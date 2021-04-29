@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DX11">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="DX11\Comon">
+      <UniqueIdentifier>{345977be-ede8-4a89-9ea0-24cd607592cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\GameObject">
+      <UniqueIdentifier>{e6f4ed5b-e71f-4e32-ab56-435b7f9be733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\GameObject\Cube">
+      <UniqueIdentifier>{a9def2a9-31ff-42ef-9457-32a400462911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Scene">
+      <UniqueIdentifier>{8f48f658-9201-4f24-9ef4-aa5c02825daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Scene\SceneManager">
+      <UniqueIdentifier>{cd9b5c3e-86e9-414c-8e64-df13c952e448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Shader">
+      <UniqueIdentifier>{d22ae78c-7bc5-4671-a89f-f107dd7c980b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource">
+      <UniqueIdentifier>{4ba440be-28c9-4e18-be9a-db0a90f69425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{c24c1a07-dfb7-4b38-9b9a-01a84316f9e7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Define.cpp">
+      <Filter>DX11\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SystemMain.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestScene.cpp">
+      <Filter>DX11\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>DX11\Scene\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector3.cpp">
+      <Filter>DX11\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>DX11\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cube.cpp">
+      <Filter>DX11\GameObject\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseObject.cpp">
+      <Filter>DX11\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3D11.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fps.cpp">
+      <Filter>DX11</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Define.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Macros.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SystemMain.h">
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Types.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestScene.h">
+      <Filter>DX11\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneManager.h">
+      <Filter>DX11\Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneList.h">
+      <Filter>DX11\Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AbstractScene.h">
+      <Filter>DX11\Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IChangeScene.h">
+      <Filter>DX11\Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3.h">
+      <Filter>DX11\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
+      <Filter>DX11\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tag.h">
+      <Filter>DX11\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cube.h">
+      <Filter>DX11\GameObject\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseObject.h">
+      <Filter>DX11\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3D11.h">
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fps.h">
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Singleton.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
