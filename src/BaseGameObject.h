@@ -1,7 +1,6 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "IGameObjectInitialize.h"
 #include "Transform.h"
 #include "GameObjectTag.h"
 

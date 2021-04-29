@@ -10,7 +10,6 @@ BaseGameObject::BaseGameObject()
 	, mTag(GameObjectTag::Untagged)
 	, mIsActive(true)
 {
-	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------

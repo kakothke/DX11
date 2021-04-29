@@ -18,15 +18,14 @@ Cube::Cube()
 /// 引数付きコンストラクタ
 Cube::Cube(Transform aTransform)
 {
-	initialize();
 	mTransform = aTransform;
+	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
 void Cube::initialize()
 {
-	setTag(GameObjectTag::Cube);
 }
 
 //-------------------------------------------------------------------------------------------------

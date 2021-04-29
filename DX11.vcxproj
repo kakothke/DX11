@@ -26,7 +26,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\BaseGameObject.cpp" />
-    <ClCompile Include="src\IGameObjectInitialize.h" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />

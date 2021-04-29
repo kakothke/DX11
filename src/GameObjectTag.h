@@ -8,9 +8,7 @@ enum class GameObjectTag
 {
 	Untagged,
 
-	Camera,
-	Light,
-	Cube,
+	Test,
 
 	TERM
 };

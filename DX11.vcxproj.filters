@@ -70,9 +70,6 @@
     <ClCompile Include="src\Fps.cpp">
       <Filter>DX11</Filter>
     </ClCompile>
-    <ClCompile Include="src\IGameObjectInitialize.h">
-      <Filter>DX11\GameObject</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Define.h">
