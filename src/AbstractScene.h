@@ -25,7 +25,7 @@ public:
 protected:
 	/// @name プライベートメンバ変数
 	//@{
-	/// シーン遷移のインターフェース
+	/// シーン遷移インターフェース
 	IChangeScene* mImplSceneChanged;
 	//@}
 

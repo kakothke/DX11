@@ -1,19 +1,20 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
+#include "IGameObjectInitialize.h"
 #include "Transform.h"
-#include "Tag.h"
+#include "GameObjectTag.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 /// 全てのゲームオブジェクトの基底クラス
-class BaseObject
+class BaseGameObject
 {
 public:
 	/// @name コンストラクタ
 	//@{
-	BaseObject();
+	BaseGameObject();
 	//@}
 
 	/// @name 外部呼出し用の初期化/更新/描画
@@ -26,9 +27,9 @@ public:
 	/// @name アクセサ
 	//@{
 	const Transform& transform() const;
-	const Tag& tag() const;
+	const GameObjectTag& tag() const;
 	const bool& isActive() const;
-	void setTag(Tag aTag);
+	void setTag(GameObjectTag aTag);
 	void setIsActive(bool aValue);
 	//@}
 
@@ -41,7 +42,7 @@ protected:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Tag mTag;
+	GameObjectTag mTag;
 	bool mIsActive;
 	//@}
 

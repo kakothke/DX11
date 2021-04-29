@@ -58,7 +58,7 @@
     <ClCompile Include="src\Cube.cpp">
       <Filter>DX11\GameObject\Cube</Filter>
     </ClCompile>
-    <ClCompile Include="src\BaseObject.cpp">
+    <ClCompile Include="src\BaseGameObject.cpp">
       <Filter>DX11\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
@@ -69,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IGameObjectInitialize.h">
+      <Filter>DX11\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,13 +111,13 @@
     <ClInclude Include="src\Transform.h">
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tag.h">
+    <ClInclude Include="src\GameObjectTag.h">
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\Cube.h">
       <Filter>DX11\GameObject\Cube</Filter>
     </ClInclude>
-    <ClInclude Include="src\BaseObject.h">
+    <ClInclude Include="src\BaseGameObject.h">
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3D11.h">

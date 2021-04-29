@@ -1,13 +1,13 @@
-#include "BaseObject.h"
+#include "BaseGameObject.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-BaseObject::BaseObject()
+BaseGameObject::BaseGameObject()
 	: mTransform()
-	, mTag(Tag::Untagged)
+	, mTag(GameObjectTag::Untagged)
 	, mIsActive(true)
 {
 	initialize();
@@ -15,49 +15,49 @@ BaseObject::BaseObject()
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void BaseObject::initialize()
+void BaseGameObject::initialize()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void BaseObject::update()
+void BaseGameObject::update()
 {
 }
 
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void BaseObject::draw() const
+void BaseGameObject::draw() const
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-const Transform& BaseObject::transform() const
+const Transform& BaseGameObject::transform() const
 {
 	return mTransform;
 }
 
 //-------------------------------------------------------------------------------------------------
-const Tag& BaseObject::tag() const
+const GameObjectTag& BaseGameObject::tag() const
 {
 	return mTag;
 }
 
 //-------------------------------------------------------------------------------------------------
-const bool& BaseObject::isActive() const
+const bool& BaseGameObject::isActive() const
 {
 	return mIsActive;
 }
 
 //-------------------------------------------------------------------------------------------------
-void BaseObject::setTag(Tag aTag)
+void BaseGameObject::setTag(GameObjectTag aTag)
 {
 	mTag = aTag;
 }
 
 //-------------------------------------------------------------------------------------------------
-void BaseObject::setIsActive(bool aValue)
+void BaseGameObject::setIsActive(bool aValue)
 {
 	mIsActive = aValue;
 }

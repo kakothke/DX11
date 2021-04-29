@@ -3,16 +3,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// ゲームオブジェクトを見分ける為の構造体
-enum class Tag
+class IGameObjectInitialize
 {
-	Untagged,
+public:
+	IGameObjectInitialize() = default;
+	virtual ~IGameObjectInitialize() = default;
+	virtual void initialize() = 0;
 
-	Camera,
-	Light,
-	Cube,
-
-	TERM
 };
 
 } // namespace

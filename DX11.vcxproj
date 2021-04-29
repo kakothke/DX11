@@ -25,7 +25,8 @@
     <ClCompile Include="src\Fps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\BaseObject.cpp" />
+    <ClCompile Include="src\BaseGameObject.cpp" />
+    <ClCompile Include="src\IGameObjectInitialize.h" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
@@ -44,14 +45,14 @@
     <ClInclude Include="src\Fps.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="src\BaseObject.h" />
+    <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Macros.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\SystemMain.h" />
-    <ClInclude Include="src\Tag.h" />
+    <ClInclude Include="src\GameObjectTag.h" />
     <ClInclude Include="src\TestScene.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Types.h" />

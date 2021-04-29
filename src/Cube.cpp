@@ -26,7 +26,7 @@ Cube::Cube(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Cube::initialize()
 {
-	setTag(Tag::Cube);
+	setTag(GameObjectTag::Cube);
 }
 
 //-------------------------------------------------------------------------------------------------

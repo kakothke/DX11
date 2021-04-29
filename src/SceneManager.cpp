@@ -1,10 +1,8 @@
 #include "SceneManager.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "TestScene.h"
-
-//-------------------------------------------------------------------------------------------------
 #include <Windows.h>
+#include "TestScene.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -14,7 +12,7 @@ namespace DX11 {
 SceneManager::SceneManager()
 	: mSceneStack()
 {
-	// テストシーンをプッシュ
+	// 最初に読み込むシーンをプッシュ
 	mSceneStack.push(std::make_shared<TestScene>(this));
 }
 
@@ -22,7 +20,7 @@ SceneManager::SceneManager()
 /// デストラクタ
 SceneManager::~SceneManager()
 {
-	// スタックを全部ポップする(スタックを空にする)
+	// シーンのスタックを全部ポップする
 	while (!mSceneStack.empty()) {
 		mSceneStack.pop();
 	}
@@ -50,12 +48,6 @@ void SceneManager::changeScene(const SceneList aSceneList)
 		break;
 	case SceneList::Test:
 		mSceneStack.push(std::make_shared<TestScene>(this));
-		break;
-	case SceneList::Title:
-		//mSceneStack.push(std::make_shared<TitleScene>(this));
-		break;
-	case SceneList::Game:
-		//mSceneStack.push(std::make_shared<GameScene>(this));
 		break;
 	default:
 		// エラーメッセージ

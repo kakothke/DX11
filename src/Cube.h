@@ -1,13 +1,13 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "BaseObject.h"
+#include "BaseGameObject.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 /// テスト用のゲームオブジェクト
-class Cube : public BaseObject
+class Cube : public BaseGameObject
 {
 public:
 	/// name コンストラクタ
