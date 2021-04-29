@@ -1,8 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include <Windows.h>
-#include "Game.h"
+#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -19,14 +18,15 @@ public:
 	/// @name WinMainから呼び出される関数
 	//@{
 	/// 初期化処理
-	bool initialize() const;
+	bool initialize();
 	/// メッセージループ
 	void msgLoop();
 	//@}
 
 private:
-	/// @name プライベートメンバ変数
+	// @name プライベートメンバ変数
 	//@{
+	Window mWindow;
 	//@}
 
 };

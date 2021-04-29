@@ -29,6 +29,9 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{c24c1a07-dfb7-4b38-9b9a-01a84316f9e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11\System">
+      <UniqueIdentifier>{7c155579-e93e-4b23-9d73-44beb7642905}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -62,13 +65,13 @@
       <Filter>DX11\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
-      <Filter>DX11</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>DX11</Filter>
+      <Filter>DX11\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
-      <Filter>DX11</Filter>
+      <Filter>DX11\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>DX11\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,17 +120,17 @@
     <ClInclude Include="src\BaseGameObject.h">
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\Direct3D11.h">
-      <Filter>DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Fps.h">
-      <Filter>DX11</Filter>
-    </ClInclude>
     <ClInclude Include="src\Singleton.h">
       <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3D11.h">
+      <Filter>DX11\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fps.h">
+      <Filter>DX11\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>DX11\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,6 @@
 //-------------------------------------------------------------------------------------------------
 #include "Macros.h"
 #include "Define.h"
-#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -114,6 +113,7 @@ ID3D11DeviceContext* Direct3D11::getContext() const
 /// @return ì¬‚É¬Œ÷‚µ‚½‚çtrue‚ð•Ô‚·
 bool Direct3D11::createDeviceAndSwapChain()
 {
+	HWND hWnd = FindWindow(Define::WindowName, nullptr);
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
@@ -124,7 +124,7 @@ bool Direct3D11::createDeviceAndSwapChain()
 	sd.BufferDesc.RefreshRate.Numerator = Define::Fps;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd.OutputWindow = Window::getInst()->hWnd();
+	sd.OutputWindow = hWnd;
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = true;

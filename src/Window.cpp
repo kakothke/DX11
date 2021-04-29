@@ -29,8 +29,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Window::Window()
-	: m_hWnd(nullptr)
-	, m_hMutex(nullptr)
+	: mWindowHandle(nullptr)
+	, mMutex(nullptr)
 {
 }
 
@@ -39,14 +39,14 @@ Window::Window()
 Window::~Window()
 {
 	// ウィンドウの破棄
-	if (m_hWnd) {
-		DestroyWindow(m_hWnd);
+	if (mWindowHandle) {
+		DestroyWindow(mWindowHandle);
 		UnregisterClass(Define::WindowName, GetModuleHandle(NULL));
 	}
 	// ミューテックスの開放
-	if (m_hMutex) {
-		ReleaseMutex(m_hMutex);
-		CloseHandle(m_hMutex);
+	if (mMutex) {
+		ReleaseMutex(mMutex);
+		CloseHandle(mMutex);
 	}
 }
 
@@ -72,14 +72,15 @@ bool Window::initialize()
 /// 作成したウィンドウハンドルを返す
 const HWND Window::hWnd() const
 {
-	return m_hWnd;
+	return mWindowHandle;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 多重起動をチェックする
 bool Window::checkMultiple()
 {
-	m_hMutex = CreateMutex(nullptr, FALSE, Define::WindowName);
+	mMutex = CreateMutex(nullptr, FALSE, Define::WindowName);
+
 	DWORD theErr = GetLastError();
 	if (theErr == ERROR_ALREADY_EXISTS) {
 		// 既に起動されているウィンドウを取得
@@ -107,7 +108,7 @@ bool Window::createWindow()
 	}
 
 	// ウィンドウ作成
-	m_hWnd =
+	mWindowHandle =
 		CreateWindow(
 			Define::WindowName,
 			Define::WindowName,
@@ -124,7 +125,7 @@ bool Window::createWindow()
 		);
 
 	// ウィンドウの作成に成功しているかをチェック
-	if (!m_hWnd) {
+	if (!mWindowHandle) {
 		return false;
 	}
 
@@ -165,14 +166,14 @@ void Window::resizeWindow()
 {
 	// 非クライアント領域を加算したウィンドウサイズを計算
 	RECT wndRect, cltRect;
-	GetWindowRect(m_hWnd, &wndRect);
-	GetClientRect(m_hWnd, &cltRect);
+	GetWindowRect(mWindowHandle, &wndRect);
+	GetClientRect(mWindowHandle, &cltRect);
 	int resizeW = ((wndRect.right - wndRect.left) - (cltRect.right - cltRect.left)) + Define::WindowWidth;
 	int resizeH = ((wndRect.bottom - wndRect.top) - (cltRect.bottom - cltRect.top)) + Define::WindowHeight;
 
 	// 作成したウィンドウの位置とサイズを変更
 	SetWindowPos(
-		m_hWnd,
+		mWindowHandle,
 		nullptr,
 		(GetSystemMetrics(SM_CXSCREEN) - resizeW) / 2, // モニターの中央に表示
 		(GetSystemMetrics(SM_CYSCREEN) - resizeH) / 2, // モニターの中央に表示

@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <Windows.h>
-#include "Singleton.h"
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ namespace DX11 {
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 /// Windowの作成を行うクラス
-class Window : public Singleton<Window>
+class Window
 {
 public:
 	/// @name コンストラクタ/デストラクタ
@@ -48,9 +47,9 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// ウィンドウハンドル
-	HWND m_hWnd;
+	HWND mWindowHandle;
 	/// ミューテックス
-	HANDLE m_hMutex;
+	HANDLE mMutex;
 	//@}
 
 };

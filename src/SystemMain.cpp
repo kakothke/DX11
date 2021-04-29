@@ -1,8 +1,8 @@
 #include "SystemMain.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Window.h"
 #include "Direct3D11.h"
+#include "Game.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -10,15 +10,16 @@ namespace DX11 {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SystemMain::SystemMain()
+	: mWindow()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-bool SystemMain::initialize() const
+bool SystemMain::initialize()
 {
 	// ウィンドウ初期化
-	if (!Window::getInst()->initialize()) {
+	if (!mWindow.initialize()) {
 		return false;
 	}
 	// Direct3D11初期化
@@ -27,8 +28,8 @@ bool SystemMain::initialize() const
 	}
 
 	// ウィンドウを表示
-	ShowWindow(Window::getInst()->hWnd(), SW_SHOW);
-	UpdateWindow(Window::getInst()->hWnd());
+	ShowWindow(mWindow.hWnd(), SW_SHOW);
+	UpdateWindow(mWindow.hWnd());
 
 	return true;
 }
