@@ -22,7 +22,8 @@ bool Game::mainLoop()
 	Direct3D11::getInst()->drawStart();
 
 	mFps.update();
-	mSceneManager.run();
+	mSceneManager.update();
+	mSceneManager.draw();
 	mFps.wait();
 	mFps.draw();
 

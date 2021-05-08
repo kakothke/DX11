@@ -21,9 +21,10 @@ public:
 	~SceneManager();
 	//@}
 
-	/// @name 動作
+	/// @name 更新/描画
 	//@{
-	void run();
+	void update();
+	void draw();
 	//@}
 
 	/// @name シーン遷移

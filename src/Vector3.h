@@ -50,26 +50,5 @@ public:
 
 };
 
-using namespace DirectX;
-
-/// ベクトル変換計算
-class Vector3Math
-{
-public:
-    //@ name 変換関数
-    //@{
-    /// ベクトルの長さを返す
-    static float Magnitude(Vector3 aVector);
-    /// 長さを1に変換したベクトルを返す
-    static Vector3 Normalized(Vector3 aVector);
-    /// XMFLOAT3型に変換して返す
-    static const XMFLOAT3& XMFLOAT3(Vector3 aVector);
-    //@}
-
-private:
-    Vector3Math();
-
-};
-
 } // namespace
 // EOF

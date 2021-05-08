@@ -4,7 +4,7 @@
 namespace DX11 {
 
 /// ƒVƒ“ƒOƒ‹ƒgƒ“
-template <typename T>
+template <class T>
 class Singleton
 {
 public:

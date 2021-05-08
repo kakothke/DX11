@@ -20,17 +20,35 @@
     <Filter Include="DX11\Scene\SceneManager">
       <UniqueIdentifier>{cd9b5c3e-86e9-414c-8e64-df13c952e448}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11\Shader">
-      <UniqueIdentifier>{d22ae78c-7bc5-4671-a89f-f107dd7c980b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DX11\Resource">
       <UniqueIdentifier>{4ba440be-28c9-4e18-be9a-db0a90f69425}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{c24c1a07-dfb7-4b38-9b9a-01a84316f9e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11\System">
-      <UniqueIdentifier>{7c155579-e93e-4b23-9d73-44beb7642905}</UniqueIdentifier>
+    <Filter Include="DX11\Resource\Mesh">
+      <UniqueIdentifier>{e7f44c08-bdf1-4bc5-912f-b600c3acabaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource\Mesh\Shader">
+      <UniqueIdentifier>{d22ae78c-7bc5-4671-a89f-f107dd7c980b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource\Mesh\Shader\PixelShader">
+      <UniqueIdentifier>{3bc84c3d-0e5c-4838-a805-0b857cc2294e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource\Mesh\Shader\VertexShader">
+      <UniqueIdentifier>{ebb00c28-c032-4ec7-85c6-c6d2997b3e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\PixelShader">
+      <UniqueIdentifier>{dc2ec232-62ba-4c30-b799-6d35d57452d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\VertexShader">
+      <UniqueIdentifier>{781c10e0-ee38-45c2-9182-f06c78592edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource\Mesh\Obj">
+      <UniqueIdentifier>{be053d7c-7d3a-434c-b629-ddae85cad72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11\Resource\Mesh\FBX">
+      <UniqueIdentifier>{04d659aa-ef8f-4e06-abc0-3540f3ae1cda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,12 +70,6 @@
     <ClCompile Include="src\SceneManager.cpp">
       <Filter>DX11\Scene\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vector3.cpp">
-      <Filter>DX11\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>DX11\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cube.cpp">
       <Filter>DX11\GameObject\Cube</Filter>
     </ClCompile>
@@ -65,13 +77,31 @@
       <Filter>DX11\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjLoader.cpp">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjRenderer.cpp">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SplitString.cpp">
+      <Filter>DX11\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>DX11\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector3.cpp">
+      <Filter>DX11\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector3Math.cpp">
+      <Filter>DX11\Comon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,12 +135,6 @@
     <ClInclude Include="src\IChangeScene.h">
       <Filter>DX11\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vector3.h">
-      <Filter>DX11\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>DX11\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObjectTag.h">
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
@@ -124,13 +148,34 @@
       <Filter>DX11\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3D11.h">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h">
-      <Filter>DX11\System</Filter>
+      <Filter>DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjLoader.h">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjRenderer.h">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjList.h">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SplitString.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3.h">
+      <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3Math.h">
+      <Filter>DX11\Comon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

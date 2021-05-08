@@ -27,11 +27,19 @@ SceneManager::~SceneManager()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// “®ì
-void SceneManager::run()
+/// XV
+void SceneManager::update()
 {
 	if (!mSceneStack.empty()) {
 		mSceneStack.top()->update();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/// •`‰æ
+void SceneManager::draw()
+{
+	if (!mSceneStack.empty()) {
 		mSceneStack.top()->draw();
 	}
 }
