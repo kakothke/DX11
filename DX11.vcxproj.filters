@@ -50,6 +50,9 @@
     <Filter Include="DX11\Resource\Mesh\FBX">
       <UniqueIdentifier>{04d659aa-ef8f-4e06-abc0-3540f3ae1cda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11\Resource\Mesh\Material">
+      <UniqueIdentifier>{05d96f5b-ca43-47e8-91f1-899f3bbced31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -102,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="src\Vector3Math.cpp">
       <Filter>DX11\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseShader.cpp">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="src\Vector3Math.h">
       <Filter>DX11\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseShader.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

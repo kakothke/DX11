@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BaseShader.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Define.cpp" />
     <ClCompile Include="src\Direct3D11.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="src\ObjRenderer.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\BaseShader.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\SplitString.h" />
     <ClInclude Include="src\SystemMain.h" />

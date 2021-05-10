@@ -29,7 +29,7 @@ ObjLoader::~ObjLoader()
 
 //-------------------------------------------------------------------------------------------------
 /// objファイルを読み込む
-/// @param aObjList 読み込むobjファイル
+/// @param aObjList 読み込みたいobjファイルを指定する構造体
 bool ObjLoader::load(ObjList aObjList)
 {
 	if (!createMesh(aObjList)) {
@@ -50,6 +50,7 @@ bool ObjLoader::load(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// 読み込んだobjファイルを破棄する
+/// @param aObjList 破棄したいobjファイルを指定する構造体
 void ObjLoader::release(ObjList aObjList)
 {
 	mObjData.erase(aObjList);
@@ -57,6 +58,7 @@ void ObjLoader::release(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// objファイルのデータを返す
+/// @param aObjList 欲しいobjファイルを指定する構造体
 const ObjData& ObjLoader::objData(ObjList aObjList)
 {
 	return mObjData[aObjList];
@@ -64,6 +66,8 @@ const ObjData& ObjLoader::objData(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// メッシュを作成する
+/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @return 作成結果 成功(true)
 bool ObjLoader::createMesh(ObjList aObjList)
 {
 	// ファイルを読み込む
@@ -121,6 +125,8 @@ bool ObjLoader::createMesh(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// 頂点バッファを作成する
+/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @return 作成結果 成功(true)
 bool ObjLoader::createVertexBuffer(ObjList aObjList)
 {
 	// バッファ情報
@@ -165,6 +171,8 @@ bool ObjLoader::createVertexBuffer(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// インデックスバッファを作成する
+/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @return 作成結果 成功(true)
 bool ObjLoader::createIndexBuffer(ObjList aObjList)
 {
 	// バッファ情報
@@ -209,6 +217,9 @@ bool ObjLoader::createIndexBuffer(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// 文字列をfloat型に変換して座標情報をpushする
+/// @tparam T テンプレート引数
+/// @param aData pushするデータ先
+/// @param aStr float型に直す文字列
 template <typename T>
 void ObjLoader::pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr)
 {

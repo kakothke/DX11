@@ -49,6 +49,7 @@ Direct3D11::~Direct3D11()
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
+/// @return 初期化結果 成功(true)
 bool Direct3D11::initialize()
 {
 	// デバイスとスワップチェーンを作成する
@@ -110,7 +111,7 @@ ID3D11DeviceContext* Direct3D11::getContext() const
 
 //-------------------------------------------------------------------------------------------------
 /// デバイスとスワップチェーンを作成する
-/// @return 作成に成功したらtrueを返す
+/// @return 作成結果 成功(true)
 bool Direct3D11::createDeviceAndSwapChain()
 {
 	HWND hWnd = FindWindow(Define::WindowName, nullptr);
@@ -154,7 +155,7 @@ bool Direct3D11::createDeviceAndSwapChain()
 
 //-------------------------------------------------------------------------------------------------
 /// レンダーターゲットビューを作成する
-/// @return 作成に成功したらtrueを返す
+/// @return 作成結果 成功(true)
 bool Direct3D11::createRenderTargetView()
 {
 	ID3D11Texture2D* pBackBuffer;
@@ -171,7 +172,7 @@ bool Direct3D11::createRenderTargetView()
 
 //-------------------------------------------------------------------------------------------------
 /// 深度ステンシルビューを作成する
-/// @return 作成に成功したらtrueを返す
+/// @return 作成結果 成功(true)
 bool Direct3D11::createDepthAndStencil()
 {
 	D3D11_TEXTURE2D_DESC descDepth;
@@ -202,6 +203,7 @@ bool Direct3D11::createDepthAndStencil()
 
 //-------------------------------------------------------------------------------------------------
 /// 深度ステンシルステートを作成する
+/// @return 作成結果 成功(true)
 bool Direct3D11::createDepthStencilState()
 {
 	// 深度ステンシルステートを作成

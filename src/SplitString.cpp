@@ -10,8 +10,8 @@ namespace DX11 {
 //-------------------------------------------------------------------------------------------------
 /// 文字列を任意のデリミタで分割する
 /// @param aStr 分割する文字列
-/// @param aDelim 区切る文字
-/// @return 区切った文字列
+/// @param aDelim 分割する文字を指定
+/// @return 分割した文字列
 std::vector<std::string> SplitString::split(const std::string& aStr, const char aDelim)
 {
     std::vector<std::string> v;

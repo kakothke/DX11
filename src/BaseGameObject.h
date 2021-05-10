@@ -11,9 +11,10 @@ namespace DX11 {
 class BaseGameObject
 {
 public:
-	/// @name コンストラクタ
+	/// @name コンストラクタ/デストラクタ
 	//@{
 	BaseGameObject();
+	virtual ~BaseGameObject();
 	//@}
 
 	/// @name 外部呼出し用の初期化/更新/描画
