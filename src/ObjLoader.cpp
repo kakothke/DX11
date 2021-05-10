@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include "SplitString.h"
+#include "Direct3D11.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -14,12 +15,16 @@ namespace DX11 {
 ObjLoader::ObjLoader()
 	: mObjData()
 {
+	mObjData.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
 ObjLoader::~ObjLoader()
 {
+	if (!mObjData.empty()) {
+		mObjData.clear();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -31,11 +36,11 @@ bool ObjLoader::load(ObjList aObjList)
 		MessageBox(nullptr, TEXT("メッシュの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!createVertexBuffer()) {
+	if (!createVertexBuffer(aObjList)) {
 		MessageBox(nullptr, TEXT("頂点バッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!createIndexBuffer()) {
+	if (!createIndexBuffer(aObjList)) {
 		MessageBox(nullptr, TEXT("インデックスバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
@@ -88,22 +93,25 @@ bool ObjLoader::createMesh(ObjList aObjList)
 		}
 		// 面情報
 		else if (str.substr(0, 2) == "f ") {
-			std::vector<std::string> space = SplitString::split(str.substr(2), ' ');
-			for (UINT i = 0; i < space.size(); i++) {
-				VertexData tmpData;
-				std::vector<std::string> slash = SplitString::split(space[i], '/');
-				for (UINT j = 0; positions.size() > 0 && j < positions[0].size(); j++) {
-					tmpData.position[j] = positions[std::stoi(slash[0]) - 1][j];
+			std::vector<std::string> spaceSplit = SplitString::split(str.substr(2), ' ');
+			for (UINT i = 0; i < spaceSplit.size(); i++) {
+				VertexData tmp;
+				std::vector<std::string> slashSplit = SplitString::split(spaceSplit[i], '/');
+				// 頂点座標
+				for (UINT j = 0; !positions.empty() && j < positions[0].size(); j++) {
+					tmp.position[j] = positions[std::stoi(slashSplit[0]) - 1][j];
 				}
-				for (UINT j = 0; textures.size() > 0 && j < textures[0].size(); j++) {
-					tmpData.texture[j] = textures[std::stoi(slash[1]) - 1][j];
+				// UV座標
+				for (UINT j = 0; !textures.empty() && j < textures[0].size(); j++) {
+					tmp.texture[j] = textures[std::stoi(slashSplit[1]) - 1][j];
 				}
-				for (UINT j = 0; normals.size() > 0 && j < normals[0].size(); j++) {
-					tmpData.normal[j] = normals[std::stoi(slash[2]) - 1][j];
+				// 法線座標
+				for (UINT j = 0; !normals.empty() && j < normals[0].size(); j++) {
+					tmp.normal[j] = normals[std::stoi(slashSplit[2]) - 1][j];
 				}
-				// 各バッファリストに追加
-				mObjData[aObjList].vertexData.push_back(tmpData);
-				mObjData[aObjList].indexes.push_back(mObjData[aObjList].vertexData.size() - 1);
+				// 各バッファコンテナに追加
+				mObjData[aObjList].vertexContainer.push_back(tmp);
+				mObjData[aObjList].indexContainer.push_back(mObjData[aObjList].vertexContainer.size() - 1);
 			}
 		}
 	}
@@ -113,15 +121,89 @@ bool ObjLoader::createMesh(ObjList aObjList)
 
 //-------------------------------------------------------------------------------------------------
 /// 頂点バッファを作成する
-bool ObjLoader::createVertexBuffer()
+bool ObjLoader::createVertexBuffer(ObjList aObjList)
 {
+	// バッファ情報
+	D3D11_BUFFER_DESC bufferDesc;
+	{
+		// バッファのサイズ
+		bufferDesc.ByteWidth = sizeof(VertexData) * mObjData[aObjList].vertexContainer.size();
+		// 使用方法
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		// BIND設定
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		// リソースへのCPUのアクセス権限についての設定
+		bufferDesc.CPUAccessFlags = 0;
+		// リソースオプションのフラグ
+		bufferDesc.MiscFlags = 0;
+		// 構造体のサイズ
+		bufferDesc.StructureByteStride = 0;
+	}
+
+	// リソース情報
+	D3D11_SUBRESOURCE_DATA subResource;
+	{
+		// バッファの中身の設定
+		subResource.pSysMem = &mObjData[aObjList].vertexContainer[0];
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemPitch = 0;
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemSlicePitch = 0;
+	}
+
+	// バッファ作成
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
+		&bufferDesc,
+		&subResource,
+		&mObjData[aObjList].vertexBuffer
+	))) {
+		return false;
+	}
+
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// インデックスバッファを作成する
-bool ObjLoader::createIndexBuffer()
+bool ObjLoader::createIndexBuffer(ObjList aObjList)
 {
+	// バッファ情報
+	D3D11_BUFFER_DESC bufferDesc;
+	{
+		// バッファのサイズ
+		bufferDesc.ByteWidth = sizeof(UINT) * mObjData[aObjList].indexContainer.size();
+		// 使用方法
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		// BIND設定
+		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		// リソースへのCPUのアクセス権限についての設定
+		bufferDesc.CPUAccessFlags = 0;
+		// リソースオプションのフラグ
+		bufferDesc.MiscFlags = 0;
+		// 構造体のサイズ
+		bufferDesc.StructureByteStride = 0;
+	}
+
+	// リソース情報
+	D3D11_SUBRESOURCE_DATA subResource;
+	{
+		// バッファの中身の設定
+		subResource.pSysMem = &mObjData[aObjList].indexContainer[0];
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemPitch = 0;
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemSlicePitch = 0;
+	}
+
+	// バッファ作成
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
+		&bufferDesc,
+		&subResource,
+		&mObjData[aObjList].indexBuffer
+	))) {
+		return false;
+	}
+
 	return true;
 }
 

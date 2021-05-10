@@ -14,8 +14,11 @@ namespace DX11 {
 /// 頂点バッファ保存用構造体
 struct VertexData
 {
+	/// 頂点座標
 	double position[3];
+	/// UV座標
 	double texture[2];
+	/// 法線座標
 	double normal[3];
 };
 
@@ -28,20 +31,21 @@ struct ObjData
 	ID3D11Buffer* indexBuffer;
 	/// 入力レイアウト
 	ID3D11InputLayout* inputLayout;
-	/// 頂点バッファ
-	std::vector<VertexData> vertexData;
-	/// インデックスバッファ
-	std::vector<UINT> indexes;
+	/// 頂点バッファ保存用構造体コンテナ
+	std::vector<VertexData> vertexContainer;
+	/// インデックスバッファコンテナ
+	std::vector<UINT> indexContainer;
 
 	/// コンストラクタ
 	ObjData()
 		: vertexBuffer(nullptr)
 		, indexBuffer(nullptr)
 		, inputLayout(nullptr)
-		, vertexData()
-		, indexes()
+		, vertexContainer()
+		, indexContainer()
 	{
-		vertexData.clear();
+		vertexContainer.clear();
+		indexContainer.clear();
 	}
 	/// デストラクタ
 	~ObjData()
@@ -54,6 +58,12 @@ struct ObjData
 		}
 		if (inputLayout) {
 			SAFE_RELEASE(inputLayout);
+		}
+		if (!vertexContainer.empty()) {
+			vertexContainer.clear();
+		}
+		if (!indexContainer.empty()) {
+			indexContainer.clear();
 		}
 	}
 };
@@ -85,10 +95,10 @@ private:
 	/// メッシュを作成する
 	bool createMesh(ObjList aObjList);
 	/// 頂点バッファを作成する
-	bool createVertexBuffer();
+	bool createVertexBuffer(ObjList aObjList);
 	/// インデックスバッファを作成する
-	bool createIndexBuffer();
-	/// 文字列をfloat型に変換してvectorをpushする
+	bool createIndexBuffer(ObjList aObjList);
+	/// 文字列をfloat型に変換して座標情報をpushする
 	template <typename T>
 	void pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr);
 	//@}
