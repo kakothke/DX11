@@ -39,7 +39,8 @@ public:
 	//@{
 	void drawStart();
 	void drawEnd();
-	void setUpContext(const ObjData& aObjData, const ShaderData& aShaderData);
+	void setUpConstantBuffer(const DirectX::XMMATRIX& aViewMatrix, const DirectX::XMMATRIX& aProjMatrix);
+	void setUpContext(const ShaderData& aShaderData);
 	//@}
 
 	/// @name アクセサ

@@ -114,22 +114,37 @@ void Direct3D11::drawEnd()
 }
 
 //-------------------------------------------------------------------------------------------------
-void Direct3D11::setUpContext(const ObjData& aObjData, const ShaderData& aShaderData)
+/// コンスタントバッファを設定する
+/// @param aViewMatrix ビュー行列
+/// @param aProjMatrix プロジェクション行列
+void Direct3D11::setUpConstantBuffer(
+	const DirectX::XMMATRIX& aViewMatrix,
+	const DirectX::XMMATRIX& aProjMatrix
+) {
+	XMStoreFloat4x4(&mConstantBufferData.View, XMMatrixTranspose(aViewMatrix));
+	XMStoreFloat4x4(&mConstantBufferData.Projection, XMMatrixTranspose(aProjMatrix));
+}
+
+//-------------------------------------------------------------------------------------------------
+void Direct3D11::setUpContext(const ShaderData& aShaderData)
 {
 	// プリミティブの形状を指定
 	mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 	// VertexShaderを設定
 	mContext->VSSetShader(
 		aShaderData.vs.getInterface(),
 		nullptr,
 		0
 	);
+
 	// PixelShaderを設定
 	mContext->PSSetShader(
 		aShaderData.ps.getInterface(),
 		nullptr,
 		0
 	);
+
 	// (OutputManger)RnderTagetの指定
 	mContext->OMSetRenderTargets(
 		1,
@@ -139,23 +154,6 @@ void Direct3D11::setUpContext(const ObjData& aObjData, const ShaderData& aShader
 
 	// IA(InputAssemblerStage)に入力レイアウトを設定する
 	mContext->IASetInputLayout(aShaderData.vs.getInputLayout());
-
-	// IAに設定する頂点バッファの指定
-	int count = 0;
-	UINT strides = sizeof(ObjVertexData);
-	UINT offsets = 0;
-	mContext->IASetVertexBuffers(
-		0,
-		1,
-		&aObjData.vertexBuffer,
-		&strides,
-		&offsets
-	);
-	mContext->IASetIndexBuffer(
-		aObjData.indexBuffer,
-		DXGI_FORMAT_R16_UINT,
-		0
-	);
 }
 
 //-------------------------------------------------------------------------------------------------

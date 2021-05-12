@@ -63,7 +63,6 @@ void ObjLoader::release(ObjList aObjList)
 const ObjData& ObjLoader::objData(ObjList aObjList)
 {
 	return mObjData[aObjList];
-
 }
 
 //-------------------------------------------------------------------------------------------------

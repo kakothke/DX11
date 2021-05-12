@@ -44,6 +44,9 @@
     <Filter Include="DX11\Resource\Mesh\FBX">
       <UniqueIdentifier>{04d659aa-ef8f-4e06-abc0-3540f3ae1cda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11\GameObject\Camera">
+      <UniqueIdentifier>{6ffa57d5-e2a4-4322-853a-2f234b54f320}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -114,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>DX11\GameObject\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="src\AbstractScene.h">
       <Filter>DX11\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>DX11\GameObject\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

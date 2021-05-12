@@ -26,6 +26,7 @@ TestScene::~TestScene()
 /// XV
 void TestScene::update()
 {
+	mCamera.update();
 	mCube.update();
 }
 
