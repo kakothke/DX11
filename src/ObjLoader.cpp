@@ -6,6 +6,7 @@
 #include <string>
 #include "SplitString.h"
 #include "Direct3D11.h"
+#include "ObjFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -71,7 +72,7 @@ const ObjData& ObjLoader::objData(ObjList aObjList)
 bool ObjLoader::createMesh(ObjList aObjList)
 {
 	// ファイルを読み込む
-	std::ifstream ifs(ObjFilePath::filePath(aObjList));
+	std::ifstream ifs(ObjFileName::fileName(aObjList));
 	if (!ifs) {
 		return false;
 	}
@@ -99,7 +100,7 @@ bool ObjLoader::createMesh(ObjList aObjList)
 		else if (str.substr(0, 2) == "f ") {
 			std::vector<std::string> spaceSplit = SplitString::split(str.substr(2), ' ');
 			for (UINT i = 0; i < spaceSplit.size(); i++) {
-				VertexData tmp;
+				ObjVertexData tmp;
 				std::vector<std::string> slashSplit = SplitString::split(spaceSplit[i], '/');
 				// 頂点座標
 				for (UINT j = 0; !positions.empty() && j < positions[0].size(); j++) {
@@ -133,7 +134,7 @@ bool ObjLoader::createVertexBuffer(ObjList aObjList)
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(VertexData) * mObjData[aObjList].vertexContainer.size();
+		bufferDesc.ByteWidth = sizeof(ObjVertexData) * mObjData[aObjList].vertexContainer.size();
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定

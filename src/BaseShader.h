@@ -1,5 +1,7 @@
 #pragma once
-#include <d3d11.h>
+
+//-------------------------------------------------------------------------------------------------
+#include <D3D11.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -14,22 +16,19 @@ public:
 	virtual ~BaseShader();
 	//@}
 
-	/// @name アクセサ
+	/// @name 作成関数
 	//@{
-	/// シェーダのデータ（バイナリ）を返す
-	const char* data() const;
-	/// シェーダのデータサイズを返す
-	const long size() const;
+	/// シェーダを作成する
+	virtual bool create(const char* aFileName) = 0;
 	//@}
 
 protected:
-	/// @name 読み込み
+	/// @name データ読み込み
 	//@{
-	bool Load(const char* file_name);
+	bool load(const char* aFileName);
 	//@}
 
-private:
-	/// @name プライベートメンバ変数
+	/// @name プロテクテッドメンバ変数
 	//@{
 	/// シェーダデータ(バイナリ)
 	char* mData;

@@ -1,7 +1,6 @@
 #include "Direct3D11.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Macros.h"
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -25,25 +24,34 @@ Direct3D11::Direct3D11()
 Direct3D11::~Direct3D11()
 {
 	if (mSwapChain) {
-		SAFE_RELEASE(mSwapChain);
+		mSwapChain->Release();
+		mSwapChain = nullptr;
 	}
 	if (mRenderTargetView) {
-		SAFE_RELEASE(mRenderTargetView);
+		mRenderTargetView->Release();
+		mRenderTargetView = nullptr;
 	}
 	if (mContext) {
-		SAFE_RELEASE(mContext);
+		mContext->ClearState();
+		mContext->Flush();
+		mContext->Release();
+		mContext = nullptr;
 	}
 	if (mDepthStencilView) {
-		SAFE_RELEASE(mDepthStencilView);
+		mDepthStencilView->Release();
+		mDepthStencilView = nullptr;
 	}
 	if (mDepthStencilTexture) {
-		SAFE_RELEASE(mDepthStencilTexture);
+		mDepthStencilTexture->Release();
+		mDepthStencilTexture = nullptr;
 	}
 	if (mDepthStencilState) {
-		SAFE_RELEASE(mDepthStencilState);
+		mDepthStencilState->Release();
+		mDepthStencilState = nullptr;
 	}
 	if (mDevice) {
-		SAFE_RELEASE(mDevice);
+		mDevice->Release();
+		mDevice = nullptr;
 	}
 }
 
@@ -158,14 +166,15 @@ bool Direct3D11::createDeviceAndSwapChain()
 /// @return ì¬Œ‹‰Ê ¬Œ÷(true)
 bool Direct3D11::createRenderTargetView()
 {
-	ID3D11Texture2D* pBackBuffer;
-	if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer))) {
+	ID3D11Texture2D* backBuffer;
+	if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer))) {
 		return false;
 	}
-	if (FAILED(mDevice->CreateRenderTargetView(pBackBuffer, nullptr, &mRenderTargetView))) {
+	if (FAILED(mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetView))) {
 		return false;
 	}
-	SAFE_RELEASE(pBackBuffer);
+	backBuffer->Release();
+	backBuffer = nullptr;
 
 	return true;
 }
@@ -188,7 +197,7 @@ bool Direct3D11::createDepthAndStencil()
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
 
-	if (FAILED(mDevice->CreateTexture2D(&descDepth, nullptr, &mDepthStencilTexture))) {
+	if (FAILED(mDevice->CreateTexture2D(&descDepth, NULL, &mDepthStencilTexture))) {
 		return false;
 	}
 	if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilTexture, nullptr, &mDepthStencilView))) {
@@ -247,11 +256,12 @@ void Direct3D11::setUpRasterize()
 	rdc.CullMode = D3D11_CULL_NONE;
 	rdc.FillMode = D3D11_FILL_SOLID;
 
-	ID3D11RasterizerState* pIr = nullptr;
-	mDevice->CreateRasterizerState(&rdc, &pIr);
-	mContext->RSSetState(pIr);
+	ID3D11RasterizerState* rs = nullptr;
+	mDevice->CreateRasterizerState(&rdc, &rs);
+	mContext->RSSetState(rs);
 
-	SAFE_RELEASE(pIr);
+	rs->Release();
+	rs = nullptr;
 }
 
 } // namespace

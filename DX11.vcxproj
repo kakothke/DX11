@@ -29,15 +29,20 @@
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\ObjFileName.cpp" />
     <ClCompile Include="src\ObjLoader.cpp" />
     <ClCompile Include="src\ObjRenderer.cpp" />
+    <ClCompile Include="src\PixelShader.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\ShaderFileName.cpp" />
+    <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\SplitString.cpp" />
     <ClCompile Include="src\SystemMain.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
     <ClCompile Include="src\Vector3Math.cpp" />
+    <ClCompile Include="src\VertexShader.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,14 +55,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\BaseGameObject.h" />
-    <ClInclude Include="src\Macros.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\ObjFileName.h" />
     <ClInclude Include="src\ObjList.h" />
     <ClInclude Include="src\ObjLoader.h" />
     <ClInclude Include="src\ObjRenderer.h" />
+    <ClInclude Include="src\PixelShader.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\BaseShader.h" />
+    <ClInclude Include="src\ShaderFileName.h" />
+    <ClInclude Include="src\ShaderList.h" />
+    <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\SplitString.h" />
     <ClInclude Include="src\SystemMain.h" />
@@ -67,6 +76,7 @@
     <ClInclude Include="src\Types.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Vector3Math.h" />
+    <ClInclude Include="src\VertexShader.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

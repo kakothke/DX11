@@ -32,12 +32,6 @@
     <Filter Include="DX11\Resource\Mesh\Shader">
       <UniqueIdentifier>{d22ae78c-7bc5-4671-a89f-f107dd7c980b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11\Resource\Mesh\Shader\PixelShader">
-      <UniqueIdentifier>{3bc84c3d-0e5c-4838-a805-0b857cc2294e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11\Resource\Mesh\Shader\VertexShader">
-      <UniqueIdentifier>{ebb00c28-c032-4ec7-85c6-c6d2997b3e2d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\PixelShader">
       <UniqueIdentifier>{dc2ec232-62ba-4c30-b799-6d35d57452d2}</UniqueIdentifier>
     </Filter>
@@ -49,9 +43,6 @@
     </Filter>
     <Filter Include="DX11\Resource\Mesh\FBX">
       <UniqueIdentifier>{04d659aa-ef8f-4e06-abc0-3540f3ae1cda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11\Resource\Mesh\Material">
-      <UniqueIdentifier>{05d96f5b-ca43-47e8-91f1-899f3bbced31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,12 +100,24 @@
     <ClCompile Include="src\BaseShader.cpp">
       <Filter>DX11\Resource\Mesh\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjFileName.cpp">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexShader.cpp">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PixelShader.cpp">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderFileName.cpp">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderLoader.cpp">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Define.h">
-      <Filter>DX11\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Macros.h">
       <Filter>DX11\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\SystemMain.h">
@@ -184,6 +187,24 @@
       <Filter>DX11\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\BaseShader.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjFileName.h">
+      <Filter>DX11\Resource\Mesh\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VertexShader.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PixelShader.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderFileName.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderList.h">
+      <Filter>DX11\Resource\Mesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderLoader.h">
       <Filter>DX11\Resource\Mesh\Shader</Filter>
     </ClInclude>
   </ItemGroup>

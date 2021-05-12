@@ -6,13 +6,12 @@
 #include "Singleton.h"
 #include "Vector3.h"
 #include "ObjList.h"
-#include "Macros.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 /// 頂点バッファ保存用構造体
-struct VertexData
+struct ObjVertexData
 {
 	/// 頂点座標
 	double position[3];
@@ -32,7 +31,7 @@ struct ObjData
 	/// 入力レイアウト
 	ID3D11InputLayout* inputLayout;
 	/// 頂点バッファ保存用構造体コンテナ
-	std::vector<VertexData> vertexContainer;
+	std::vector<ObjVertexData> vertexContainer;
 	/// インデックスバッファコンテナ
 	std::vector<UINT> indexContainer;
 
@@ -51,13 +50,16 @@ struct ObjData
 	~ObjData()
 	{
 		if (vertexBuffer) {
-			SAFE_RELEASE(vertexBuffer);
+			vertexBuffer->Release();
+			vertexBuffer = nullptr;
 		}
 		if (indexBuffer) {
-			SAFE_RELEASE(indexBuffer);
+			indexBuffer->Release();
+			indexBuffer = nullptr;
 		}
 		if (inputLayout) {
-			SAFE_RELEASE(inputLayout);
+			inputLayout->Release();
+			inputLayout = nullptr;
 		}
 		if (!vertexContainer.empty()) {
 			vertexContainer.clear();

@@ -3,11 +3,10 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// objリスト
-enum class ObjList
+/// Shaderリスト
+enum class ShaderList
 {
-	Cube,
-	Sphere,
+	TestShader
 };
 
 } // namespace
