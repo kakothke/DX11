@@ -30,7 +30,7 @@ public:
 
 	/// @name シェーダーを作成する
 	//@{
-	bool create(ShaderList aList);
+	bool load(ShaderList aList);
 	//@}
 
 	/// @name アクセサ

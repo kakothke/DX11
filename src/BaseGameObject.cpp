@@ -33,7 +33,7 @@ void BaseGameObject::update()
 
 //-------------------------------------------------------------------------------------------------
 /// •`‰æ
-void BaseGameObject::draw() const
+void BaseGameObject::draw()
 {
 }
 

@@ -138,9 +138,6 @@
     <ClInclude Include="src\SceneList.h">
       <Filter>DX11\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\AbstractScene.h">
-      <Filter>DX11\Scene\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="src\IChangeScene.h">
       <Filter>DX11\Scene\SceneManager</Filter>
     </ClInclude>
@@ -207,5 +204,16 @@
     <ClInclude Include="src\ShaderLoader.h">
       <Filter>DX11\Resource\Mesh\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="src\AbstractScene.h">
+      <Filter>DX11\Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\UnlitShader_ps.hlsl">
+      <Filter>Shader\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\UnlitShader_vs.hlsl">
+      <Filter>Shader\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

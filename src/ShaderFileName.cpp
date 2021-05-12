@@ -15,7 +15,7 @@ const char* ShaderFileName::fileName(ShaderList aObjList)
 //-------------------------------------------------------------------------------------------------
 // objƒtƒ@ƒCƒ‹–¼‚Ì‰Šú‰»
 std::unordered_map<ShaderList, const char*> ShaderFileName::mFileName = {
-	{ShaderList::TestShader  , "res/shader/UnlitShader"},
+	{ShaderList::UnlitShader  , "res/shader/UnlitShader"},
 };
 
 } // namespace

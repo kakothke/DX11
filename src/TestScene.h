@@ -19,7 +19,7 @@ public:
 	/// @name XV/•`‰æ
 	//@{
 	void update() override;
-	void draw() const override;
+	void draw() override;
 	//@}
 
 private:

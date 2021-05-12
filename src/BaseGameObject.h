@@ -21,7 +21,7 @@ public:
 	//@{
 	virtual void initialize();
 	virtual void update();
-	virtual void draw() const;
+	virtual void draw();
 	//@}
 
 	/// @name アクセサ

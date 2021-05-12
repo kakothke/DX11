@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
+#include "ObjRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -20,12 +21,13 @@ public:
 	//@{
 	void initialize() override;
 	void update() override;
-	void draw() const override;
+	void draw() override;
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
+	ObjRenderer mRenderer;
 	//@}
 
 };

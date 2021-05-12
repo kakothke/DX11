@@ -26,6 +26,7 @@ Cube::Cube(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Cube::initialize()
 {
+	mRenderer.setObjAndShaderData(ObjList::Cube, ShaderList::UnlitShader);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -36,8 +37,9 @@ void Cube::update()
 
 //-------------------------------------------------------------------------------------------------
 /// •`‰æ
-void Cube::draw() const
+void Cube::draw()
 {
+	mRenderer.render(mTransform);
 }
 
 } // namespace

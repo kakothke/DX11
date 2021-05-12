@@ -29,7 +29,7 @@ ShaderLoader::~ShaderLoader()
 /// シェーダーを作成する
 /// @param aList 作成するシェーダーを指定する
 /// @return 作成結果 成功(true)
-bool ShaderLoader::create(ShaderList aList)
+bool ShaderLoader::load(ShaderList aList)
 {
 	std::string fileName;
 

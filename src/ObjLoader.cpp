@@ -29,7 +29,7 @@ ObjLoader::~ObjLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// objファイルを読み込む
+/// objファイルを作成する
 /// @param aObjList 読み込みたいobjファイルを指定する構造体
 bool ObjLoader::load(ObjList aObjList)
 {
@@ -63,6 +63,7 @@ void ObjLoader::release(ObjList aObjList)
 const ObjData& ObjLoader::objData(ObjList aObjList)
 {
 	return mObjData[aObjList];
+
 }
 
 //-------------------------------------------------------------------------------------------------

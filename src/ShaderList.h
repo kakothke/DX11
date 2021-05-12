@@ -6,7 +6,7 @@ namespace DX11 {
 /// ShaderƒŠƒXƒg
 enum class ShaderList
 {
-	TestShader
+	UnlitShader
 };
 
 } // namespace

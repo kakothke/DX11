@@ -80,7 +80,7 @@ public:
 	~ObjLoader();
 	//@}
 
-	/// @name “Ç‚İ‚İA”jŠü
+	/// @name ì¬A”jŠü
 	//@{
 	bool load(ObjList aObjList);
 	void release(ObjList aObjList);

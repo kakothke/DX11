@@ -1,8 +1,9 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include <D3D11.h>
 #include "Transform.h"
+#include "ObjLoader.h"
+#include "ShaderLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -17,11 +18,12 @@ public:
 	~ObjRenderer();
 	//@}
 
-	void initialize();
 	void render(Transform aTransform);
+	void setObjAndShaderData(ObjList, ShaderList);
 
 private:
-	
+	ObjData mObjData;
+	ShaderData mShaderData;
 
 };
 
