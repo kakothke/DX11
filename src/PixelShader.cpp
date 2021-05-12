@@ -48,7 +48,7 @@ bool PixelShader::create(const char* aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-const ID3D11PixelShader* PixelShader::shaderInterface() const
+ID3D11PixelShader* PixelShader::getInterface() const
 {
 	return mInterface;
 }

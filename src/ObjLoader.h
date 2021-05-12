@@ -31,20 +31,20 @@ struct ObjData
 	/// 入力レイアウト
 	ID3D11InputLayout* inputLayout;
 	/// 頂点バッファ保存用構造体コンテナ
-	std::vector<ObjVertexData> vertexContainer;
+	std::vector<ObjVertexData> vertexData;
 	/// インデックスバッファコンテナ
-	std::vector<UINT> indexContainer;
+	std::vector<UINT> indexes;
 
 	/// コンストラクタ
 	ObjData()
 		: vertexBuffer(nullptr)
 		, indexBuffer(nullptr)
 		, inputLayout(nullptr)
-		, vertexContainer()
-		, indexContainer()
+		, vertexData()
+		, indexes()
 	{
-		vertexContainer.clear();
-		indexContainer.clear();
+		vertexData.clear();
+		indexes.clear();
 	}
 	/// デストラクタ
 	~ObjData()
@@ -61,11 +61,11 @@ struct ObjData
 			inputLayout->Release();
 			inputLayout = nullptr;
 		}
-		if (!vertexContainer.empty()) {
-			vertexContainer.clear();
+		if (!vertexData.empty()) {
+			vertexData.clear();
 		}
-		if (!indexContainer.empty()) {
-			indexContainer.clear();
+		if (!indexes.empty()) {
+			indexes.clear();
 		}
 	}
 };

@@ -24,7 +24,7 @@ public:
 	/// @name アクセサ
 	//@{
 	/// インターフェースを返す
-	const ID3D11PixelShader* shaderInterface() const;
+	ID3D11PixelShader* getInterface() const;
 	//@}
 
 protected:

@@ -24,9 +24,9 @@ public:
 	/// @name アクセサ
 	//@{
 	/// インターフェースを返す
-	const ID3D11VertexShader* shaderInterface() const;
+	ID3D11VertexShader* getInterface() const;
 	/// 入力レイアウトを返す
-	const ID3D11InputLayout* inputLayout() const;
+	ID3D11InputLayout* getInputLayout() const;
 	//@}
 
 private:

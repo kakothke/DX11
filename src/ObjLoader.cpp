@@ -116,8 +116,8 @@ bool ObjLoader::createMesh(ObjList aObjList)
 					tmp.normal[j] = normals[std::stoi(slashSplit[2]) - 1][j];
 				}
 				// 各バッファコンテナに追加
-				mObjData[aObjList].vertexContainer.push_back(tmp);
-				mObjData[aObjList].indexContainer.push_back(mObjData[aObjList].vertexContainer.size() - 1);
+				mObjData[aObjList].vertexData.push_back(tmp);
+				mObjData[aObjList].indexes.push_back(mObjData[aObjList].vertexData.size() - 1);
 			}
 		}
 	}
@@ -135,7 +135,7 @@ bool ObjLoader::createVertexBuffer(ObjList aObjList)
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(ObjVertexData) * mObjData[aObjList].vertexContainer.size();
+		bufferDesc.ByteWidth = sizeof(ObjVertexData) * mObjData[aObjList].vertexData.size();
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定
@@ -152,7 +152,7 @@ bool ObjLoader::createVertexBuffer(ObjList aObjList)
 	D3D11_SUBRESOURCE_DATA subResource;
 	{
 		// バッファの中身の設定
-		subResource.pSysMem = &mObjData[aObjList].vertexContainer[0];
+		subResource.pSysMem = &mObjData[aObjList].vertexData[0];
 		// textureデータを使用する際に使用するメンバ
 		subResource.SysMemPitch = 0;
 		// textureデータを使用する際に使用するメンバ
@@ -181,7 +181,7 @@ bool ObjLoader::createIndexBuffer(ObjList aObjList)
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(UINT) * mObjData[aObjList].indexContainer.size();
+		bufferDesc.ByteWidth = sizeof(UINT) * mObjData[aObjList].indexes.size();
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定
@@ -198,7 +198,7 @@ bool ObjLoader::createIndexBuffer(ObjList aObjList)
 	D3D11_SUBRESOURCE_DATA subResource;
 	{
 		// バッファの中身の設定
-		subResource.pSysMem = &mObjData[aObjList].indexContainer[0];
+		subResource.pSysMem = &mObjData[aObjList].indexes[0];
 		// textureデータを使用する際に使用するメンバ
 		subResource.SysMemPitch = 0;
 		// textureデータを使用する際に使用するメンバ

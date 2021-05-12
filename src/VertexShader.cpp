@@ -83,13 +83,13 @@ bool VertexShader::createInputLayout()
 }
 
 //-------------------------------------------------------------------------------------------------
-const ID3D11VertexShader* VertexShader::shaderInterface() const
+ID3D11VertexShader* VertexShader::getInterface() const
 {
 	return mInterface;
 }
 
 //-------------------------------------------------------------------------------------------------
-const ID3D11InputLayout* VertexShader::inputLayout() const
+ID3D11InputLayout* VertexShader::getInputLayout() const
 {
 	return mInputLayout;
 }
