@@ -36,7 +36,7 @@ public:
 	/// @name アクセサ
 	//@{
 	/// シェーダー構造体を返す
-	const ShaderData& shaderData(ShaderList aList);
+	ShaderData* getShaderData(ShaderList aList);
 	//@}
 
 private:

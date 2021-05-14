@@ -18,12 +18,12 @@ public:
 	~ObjRenderer();
 	//@}
 
-	void render(Transform aTransform);
-	void setObjAndShaderData(ObjList, ShaderList);
+	void render(const Transform& aTransform);
+	void setObjAndShaderData(const ObjList& aObjList, const ShaderList& aShaderList);
 
 private:
-	ObjData mObjData;
-	ShaderData mShaderData;
+	ObjData* mObjData;
+	ShaderData* mShaderData;
 
 };
 

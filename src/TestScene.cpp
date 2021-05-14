@@ -13,6 +13,7 @@ TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	// ƒŠƒ\[ƒX‚Ì“Ç‚Ýž‚Ý
 	ObjLoader::getInst()->load(ObjList::Cube);
+	ObjLoader::getInst()->load(ObjList::Sphere);
 	ShaderLoader::getInst()->load(ShaderList::UnlitShader);
 }
 

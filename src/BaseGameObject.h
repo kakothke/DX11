@@ -33,10 +33,10 @@ public:
 	void setIsActive(bool aValue);
 	//@}
 
+	Transform mTransform;
 protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
-	Transform mTransform;
 	//@}
 
 private:

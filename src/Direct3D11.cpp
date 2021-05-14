@@ -126,21 +126,21 @@ void Direct3D11::setUpConstantBuffer(
 }
 
 //-------------------------------------------------------------------------------------------------
-void Direct3D11::setUpContext(const ShaderData& aShaderData)
+void Direct3D11::setUpContext(const ShaderData* aShaderData)
 {
 	// プリミティブの形状を指定
 	mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// VertexShaderを設定
 	mContext->VSSetShader(
-		aShaderData.vs.getInterface(),
+		aShaderData->vs.getInterface(),
 		nullptr,
 		0
 	);
 
 	// PixelShaderを設定
 	mContext->PSSetShader(
-		aShaderData.ps.getInterface(),
+		aShaderData->ps.getInterface(),
 		nullptr,
 		0
 	);
@@ -153,7 +153,7 @@ void Direct3D11::setUpContext(const ShaderData& aShaderData)
 	);
 
 	// IA(InputAssemblerStage)に入力レイアウトを設定する
-	mContext->IASetInputLayout(aShaderData.vs.getInputLayout());
+	mContext->IASetInputLayout(aShaderData->vs.getInputLayout());
 }
 
 //-------------------------------------------------------------------------------------------------

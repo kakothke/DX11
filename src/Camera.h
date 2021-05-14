@@ -17,7 +17,7 @@ private:
 		Vector3 forcus;
 		Vector3 up;
 		ViewMatrix()
-			: pos(0, 0, -50.0f)
+			: pos(0, 1.0f, -10.0f)
 			, forcus(0, 0, 0)
 			, up(0, 1.0f, 0)
 		{
@@ -29,9 +29,9 @@ private:
 		float nearZ;
 		float farZ;
 		WorldMatrix()
-			: fov(45.0f)
-			, nearZ(0.1f)
-			, farZ(100.0f)
+			: fov(60.0f)
+			, nearZ(0.3f)
+			, farZ(1000.0f)
 		{
 		}
 	};

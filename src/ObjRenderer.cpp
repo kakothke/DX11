@@ -19,7 +19,7 @@ ObjRenderer::~ObjRenderer()
 }
 
 //-------------------------------------------------------------------------------------------------
-void ObjRenderer::render(Transform aTransform)
+void ObjRenderer::render(const Transform& aTransform)
 {
 	Direct3D11::getInst()->setUpContext(mShaderData);
 
@@ -30,12 +30,12 @@ void ObjRenderer::render(Transform aTransform)
 	Direct3D11::getInst()->getContext()->IASetVertexBuffers(
 		0,
 		1,
-		&mObjData.vertexBuffer,
+		&mObjData->vertexBuffer,
 		&strides,
 		&offsets
 	);
 	Direct3D11::getInst()->getContext()->IASetIndexBuffer(
-		mObjData.indexBuffer,
+		mObjData->indexBuffer,
 		DXGI_FORMAT_R16_UINT,
 		0
 	);
@@ -65,14 +65,14 @@ void ObjRenderer::render(Transform aTransform)
 	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(0, 1, &constantBuffer);
 
 	// •`‰æ
-	Direct3D11::getInst()->getContext()->DrawIndexed(mObjData.indexes.size(), 0, 0);
+	Direct3D11::getInst()->getContext()->DrawIndexed(mObjData->indexes.size(), 0, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
-void ObjRenderer::setObjAndShaderData(ObjList aObjList, ShaderList aShaderList)
+void ObjRenderer::setObjAndShaderData(const ObjList& aObjList, const ShaderList& aShaderList)
 {
-	mObjData = ObjLoader::getInst()->objData(aObjList);
-	mShaderData = ShaderLoader::getInst()->shaderData(aShaderList);
+	mObjData = ObjLoader::getInst()->getObjData(aObjList);
+	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderList);
 }
 
 } // namespace

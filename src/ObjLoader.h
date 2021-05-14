@@ -14,11 +14,11 @@ namespace DX11 {
 struct ObjVertexData
 {
 	/// 頂点座標
-	double position[3];
+	float pos[3];
 	/// UV座標
-	double texture[2];
+	float uv[2];
 	/// 法線座標
-	double normal[3];
+	float nor[3];
 };
 
 /// objファイルデータ保存用構造体
@@ -28,22 +28,15 @@ struct ObjData
 	ID3D11Buffer* vertexBuffer;
 	/// インデックスバッファ(Shader送信用)
 	ID3D11Buffer* indexBuffer;
-	/// 入力レイアウト
-	ID3D11InputLayout* inputLayout;
-	/// 頂点バッファ保存用構造体コンテナ
-	std::vector<ObjVertexData> vertexData;
 	/// インデックスバッファコンテナ
-	std::vector<UINT> indexes;
+	std::vector<UWORD> indexes;
 
 	/// コンストラクタ
 	ObjData()
 		: vertexBuffer(nullptr)
 		, indexBuffer(nullptr)
-		, inputLayout(nullptr)
-		, vertexData()
 		, indexes()
 	{
-		vertexData.clear();
 		indexes.clear();
 	}
 	/// デストラクタ
@@ -56,13 +49,6 @@ struct ObjData
 		if (indexBuffer) {
 			indexBuffer->Release();
 			indexBuffer = nullptr;
-		}
-		if (inputLayout) {
-			inputLayout->Release();
-			inputLayout = nullptr;
-		}
-		if (!vertexData.empty()) {
-			vertexData.clear();
 		}
 		if (!indexes.empty()) {
 			indexes.clear();
@@ -88,7 +74,7 @@ public:
 
 	/// @name 読み込んだobjデータを返す
 	//@{
-	const ObjData& objData(ObjList aObjList);
+	ObjData* getObjData(ObjList aObjList);
 	//@}
 
 private:
@@ -109,6 +95,8 @@ private:
 	//@{
 	/// objファイルデータ
 	std::unordered_map<ObjList, ObjData> mObjData;
+	/// 頂点バッファ保存用構造体コンテナ
+	std::vector<ObjVertexData> mVertexData;
 	//@}
 
 };

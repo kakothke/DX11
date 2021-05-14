@@ -54,9 +54,9 @@ bool ShaderLoader::load(ShaderList aList)
 
 //-------------------------------------------------------------------------------------------------
 /// シェーダー構造体を返す
-const ShaderData& ShaderLoader::shaderData(ShaderList aList)
+ShaderData* ShaderLoader::getShaderData(ShaderList aList)
 {
-	return mShaderData[aList];
+	return &mShaderData[aList];
 }
 
 } // namespace
