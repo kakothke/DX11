@@ -25,7 +25,7 @@ VS_OUT main(VS_IN input)
     output.pos = mul(output.pos, View);
     output.pos = mul(output.pos, Projection);
     
-    output.col = (1, 1, 1, 1);
+    output.col = float4(0, 1, 1, 1);
 
     return output;
 }

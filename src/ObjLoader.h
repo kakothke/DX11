@@ -10,7 +10,7 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// 頂点バッファ保存用構造体
+/// 頂点データ構造体
 struct ObjVertexData
 {
 	/// 頂点座標
@@ -68,8 +68,8 @@ public:
 
 	/// @name 作成、破棄
 	//@{
-	bool load(ObjList aObjList);
-	void release(ObjList aObjList);
+	bool load(const ObjList& aObjList);
+	void release(const ObjList& aObjList);
 	//@}
 
 	/// @name 読み込んだobjデータを返す
@@ -81,11 +81,11 @@ private:
 	/// @name 内部実装関数
 	//@{
 	/// メッシュを作成する
-	bool createMesh(ObjList aObjList);
+	bool createMesh(const ObjList& aObjList, std::vector<ObjVertexData>& aVertexData);
 	/// 頂点バッファを作成する
-	bool createVertexBuffer(ObjList aObjList);
+	bool createVertexBuffer(const ObjList& aObjList, const std::vector<ObjVertexData>& aVertexData);
 	/// インデックスバッファを作成する
-	bool createIndexBuffer(ObjList aObjList);
+	bool createIndexBuffer(const ObjList& aObjList);
 	/// 文字列をfloat型に変換して座標情報をpushする
 	template <typename T>
 	void pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr);
@@ -95,8 +95,6 @@ private:
 	//@{
 	/// objファイルデータ
 	std::unordered_map<ObjList, ObjData> mObjData;
-	/// 頂点バッファ保存用構造体コンテナ
-	std::vector<ObjVertexData> mVertexData;
 	//@}
 
 };

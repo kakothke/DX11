@@ -30,13 +30,13 @@ public:
 
 	/// @name シェーダーを作成する
 	//@{
-	bool load(ShaderList aList);
+	bool load(ShaderList aShaderList);
 	//@}
 
 	/// @name アクセサ
 	//@{
-	/// シェーダー構造体を返す
-	ShaderData* getShaderData(ShaderList aList);
+	/// シェーダーデータを返す
+	ShaderData* getShaderData(ShaderList aShaderList);
 	//@}
 
 private:

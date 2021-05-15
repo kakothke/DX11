@@ -19,8 +19,14 @@ ObjRenderer::~ObjRenderer()
 }
 
 //-------------------------------------------------------------------------------------------------
-void ObjRenderer::render(const Transform& aTransform)
+bool ObjRenderer::render(const Transform& aTransform)
 {
+	// 読み込みチェック
+	if (!mObjData || !mShaderData) {
+		return false;
+	}
+
+	// シェーダーの指定
 	Direct3D11::getInst()->setUpContext(mShaderData);
 
 	// IAに設定する頂点バッファの指定
@@ -66,6 +72,8 @@ void ObjRenderer::render(const Transform& aTransform)
 
 	// 描画
 	Direct3D11::getInst()->getContext()->DrawIndexed(mObjData->indexes.size(), 0, 0);
+
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------

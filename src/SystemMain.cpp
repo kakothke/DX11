@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Game.h"
+#include "ObjLoader.h"
+#include "ShaderLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -31,6 +33,15 @@ bool SystemMain::initialize()
 	// ウィンドウを表示
 	ShowWindow(mWindow.hWnd(), SW_SHOW);
 	UpdateWindow(mWindow.hWnd());
+
+	// Singletonクラスを継承しているクラスの実体化
+	ObjLoader::getInst();
+	ShaderLoader::getInst();
+
+	// リソースの読み込み
+	ObjLoader::getInst()->load(ObjList::Cube);
+	ObjLoader::getInst()->load(ObjList::Sphere);
+	ShaderLoader::getInst()->load(ShaderList::UnlitShader);
 
 	return true;
 }

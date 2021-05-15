@@ -13,10 +13,10 @@ class Define
 public:
     /// @name ウィンドウ設定
     //@{
-    /// ウィンドウサイズ横
-    const static USHORT WindowWidth = 1280;
-    /// ウィンドウサイズ縦
-    const static USHORT WindowHeight = 720;
+    /// 解像度横
+    const static USHORT ResolutionWidth = 1280;
+    /// 解像度縦
+    const static USHORT ResolutionHeight = 720;
     /// ウィンドウ名
     const static LPCTSTR WindowName;
     //@}

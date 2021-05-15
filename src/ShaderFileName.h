@@ -11,7 +11,7 @@ namespace DX11 {
 class ShaderFileName
 {
 public:
-	static const char* fileName(ShaderList aObjList);
+	static const char* fileName(ShaderList aShaderList);
 
 private:
 	ShaderFileName();

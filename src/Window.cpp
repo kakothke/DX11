@@ -172,8 +172,8 @@ void Window::resizeWindow()
 	RECT wndRect, cltRect;
 	GetWindowRect(mWindowHandle, &wndRect);
 	GetClientRect(mWindowHandle, &cltRect);
-	int resizeW = ((wndRect.right - wndRect.left) - (cltRect.right - cltRect.left)) + Define::WindowWidth;
-	int resizeH = ((wndRect.bottom - wndRect.top) - (cltRect.bottom - cltRect.top)) + Define::WindowHeight;
+	int resizeW = ((wndRect.right - wndRect.left) - (cltRect.right - cltRect.left)) + Define::ResolutionWidth;
+	int resizeH = ((wndRect.bottom - wndRect.top) - (cltRect.bottom - cltRect.top)) + Define::ResolutionHeight;
 
 	// 作成したウィンドウの位置とサイズを変更
 	SetWindowPos(

@@ -18,7 +18,7 @@ public:
 	~ObjRenderer();
 	//@}
 
-	void render(const Transform& aTransform);
+	bool render(const Transform& aTransform);
 	void setObjAndShaderData(const ObjList& aObjList, const ShaderList& aShaderList);
 
 private:

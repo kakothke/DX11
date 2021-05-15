@@ -7,9 +7,9 @@ namespace DX11 {
 /// objファイル名を返す
 /// @param aObjList 読み込みたいobjを指定する
 /// @return ファイルパス
-const char* ShaderFileName::fileName(ShaderList aObjList)
+const char* ShaderFileName::fileName(ShaderList aShaderList)
 {
-	return mFileName[aObjList];
+	return mFileName[aShaderList];
 }
 
 //-------------------------------------------------------------------------------------------------
