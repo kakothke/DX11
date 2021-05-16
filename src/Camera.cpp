@@ -9,30 +9,11 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 Camera::Camera()
-	: mView()
-	, mWorld()
+	: mFov(60)
+	, mNearZ(0.3f)
+	, mFarZ(1000)
 {
-}
-
-//-------------------------------------------------------------------------------------------------
-Camera::Camera(ViewMatrix aView)
-	: mView(aView)
-	, mWorld()
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-Camera::Camera(WorldMatrix aWorld)
-	: mView()
-	, mWorld(aWorld)
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-Camera::Camera(ViewMatrix aView, WorldMatrix aWorld)
-	: mView(aView)
-	, mWorld(aWorld)
-{
+	mTransform.pos = Vector3(0, 1, -10);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -45,26 +26,28 @@ void Camera::update()
 void Camera::setUpTransform()
 {
 	// Viewマトリクス設定
-	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(
-		DirectX::XMVectorSet(mView.pos.x, mView.pos.y, mView.pos.z, 0),
-		DirectX::XMVectorSet(mView.forcus.x, mView.forcus.y, mView.forcus.z, 0),
-		DirectX::XMVectorSet(mView.up.x, mView.up.y, mView.up.z, 0)
-	);
+	DirectX::XMVECTOR pos = { mTransform.pos.x, mTransform.pos.y, mTransform.pos.z, 0 };
+	DirectX::XMVECTOR forcus = { mTransform.pos.x, mTransform.pos.y, mTransform.pos.z + 1, 0 };
+	DirectX::XMVECTOR upVec = { 0, 1, 0, 0 };
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(mTransform.rot.x, mTransform.rot.y, -mTransform.rot.z);
+	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
 
 	// ビューポート
 	D3D11_VIEWPORT vp;
-	UINT pNumVierports = 1;
-	Direct3D11::getInst()->getContext()->RSGetViewports(&pNumVierports, &vp);
+	UINT numVierports = 1;
+	Direct3D11::getInst()->getContext()->RSGetViewports(&numVierports, &vp);
 
 	// プロジェクションマトリクス設定
 	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
-		DirectX::XMConvertToRadians(mWorld.fov),
+		DirectX::XMConvertToRadians(mFov),
 		(float)vp.Width / (float)vp.Height,
-		mWorld.nearZ,
-		mWorld.farZ
+		mNearZ,
+		mFarZ
 	);
 
-	Direct3D11::getInst()->setUpConstantBuffer(viewMatrix, projMatrix);
+	// コンスタントバッファを設定する
+	XMStoreFloat4x4(&Direct3D11::getInst()->getConstantBufferData()->View, XMMatrixTranspose(viewMatrix));
+	XMStoreFloat4x4(&Direct3D11::getInst()->getConstantBufferData()->Projection, XMMatrixTranspose(projMatrix));
 }
 
 //-------------------------------------------------------------------------------------------------

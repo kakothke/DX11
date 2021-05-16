@@ -1,25 +1,25 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "AbstractScene.h"
-#include "Cube.h"
-#include "Sphere.h"
-#include "Camera.h"
+#include "BaseGameObject.h"
+#include "ObjRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-class TestScene : public AbstractScene
+/// テスト用のゲームオブジェクト
+class Sphere : public BaseGameObject
 {
 public:
-	/// @name コンストラクタ/仮想デストラクタ
+	/// name コンストラクタ
 	//@{
-	TestScene(IChangeScene* aImpl);
-	virtual ~TestScene();
+	Sphere();
+	Sphere(Transform aTransform);
 	//@}
 
-	/// @name 更新/描画
+	/// @name 初期化/更新/描画
 	//@{
+	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}
@@ -27,9 +27,7 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Cube mCube;
-	Sphere mSphere;
-	Camera mCamera;
+	ObjRenderer mRenderer;
 	//@}
 
 };

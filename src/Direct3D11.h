@@ -12,7 +12,7 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// コンスタントバッファ
+/// コンスタントバッファ構造体
 struct ConstantBufferData
 {
 	DirectX::XMFLOAT4X4 World;
@@ -39,8 +39,8 @@ public:
 	//@{
 	void drawStart();
 	void drawEnd();
-	void setUpConstantBuffer(const DirectX::XMMATRIX& aViewMatrix, const DirectX::XMMATRIX& aProjMatrix);
 	void setUpContext(const ShaderData* aShaderData);
+	void updateConstantBuffer();
 	//@}
 
 	/// @name アクセサ
@@ -49,9 +49,7 @@ public:
 	ID3D11Device* getDevice() const;
 	/// コンテキストを返す
 	ID3D11DeviceContext* getContext() const;
-	/// コンスタントバッファを返す
-	ID3D11Buffer* getConstantBuffer() const;	
-	/// コンスタントバッファデータを返す
+	/// コンスタントバッファ構造体を返す
 	ConstantBufferData* getConstantBufferData();
 	//@}
 
@@ -92,7 +90,7 @@ private:
 	ID3D11DepthStencilState* mDepthStencilState;
 	/// コンスタントバッファ
 	ID3D11Buffer* mConstantBuffer;
-	/// コンスタントバッファデータ
+	/// コンスタントバッファ構造体
 	ConstantBufferData mConstantBufferData;
 	//@}
 

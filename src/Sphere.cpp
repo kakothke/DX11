@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Sphere.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
@@ -9,14 +9,14 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-Cube::Cube()
+Sphere::Sphere()
 {
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 引数付きコンストラクタ
-Cube::Cube(Transform aTransform)
+Sphere::Sphere(Transform aTransform)
 {
 	mTransform = aTransform;
 	initialize();
@@ -24,20 +24,20 @@ Cube::Cube(Transform aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void Cube::initialize()
+void Sphere::initialize()
 {
-	mRenderer.setObjAndShaderData(ObjList::Cube, ShaderList::UnlitShader);
+	mRenderer.setObjAndShaderData(ObjList::Sphere, ShaderList::UnlitShader);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void Cube::update()
+void Sphere::update()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void Cube::draw()
+void Sphere::draw()
 {
 	mRenderer.render(mTransform);
 }

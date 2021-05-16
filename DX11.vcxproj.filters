@@ -11,9 +11,6 @@
     <Filter Include="DX11\GameObject">
       <UniqueIdentifier>{e6f4ed5b-e71f-4e32-ab56-435b7f9be733}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11\GameObject\Cube">
-      <UniqueIdentifier>{a9def2a9-31ff-42ef-9457-32a400462911}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DX11\Scene">
       <UniqueIdentifier>{8f48f658-9201-4f24-9ef4-aa5c02825daa}</UniqueIdentifier>
     </Filter>
@@ -47,6 +44,9 @@
     <Filter Include="DX11\GameObject\Camera">
       <UniqueIdentifier>{6ffa57d5-e2a4-4322-853a-2f234b54f320}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11\GameObject\3D Object">
+      <UniqueIdentifier>{a9def2a9-31ff-42ef-9457-32a400462911}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -68,7 +68,7 @@
       <Filter>DX11\Scene\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="src\Cube.cpp">
-      <Filter>DX11\GameObject\Cube</Filter>
+      <Filter>DX11\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\BaseGameObject.cpp">
       <Filter>DX11\GameObject</Filter>
@@ -121,6 +121,9 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>DX11\GameObject\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="src\Sphere.cpp">
+      <Filter>DX11\GameObject\3D Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Define.h">
@@ -151,7 +154,7 @@
       <Filter>DX11\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\Cube.h">
-      <Filter>DX11\GameObject\Cube</Filter>
+      <Filter>DX11\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\BaseGameObject.h">
       <Filter>DX11\GameObject</Filter>
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="src\Camera.h">
       <Filter>DX11\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sphere.h">
+      <Filter>DX11\GameObject\3D Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

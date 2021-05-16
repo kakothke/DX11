@@ -17,6 +17,7 @@ Direct3D11::Direct3D11()
 	, mDepthStencilTexture(nullptr)
 	, mDepthStencilState(nullptr)
 	, mConstantBuffer(nullptr)
+	, mConstantBufferData()
 {
 }
 
@@ -114,18 +115,6 @@ void Direct3D11::drawEnd()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンスタントバッファを設定する
-/// @param aViewMatrix ビュー行列
-/// @param aProjMatrix プロジェクション行列
-void Direct3D11::setUpConstantBuffer(
-	const DirectX::XMMATRIX& aViewMatrix,
-	const DirectX::XMMATRIX& aProjMatrix
-) {
-	XMStoreFloat4x4(&mConstantBufferData.View, XMMatrixTranspose(aViewMatrix));
-	XMStoreFloat4x4(&mConstantBufferData.Projection, XMMatrixTranspose(aProjMatrix));
-}
-
-//-------------------------------------------------------------------------------------------------
 void Direct3D11::setUpContext(const ShaderData* aShaderData)
 {
 	// プリミティブの形状を指定
@@ -157,6 +146,23 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// コンスタントバッファを更新する
+void Direct3D11::updateConstantBuffer()
+{
+	mContext->UpdateSubresource(
+		mConstantBuffer,
+		0,
+		NULL,
+		&mConstantBufferData,
+		0,
+		0
+	);
+
+	// コンテキストにコンスタントバッファを設定
+	mContext->VSSetConstantBuffers(0, 1, &mConstantBuffer);
+}
+
+//-------------------------------------------------------------------------------------------------
 /// デバイスを返す
 ID3D11Device* Direct3D11::getDevice() const
 {
@@ -171,14 +177,7 @@ ID3D11DeviceContext* Direct3D11::getContext() const
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンスタントバッファを返す
-ID3D11Buffer* Direct3D11::getConstantBuffer() const
-{
-	return mConstantBuffer;
-}
-
-//-------------------------------------------------------------------------------------------------
-/// コンスタントバッファデータを返す
+/// コンスタントバッファ構造体を返す
 ConstantBufferData* Direct3D11::getConstantBufferData()
 {
 	return &mConstantBufferData;

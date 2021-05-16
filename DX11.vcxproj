@@ -37,6 +37,7 @@
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\ShaderFileName.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
+    <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\SplitString.cpp" />
     <ClCompile Include="src\SystemMain.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\ShaderList.h" />
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Singleton.h" />
+    <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\SplitString.h" />
     <ClInclude Include="src\SystemMain.h" />
     <ClInclude Include="src\GameObjectTag.h" />
@@ -87,6 +89,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="shader\UnlitShader_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -95,6 +98,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
