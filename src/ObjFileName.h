@@ -2,16 +2,28 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <unordered_map>
-#include "OBJList.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
+
+/// OBJリスト
+enum class OBJList
+{
+	Cube,
+	Sphere,
+};
 
 /// OBJファイル名取得用クラス
 class OBJFileName
 {
 public:
-	static const char* fileName(OBJList aOBJList);
+	/// 指定したOBJのファイルパスを取得する
+	/// @param aList 取得したいOBJファイルを指定する列挙型
+	/// @return ファイルパス
+	inline static const char* fileName(OBJList aList)
+	{
+		return mFileName[aList];
+	}
 
 private:
 	OBJFileName();

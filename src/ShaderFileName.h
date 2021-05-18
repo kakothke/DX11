@@ -2,16 +2,27 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <unordered_map>
-#include "ShaderList.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// objファイル名取得用クラス
+/// シェーダーリスト
+enum class ShaderList
+{
+	UnlitShader
+};
+
+/// シェーダーファイル名取得用クラス
 class ShaderFileName
 {
 public:
-	static const char* fileName(ShaderList aShaderList);
+	/// 指定したシェーダーのファイルパスを取得する
+	/// @param aList 取得したいシェーダーファイルを指定する列挙型
+	/// @return ファイルパス
+	inline static const char* fileName(ShaderList aList)
+	{
+		return mFileName[aList];
+	}
 
 private:
 	ShaderFileName();

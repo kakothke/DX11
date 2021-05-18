@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <D3D11.h>
+#include <DirectXMath.h>
 #include "Singleton.h"
 #include "ObjLoader.h"
 #include "ShaderLoader.h"

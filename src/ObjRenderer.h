@@ -19,7 +19,7 @@ public:
 	//@}
 
 	bool render(const Transform& aTransform);
-	void setObjAndShaderData(const OBJList& aOBJList, const ShaderList& aShaderList);
+	void setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName);
 
 private:
 	OBJData* mOBJData;

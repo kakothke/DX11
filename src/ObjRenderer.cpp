@@ -65,10 +65,10 @@ bool OBJRenderer::render(const Transform& aTransform)
 }
 
 //-------------------------------------------------------------------------------------------------
-void OBJRenderer::setObjAndShaderData(const OBJList& aOBJList, const ShaderList& aShaderList)
+void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
 {
-	mOBJData = OBJLoader::getInst()->getObjData(aOBJList);
-	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderList);
+	mOBJData = OBJLoader::getInst()->getObjData(aOBJFileName);
+	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
 }
 
 } // namespace

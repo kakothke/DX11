@@ -2,10 +2,11 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <D3D11.h>
+#include <vector>
+#include <fstream>
+#include <string>
 #include <unordered_map>
 #include "Singleton.h"
-#include "Vector3.h"
-#include "OBJList.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -68,24 +69,24 @@ public:
 
 	/// @name 読み込み、破棄
 	//@{
-	bool load(const OBJList& aOBJList);
-	void release(const OBJList& aOBJList);
+	bool load(const char* aFileName);
+	void release(const char* aFileName);
 	//@}
 
 	/// @name OBJデータを取得する
 	//@{
-	OBJData* getObjData(OBJList aOBJList);
+	OBJData* getObjData(const char* aFileName);
 	//@}
 
 private:
 	/// @name 内部実装関数
 	//@{
 	/// メッシュを作成する
-	bool createMesh(const OBJList& aOBJList, std::vector<OBJVertexData>& aVertexData);
+	bool createMesh(const char* aFileName, std::vector<OBJVertexData>& aVertexData);
 	/// 頂点バッファを作成する
-	bool createVertexBuffer(const OBJList& aOBJList, const std::vector<OBJVertexData>& aVertexData);
+	bool createVertexBuffer(const char* aFileName, const std::vector<OBJVertexData>& aVertexData);
 	/// インデックスバッファを作成する
-	bool createIndexBuffer(const OBJList& aOBJList);
+	bool createIndexBuffer(const char* aFileName);
 	/// 文字列をfloat型に変換して座標情報をpushする
 	template <typename T>
 	void pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr);
@@ -94,7 +95,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// objファイルデータ
-	std::unordered_map<OBJList, OBJData> mOBJData;
+	std::unordered_map<const char*, OBJData> mOBJData;
 	//@}
 
 };

@@ -4,7 +4,9 @@
 #include "Direct3D11.h"
 #include "Game.h"
 #include "OBJLoader.h"
+#include "OBJFileName.h"
 #include "ShaderLoader.h"
+#include "ShaderFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -39,9 +41,9 @@ bool SystemMain::initialize()
 	ShaderLoader::getInst();
 
 	// ƒŠƒ\[ƒX‚Ì“Ç‚Ýž‚Ý
-	OBJLoader::getInst()->load(OBJList::Cube);
-	OBJLoader::getInst()->load(OBJList::Sphere);
-	ShaderLoader::getInst()->load(ShaderList::UnlitShader);
+	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Cube));
+	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Sphere));
+	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::UnlitShader));
 
 	return true;
 }

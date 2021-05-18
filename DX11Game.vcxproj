@@ -159,14 +159,12 @@
     <ClInclude Include="src\GameObjectTag.h" />
     <ClInclude Include="src\IChangeScene.h" />
     <ClInclude Include="src\OBJFileName.h" />
-    <ClInclude Include="src\OBJList.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
     <ClInclude Include="src\PixelShader.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\ShaderFileName.h" />
-    <ClInclude Include="src\ShaderList.h" />
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\Sphere.h" />

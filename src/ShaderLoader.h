@@ -4,7 +4,6 @@
 #include <D3D11.h>
 #include <unordered_map>
 #include "Singleton.h"
-#include "ShaderList.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 
@@ -30,20 +29,20 @@ public:
 
 	/// @name シェーダーを作成する
 	//@{
-	bool load(ShaderList aShaderList);
+	bool load(const char* aFileName);
 	//@}
 
 	/// @name アクセサ
 	//@{
 	/// シェーダーデータを返す
-	ShaderData* getShaderData(ShaderList aShaderList);
+	ShaderData* getShaderData(const char* aFileName);
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// シェーダー構造体
-	std::unordered_map<ShaderList, ShaderData> mShaderData;
+	std::unordered_map<const char*, ShaderData> mShaderData;
 	//@}
 
 };
