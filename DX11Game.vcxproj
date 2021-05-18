@@ -18,96 +18,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\BaseShader.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Cube.cpp" />
-    <ClCompile Include="src\Define.cpp" />
-    <ClCompile Include="src\Direct3D11.cpp" />
-    <ClCompile Include="src\Fps.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\BaseGameObject.cpp" />
-    <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\ObjFileName.cpp" />
-    <ClCompile Include="src\ObjLoader.cpp" />
-    <ClCompile Include="src\ObjRenderer.cpp" />
-    <ClCompile Include="src\PixelShader.cpp" />
-    <ClCompile Include="src\SceneManager.cpp" />
-    <ClCompile Include="src\ShaderFileName.cpp" />
-    <ClCompile Include="src\ShaderLoader.cpp" />
-    <ClCompile Include="src\Sphere.cpp" />
-    <ClCompile Include="src\SplitString.cpp" />
-    <ClCompile Include="src\SystemMain.cpp" />
-    <ClCompile Include="src\TestScene.cpp" />
-    <ClCompile Include="src\Transform.cpp" />
-    <ClCompile Include="src\Vector3.cpp" />
-    <ClCompile Include="src\Vector3Math.cpp" />
-    <ClCompile Include="src\VertexShader.cpp" />
-    <ClCompile Include="src\Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\AbstractScene.h" />
-    <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\Cube.h" />
-    <ClInclude Include="src\IChangeScene.h" />
-    <ClInclude Include="src\Define.h" />
-    <ClInclude Include="src\Direct3D11.h" />
-    <ClInclude Include="src\Fps.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="src\BaseGameObject.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\ObjFileName.h" />
-    <ClInclude Include="src\ObjList.h" />
-    <ClInclude Include="src\ObjLoader.h" />
-    <ClInclude Include="src\ObjRenderer.h" />
-    <ClInclude Include="src\PixelShader.h" />
-    <ClInclude Include="src\SceneList.h" />
-    <ClInclude Include="src\SceneManager.h" />
-    <ClInclude Include="src\BaseShader.h" />
-    <ClInclude Include="src\ShaderFileName.h" />
-    <ClInclude Include="src\ShaderList.h" />
-    <ClInclude Include="src\ShaderLoader.h" />
-    <ClInclude Include="src\Singleton.h" />
-    <ClInclude Include="src\Sphere.h" />
-    <ClInclude Include="src\SplitString.h" />
-    <ClInclude Include="src\SystemMain.h" />
-    <ClInclude Include="src\GameObjectTag.h" />
-    <ClInclude Include="src\TestScene.h" />
-    <ClInclude Include="src\Transform.h" />
-    <ClInclude Include="src\Types.h" />
-    <ClInclude Include="src\Vector3.h" />
-    <ClInclude Include="src\Vector3Math.h" />
-    <ClInclude Include="src\VertexShader.h" />
-    <ClInclude Include="src\Window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="shader\UnlitShader_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="shader\UnlitShader_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3e3e69a0-96f4-40bb-a55c-2f608a31c08c}</ProjectGuid>
-    <RootNamespace>DX11</RootNamespace>
+    <ProjectGuid>{9caadfaf-fe74-41ba-94bd-dea995bc750f}</ProjectGuid>
+    <RootNamespace>DX11Game</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>DX11</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -156,16 +72,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.19041.0\um;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.19041.0\um;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -176,14 +88,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -230,6 +138,74 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\UnlitShader_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shader\UnlitShader_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AbstractScene.h" />
+    <ClInclude Include="src\BaseGameObject.h" />
+    <ClInclude Include="src\BaseShader.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Cube.h" />
+    <ClInclude Include="src\Define.h" />
+    <ClInclude Include="src\Direct3D11.h" />
+    <ClInclude Include="src\Fps.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameObjectTag.h" />
+    <ClInclude Include="src\IChangeScene.h" />
+    <ClInclude Include="src\ObjFileName.h" />
+    <ClInclude Include="src\ObjList.h" />
+    <ClInclude Include="src\ObjLoader.h" />
+    <ClInclude Include="src\ObjRenderer.h" />
+    <ClInclude Include="src\PixelShader.h" />
+    <ClInclude Include="src\SceneList.h" />
+    <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\ShaderFileName.h" />
+    <ClInclude Include="src\ShaderList.h" />
+    <ClInclude Include="src\ShaderLoader.h" />
+    <ClInclude Include="src\Singleton.h" />
+    <ClInclude Include="src\Sphere.h" />
+    <ClInclude Include="src\SplitString.h" />
+    <ClInclude Include="src\SystemMain.h" />
+    <ClInclude Include="src\TestScene.h" />
+    <ClInclude Include="src\Transform.h" />
+    <ClInclude Include="src\Vector3.h" />
+    <ClInclude Include="src\Vector3Math.h" />
+    <ClInclude Include="src\VertexShader.h" />
+    <ClInclude Include="src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\BaseGameObject.cpp" />
+    <ClCompile Include="src\BaseShader.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Cube.cpp" />
+    <ClCompile Include="src\Define.cpp" />
+    <ClCompile Include="src\Direct3D11.cpp" />
+    <ClCompile Include="src\Fps.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ObjFileName.cpp" />
+    <ClCompile Include="src\ObjLoader.cpp" />
+    <ClCompile Include="src\ObjRenderer.cpp" />
+    <ClCompile Include="src\PixelShader.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\ShaderFileName.cpp" />
+    <ClCompile Include="src\ShaderLoader.cpp" />
+    <ClCompile Include="src\Sphere.cpp" />
+    <ClCompile Include="src\SplitString.cpp" />
+    <ClCompile Include="src\SystemMain.cpp" />
+    <ClCompile Include="src\TestScene.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
+    <ClCompile Include="src\Vector3.cpp" />
+    <ClCompile Include="src\Vector3Math.cpp" />
+    <ClCompile Include="src\VertexShader.cpp" />
+    <ClCompile Include="src\Window.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
