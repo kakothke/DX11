@@ -4,7 +4,7 @@
 namespace DX11 {
 
 /// objƒŠƒXƒg
-enum class ObjList
+enum class OBJList
 {
 	Cube,
 	Sphere,

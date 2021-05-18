@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Game.h"
-#include "ObjLoader.h"
+#include "OBJLoader.h"
 #include "ShaderLoader.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -35,12 +35,12 @@ bool SystemMain::initialize()
 	UpdateWindow(mWindow.hWnd());
 
 	// Singletonクラスを継承しているクラスの実体化
-	ObjLoader::getInst();
+	OBJLoader::getInst();
 	ShaderLoader::getInst();
 
 	// リソースの読み込み
-	ObjLoader::getInst()->load(ObjList::Cube);
-	ObjLoader::getInst()->load(ObjList::Sphere);
+	OBJLoader::getInst()->load(OBJList::Cube);
+	OBJLoader::getInst()->load(OBJList::Sphere);
 	ShaderLoader::getInst()->load(ShaderList::UnlitShader);
 
 	return true;

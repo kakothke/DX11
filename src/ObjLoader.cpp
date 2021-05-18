@@ -1,4 +1,4 @@
-#include "ObjLoader.h"
+#include "OBJLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 #include <vector>
@@ -6,49 +6,48 @@
 #include <string>
 #include "SplitString.h"
 #include "Direct3D11.h"
-#include "ObjFileName.h"
+#include "OBJFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-ObjLoader::ObjLoader()
-	: mObjData()
+OBJLoader::OBJLoader()
+	: mOBJData()
 {
-	mObjData.clear();
+	mOBJData.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
-ObjLoader::~ObjLoader()
+OBJLoader::~OBJLoader()
 {
-	if (!mObjData.empty()) {
-		mObjData.clear();
+	if (!mOBJData.empty()) {
+		mOBJData.clear();
 	}
 }
 
 //-------------------------------------------------------------------------------------------------
-/// objファイルを作成する
-/// @param aObjList 読み込みたいobjファイルを指定する構造体
-bool ObjLoader::load(const ObjList& aObjList)
+/// OBJファイルを読み込む
+/// @param aOBJList 読み込みたいOBJファイルを指定する構造体
+bool OBJLoader::load(const OBJList& aOBJList)
 {
-	if (mObjData.count(aObjList)) {
-		MessageBox(nullptr, TEXT("objファイルの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	if (mOBJData.count(aOBJList)) {
+		MessageBox(nullptr, TEXT("OBJファイルの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-
-	std::vector<ObjVertexData> vertexData;
-	if (!createMesh(aObjList, vertexData)) {
-		MessageBox(nullptr, TEXT("objメッシュの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	std::vector<OBJVertexData> vertexData;
+	if (!createMesh(aOBJList, vertexData)) {
+		MessageBox(nullptr, TEXT("OBJファイルのメッシュの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!createVertexBuffer(aObjList, vertexData)) {
-		MessageBox(nullptr, TEXT("obj頂点バッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	if (!createVertexBuffer(aOBJList, vertexData)) {
+		MessageBox(nullptr, TEXT("OBJファイルの頂点バッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!createIndexBuffer(aObjList)) {
-		MessageBox(nullptr, TEXT("objインデックスバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	if (!createIndexBuffer(aOBJList)) {
+		MessageBox(nullptr, TEXT("OBJファイルのインデックスバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
 	vertexData.clear();
@@ -57,42 +56,42 @@ bool ObjLoader::load(const ObjList& aObjList)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 読み込んだobjファイルを破棄する
-/// @param aObjList 破棄したいobjファイルを指定する構造体
-void ObjLoader::release(const ObjList& aObjList)
+/// OBJファイルを破棄する
+/// @param aObjList 破棄したいOBJファイルを指定する構造体
+void OBJLoader::release(const OBJList& aOBJList)
 {
-	if (mObjData.count(aObjList)) {
-		mObjData.erase(aObjList);
+	if (mOBJData.count(aOBJList)) {
+		mOBJData.erase(aOBJList);
 	}
-	MessageBox(nullptr, TEXT("存在しないobjデータを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	MessageBox(nullptr, TEXT("存在しないOBJデータを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 }
 
 //-------------------------------------------------------------------------------------------------
-/// objファイルのデータを返す
-/// @param aObjList 欲しいobjファイルを指定する構造体
-ObjData* ObjLoader::getObjData(ObjList aObjList)
+/// OBJファイルのデータを取得する
+/// @param aObjList 取得したいOBJファイルを指定する構造体
+OBJData* OBJLoader::getObjData(OBJList aOBJList)
 {
-	if (mObjData.count(aObjList)) {
-		return &mObjData[aObjList];
+	if (mOBJData.count(aOBJList)) {
+		return &mOBJData[aOBJList];
 	}
-	MessageBox(nullptr, TEXT("読み込まれていないobjデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	MessageBox(nullptr, TEXT("読み込まれていないOBJデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// メッシュを作成する
-/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @param aOBJList 読み込みたいOBJファイルを指定する構造体
 /// @param aVertexData 要素を追加させる頂点データ構造体
 /// @return 作成結果 成功(true)
-bool ObjLoader::createMesh(const ObjList& aObjList, std::vector<ObjVertexData>& aVertexData)
+bool OBJLoader::createMesh(const OBJList& aOBJList, std::vector<OBJVertexData>& aVertexData)
 {
 	// ファイルを読み込む
-	std::ifstream ifs(ObjFileName::fileName(aObjList));
+	std::ifstream ifs(OBJFileName::fileName(aOBJList));
 	if (!ifs) {
 		return false;
 	}
 
-	std::vector<std::vector<float>> positions, normals, textures;
+	std::vector<std::vector<float>> positions, textures, normals;
 
 	std::string str;
 	while (getline(ifs, str)) {
@@ -104,19 +103,19 @@ bool ObjLoader::createMesh(const ObjList& aObjList, std::vector<ObjVertexData>& 
 		if (str.substr(0, 2) == "v ") {
 			pushAtofVector(positions, SplitString::split(str.substr(2), ' '));
 		}
+		// UV座標
+		else if (str.substr(0, 2) == "vt") {
+			pushAtofVector(textures, SplitString::split(str.substr(3), ' '));
+		}
 		// 法線座標
 		else if (str.substr(0, 2) == "vn") {
 			pushAtofVector(normals, SplitString::split(str.substr(3), ' '));
-		}
-		// テクスチャ座標
-		else if (str.substr(0, 2) == "vt") {
-			pushAtofVector(textures, SplitString::split(str.substr(3), ' '));
 		}
 		// 面情報
 		else if (str.substr(0, 2) == "f ") {
 			std::vector<std::string> spaceSplit = SplitString::split(str.substr(2), ' ');
 			for (UINT i = 0; i < spaceSplit.size(); i++) {
-				ObjVertexData tmp;
+				OBJVertexData tmp;
 				std::vector<std::string> slashSplit = SplitString::split(spaceSplit[i], '/');
 				// 頂点座標
 				for (UINT j = 0; !positions.empty() && j < positions[0].size(); j++) {
@@ -132,8 +131,16 @@ bool ObjLoader::createMesh(const ObjList& aObjList, std::vector<ObjVertexData>& 
 				}
 				// 各バッファコンテナに追加
 				aVertexData.push_back(tmp);
-				mObjData[aObjList].indexes.push_back(aVertexData.size() - 1);
+				mOBJData[aOBJList].indexes.push_back(aVertexData.size() - 1);
 			}
+		}
+		// 所属しているマテリアルの名前を覚えておく
+		else if (str.substr(0, 6) == "mtllib") {
+
+		}
+		// 使用しているmtlファイルの追加
+		else if (str.substr(0, 6) == "usemtl") {
+
 		}
 	}
 
@@ -142,16 +149,16 @@ bool ObjLoader::createMesh(const ObjList& aObjList, std::vector<ObjVertexData>& 
 
 //-------------------------------------------------------------------------------------------------
 /// 頂点バッファを作成する
-/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @param aOBJList 読み込みたいOBJファイルを指定する構造体
 /// @param aVertexData 参照する頂点データ構造体
 /// @return 作成結果 成功(true)
-bool ObjLoader::createVertexBuffer(const ObjList& aObjList, const std::vector<ObjVertexData>& aVertexData)
+bool OBJLoader::createVertexBuffer(const OBJList& aOBJList, const std::vector<OBJVertexData>& aVertexData)
 {
 	// バッファ情報
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(ObjVertexData) * aVertexData.size();
+		bufferDesc.ByteWidth = sizeof(OBJVertexData) * aVertexData.size();
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定
@@ -179,7 +186,7 @@ bool ObjLoader::createVertexBuffer(const ObjList& aObjList, const std::vector<Ob
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
 		&bufferDesc,
 		&subResource,
-		&mObjData[aObjList].vertexBuffer
+		&mOBJData[aOBJList].vertexBuffer
 	))) {
 		return false;
 	}
@@ -189,15 +196,15 @@ bool ObjLoader::createVertexBuffer(const ObjList& aObjList, const std::vector<Ob
 
 //-------------------------------------------------------------------------------------------------
 /// インデックスバッファを作成する
-/// @param aObjList 読み込みたいobjファイルを指定する構造体
+/// @param aOBJList 読み込みたいobjファイルを指定する構造体
 /// @return 作成結果 成功(true)
-bool ObjLoader::createIndexBuffer(const ObjList& aObjList)
+bool OBJLoader::createIndexBuffer(const OBJList& aOBJList)
 {
 	// バッファ情報
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(UWORD) * mObjData[aObjList].indexes.size();
+		bufferDesc.ByteWidth = sizeof(UWORD) * mOBJData[aOBJList].indexes.size();
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定
@@ -214,7 +221,7 @@ bool ObjLoader::createIndexBuffer(const ObjList& aObjList)
 	D3D11_SUBRESOURCE_DATA subResource;
 	{
 		// バッファの中身の設定
-		subResource.pSysMem = &mObjData[aObjList].indexes[0];
+		subResource.pSysMem = &mOBJData[aOBJList].indexes[0];
 		// textureデータを使用する際に使用するメンバ
 		subResource.SysMemPitch = 0;
 		// textureデータを使用する際に使用するメンバ
@@ -225,7 +232,7 @@ bool ObjLoader::createIndexBuffer(const ObjList& aObjList)
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
 		&bufferDesc,
 		&subResource,
-		&mObjData[aObjList].indexBuffer
+		&mOBJData[aOBJList].indexBuffer
 	))) {
 		return false;
 	}
@@ -239,7 +246,7 @@ bool ObjLoader::createIndexBuffer(const ObjList& aObjList)
 /// @param aData pushするデータ先
 /// @param aStr float型に直す文字列
 template <typename T>
-void ObjLoader::pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr)
+void OBJLoader::pushAtofVector(std::vector<std::vector<T>>& aData, const std::vector<std::string>& aStr)
 {
 	std::vector<T> values;
 	for (UINT i = 0; i < aStr.size(); i++) {

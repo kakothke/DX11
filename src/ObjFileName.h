@@ -2,20 +2,20 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <unordered_map>
-#include "ObjList.h"
+#include "OBJList.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// objファイル名取得用クラス
-class ObjFileName
+/// OBJファイル名取得用クラス
+class OBJFileName
 {
 public:
-	static const char* fileName(ObjList aObjList);
+	static const char* fileName(OBJList aOBJList);
 
 private:
-	ObjFileName();
-	static std::unordered_map<ObjList, const char*> mFileName;
+	OBJFileName();
+	static std::unordered_map<OBJList, const char*> mFileName;
 
 };
 

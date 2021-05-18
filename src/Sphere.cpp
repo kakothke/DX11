@@ -26,7 +26,7 @@ Sphere::Sphere(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Sphere::initialize()
 {
-	mRenderer.setObjAndShaderData(ObjList::Sphere, ShaderList::UnlitShader);
+	mRenderer.setObjAndShaderData(OBJList::Sphere, ShaderList::UnlitShader);
 }
 
 //-------------------------------------------------------------------------------------------------

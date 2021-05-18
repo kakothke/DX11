@@ -158,10 +158,10 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObjectTag.h" />
     <ClInclude Include="src\IChangeScene.h" />
-    <ClInclude Include="src\ObjFileName.h" />
-    <ClInclude Include="src\ObjList.h" />
-    <ClInclude Include="src\ObjLoader.h" />
-    <ClInclude Include="src\ObjRenderer.h" />
+    <ClInclude Include="src\OBJFileName.h" />
+    <ClInclude Include="src\OBJList.h" />
+    <ClInclude Include="src\OBJLoader.h" />
+    <ClInclude Include="src\OBJRenderer.h" />
     <ClInclude Include="src\PixelShader.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
@@ -189,9 +189,9 @@
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\ObjFileName.cpp" />
-    <ClCompile Include="src\ObjLoader.cpp" />
-    <ClCompile Include="src\ObjRenderer.cpp" />
+    <ClCompile Include="src\OBJFileName.cpp" />
+    <ClCompile Include="src\OBJLoader.cpp" />
+    <ClCompile Include="src\OBJRenderer.cpp" />
     <ClCompile Include="src\PixelShader.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\ShaderFileName.cpp" />

@@ -1,4 +1,4 @@
-#include "ObjRenderer.h"
+#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
@@ -7,22 +7,22 @@
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
-ObjRenderer::ObjRenderer()
-	: mObjData()
+OBJRenderer::OBJRenderer()
+	: mOBJData()
 	, mShaderData()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-ObjRenderer::~ObjRenderer()
+OBJRenderer::~OBJRenderer()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-bool ObjRenderer::render(const Transform& aTransform)
+bool OBJRenderer::render(const Transform& aTransform)
 {
 	// 読み込みチェック
-	if (!mObjData || !mShaderData) {
+	if (!mOBJData || !mShaderData) {
 		return false;
 	}
 
@@ -31,17 +31,17 @@ bool ObjRenderer::render(const Transform& aTransform)
 
 	// IAに設定する頂点バッファの指定
 	int count = 0;
-	UINT strides = sizeof(ObjVertexData);
+	UINT strides = sizeof(OBJVertexData);
 	UINT offsets = 0;
 	Direct3D11::getInst()->getContext()->IASetVertexBuffers(
 		0,
 		1,
-		&mObjData->vertexBuffer,
+		&mOBJData->vertexBuffer,
 		&strides,
 		&offsets
 	);
 	Direct3D11::getInst()->getContext()->IASetIndexBuffer(
-		mObjData->indexBuffer,
+		mOBJData->indexBuffer,
 		DXGI_FORMAT_R16_UINT,
 		0
 	);
@@ -59,15 +59,15 @@ bool ObjRenderer::render(const Transform& aTransform)
 	Direct3D11::getInst()->updateConstantBuffer();
 
 	// 描画
-	Direct3D11::getInst()->getContext()->DrawIndexed(mObjData->indexes.size(), 0, 0);
+	Direct3D11::getInst()->getContext()->DrawIndexed(mOBJData->indexes.size(), 0, 0);
 
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
-void ObjRenderer::setObjAndShaderData(const ObjList& aObjList, const ShaderList& aShaderList)
+void OBJRenderer::setObjAndShaderData(const OBJList& aOBJList, const ShaderList& aShaderList)
 {
-	mObjData = ObjLoader::getInst()->getObjData(aObjList);
+	mOBJData = OBJLoader::getInst()->getObjData(aOBJList);
 	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderList);
 }
 

@@ -93,16 +93,16 @@
     <ClInclude Include="src\IChangeScene.h">
       <Filter>DX11Game\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjFileName.h">
+    <ClInclude Include="src\OBJFileName.h">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjList.h">
+    <ClInclude Include="src\OBJList.h">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjLoader.h">
+    <ClInclude Include="src\OBJLoader.h">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjRenderer.h">
+    <ClInclude Include="src\OBJRenderer.h">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
     <ClInclude Include="src\SceneList.h">
@@ -124,9 +124,6 @@
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="src\Singleton.h">
-      <Filter>DX11Game\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sphere.h">
       <Filter>DX11Game\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\SplitString.h">
@@ -152,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="src\Window.h">
       <Filter>DX11Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sphere.h">
+      <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,13 +182,13 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>DX11Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjFileName.cpp">
+    <ClCompile Include="src\OBJFileName.cpp">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjLoader.cpp">
+    <ClCompile Include="src\OBJLoader.cpp">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjRenderer.cpp">
+    <ClCompile Include="src\OBJRenderer.cpp">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
@@ -202,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>DX11Game\Resource\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sphere.cpp">
-      <Filter>DX11Game\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\SplitString.cpp">
       <Filter>DX11Game\Comon</Filter>
@@ -229,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>DX11Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sphere.cpp">
+      <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,22 +1,22 @@
-#include "ObjFileName.h"
+#include "OBJFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
-/// objファイル名を返す
-/// @param aObjList 読み込みたいobjを指定する
+/// 指定したOBJのファイルパスを取得する
+/// @param aOBJList 取得したいOBJファイルを指定する列挙型
 /// @return ファイルパス
-const char* ObjFileName::fileName(ObjList aObjList)
+const char* OBJFileName::fileName(OBJList aOBJList)
 {
-	return mFileName[aObjList];
+	return mFileName[aOBJList];
 }
 
 //-------------------------------------------------------------------------------------------------
-// objファイル名の初期化
-std::unordered_map<ObjList, const char*> ObjFileName::mFileName = {
-	{ObjList::Cube  , "res/mesh/cube.obj"  },
-	{ObjList::Sphere, "res/mesh/sphere.obj"}
+// OBJファイルパスの指定
+std::unordered_map<OBJList, const char*> OBJFileName::mFileName = {
+	{OBJList::Cube  , "res/mesh/cube.obj"  },
+	{OBJList::Sphere, "res/mesh/sphere.obj"}
 };
 
 } // namespace

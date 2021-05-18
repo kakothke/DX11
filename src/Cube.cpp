@@ -26,7 +26,7 @@ Cube::Cube(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Cube::initialize()
 {
-	mRenderer.setObjAndShaderData(ObjList::Cube, ShaderList::UnlitShader);
+	mRenderer.setObjAndShaderData(OBJList::Cube, ShaderList::UnlitShader);
 }
 
 //-------------------------------------------------------------------------------------------------

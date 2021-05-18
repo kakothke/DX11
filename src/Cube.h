@@ -2,7 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
-#include "ObjRenderer.h"
+#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -27,7 +27,7 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	ObjRenderer mRenderer;
+	OBJRenderer mRenderer;
 	//@}
 
 };

@@ -9,20 +9,20 @@
 namespace DX11 {
 
 /// .objファイル描画クラス
-class ObjRenderer
+class OBJRenderer
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	ObjRenderer();
-	~ObjRenderer();
+	OBJRenderer();
+	~OBJRenderer();
 	//@}
 
 	bool render(const Transform& aTransform);
-	void setObjAndShaderData(const ObjList& aObjList, const ShaderList& aShaderList);
+	void setObjAndShaderData(const OBJList& aOBJList, const ShaderList& aShaderList);
 
 private:
-	ObjData* mObjData;
+	OBJData* mOBJData;
 	ShaderData* mShaderData;
 
 };
