@@ -71,7 +71,7 @@ OBJData* OBJLoader::getObjData(const char* aFileName)
 	if (mOBJData.count(aFileName)) {
 		return &mOBJData[aFileName];
 	}
-	MessageBox(nullptr, TEXT("読み込まれていないOBJデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	MessageBox(nullptr, TEXT("存在しないOBJデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 	return nullptr;
 }
 

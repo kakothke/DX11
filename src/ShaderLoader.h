@@ -34,7 +34,7 @@ public:
 
 	/// @name アクセサ
 	//@{
-	/// シェーダーデータを返す
+	/// シェーダーデータを取得する
 	ShaderData* getShaderData(const char* aFileName);
 	//@}
 

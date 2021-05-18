@@ -56,13 +56,13 @@ bool ShaderLoader::load(const char* aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// シェーダーデータを返す
+/// シェーダーデータを取得する
 ShaderData* ShaderLoader::getShaderData(const char* aFileName)
 {
 	if (mShaderData.count(aFileName)) {
 		return &mShaderData[aFileName];
 	}
-	MessageBox(nullptr, TEXT("読み込まれていないシェーダーデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	MessageBox(nullptr, TEXT("存在しないシェーダーデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 	return nullptr;
 }
 
