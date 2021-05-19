@@ -30,7 +30,7 @@ void Cube::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::Cube),
-		ShaderFileName::fileName(ShaderList::UnlitShader)
+		ShaderFileName::fileName(ShaderList::Unlit)
 	);
 }
 

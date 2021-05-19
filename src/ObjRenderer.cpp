@@ -29,37 +29,42 @@ bool OBJRenderer::render(const Transform& aTransform)
 	// シェーダーの指定
 	Direct3D11::getInst()->setUpContext(mShaderData);
 
-	// IAに設定する頂点バッファの指定
-	int count = 0;
-	UINT strides = sizeof(OBJVertexData);
+	int cnt = 0;
+	UINT strides = sizeof(OBJVertex);
 	UINT offsets = 0;
-	Direct3D11::getInst()->getContext()->IASetVertexBuffers(
-		0,
-		1,
-		&mOBJData->vertexBuffer,
-		&strides,
-		&offsets
-	);
-	Direct3D11::getInst()->getContext()->IASetIndexBuffer(
-		mOBJData->indexBuffer,
-		DXGI_FORMAT_R16_UINT,
-		0
-	);
 
-	// ワールドマトリクス設定
-	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(aTransform.pos.x, aTransform.pos.y, aTransform.pos.z);
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, aTransform.rot.z);
-	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(aTransform.scale.x, aTransform.scale.y, aTransform.scale.z);
-	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
+	for (auto index : mOBJData->indexes) {
+		// IAに設定する頂点バッファの指定
+		Direct3D11::getInst()->getContext()->IASetVertexBuffers(
+			0,
+			1,
+			&mOBJData->vertexBuffer,
+			&strides,
+			&offsets
+		);
+		Direct3D11::getInst()->getContext()->IASetIndexBuffer(
+			mOBJData->indexBuffers[cnt],
+			DXGI_FORMAT_R32_UINT,
+			0
+		);
 
-	// ワールドマトリクスをコンスタントバッファに設定
-	XMStoreFloat4x4(&Direct3D11::getInst()->getConstantBufferData()->World, XMMatrixTranspose(worldMatrix));
+		// ワールドマトリクス設定
+		DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(aTransform.pos.x, aTransform.pos.y, aTransform.pos.z);
+		DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, aTransform.rot.z);
+		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(aTransform.scale.x, aTransform.scale.y, aTransform.scale.z);
+		DirectX::XMMATRIX worldMatrix = scale * rot * pos;
 
-	// コンスタントバッファを更新
-	Direct3D11::getInst()->updateConstantBuffer();
+		// ワールドマトリクスをコンスタントバッファに設定
+		XMStoreFloat4x4(&Direct3D11::getInst()->getConstantBufferData()->World, XMMatrixTranspose(worldMatrix));
 
-	// 描画
-	Direct3D11::getInst()->getContext()->DrawIndexed(mOBJData->indexes.size(), 0, 0);
+		// コンスタントバッファを更新
+		Direct3D11::getInst()->updateConstantBuffer();
+
+		// 描画
+		Direct3D11::getInst()->getContext()->DrawIndexed((UINT)index.second.size(), 0, 0);
+
+		cnt++;
+	}
 
 	return true;
 }

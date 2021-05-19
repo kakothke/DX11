@@ -160,6 +160,7 @@ void Direct3D11::updateConstantBuffer()
 
 	// コンテキストにコンスタントバッファを設定
 	mContext->VSSetConstantBuffers(0, 1, &mConstantBuffer);
+	mContext->PSSetConstantBuffers(0, 1, &mConstantBuffer);
 }
 
 //-------------------------------------------------------------------------------------------------

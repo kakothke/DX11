@@ -41,10 +41,10 @@ bool SystemMain::initialize()
 	ShaderLoader::getInst();
 
 	// ƒŠƒ\[ƒX‚Ì“Ç‚Ýž‚Ý
-	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Cube));
-	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Sphere));
+	//OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Cube));
+	//OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Sphere));
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
-	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::UnlitShader));
+	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
 
 	return true;
 }

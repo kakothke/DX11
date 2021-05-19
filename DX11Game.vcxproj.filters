@@ -55,11 +55,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\UnlitShader_ps.hlsl">
+    <FxCompile Include="shader\Unlit_ps.hlsl">
       <Filter>Shader\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\UnlitShader_vs.hlsl">
+    <FxCompile Include="shader\Unlit_vs.hlsl">
       <Filter>Shader\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Standard_vs.hlsl">
+      <Filter>Shader\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Standard_ps.hlsl">
+      <Filter>Shader\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

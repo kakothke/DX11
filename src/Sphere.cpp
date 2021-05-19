@@ -30,7 +30,7 @@ void Sphere::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::Sphere),
-		ShaderFileName::fileName(ShaderList::UnlitShader)
+		ShaderFileName::fileName(ShaderList::Unlit)
 	);
 }
 

@@ -9,7 +9,8 @@ namespace DX11 {
 /// シェーダーリスト
 enum class ShaderList
 {
-	UnlitShader
+	Unlit,
+	Standard
 };
 
 /// シェーダーファイル名取得用クラス

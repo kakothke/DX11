@@ -30,7 +30,7 @@ void TestObj::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::TestObj),
-		ShaderFileName::fileName(ShaderList::UnlitShader)
+		ShaderFileName::fileName(ShaderList::Unlit)
 	);
 }
 
@@ -38,6 +38,7 @@ void TestObj::initialize()
 /// çXêV
 void TestObj::update()
 {
+	mTransform.rot.y += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------
