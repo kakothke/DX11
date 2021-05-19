@@ -11,6 +11,7 @@ enum class OBJList
 {
 	Cube,
 	Sphere,
+	TestObj
 };
 
 /// OBJファイル名取得用クラス

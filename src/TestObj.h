@@ -7,14 +7,14 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// 球
-class Sphere : public BaseGameObject
+/// テスト用のゲームオブジェクト
+class TestObj : public BaseGameObject
 {
 public:
 	/// name コンストラクタ
 	//@{
-	Sphere();
-	Sphere(Transform aTransform);
+	TestObj();
+	TestObj(Transform aTransform);
 	//@}
 
 	/// @name 初期化/更新/描画

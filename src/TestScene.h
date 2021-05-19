@@ -5,6 +5,7 @@
 #include "Cube.h"
 #include "Sphere.h"
 #include "Camera.h"
+#include "TestObj.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,6 +30,7 @@ private:
 	//@{
 	Cube mCube;
 	Sphere mSphere;
+	TestObj mTestObj;
 	Camera mCamera;
 	//@}
 

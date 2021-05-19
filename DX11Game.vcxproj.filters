@@ -50,7 +50,7 @@
     <Filter Include="DX11Game\GameObject\Camera">
       <UniqueIdentifier>{0d8b0f7e-d88c-447f-a6b5-ef9da065bd9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\Resource\#FileNames">
+    <Filter Include="DX11Game\Resource\FileNames">
       <UniqueIdentifier>{ec7f223a-e07c-4ffd-b0f7-1fa267a66ced}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -145,10 +145,13 @@
       <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\OBJFileName.h">
-      <Filter>DX11Game\Resource\#FileNames</Filter>
+      <Filter>DX11Game\Resource\FileNames</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderFileName.h">
-      <Filter>DX11Game\Resource\#FileNames</Filter>
+      <Filter>DX11Game\Resource\FileNames</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestObj.h">
+      <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,10 +225,13 @@
       <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\OBJFileName.cpp">
-      <Filter>DX11Game\Resource\#FileNames</Filter>
+      <Filter>DX11Game\Resource\FileNames</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderFileName.cpp">
-      <Filter>DX11Game\Resource\#FileNames</Filter>
+      <Filter>DX11Game\Resource\FileNames</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestObj.cpp">
+      <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

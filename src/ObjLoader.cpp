@@ -131,12 +131,12 @@ bool OBJLoader::createMesh(const char* aFileName, std::vector<OBJVertexData>& aV
 				mOBJData[aFileName].indexes.push_back(aVertexData.size() - 1);
 			}
 		}
-		// 所属しているマテリアルの名前を覚えておく
-		else if (str.substr(0, 6) == "mtllib") {
-
-		}
 		// 使用しているmtlファイルの追加
 		else if (str.substr(0, 6) == "usemtl") {
+
+		}
+		// 所属しているマテリアルの名前を覚えておく
+		else if (str.substr(0, 6) == "mtllib") {
 
 		}
 	}

@@ -1,4 +1,4 @@
-#include "Sphere.h"
+#include "TestObj.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
@@ -11,14 +11,14 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-Sphere::Sphere()
+TestObj::TestObj()
 {
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 引数付きコンストラクタ
-Sphere::Sphere(Transform aTransform)
+TestObj::TestObj(Transform aTransform)
 {
 	mTransform = aTransform;
 	initialize();
@@ -26,23 +26,23 @@ Sphere::Sphere(Transform aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void Sphere::initialize()
+void TestObj::initialize()
 {
 	mRenderer.setObjAndShaderData(
-		OBJFileName::fileName(OBJList::Sphere),
+		OBJFileName::fileName(OBJList::TestObj),
 		ShaderFileName::fileName(ShaderList::UnlitShader)
 	);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void Sphere::update()
+void TestObj::update()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void Sphere::draw()
+void TestObj::draw()
 {
 	mRenderer.render(mTransform);
 }
