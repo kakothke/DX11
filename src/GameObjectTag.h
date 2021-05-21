@@ -7,6 +7,8 @@ namespace DX11 {
 enum class GameObjectTag
 {
 	Untagged,
+	Camera,
+	Light,
 
 	Test,
 

@@ -1,38 +1,35 @@
-#include "TestScene.h"
+#include "DirectionalLight.h"
+
+//-------------------------------------------------------------------------------------------------
+#include "Direct3D11.h"
+#include "ConstantBuffer.h"
+#include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
-/// コンストラクタ
-TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
+DirectionalLight::DirectionalLight()
+	: mColor(DirectX::XMFLOAT4(1, 0.95f, 0.83f, 1))
 {
+	mTransform.rot = Vector3(50, -30, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
-/// デストラクタ
-TestScene::~TestScene()
+void DirectionalLight::update()
 {
+	updateConstantBuffer();
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 更新
-void TestScene::update()
+void DirectionalLight::updateConstantBuffer()
 {
-	//mCube.update();
-	//mSphere.update();
-	mTestObj.update();
-	mCamera.update();
-	mDirectionalLight.update();
+	ConstantBuffer::getInst()->updateLight(mTransform.rot, mColor);
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 描画
-void TestScene::draw()
+void DirectionalLight::draw()
 {
-	//mCube.draw();
-	//mSphere.draw();
-	mTestObj.draw();
 }
 
 } // namespace

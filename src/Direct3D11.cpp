@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Define.h"
+#include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -16,8 +17,6 @@ Direct3D11::Direct3D11()
 	, mDepthStencilView(nullptr)
 	, mDepthStencilTexture(nullptr)
 	, mDepthStencilState(nullptr)
-	, mConstantBuffer(nullptr)
-	, mConstantBufferData()
 {
 }
 
@@ -25,10 +24,6 @@ Direct3D11::Direct3D11()
 /// デストラクタ
 Direct3D11::~Direct3D11()
 {
-	if (mConstantBuffer) {
-		mConstantBuffer->Release();
-		mConstantBuffer = nullptr;
-	}
 	if (mSwapChain) {
 		mSwapChain->Release();
 		mSwapChain = nullptr;
@@ -87,7 +82,7 @@ bool Direct3D11::initialize()
 		return false;
 	}
 	// コンスタントバッファを作成する
-	if (!createConstantBuffer()) {
+	if (!ConstantBuffer::getInst()->create()) {
 		MessageBox(nullptr, TEXT("コンスタントバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
@@ -146,24 +141,6 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンスタントバッファを更新する
-void Direct3D11::updateConstantBuffer()
-{
-	mContext->UpdateSubresource(
-		mConstantBuffer,
-		0,
-		NULL,
-		&mConstantBufferData,
-		0,
-		0
-	);
-
-	// コンテキストにコンスタントバッファを設定
-	mContext->VSSetConstantBuffers(0, 1, &mConstantBuffer);
-	mContext->PSSetConstantBuffers(0, 1, &mConstantBuffer);
-}
-
-//-------------------------------------------------------------------------------------------------
 /// デバイスを返す
 ID3D11Device* Direct3D11::getDevice() const
 {
@@ -175,13 +152,6 @@ ID3D11Device* Direct3D11::getDevice() const
 ID3D11DeviceContext* Direct3D11::getContext() const
 {
 	return mContext;
-}
-
-//-------------------------------------------------------------------------------------------------
-/// コンスタントバッファ構造体を返す
-ConstantBufferData* Direct3D11::getConstantBufferData()
-{
-	return &mConstantBufferData;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -296,26 +266,6 @@ bool Direct3D11::createDepthStencilState()
 
 	// 深度ステンシルステートを適用
 	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
-
-	return true;
-}
-
-//-------------------------------------------------------------------------------------------------
-/// コンスタントバッファを作成する
-/// @return 作成結果 成功(true)
-bool Direct3D11::createConstantBuffer()
-{
-	D3D11_BUFFER_DESC bufferDesc;
-	bufferDesc.ByteWidth = sizeof(ConstantBufferData);
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	bufferDesc.CPUAccessFlags = 0;
-	bufferDesc.MiscFlags = 0;
-	bufferDesc.StructureByteStride = 0;
-
-	if (FAILED(mDevice->CreateBuffer(&bufferDesc, nullptr, &mConstantBuffer))) {
-		return false;
-	}
 
 	return true;
 }

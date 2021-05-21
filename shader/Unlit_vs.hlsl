@@ -10,20 +10,20 @@ struct VS_OUT
     float4 col : COLOR0;
 };
  
-cbuffer ConstantBuffer
+cbuffer CB_MATRIX : register(b0)
 {
-    float4x4 World;
-    float4x4 View;
-    float4x4 Projection;
+    float4x4 MATRIX_W;
+    float4x4 MATRIX_V;
+    float4x4 MATRIX_P;
 }
 
 VS_OUT main(VS_IN input)
 {
     VS_OUT output;
     
-    output.pos = mul(input.pos, World);
-    output.pos = mul(output.pos, View);
-    output.pos = mul(output.pos, Projection);
+    output.pos = mul(input.pos, MATRIX_W);
+    output.pos = mul(output.pos, MATRIX_V);
+    output.pos = mul(output.pos, MATRIX_P);
     
     output.col = float4(0, 1, 1, 1);
 

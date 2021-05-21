@@ -45,6 +45,7 @@ bool SystemMain::initialize()
 	//OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Sphere));
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
+	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Standard));
 
 	return true;
 }

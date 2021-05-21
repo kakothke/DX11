@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -48,17 +49,10 @@ bool OBJRenderer::render(const Transform& aTransform)
 			0
 		);
 
-		// ワールドマトリクス設定
-		DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(aTransform.pos.x, aTransform.pos.y, aTransform.pos.z);
-		DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, aTransform.rot.z);
-		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(aTransform.scale.x, aTransform.scale.y, aTransform.scale.z);
-		DirectX::XMMATRIX worldMatrix = scale * rot * pos;
-
-		// ワールドマトリクスをコンスタントバッファに設定
-		XMStoreFloat4x4(&Direct3D11::getInst()->getConstantBufferData()->World, XMMatrixTranspose(worldMatrix));
-
 		// コンスタントバッファを更新
-		Direct3D11::getInst()->updateConstantBuffer();
+		ConstantBuffer::getInst()->setMatrixW(aTransform);
+		ConstantBuffer::getInst()->updateMatrix();
+		ConstantBuffer::getInst()->updateMaterial(mOBJData->materials[index.first]);
 
 		// 描画
 		Direct3D11::getInst()->getContext()->DrawIndexed((UINT)index.second.size(), 0, 0);

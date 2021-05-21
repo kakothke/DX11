@@ -23,12 +23,6 @@
     <Filter Include="DX11Game\System">
       <UniqueIdentifier>{82cda6ef-86d7-4b41-b11f-b8d47afd6b4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\PixelShader">
-      <UniqueIdentifier>{57b8779f-0b98-419c-9aad-60d32c23dae5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\VertexShader">
-      <UniqueIdentifier>{c084dadd-f80d-43d2-9c04-0e5e4f0f468d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DX11Game\Scene\SceneManager">
       <UniqueIdentifier>{608668df-7e7c-477f-937d-5d13145263de}</UniqueIdentifier>
     </Filter>
@@ -53,19 +47,22 @@
     <Filter Include="DX11Game\Resource\FileNames">
       <UniqueIdentifier>{ec7f223a-e07c-4ffd-b0f7-1fa267a66ced}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11Game\GameObject\Light">
+      <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\Unlit_ps.hlsl">
-      <Filter>Shader\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\Unlit_vs.hlsl">
-      <Filter>Shader\VertexShader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\Standard_vs.hlsl">
-      <Filter>Shader\VertexShader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\Standard_ps.hlsl">
-      <Filter>Shader\PixelShader</Filter>
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Standard_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Unlit_vs.hlsl">
+      <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +156,12 @@
     <ClInclude Include="src\TestObj.h">
       <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConstantBuffer.h">
+      <Filter>DX11Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectionalLight.h">
+      <Filter>DX11Game\GameObject\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -238,6 +241,12 @@
     </ClCompile>
     <ClCompile Include="src\TestObj.cpp">
       <Filter>DX11Game\GameObject\3D Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConstantBuffer.cpp">
+      <Filter>DX11Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalLight.cpp">
+      <Filter>DX11Game\GameObject\Light</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

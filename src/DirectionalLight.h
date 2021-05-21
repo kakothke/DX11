@@ -8,12 +8,12 @@
 namespace DX11 {
 
 /// 全てのゲームオブジェクトの基底クラス
-class Camera : public BaseGameObject
+class DirectionalLight : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ
 	//@{
-	Camera();
+	DirectionalLight();
 	//@}
 
 	/// @name 更新/描画
@@ -24,17 +24,8 @@ public:
 
 
 protected:
-	/// @name プロテクテッドメンバ関数
-	//@{
 	void updateConstantBuffer();
-	//@}
-
-	/// @name プロテクテッドメンバ変数
-	//@{
-	float mFov;
-	float mNearZ;
-	float mFarZ;
-	//@}
+	DirectX::XMFLOAT4 mColor;
 
 };
 

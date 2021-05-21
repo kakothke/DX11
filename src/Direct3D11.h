@@ -13,14 +13,6 @@
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
-/// コンスタントバッファ構造体
-struct ConstantBufferData
-{
-	DirectX::XMFLOAT4X4 World;
-	DirectX::XMFLOAT4X4 View;
-	DirectX::XMFLOAT4X4 Projection;
-};
-
 /// Direct3D11の管理
 class Direct3D11 : public Singleton<Direct3D11>
 {
@@ -41,7 +33,6 @@ public:
 	void drawStart();
 	void drawEnd();
 	void setUpContext(const ShaderData* aShaderData);
-	void updateConstantBuffer();
 	//@}
 
 	/// @name アクセサ
@@ -50,8 +41,6 @@ public:
 	ID3D11Device* getDevice() const;
 	/// コンテキストを返す
 	ID3D11DeviceContext* getContext() const;
-	/// コンスタントバッファ構造体を返す
-	ConstantBufferData* getConstantBufferData();
 	//@}
 
 private:
@@ -65,8 +54,6 @@ private:
 	bool createDepthAndStencil();
 	/// 深度ステンシルステートを作成する
 	bool createDepthStencilState();
-	/// コンスタントバッファを作成する
-	bool createConstantBuffer();
 	/// ビューポートを設定する
 	void setUpViewPort();
 	/// ラスタライズを設定する
@@ -89,10 +76,6 @@ private:
 	ID3D11Texture2D* mDepthStencilTexture;
 	/// 深度ステンシルステート
 	ID3D11DepthStencilState* mDepthStencilState;
-	/// コンスタントバッファ
-	ID3D11Buffer* mConstantBuffer;
-	/// コンスタントバッファ構造体
-	ConstantBufferData mConstantBufferData;
 	//@}
 
 };

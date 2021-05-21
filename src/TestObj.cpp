@@ -30,7 +30,7 @@ void TestObj::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::TestObj),
-		ShaderFileName::fileName(ShaderList::Unlit)
+		ShaderFileName::fileName(ShaderList::Standard)
 	);
 }
 

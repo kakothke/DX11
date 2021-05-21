@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "Camera.h"
 #include "TestObj.h"
+#include "DirectionalLight.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -32,6 +33,8 @@ private:
 	//Sphere mSphere;
 	TestObj mTestObj;
 	Camera mCamera;
+	DirectionalLight mDirectionalLight;
+	
 	//@}
 
 };
