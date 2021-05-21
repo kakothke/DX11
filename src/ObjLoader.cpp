@@ -41,14 +41,17 @@ bool OBJLoader::load(const char* const aFileName)
 	}
 	if (!loadMtlFile(aFileName, mtlNames)) {
 		MessageBox(nullptr, TEXT(".mtlファイルの読み込みに失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		mOBJData.erase(aFileName);
 		return false;
 	}
 	if (!createVertexBuffer(aFileName, vertexes)) {
 		MessageBox(nullptr, TEXT("頂点バッファの作成に失敗しました。(OBJ)"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		mOBJData.erase(aFileName);
 		return false;
 	}
 	if (!createIndexBuffer(aFileName)) {
 		MessageBox(nullptr, TEXT("インデックスバッファの作成に失敗しました。(OBJ)"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		mOBJData.erase(aFileName);
 		return false;
 	}
 
@@ -150,6 +153,11 @@ bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>&
 //-------------------------------------------------------------------------------------------------
 bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::string>& aMtlNames)
 {
+	// マテリアルが存在しないとき
+	if (aMtlNames.empty()) {
+		return true;
+	}
+	// マテリアルファイルを読み込む
 	for (auto mtlName : aMtlNames) {
 		std::string filePath = aFileName;
 		filePath.erase(filePath.rfind("/") + 1);

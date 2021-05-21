@@ -29,8 +29,8 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	//Cube mCube;
-	//Sphere mSphere;
+	Cube mCube;
+	Sphere mSphere;
 	TestObj mTestObj;
 	Camera mCamera;
 	DirectionalLight mDirectionalLight;

@@ -30,7 +30,7 @@ void Sphere::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::Sphere),
-		ShaderFileName::fileName(ShaderList::Unlit)
+		ShaderFileName::fileName(ShaderList::Standard)
 	);
 }
 
@@ -38,6 +38,7 @@ void Sphere::initialize()
 /// çXêV
 void Sphere::update()
 {
+	mTransform.scale.z += 0.05f;
 }
 
 //-------------------------------------------------------------------------------------------------
