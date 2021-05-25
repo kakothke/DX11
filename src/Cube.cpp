@@ -30,7 +30,7 @@ void Cube::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		OBJFileName::fileName(OBJList::Cube),
-		ShaderFileName::fileName(ShaderList::Unlit)
+		ShaderFileName::fileName(ShaderList::Standard)
 	);
 }
 
@@ -38,7 +38,7 @@ void Cube::initialize()
 /// çXêV
 void Cube::update()
 {
-	mTransform.scale.y += 0.01f;
+	mTransform.rot.y += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------

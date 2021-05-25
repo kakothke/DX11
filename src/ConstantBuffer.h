@@ -12,39 +12,39 @@ namespace DX11 {
 /// 行列
 struct CB_MATRIX
 {
-	DirectX::XMFLOAT4X4 MATRIX_W;
-	DirectX::XMFLOAT4X4 MATRIX_V;
-	DirectX::XMFLOAT4X4 MATRIX_P;
+	DirectX::XMFLOAT4X4 W;
+	DirectX::XMFLOAT4X4 V;
+	DirectX::XMFLOAT4X4 P;
 };
 
 // カメラ
 struct CB_CAMERA
 {
-	DirectX::XMFLOAT4 CAMERA_POS;
-	DirectX::XMFLOAT4 CAMERA_ROT;
+	DirectX::XMFLOAT4 POS;
+	DirectX::XMFLOAT4 ROT;
 };
 
 // ライト
-struct CB_LIGHT
+struct CB_DLIGHT
 {
-	DirectX::XMFLOAT4 LIGHT_ROT;
-	DirectX::XMFLOAT4 LIGHT_COL;
+	DirectX::XMFLOAT4 ROT;
+	DirectX::XMFLOAT4 COL;
 };
 
 // マテリアル
 struct CB_MATERIAL
 {
-	DirectX::XMFLOAT4 MATERIAL_A;
-	DirectX::XMFLOAT4 MATERIAL_D;
-	DirectX::XMFLOAT4 MATERIAL_S;
+	DirectX::XMFLOAT4 A;
+	DirectX::XMFLOAT4 D;
+	DirectX::XMFLOAT4 S;
 };
 
-struct CB_Data
+struct CB_DATA
 {
-	CB_MATRIX matrix;
-	CB_CAMERA camera;
-	CB_LIGHT light;
-	CB_MATERIAL material;
+	CB_MATRIX MATRIX;
+	CB_CAMERA CAMERA;
+	CB_DLIGHT DLIGHT;
+	CB_MATERIAL MATERIAL;
 };
 
 /// コンスタントバッファ
@@ -57,10 +57,10 @@ public:
 	bool create();
 	void setMatrixW(const Transform& aTransform);
 	void setMatrixV(const Transform& aTransform);
-	void setMatrixP(const float aFov, const float aNear, const float aFar);
+	void setMatrixP(const float aFov, const float aNearZ, const float aFarZ);
 	void updateMatrix();
 	void updateCamera(const Transform& aTransform);
-	void updateLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol);
+	void updateDirectionalLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol);
 	void updateMaterial(const OBJMaterial& aMaterial);
 
 private:
@@ -68,7 +68,7 @@ private:
 	ID3D11Buffer* mBufferCamera;
 	ID3D11Buffer* mBufferLight;
 	ID3D11Buffer* mBufferMaterial;
-	CB_Data mData;
+	CB_DATA mData;
 
 };
 

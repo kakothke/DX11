@@ -155,6 +155,15 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 {
 	// マテリアルが存在しないとき
 	if (aMtlNames.empty()) {
+		mOBJData[aFileName].materials[""].ambient[0] = 1;
+		mOBJData[aFileName].materials[""].ambient[1] = 1;
+		mOBJData[aFileName].materials[""].ambient[2] = 1;
+		mOBJData[aFileName].materials[""].diffuse[0] = 1;
+		mOBJData[aFileName].materials[""].diffuse[1] = 1;
+		mOBJData[aFileName].materials[""].diffuse[2] = 1;
+		mOBJData[aFileName].materials[""].specular[0] = .5f;
+		mOBJData[aFileName].materials[""].specular[1] = .5f;
+		mOBJData[aFileName].materials[""].specular[2] = .5f;
 		return true;
 	}
 	// マテリアルファイルを読み込む

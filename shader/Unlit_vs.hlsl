@@ -25,7 +25,7 @@ VS_OUT main(VS_IN input)
     output.pos = mul(output.pos, MATRIX_V);
     output.pos = mul(output.pos, MATRIX_P);
     
-    output.col = float4(0, 1, 1, 1);
+    output.col = float4(1, 1, 1, 1);
 
     return output;
 }

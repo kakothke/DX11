@@ -55,7 +55,7 @@ bool ConstantBuffer::create()
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferCamera))) {
 		return false;
 	}
-	bufferDesc.ByteWidth = sizeof(CB_LIGHT);
+	bufferDesc.ByteWidth = sizeof(CB_DLIGHT);
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferLight))) {
 		return false;
 	}
@@ -77,7 +77,7 @@ void ConstantBuffer::setMatrixW(const Transform& aTransform)
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(aTransform.scale.x, aTransform.scale.y, aTransform.scale.z);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
 
-	XMStoreFloat4x4(&mData.matrix.MATRIX_W, XMMatrixTranspose(worldMatrix));
+	XMStoreFloat4x4(&mData.MATRIX.W, XMMatrixTranspose(worldMatrix));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -90,12 +90,12 @@ void ConstantBuffer::setMatrixV(const Transform& aTransform)
 	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, -aTransform.rot.z);
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
 
-	XMStoreFloat4x4(&mData.matrix.MATRIX_V, XMMatrixTranspose(viewMatrix));
+	XMStoreFloat4x4(&mData.MATRIX.V, XMMatrixTranspose(viewMatrix));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// Projectionマトリクス設定
-void ConstantBuffer::setMatrixP(const float aFov, const float aNear, const float aFar)
+void ConstantBuffer::setMatrixP(const float aFov, const float aNearZ, const float aFarZ)
 {
 	D3D11_VIEWPORT vp;
 	UINT numVierports = 1;
@@ -103,11 +103,11 @@ void ConstantBuffer::setMatrixP(const float aFov, const float aNear, const float
 	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
 		DirectX::XMConvertToRadians(aFov),
 		(float)vp.Width / (float)vp.Height,
-		aNear,
-		aFar
+		aNearZ,
+		aFarZ
 	);
 
-	XMStoreFloat4x4(&mData.matrix.MATRIX_P, XMMatrixTranspose(projMatrix));
+	XMStoreFloat4x4(&mData.MATRIX.P, XMMatrixTranspose(projMatrix));
 }
 //-------------------------------------------------------------------------------------------------
 /// マトリクスコンスタントバッファを更新する
@@ -117,7 +117,7 @@ void ConstantBuffer::updateMatrix()
 		mBufferMatrix,
 		0,
 		NULL,
-		&mData.matrix,
+		&mData.MATRIX,
 		0,
 		0
 	);
@@ -136,7 +136,7 @@ void ConstantBuffer::updateCamera(const Transform& aTransform)
 		aTransform.pos.z,
 		0
 	);
-	XMStoreFloat4(&mData.camera.CAMERA_POS, pos);
+	XMStoreFloat4(&mData.CAMERA.POS, pos);
 	// カメラ向き
 	DirectX::XMVECTOR rot = DirectX::XMVectorSet(
 		aTransform.rot.x,
@@ -144,14 +144,14 @@ void ConstantBuffer::updateCamera(const Transform& aTransform)
 		aTransform.rot.z,
 		0
 	);
-	XMStoreFloat4(&mData.camera.CAMERA_ROT, pos);
+	XMStoreFloat4(&mData.CAMERA.ROT, pos);
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
 		mBufferCamera,
 		0,
 		NULL,
-		&mData.camera,
+		&mData.CAMERA,
 		0,
 		0
 	);
@@ -161,7 +161,7 @@ void ConstantBuffer::updateCamera(const Transform& aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// ライトコンスタントバッファを更新する
-void ConstantBuffer::updateLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol)
+void ConstantBuffer::updateDirectionalLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol)
 {
 	// ライト向き
 	DirectX::XMVECTOR rot = DirectX::XMVector3Normalize(
@@ -172,16 +172,16 @@ void ConstantBuffer::updateLight(const Vector3& aRot, const DirectX::XMFLOAT4& a
 			0
 		)
 	);
-	XMStoreFloat4(&mData.light.LIGHT_ROT, rot);
+	XMStoreFloat4(&mData.DLIGHT.ROT, rot);
 	// ライトカラー
-	mData.light.LIGHT_COL = aCol;
+	mData.DLIGHT.COL = aCol;
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
 		mBufferLight,
 		0,
 		NULL,
-		&mData.light,
+		&mData.DLIGHT,
 		0,
 		0
 	);
@@ -194,7 +194,7 @@ void ConstantBuffer::updateLight(const Vector3& aRot, const DirectX::XMFLOAT4& a
 void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 {	
 	// アンビエント
-	mData.material.MATERIAL_A = DirectX::XMFLOAT4(
+	mData.MATERIAL.A = DirectX::XMFLOAT4(
 		aMaterial.ambient[0],
 		aMaterial.ambient[1],
 		aMaterial.ambient[2],
@@ -202,7 +202,7 @@ void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 	);
 
 	// ディフューズ
-	mData.material.MATERIAL_D = DirectX::XMFLOAT4(
+	mData.MATERIAL.D = DirectX::XMFLOAT4(
 		aMaterial.diffuse[0],
 		aMaterial.diffuse[1],
 		aMaterial.diffuse[2],
@@ -210,7 +210,7 @@ void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 	);
 
 	// スペキュラー
-	mData.material.MATERIAL_S = DirectX::XMFLOAT4(
+	mData.MATERIAL.S = DirectX::XMFLOAT4(
 		aMaterial.specular[0],
 		aMaterial.specular[1],
 		aMaterial.specular[2],
@@ -222,7 +222,7 @@ void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 		mBufferMaterial,
 		0,
 		NULL,
-		&mData.material,
+		&mData.MATERIAL,
 		0,
 		0
 	);

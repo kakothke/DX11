@@ -21,7 +21,6 @@ Camera::Camera()
 //-------------------------------------------------------------------------------------------------
 void Camera::update()
 {
-	mTransform.rot.z += 0.001f;
 	updateConstantBuffer();
 }
 

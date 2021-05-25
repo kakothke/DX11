@@ -24,7 +24,7 @@ void DirectionalLight::update()
 //-------------------------------------------------------------------------------------------------
 void DirectionalLight::updateConstantBuffer()
 {
-	ConstantBuffer::getInst()->updateLight(mTransform.rot, mColor);
+	ConstantBuffer::getInst()->updateDirectionalLight(mTransform.rot, mColor);
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -17,7 +17,7 @@ cbuffer CB_MATRIX : register(b0)
     float4x4 MATRIX_P;
 }
 
-cbuffer CB_LIGHT : register(b2)
+cbuffer CB_DLIGHT : register(b2)
 {
     float4 LIGHT_VEC;
     float4 LIGHT_COL;

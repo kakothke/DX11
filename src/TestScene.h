@@ -2,8 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "AbstractScene.h"
-#include "Cube.h"
-#include "Sphere.h"
 #include "Camera.h"
 #include "TestObj.h"
 #include "DirectionalLight.h"
@@ -29,8 +27,6 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Cube mCube;
-	Sphere mSphere;
 	TestObj mTestObj;
 	Camera mCamera;
 	DirectionalLight mDirectionalLight;
