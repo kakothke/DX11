@@ -5,8 +5,8 @@ namespace DX11 {
 
 std::unordered_map<ShaderList, const char*> ShaderFileName::mFileName =
 {
-	{ ShaderList::Unlit, "shader/Unlit.hlsl" },
-	{ ShaderList::Standard, "shader/Standard.hlsl" },
+	{ ShaderList::Unlit, "hlsl/Unlit.hlsl" },
+	{ ShaderList::Standard, "hlsl/Standard.hlsl" },
 };
 
 } // namespace

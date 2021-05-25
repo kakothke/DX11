@@ -49,14 +49,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\Standard.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\Unlit.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
       <Filter>DX11Game\Scene\SceneManager</Filter>
     </ClInclude>
@@ -221,5 +213,13 @@
     <ClCompile Include="src\ShaderFileName.cpp">
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="hlsl\Standard.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="hlsl\Unlit.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
