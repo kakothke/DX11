@@ -17,7 +17,7 @@ cbuffer CB_MATRIX : register(b0)
     float4x4 MATRIX_P;
 }
 
-VS_OUT main(VS_IN input)
+VS_OUT VS(VS_IN input)
 {
     VS_OUT output;
     
@@ -28,4 +28,9 @@ VS_OUT main(VS_IN input)
     output.col = float4(1, 1, 1, 1);
 
     return output;
+}
+ 
+float4 PS(VS_OUT input) : SV_Target
+{
+    return input.col;
 }

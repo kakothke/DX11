@@ -117,14 +117,14 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 
 	// VertexShaderを設定
 	mContext->VSSetShader(
-		aShaderData->vs.getInterface(),
+		aShaderData->vs,
 		nullptr,
 		0
 	);
 
 	// PixelShaderを設定
 	mContext->PSSetShader(
-		aShaderData->ps.getInterface(),
+		aShaderData->ps,
 		nullptr,
 		0
 	);
@@ -137,7 +137,7 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 	);
 
 	// IA(InputAssemblerStage)に入力レイアウトを設定する
-	mContext->IASetInputLayout(aShaderData->vs.getInputLayout());
+	mContext->IASetInputLayout(aShaderData->inputLayout);
 }
 
 //-------------------------------------------------------------------------------------------------

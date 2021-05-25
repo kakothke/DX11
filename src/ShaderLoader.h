@@ -2,10 +2,12 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
+#include <d3dcompiler.h>
 #include <unordered_map>
 #include "Singleton.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
+
+//-------------------------------------------------------------------------------------------------
+#pragma comment(lib, "d3dcompiler.lib")
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -13,8 +15,24 @@ namespace DX11 {
 /// シェーダー構造体
 struct ShaderData
 {
-	VertexShader vs;
-	PixelShader ps;
+	ID3D11VertexShader* vs;
+	ID3D11PixelShader* ps;
+	ID3D11InputLayout* inputLayout;
+	~ShaderData()
+	{
+		if (vs) {
+			vs->Release();
+			vs = nullptr;
+		}
+		if (ps) {
+			ps->Release();
+			ps = nullptr;
+		}
+		if (inputLayout) {
+			inputLayout->Release();
+			inputLayout = nullptr;
+		}
+	}
 };
 
 /// シェーダーデータ読み込みクラス
@@ -29,16 +47,20 @@ public:
 
 	/// @name シェーダーを作成する
 	//@{
-	bool load(const char* aFileName);
+	bool load(const char* const aFileName);
 	//@}
 
 	/// @name アクセサ
 	//@{
 	/// シェーダーデータを取得する
-	ShaderData* getShaderData(const char* aFileName);
+	ShaderData* getShaderData(const char* const aFileName);
 	//@}
 
 private:
+	bool createVertexShader(const char* const aFileName);
+	bool createInputLayout(const char* const aFileName);
+	bool createPixelShader(const char* const aFileName);
+
 	/// @name プライベートメンバ変数
 	//@{
 	/// シェーダー構造体

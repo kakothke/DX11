@@ -44,24 +44,15 @@
     <Filter Include="DX11Game\GameObject\Camera">
       <UniqueIdentifier>{0d8b0f7e-d88c-447f-a6b5-ef9da065bd9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\Resource\FileNames">
-      <UniqueIdentifier>{ec7f223a-e07c-4ffd-b0f7-1fa267a66ced}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DX11Game\GameObject\Light">
       <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\Unlit_ps.hlsl">
+    <FxCompile Include="shader\Standard.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\Standard_ps.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\Standard_vs.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\Unlit_vs.hlsl">
+    <FxCompile Include="shader\Unlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
@@ -71,9 +62,6 @@
     </ClInclude>
     <ClInclude Include="src\BaseGameObject.h">
       <Filter>DX11Game\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BaseShader.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
       <Filter>DX11Game\GameObject\Camera</Filter>
@@ -111,9 +99,6 @@
     <ClInclude Include="src\SceneManager.h">
       <Filter>DX11Game\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\PixelShader.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="src\ShaderLoader.h">
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClInclude>
@@ -138,20 +123,11 @@
     <ClInclude Include="src\Vector3Math.h">
       <Filter>DX11Game\Comon</Filter>
     </ClInclude>
-    <ClInclude Include="src\VertexShader.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="src\Window.h">
       <Filter>DX11Game\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Sphere.h">
       <Filter>DX11Game\GameObject\3D Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OBJFileName.h">
-      <Filter>DX11Game\Resource\FileNames</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ShaderFileName.h">
-      <Filter>DX11Game\Resource\FileNames</Filter>
     </ClInclude>
     <ClInclude Include="src\TestObj.h">
       <Filter>DX11Game\GameObject\3D Object</Filter>
@@ -162,13 +138,16 @@
     <ClInclude Include="src\DirectionalLight.h">
       <Filter>DX11Game\GameObject\Light</Filter>
     </ClInclude>
+    <ClInclude Include="src\OBJFileName.h">
+      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderFileName.h">
+      <Filter>DX11Game\Resource\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
       <Filter>DX11Game\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BaseShader.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>DX11Game\GameObject\Camera</Filter>
@@ -200,9 +179,6 @@
     <ClCompile Include="src\SceneManager.cpp">
       <Filter>DX11Game\Scene\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\PixelShader.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClCompile>
@@ -224,20 +200,11 @@
     <ClCompile Include="src\Vector3Math.cpp">
       <Filter>DX11Game\Comon</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexShader.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>DX11Game\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Sphere.cpp">
       <Filter>DX11Game\GameObject\3D Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OBJFileName.cpp">
-      <Filter>DX11Game\Resource\FileNames</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShaderFileName.cpp">
-      <Filter>DX11Game\Resource\FileNames</Filter>
     </ClCompile>
     <ClCompile Include="src\TestObj.cpp">
       <Filter>DX11Game\GameObject\3D Object</Filter>
@@ -247,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>DX11Game\GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OBJFileName.cpp">
+      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderFileName.cpp">
+      <Filter>DX11Game\Resource\Shader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

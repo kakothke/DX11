@@ -139,33 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <FxCompile Include="shader\Standard_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
+    <FxCompile Include="shader\Standard.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
     </FxCompile>
-    <FxCompile Include="shader\Standard_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="shader\Unlit_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="shader\Unlit_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/res/shader/%(Filename).cso</ObjectFileOutput>
+    <FxCompile Include="shader\Unlit.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h" />
     <ClInclude Include="src\BaseGameObject.h" />
-    <ClInclude Include="src\BaseShader.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\ConstantBuffer.h" />
     <ClInclude Include="src\Cube.h" />
@@ -179,7 +164,6 @@
     <ClInclude Include="src\OBJFileName.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
-    <ClInclude Include="src\PixelShader.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\ShaderFileName.h" />
@@ -193,12 +177,10 @@
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Vector3Math.h" />
-    <ClInclude Include="src\VertexShader.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp" />
-    <ClCompile Include="src\BaseShader.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\ConstantBuffer.cpp" />
     <ClCompile Include="src\Cube.cpp" />
@@ -211,7 +193,6 @@
     <ClCompile Include="src\OBJFileName.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
-    <ClCompile Include="src\PixelShader.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\ShaderFileName.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
@@ -223,7 +204,6 @@
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
     <ClCompile Include="src\Vector3Math.cpp" />
-    <ClCompile Include="src\VertexShader.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
