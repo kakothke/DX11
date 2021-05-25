@@ -32,10 +32,6 @@ bool SystemMain::initialize()
 		return false;
 	}
 
-	// ウィンドウを表示
-	ShowWindow(mWindow.hWnd(), SW_SHOW);
-	UpdateWindow(mWindow.hWnd());
-
 	// Singletonクラスを継承しているクラスの実体化
 	OBJLoader::getInst();
 	ShaderLoader::getInst();
@@ -46,6 +42,10 @@ bool SystemMain::initialize()
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Standard));
+
+	// ウィンドウを表示
+	ShowWindow(mWindow.hWnd(), SW_SHOW);
+	UpdateWindow(mWindow.hWnd());
 
 	return true;
 }

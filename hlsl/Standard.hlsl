@@ -1,12 +1,14 @@
 struct VS_IN
 {
     float4 pos : POSITION0;
+    float2 uv : TEXTURE0;
     float4 nor : NORMAL0;
 };
 
 struct VS_OUT
 {
     float4 pos : SV_POSITION;
+    float2 uv : TEXTURE0;
     float4 nor : NORMAL;
 };
 
@@ -30,6 +32,8 @@ VS_OUT VS(VS_IN input)
     output.pos = mul(input.pos, MATRIX_W);
     output.pos = mul(output.pos, MATRIX_V);
     output.pos = mul(output.pos, MATRIX_P);
+    
+    output.uv = input.uv;
 
     float4 normal;
     input.nor.w = 0.0;
@@ -40,6 +44,9 @@ VS_OUT VS(VS_IN input)
     return output;
 }
 
+Texture2D Texture : register(t0[0]);
+SamplerState Sampler : register(s0[0]);
+
 cbuffer CB_MATERIAL : register(b3)
 {
     float4 MATERIAL_A;
@@ -49,23 +56,8 @@ cbuffer CB_MATERIAL : register(b3)
 
 float4 PS(VS_OUT input) : SV_Target
 {
-    float material_ambient_power = 1.0;
-    float material_diffuse_power = 1.0;
-    float total_power = material_ambient_power + material_diffuse_power;
+    float4 outColor = (LIGHT_COL * MATERIAL_D * input.nor);
+    outColor += Texture.Sample(Sampler, input.uv);
 
-    if (total_power == 0)
-    {
-        total_power = 1.0;
-    }
-
-    float ambient_power = material_ambient_power / total_power;
-    float diffuse_power = material_diffuse_power / total_power;
-
-    float4 ambient_color = MATERIAL_A * ambient_power;
-    float4 diffuse_color = (LIGHT_COL * MATERIAL_D * input.nor) * diffuse_power;
-
-	// アンビエントカラー + ディフューズカラー
-    float4 out_color = ambient_color + diffuse_color;
-
-    return out_color;
+    return outColor;
 }

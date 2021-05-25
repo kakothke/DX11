@@ -32,8 +32,10 @@ public:
 	//@{
 	void drawStart();
 	void drawEnd();
-	void setUpContext(const ShaderData* aShaderData);
 	//@}
+
+	void setUpContext(const ShaderData* aShaderData);
+	void setTexture(ID3D11ShaderResourceView* aTexture);
 
 	/// @name アクセサ
 	//@{
@@ -54,6 +56,8 @@ private:
 	bool createDepthAndStencil();
 	/// 深度ステンシルステートを作成する
 	bool createDepthStencilState();
+	/// テクスチャサンプラーを作成する
+	bool createTextureSampler();
 	/// ビューポートを設定する
 	void setUpViewPort();
 	/// ラスタライズを設定する
@@ -76,6 +80,8 @@ private:
 	ID3D11Texture2D* mDepthStencilTexture;
 	/// 深度ステンシルステート
 	ID3D11DepthStencilState* mDepthStencilState;
+	/// テクスチャサンプラー
+	ID3D11SamplerState* mSamplerState;
 	//@}
 
 };

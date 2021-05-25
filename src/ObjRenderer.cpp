@@ -53,6 +53,9 @@ bool OBJRenderer::render(const Transform& aTransform)
 		ConstantBuffer::getInst()->setMatrixW(aTransform);
 		ConstantBuffer::getInst()->updateMatrix();
 		ConstantBuffer::getInst()->updateMaterial(mOBJData->materials[index.first]);
+		if (!mOBJData->textures.empty()) {
+			Direct3D11::getInst()->setTexture(mOBJData->textures[mOBJData->materials[index.first].textureFileName]);
+		}
 
 		// •`‰æ
 		Direct3D11::getInst()->getContext()->DrawIndexed((UINT)index.second.size(), 0, 0);

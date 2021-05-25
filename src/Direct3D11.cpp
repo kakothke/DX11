@@ -17,6 +17,7 @@ Direct3D11::Direct3D11()
 	, mDepthStencilView(nullptr)
 	, mDepthStencilTexture(nullptr)
 	, mDepthStencilState(nullptr)
+	, mSamplerState(nullptr)
 {
 }
 
@@ -37,6 +38,10 @@ Direct3D11::~Direct3D11()
 		mContext->Flush();
 		mContext->Release();
 		mContext = nullptr;
+	}
+	if (mSamplerState) {
+		mSamplerState->Release();
+		mSamplerState = nullptr;
 	}
 	if (mDepthStencilView) {
 		mDepthStencilView->Release();
@@ -81,6 +86,11 @@ bool Direct3D11::initialize()
 		MessageBox(nullptr, TEXT("深度ステンシルステートの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
+	// テクスチャサンプラーの作成
+	if (!createTextureSampler()) {
+		MessageBox(nullptr, TEXT("テクスチャサンプラーの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return false;
+	}
 	// コンスタントバッファを作成する
 	if (!ConstantBuffer::getInst()->create()) {
 		MessageBox(nullptr, TEXT("コンスタントバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -110,6 +120,7 @@ void Direct3D11::drawEnd()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// コンテキストを設定する
 void Direct3D11::setUpContext(const ShaderData* aShaderData)
 {
 	// プリミティブの形状を指定
@@ -138,6 +149,14 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 
 	// IA(InputAssemblerStage)に入力レイアウトを設定する
 	mContext->IASetInputLayout(aShaderData->inputLayout);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// テクスチャーを設定する
+void Direct3D11::setTexture(ID3D11ShaderResourceView* aTexture)
+{
+	mContext->PSSetSamplers(0, 1, &mSamplerState);
+	mContext->PSSetShaderResources(0, 1, &aTexture);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -266,6 +285,24 @@ bool Direct3D11::createDepthStencilState()
 
 	// 深度ステンシルステートを適用
 	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Direct3D11::createTextureSampler()
+{
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+
+	if (FAILED(mDevice->CreateSamplerState(&samplerDesc, &mSamplerState)))	{
+		return false;
+	}
 
 	return true;
 }

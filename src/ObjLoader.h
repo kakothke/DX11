@@ -14,11 +14,8 @@ namespace DX11 {
 /// 頂点データ構造体
 struct OBJVertex
 {
-	/// 頂点座標
 	float pos[3];
-	/// UV座標
 	float uv[2];
-	/// 法線座標
 	float nor[3];
 };
 
@@ -28,6 +25,7 @@ struct OBJMaterial
 	float ambient[3];
 	float diffuse[3];
 	float specular[3];
+	std::string textureFileName;
 };
 
 /// OBJファイルデータ保存用構造体
@@ -39,8 +37,10 @@ struct OBJData
 	std::vector<ID3D11Buffer*> indexBuffers;
 	/// インデックスバッファ
 	std::unordered_map<std::string, std::vector<UINT>> indexes;
-	/// マテリアルデータ
+	/// マテリアル
 	std::unordered_map<std::string, OBJMaterial> materials;
+	/// テクスチャ
+	std::unordered_map<std::string, ID3D11ShaderResourceView*> textures;
 
 	/// コンストラクタ
 	OBJData()
@@ -62,9 +62,12 @@ struct OBJData
 			buffer->Release();
 			buffer = nullptr;
 		}
-		indexBuffers.clear();
 		if (!indexes.empty()) {
 			indexes.clear();
+		}
+		for (auto tex : textures) {
+			tex.second->Release();
+			tex.second = nullptr;
 		}
 	}
 };

@@ -47,6 +47,9 @@
     <Filter Include="DX11Game\GameObject\Light">
       <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{b3fb5c2b-c537-4db6-a612-47425a91208a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -136,6 +139,9 @@
     <ClInclude Include="src\ShaderFileName.h">
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="src\ThirdParty\WICTextureLoader11.h">
+      <Filter>ThirdParty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -157,9 +163,6 @@
       <Filter>DX11Game\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
-      <Filter>DX11Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Main.cpp">
       <Filter>DX11Game</Filter>
     </ClCompile>
     <ClCompile Include="src\OBJLoader.cpp">
@@ -212,6 +215,12 @@
     </ClCompile>
     <ClCompile Include="src\ShaderFileName.cpp">
       <Filter>DX11Game\Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>DX11Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp">
+      <Filter>ThirdParty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

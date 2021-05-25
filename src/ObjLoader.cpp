@@ -1,6 +1,8 @@
 #include "OBJLoader.h"
 
 //-------------------------------------------------------------------------------------------------
+#include <../../src/ThirdParty/WICTextureLoader11.h>
+#include <codecvt>
 #include "SplitString.h"
 #include "Direct3D11.h"
 
@@ -105,14 +107,20 @@ bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>&
 		// 頂点座標
 		else if (line.substr(0, 2) == "v ") {
 			pushStoV(v, SplitString::split(line.substr(2), ' '));
+			// z軸を反転させる
+			v[v.size() - 1][2] *= -1;
 		}
 		// UV座標
 		else if (line.substr(0, 2) == "vt") {
 			pushStoV(vt, SplitString::split(line.substr(3), ' '));
+			// v軸を反転させる
+			vt[vt.size() - 1][1] = (1.0f - vt[vt.size() - 1][1]);
 		}
 		// 法線座標
 		else if (line.substr(0, 2) == "vn") {
 			pushStoV(vn, SplitString::split(line.substr(3), ' '));
+			// z軸を反転させる
+			vn[vn.size() - 1][2] *= -1;
 		}
 		// 面情報
 		else if (line.substr(0, 2) == "f ") {
@@ -155,6 +163,7 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 {
 	// マテリアルが存在しないとき
 	if (aMtlNames.empty()) {
+		// とりあえず代入
 		mOBJData[aFileName].materials[""].ambient[0] = 1;
 		mOBJData[aFileName].materials[""].ambient[1] = 1;
 		mOBJData[aFileName].materials[""].ambient[2] = 1;
@@ -182,6 +191,10 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			if (line[0] == '#') {
 				continue;
 			}
+			// マテリアルグループ名を変更
+			else if (line.substr(0, 6) == "newmtl") {
+				newmtlName = line.substr(7);
+			}
 			// アンビエント
 			else if (line.substr(0, 2) == "Ka") {
 				std::vector<std::string> splitSpace = SplitString::split(line.substr(3), ' ');
@@ -203,9 +216,21 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 					mOBJData[aFileName].materials[newmtlName].specular[i] = std::stof(splitSpace[i]);
 				}
 			}
-			// マテリアルグループ名を変更
-			else if (line.substr(0, 6) == "newmtl") {
-				newmtlName = line.substr(7);
+			// テクスチャ
+			else if (line.substr(0, 6) == "map_Kd") {
+				std::string texName = filePath + line.substr(7);
+				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
+				// テクスチャ作成
+				std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
+				std::wstring wTexName = cv.from_bytes(texName);
+				if (FAILED(DirectX::CreateWICTextureFromFile(
+					Direct3D11::getInst()->getDevice(),
+					wTexName.c_str(),
+					nullptr,
+					&mOBJData[aFileName].textures[texName]
+				))) {
+					return false;
+				}
 			}
 		}
 	}
