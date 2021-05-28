@@ -166,9 +166,9 @@ void ConstantBuffer::updateDirectionalLight(const Vector3& aRot, const DirectX::
 	// ƒ‰ƒCƒgŒü‚«
 	DirectX::XMVECTOR rot = DirectX::XMVector3Normalize(
 		DirectX::XMVectorSet(
+			-aRot.y,
 			aRot.x,
-			aRot.y,
-			aRot.z,
+			0,
 			0
 		)
 	);
