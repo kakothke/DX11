@@ -103,6 +103,12 @@ bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>&
 	std::unordered_map<std::string, UINT> vertexID;
 	std::string line, usemtlName;
 	while (getline(ifs, line)) {
+		// 空白は消す
+		if (line[0] == ' ' || line[0] == '	') {
+			while (line[0] == ' ' || line[0] == '	') {
+				line.erase(0, 1);
+			}
+		}
 		// コメントは無視する
 		if (line[0] == '#') {
 			continue;
@@ -210,6 +216,12 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 
 		std::string line, newmtlName;
 		while (getline(ifs, line)) {
+			// 空白は消す
+			if (line[0] == ' ' || line[0] == '	') {
+				while (line[0] == ' ' || line[0] == '	') {
+					line.erase(0, 1);
+				}
+			}
 			// コメントは無視する
 			if (line[0] == '#') {
 				continue;
