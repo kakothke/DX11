@@ -127,6 +127,12 @@ bool Vector3::operator !=(const Vector3& aVector) const
 }
 
 //-------------------------------------------------------------------------------------------------
+void Vector3::operator =(float aValue)
+{
+	x = aValue;
+	y = aValue;
+	z = aValue;
+}
 void Vector3::operator +=(float aValue)
 {
 	x += aValue;

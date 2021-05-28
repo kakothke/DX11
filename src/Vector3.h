@@ -31,6 +31,7 @@ public:
     bool operator ==(const Vector3& aVector) const;
     bool operator !=(const Vector3& aVector) const;
 
+    void operator =(float aValue);
     void operator +=(float aValue);
     void operator -=(float aValue);
     void operator *=(float aValue);

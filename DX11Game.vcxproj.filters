@@ -230,5 +230,8 @@
     <FxCompile Include="hlsl\Unlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="hlsl\Sprite.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -32,6 +32,7 @@ void TestObj::initialize()
 		OBJFileName::fileName(OBJList::TestObj),
 		ShaderFileName::fileName(ShaderList::Standard)
 	);
+	mTransform.scale = 20;
 }
 
 //-------------------------------------------------------------------------------------------------
