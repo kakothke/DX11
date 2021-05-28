@@ -17,6 +17,13 @@ struct OBJVertex
 	float pos[3];
 	float uv[2];
 	float nor[3];
+
+	OBJVertex()
+		: pos{ 0,0,0 }
+		, uv{ 0,0 }
+		, nor{ 0,0,0 }
+	{
+	}
 };
 
 /// マテリアルデータ構造体
@@ -26,6 +33,14 @@ struct OBJMaterial
 	float diffuse[3];
 	float specular[3];
 	std::string textureFileName;
+
+	OBJMaterial()
+		: ambient{ 0,0,0 }
+		, diffuse{ 0,0,0 }
+		, specular{ 0,0,0 }
+		, textureFileName()
+	{
+	}
 };
 
 /// OBJファイルデータ保存用構造体

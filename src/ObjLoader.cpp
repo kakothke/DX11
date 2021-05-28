@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------------------------------------
 #include <../../src/ThirdParty/WICTextureLoader11.h>
 #include <codecvt>
+#include <sstream>
+#include <iomanip>
 #include "SplitString.h"
 #include "Direct3D11.h"
 
@@ -98,6 +100,7 @@ bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>&
 	}
 
 	std::vector<std::vector<float>> v, vt, vn;
+	std::unordered_map<std::string, UINT> vertexID;
 	std::string line, usemtlName;
 	while (getline(ifs, line)) {
 		// コメントは無視する
@@ -140,9 +143,29 @@ bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>&
 				for (UINT j = 0; !vn.empty() && j < vn[0].size(); j++) {
 					tmp.nor[j] = vn[std::stoi(slashSplit[2]) - 1][j];
 				}
-				// 各バッファコンテナに追加
-				aVertexes.push_back(tmp);
-				mOBJData[aFileName].indexes[usemtlName].push_back(aVertexes.size() - 1);
+				// 頂点情報調査用文字列作成
+				std::string key;
+				for (int i = 0; i < 3; i++) {
+					std::ostringstream sout;
+					sout << std::setfill('0') << std::setw(5) << slashSplit[i];
+					key += sout.str();
+				}
+				// 重複チェック
+				if (vertexID.count(key) == 0) {
+					// 頂点情報追加
+					aVertexes.push_back(tmp);
+					mOBJData[aFileName].indexes[usemtlName].push_back((UINT)aVertexes.size() - 1);
+					vertexID[key] = (UINT)aVertexes.size() - 1;
+				} else {
+					// 登録されている頂点バッファの要素番号をインデックスバッファに保存する
+					mOBJData[aFileName].indexes[usemtlName].push_back(vertexID[key]);
+				}
+			}
+			// 4頂点対応
+			if (spaceSplit.size() > 3) {
+				UINT size = (UINT)mOBJData[aFileName].indexes[usemtlName].size();
+				mOBJData[aFileName].indexes[usemtlName].push_back(mOBJData[aFileName].indexes[usemtlName][size - 4]);
+				mOBJData[aFileName].indexes[usemtlName].push_back(mOBJData[aFileName].indexes[usemtlName][size - 2]);
 			}
 		}
 		// 所属マテリアル名の切り替え

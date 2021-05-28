@@ -44,8 +44,8 @@ VS_OUT VS(VS_IN input)
     return output;
 }
 
-Texture2D Texture : register(t0[0]);
-SamplerState Sampler : register(s0[0]);
+Texture2D Texture : register(t0);
+SamplerState Sampler : register(s0);
 
 cbuffer CB_MATERIAL : register(b3)
 {
