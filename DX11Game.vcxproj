@@ -163,9 +163,13 @@
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\SplitString.h" />
+    <ClInclude Include="src\SpriteFileName.h" />
+    <ClInclude Include="src\SpriteLoader.h" />
+    <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\SystemMain.h" />
     <ClInclude Include="src\TestObj.h" />
     <ClInclude Include="src\TestScene.h" />
+    <ClInclude Include="src\TextureLoader.h" />
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Vector3.h" />
@@ -191,9 +195,13 @@
     <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\SplitString.cpp" />
+    <ClCompile Include="src\SpriteFileName.cpp" />
+    <ClCompile Include="src\SpriteLoader.cpp" />
+    <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\SystemMain.cpp" />
     <ClCompile Include="src\TestObj.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
+    <ClCompile Include="src\TextureLoader.cpp" />
     <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector3.cpp" />

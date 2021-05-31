@@ -50,6 +50,15 @@
     <Filter Include="ThirdParty">
       <UniqueIdentifier>{b3fb5c2b-c537-4db6-a612-47425a91208a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11Game\Resource\Texture">
+      <UniqueIdentifier>{9af04d80-4b32-481a-a610-9e45fe077267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11Game\Resource\Sprite">
+      <UniqueIdentifier>{4892d28b-5d40-4e02-8205-852528645de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11Game\Resource\Mesh\Billboard">
+      <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -142,6 +151,18 @@
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h">
       <Filter>ThirdParty</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextureLoader.h">
+      <Filter>DX11Game\Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteRenderer.h">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteFileName.h">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteLoader.h">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -221,6 +242,18 @@
     </ClCompile>
     <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp">
       <Filter>ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureLoader.cpp">
+      <Filter>DX11Game\Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteRenderer.cpp">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteFileName.cpp">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteLoader.cpp">
+      <Filter>DX11Game\Resource\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

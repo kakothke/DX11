@@ -123,9 +123,6 @@ void Direct3D11::drawEnd()
 /// コンテキストを設定する
 void Direct3D11::setUpContext(const ShaderData* aShaderData)
 {
-	// プリミティブの形状を指定
-	mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 	// VertexShaderを設定
 	mContext->VSSetShader(
 		aShaderData->vs,
@@ -140,14 +137,14 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 		0
 	);
 
-	// (OutputManger)RnderTagetの指定
+	// OutputMangerRnderTagetの指定
 	mContext->OMSetRenderTargets(
 		1,
 		&mRenderTargetView,
 		mDepthStencilView
 	);
 
-	// IA(InputAssemblerStage)に入力レイアウトを設定する
+	// InputAssemblerStageに入力レイアウトを設定する
 	mContext->IASetInputLayout(aShaderData->inputLayout);
 }
 

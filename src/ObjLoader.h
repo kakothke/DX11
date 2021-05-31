@@ -54,8 +54,6 @@ struct OBJData
 	std::unordered_map<std::string, std::vector<UINT>> indexes;
 	/// マテリアル
 	std::unordered_map<std::string, OBJMaterial> materials;
-	/// テクスチャ
-	std::unordered_map<std::string, ID3D11ShaderResourceView*> textures;
 
 	/// コンストラクタ
 	OBJData()
@@ -79,10 +77,6 @@ struct OBJData
 		}
 		if (!indexes.empty()) {
 			indexes.clear();
-		}
-		for (auto tex : textures) {
-			tex.second->Release();
-			tex.second = nullptr;
 		}
 	}
 };
@@ -111,8 +105,8 @@ public:
 private:
 	/// @name 内部実装関数
 	//@{
-	/// OBJファイルを読み込む
-	bool loadOBJFile(const char* const aFileName, std::vector<OBJVertex>& aVertexes, std::vector<std::string>& aMtlNames);
+	/// メッシュを作成する
+	bool createMesh(const char* const aFileName, std::vector<OBJVertex>& aVertexes, std::vector<std::string>& aMtlNames);
 	/// マテリアルファイルを読み込む
 	bool loadMtlFile(const char* const aFileName, const std::vector<std::string>& aMtlNames);
 	/// 頂点バッファを作成する

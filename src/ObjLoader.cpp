@@ -7,6 +7,7 @@
 #include <iomanip>
 #include "SplitString.h"
 #include "Direct3D11.h"
+#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -39,7 +40,7 @@ bool OBJLoader::load(const char* const aFileName)
 	}
 	std::vector<OBJVertex> vertexes;
 	std::vector<std::string> mtlNames;
-	if (!loadOBJFile(aFileName, vertexes, mtlNames)) {
+	if (!createMesh(aFileName, vertexes, mtlNames)) {
 		MessageBox(nullptr, TEXT(".objファイルの読み込みに失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
@@ -87,11 +88,11 @@ OBJData* OBJLoader::getObjData(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// OBJファイルを読み込む
-/// @param aFileName 読み込みたいOBJのファイルパス
+/// メッシュを作成する
+/// @param aFileName 作成したいOBJのファイルパス
 /// @param aVertexData 要素を追加させる頂点データ構造体
 /// @return 作成結果 成功(true)
-bool OBJLoader::loadOBJFile(const char* const aFileName, std::vector<OBJVertex>& aVertexes, std::vector<std::string>& aMtlNames)
+bool OBJLoader::createMesh(const char* const aFileName, std::vector<OBJVertex>& aVertexes, std::vector<std::string>& aMtlNames)
 {
 	// ファイルを読み込む
 	std::ifstream ifs(aFileName);
@@ -255,17 +256,7 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
 				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				// テクスチャ作成
-				std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
-				std::wstring wTexName = cv.from_bytes(texName);
-				if (FAILED(DirectX::CreateWICTextureFromFile(
-					Direct3D11::getInst()->getDevice(),
-					wTexName.c_str(),
-					nullptr,
-					&mOBJData[aFileName].textures[texName]
-				))) {
-					return false;
-				}
+				TextureLoader::getInst()->load(texName.c_str());
 			}
 		}
 	}

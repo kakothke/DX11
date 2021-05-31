@@ -5,6 +5,7 @@
 #include "Define.h"
 #include "OBJFileName.h"
 #include "ShaderFileName.h"
+#include "SpriteFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {

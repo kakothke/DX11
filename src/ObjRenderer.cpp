@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "ConstantBuffer.h"
+#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -26,6 +27,9 @@ bool OBJRenderer::render(const Transform& aTransform)
 	if (!mOBJData || !mShaderData) {
 		return false;
 	}
+
+	// プリミティブの形状を指定
+	Direct3D11::getInst()->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// シェーダーの指定
 	Direct3D11::getInst()->setUpContext(mShaderData);
@@ -53,8 +57,13 @@ bool OBJRenderer::render(const Transform& aTransform)
 		ConstantBuffer::getInst()->setMatrixW(aTransform);
 		ConstantBuffer::getInst()->updateMatrix();
 		ConstantBuffer::getInst()->updateMaterial(mOBJData->materials[index.first]);
-		if (!mOBJData->textures.empty()) {
-			Direct3D11::getInst()->setTexture(mOBJData->textures[mOBJData->materials[index.first].textureFileName]);
+
+		if (!mOBJData->materials[index.first].textureFileName.empty()) {
+			// テクスチャーセット
+			const char* texName = mOBJData->materials[index.first].textureFileName.c_str();
+			Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(texName));
+		} else {
+			Direct3D11::getInst()->setTexture(nullptr);
 		}
 
 		// 描画

@@ -7,6 +7,8 @@
 #include "OBJFileName.h"
 #include "ShaderLoader.h"
 #include "ShaderFileName.h"
+#include "SpriteLoader.h"
+#include "SpriteFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -35,6 +37,7 @@ bool SystemMain::initialize()
 	// Singletonクラスを継承しているクラスの実体化
 	OBJLoader::getInst();
 	ShaderLoader::getInst();
+	SpriteLoader::getInst();
 
 	// リソースの読み込み
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Cube));
@@ -42,6 +45,7 @@ bool SystemMain::initialize()
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Standard));
+	SpriteLoader::getInst()->load(SpriteFileName::fileName(SpriteList::TestImage));
 
 	// ウィンドウを表示
 	ShowWindow(mWindow.hWnd(), SW_SHOW);
