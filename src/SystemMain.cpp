@@ -45,7 +45,7 @@ bool SystemMain::initialize()
 	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
 	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Standard));
-	SpriteLoader::getInst()->load(SpriteFileName::fileName(SpriteList::TestImage));
+	SpriteLoader::getInst()->load(SpriteFileName::fileName(SpriteList::TestTexture));
 
 	// ウィンドウを表示
 	ShowWindow(mWindow.hWnd(), SW_SHOW);

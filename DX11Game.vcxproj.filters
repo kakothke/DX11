@@ -59,6 +59,9 @@
     <Filter Include="DX11Game\Resource\Mesh\Billboard">
       <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11Game\GameObject\UI">
+      <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -163,6 +166,9 @@
     <ClInclude Include="src\SpriteLoader.h">
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestSprite.h">
+      <Filter>DX11Game\GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -254,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="src\SpriteLoader.cpp">
       <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestSprite.cpp">
+      <Filter>DX11Game\GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

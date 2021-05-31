@@ -19,9 +19,10 @@ TestScene::~TestScene()
 /// çXêV
 void TestScene::update()
 {
-	mTestObj.update();
 	mCamera.update();
 	mDirectionalLight.update();
+	mTestObj.update();
+	mTestSprite.update();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -29,6 +30,7 @@ void TestScene::update()
 void TestScene::draw()
 {
 	mTestObj.draw();
+	mTestSprite.draw();
 }
 
 } // namespace

@@ -1,9 +1,9 @@
-#include "TestObj.h"
+#include "TestSprite.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Define.h"
-#include "OBJFileName.h"
+#include "SpriteFileName.h"
 #include "ShaderFileName.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -11,14 +11,14 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-TestObj::TestObj()
+TestSprite::TestSprite()
 {
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 引数付きコンストラクタ
-TestObj::TestObj(Transform aTransform)
+TestSprite::TestSprite(Transform aTransform)
 {
 	mTransform = aTransform;
 	initialize();
@@ -26,25 +26,25 @@ TestObj::TestObj(Transform aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void TestObj::initialize()
+void TestSprite::initialize()
 {
-	mRenderer.setObjAndShaderData(
-		OBJFileName::fileName(OBJList::TestObj),
+	mRenderer.setSpriteAndShaderData(
+		SpriteFileName::fileName(SpriteList::TestTexture),
 		ShaderFileName::fileName(ShaderList::Standard)
 	);
-	mTransform.scale = 20;
+	mTransform.scale = 10;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void TestObj::update()
+void TestSprite::update()
 {
 	mTransform.rot.y += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void TestObj::draw()
+void TestSprite::draw()
 {
 	mRenderer.render(mTransform);
 }

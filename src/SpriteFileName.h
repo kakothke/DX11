@@ -9,7 +9,7 @@ namespace DX11 {
 /// シェーダーリスト
 enum class SpriteList
 {
-	TestImage,
+	TestTexture,
 };
 
 /// シェーダーファイル名取得用クラス
