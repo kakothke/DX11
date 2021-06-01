@@ -112,7 +112,7 @@
     <ClInclude Include="src\Singleton.h">
       <Filter>DX11Game\Comon</Filter>
     </ClInclude>
-    <ClInclude Include="src\SplitString.h">
+    <ClInclude Include="src\StringSupport.h">
       <Filter>DX11Game\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\SystemMain.h">
@@ -207,7 +207,7 @@
     <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>DX11Game\Resource\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="src\SplitString.cpp">
+    <ClCompile Include="src\StringSupport.cpp">
       <Filter>DX11Game\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\SystemMain.cpp">

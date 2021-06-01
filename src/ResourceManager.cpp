@@ -10,10 +10,10 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 ResourceManager::ResourceManager()
-	: mOBJLoader()
-	, mSpriteLoader()
-	, mTextureLoader()
-	, mShaderLoader()
+	: mOBJ()
+	, mSprite()
+	, mTexture()
+	, mShader()
 {
 }
 
@@ -26,41 +26,41 @@ ResourceManager::~ResourceManager()
 void ResourceManager::initialize()
 {
 	// OBJs
-	mOBJLoader.load(OBJFileName::fileName(OBJList::Cube));
-	mOBJLoader.load(OBJFileName::fileName(OBJList::Sphere));
-	mOBJLoader.load(OBJFileName::fileName(OBJList::TestObj));
+	mOBJ.load(OBJFileName::fileName(OBJList::Cube));
+	mOBJ.load(OBJFileName::fileName(OBJList::Sphere));
+	mOBJ.load(OBJFileName::fileName(OBJList::TestObj));
 
 	// Sprites
-	mSpriteLoader.load(SpriteFileName::fileName(SpriteList::TestTexture));
+	mSprite.load(SpriteFileName::fileName(SpriteList::TestTexture));
 
 	// Shaders
-	mShaderLoader.load(ShaderFileName::fileName(ShaderList::Unlit));
-	mShaderLoader.load(ShaderFileName::fileName(ShaderList::Standard));
-	mShaderLoader.load(ShaderFileName::fileName(ShaderList::Sprite));
+	mShader.load(ShaderFileName::fileName(ShaderList::Unlit));
+	mShader.load(ShaderFileName::fileName(ShaderList::Standard));
+	mShader.load(ShaderFileName::fileName(ShaderList::Sprite));
 }
 
 //-------------------------------------------------------------------------------------------------
-OBJLoader* ResourceManager::getOBJLoader()
+OBJLoader* ResourceManager::OBJ()
 {
-	return &mOBJLoader;
+	return &mOBJ;
 }
 
 //-------------------------------------------------------------------------------------------------
-SpriteLoader* ResourceManager::getSpriteLoader()
+SpriteLoader* ResourceManager::Sprite()
 {
-	return &mSpriteLoader;
+	return &mSprite;
 }
 
 //-------------------------------------------------------------------------------------------------
-TextureLoader* ResourceManager::getTextureLoader()
+TextureLoader* ResourceManager::Texture()
 {
-	return &mTextureLoader;
+	return &mTexture;
 }
 
 //-------------------------------------------------------------------------------------------------
-ShaderLoader* ResourceManager::getShaderLoader()
+ShaderLoader* ResourceManager::Shader()
 {
-	return &mShaderLoader;
+	return &mShader;
 }
 
 } // namespace

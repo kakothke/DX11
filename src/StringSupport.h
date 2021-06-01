@@ -8,7 +8,7 @@
 namespace DX11 {
 
 /// ベクトル変換計算
-class SplitString
+class StringSupport
 {
 public:
 	//@ name 文字列を任意のデリミタで分割する
@@ -17,7 +17,7 @@ public:
 	//@}
 
 private:
-	SplitString();
+	StringSupport();
 
 };
 

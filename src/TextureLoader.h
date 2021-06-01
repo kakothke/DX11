@@ -3,13 +3,12 @@
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
 #include <unordered_map>
-#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 /// テクスチャー読み込みクラス
-class TextureLoader : public Singleton<TextureLoader>
+class TextureLoader
 {
 public:
 	/// @name コンストラクタ/デストラクタ

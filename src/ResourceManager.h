@@ -19,16 +19,16 @@ public:
 
 	void initialize();
 
-	OBJLoader* getOBJLoader();
-	SpriteLoader* getSpriteLoader();
-	TextureLoader* getTextureLoader();
-	ShaderLoader* getShaderLoader();
+	OBJLoader* OBJ();
+	SpriteLoader* Sprite();
+	TextureLoader* Texture();
+	ShaderLoader* Shader();
 
 private:
-	OBJLoader mOBJLoader;
-	SpriteLoader mSpriteLoader;
-	TextureLoader mTextureLoader;
-	ShaderLoader mShaderLoader;
+	OBJLoader mOBJ;
+	SpriteLoader mSprite;
+	TextureLoader mTexture;
+	ShaderLoader mShader;
 
 };
 

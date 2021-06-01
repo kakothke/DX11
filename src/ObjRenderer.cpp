@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "ConstantBuffer.h"
-#include "TextureLoader.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -61,7 +61,7 @@ bool OBJRenderer::render(const Transform& aTransform)
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット
 			const char* texName = mOBJData->materials[index.first].textureFileName.c_str();
-			Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(texName));
+			Direct3D11::getInst()->setTexture(ResourceManager::getInst()->Texture()->getTexture(texName));
 		} else {
 			Direct3D11::getInst()->setTexture(nullptr);
 		}
@@ -78,8 +78,8 @@ bool OBJRenderer::render(const Transform& aTransform)
 //-------------------------------------------------------------------------------------------------
 void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
 {
-	mOBJData = OBJLoader::getInst()->getObjData(aOBJFileName);
-	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	mOBJData = ResourceManager::getInst()->OBJ()->getOBJData(aOBJFileName);
+	mShaderData = ResourceManager::getInst()->Shader()->getShaderData(aShaderFileName);
 }
 
 } // namespace

@@ -4,7 +4,6 @@
 #include <d3d11.h>
 #include <vector>
 #include <unordered_map>
-#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -33,6 +32,7 @@ struct SpriteData
 	/// コンストラクタ
 	SpriteData()
 		: vertexBuffer(nullptr)
+		, fileName("")
 	{
 	}
 	/// デストラクタ
@@ -46,7 +46,7 @@ struct SpriteData
 };
 
 /// スプライト読み込みクラス
-class SpriteLoader : public Singleton<SpriteLoader>
+class SpriteLoader
 {
 public:
 	/// @name コンストラクタ/デストラクタ

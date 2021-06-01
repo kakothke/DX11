@@ -2,7 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "TextureLoader.h"
+#include "ResourceManager.h"
 
 namespace DX11 {
 
@@ -28,7 +28,7 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("スプライトの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!TextureLoader::getInst()->load(aFileName)) {
+	if (!ResourceManager::getInst()->Texture()->load(aFileName)) {
 		return false;
 	}
 	if (!createVertexBuffer(aFileName)) {
@@ -109,16 +109,17 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 //-------------------------------------------------------------------------------------------------
 void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)
 {
-
+	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	TextureLoader::getInst()->getTexture(aFileName)->GetResource(&res);
+	ResourceManager::getInst()->Texture()->getTexture(aFileName)->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
 	res->QueryInterface(&tex2D);
 	D3D11_TEXTURE2D_DESC desc;
 	tex2D->GetDesc(&desc);
 
-	int width = desc.Width / 100;
-	int height = desc.Height / 100;
+	// そのままだと大きすぎるので除算
+	float width = (float)desc.Width / 100;
+	float height = (float)desc.Height / 100;
 
 	res->Release();
 	res = nullptr;

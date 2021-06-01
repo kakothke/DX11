@@ -1,5 +1,5 @@
 #pragma once
-#include "SplitString.h"
+#include "StringSupport.h"
 
 //-------------------------------------------------------------------------------------------------
 #include <sstream>
@@ -12,7 +12,7 @@ namespace DX11 {
 /// @param aStr •ªŠ„‚·‚é•¶Žš—ñ
 /// @param aDelim •ªŠ„‚·‚é•¶Žš‚ðŽw’è
 /// @return •ªŠ„‚µ‚½•¶Žš—ñ
-std::vector<std::string> SplitString::split(const std::string& aStr, const char aDelim)
+std::vector<std::string> StringSupport::split(const std::string& aStr, const char aDelim)
 {
     std::vector<std::string> v;
     std::istringstream iss(aStr);

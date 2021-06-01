@@ -3,12 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Game.h"
-#include "OBJLoader.h"
-#include "OBJFileName.h"
-#include "ShaderLoader.h"
-#include "ShaderFileName.h"
-#include "SpriteLoader.h"
-#include "SpriteFileName.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -34,19 +29,8 @@ bool SystemMain::initialize()
 		return false;
 	}
 
-	// Singletonクラスを継承しているクラスの実体化
-	OBJLoader::getInst();
-	ShaderLoader::getInst();
-	SpriteLoader::getInst();
-
-	// リソースの読み込み
-	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Cube));
-	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::Sphere));
-	OBJLoader::getInst()->load(OBJFileName::fileName(OBJList::TestObj));
-	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Unlit));
-	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Standard));
-	ShaderLoader::getInst()->load(ShaderFileName::fileName(ShaderList::Sprite));
-	SpriteLoader::getInst()->load(SpriteFileName::fileName(SpriteList::TestTexture));
+	// リソースの初期化
+	ResourceManager::getInst()->initialize();
 
 	// ウィンドウを表示
 	ShowWindow(mWindow.hWnd(), SW_SHOW);

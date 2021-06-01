@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "ConstantBuffer.h"
-#include "TextureLoader.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -52,7 +52,7 @@ bool SpriteRenderer::render(const Transform& aTransform)
 	ConstantBuffer::getInst()->updateMatrix();
 
 	// テクスチャーセット
-	Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(mSpriteData->fileName));
+	Direct3D11::getInst()->setTexture(ResourceManager::getInst()->Texture()->getTexture(mSpriteData->fileName));
 
 	// 描画
 	Direct3D11::getInst()->getContext()->Draw(4, 0);
@@ -63,8 +63,8 @@ bool SpriteRenderer::render(const Transform& aTransform)
 //-------------------------------------------------------------------------------------------------
 void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
 {
-	mSpriteData = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
-	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	mSpriteData = ResourceManager::getInst()->Sprite()->getSpriteData(aSpriteFileName);
+	mShaderData = ResourceManager::getInst()->Shader()->getShaderData(aShaderFileName);
 }
 
 } // namespace

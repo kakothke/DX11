@@ -163,7 +163,7 @@
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\Sphere.h" />
-    <ClInclude Include="src\SplitString.h" />
+    <ClInclude Include="src\StringSupport.h" />
     <ClInclude Include="src\SpriteFileName.h" />
     <ClInclude Include="src\SpriteLoader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
@@ -197,7 +197,7 @@
     <ClCompile Include="src\ShaderFileName.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
-    <ClCompile Include="src\SplitString.cpp" />
+    <ClCompile Include="src\StringSupport.cpp" />
     <ClCompile Include="src\SpriteFileName.cpp" />
     <ClCompile Include="src\SpriteLoader.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />

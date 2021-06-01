@@ -5,9 +5,9 @@
 #include <codecvt>
 #include <sstream>
 #include <iomanip>
-#include "SplitString.h"
+#include "StringSupport.h"
 #include "Direct3D11.h"
-#include "TextureLoader.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -78,7 +78,7 @@ void OBJLoader::release(const char* const aFileName)
 //-------------------------------------------------------------------------------------------------
 /// OBJファイルのデータを取得する
 /// @param aFileName 取得したいOBJのファイルパス
-OBJData* OBJLoader::getObjData(const char* const aFileName)
+OBJData* OBJLoader::getOBJData(const char* const aFileName)
 {
 	if (mOBJData.count(aFileName)) {
 		return &mOBJData[aFileName];
@@ -116,28 +116,28 @@ bool OBJLoader::createMesh(const char* const aFileName, std::vector<OBJVertex>& 
 		}
 		// 頂点座標
 		else if (line.substr(0, 2) == "v ") {
-			pushStoV(v, SplitString::split(line.substr(2), ' '));
+			pushStoV(v, StringSupport::split(line.substr(2), ' '));
 			// z軸を反転させる
 			v[v.size() - 1][2] *= -1;
 		}
 		// UV座標
 		else if (line.substr(0, 2) == "vt") {
-			pushStoV(vt, SplitString::split(line.substr(3), ' '));
+			pushStoV(vt, StringSupport::split(line.substr(3), ' '));
 			// v軸を反転させる
 			vt[vt.size() - 1][1] = (1.0f - vt[vt.size() - 1][1]);
 		}
 		// 法線座標
 		else if (line.substr(0, 2) == "vn") {
-			pushStoV(vn, SplitString::split(line.substr(3), ' '));
+			pushStoV(vn, StringSupport::split(line.substr(3), ' '));
 			// z軸を反転させる
 			vn[vn.size() - 1][2] *= -1;
 		}
 		// 面情報
 		else if (line.substr(0, 2) == "f ") {
-			std::vector<std::string> spaceSplit = SplitString::split(line.substr(2), ' ');
+			std::vector<std::string> spaceSplit = StringSupport::split(line.substr(2), ' ');
 			for (UINT i = 0; i < spaceSplit.size(); i++) {
 				OBJVertex tmp;
-				std::vector<std::string> slashSplit = SplitString::split(spaceSplit[i], '/');
+				std::vector<std::string> slashSplit = StringSupport::split(spaceSplit[i], '/');
 				// 頂点座標
 				for (UINT j = 0; !v.empty() && j < v[0].size(); j++) {
 					tmp.pos[j] = v[std::stoi(slashSplit[0]) - 1][j];
@@ -233,21 +233,21 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			}
 			// アンビエント
 			else if (line.substr(0, 2) == "Ka") {
-				std::vector<std::string> splitSpace = SplitString::split(line.substr(3), ' ');
+				std::vector<std::string> splitSpace = StringSupport::split(line.substr(3), ' ');
 				for (UINT i = 0; i < splitSpace.size(); i++) {
 					mOBJData[aFileName].materials[newmtlName].ambient[i] = std::stof(splitSpace[i]);
 				}
 			}
 			// デフューズ
 			else if (line.substr(0, 2) == "Kd") {
-				std::vector<std::string> splitSpace = SplitString::split(line.substr(3), ' ');
+				std::vector<std::string> splitSpace = StringSupport::split(line.substr(3), ' ');
 				for (UINT i = 0; i < splitSpace.size(); i++) {
 					mOBJData[aFileName].materials[newmtlName].diffuse[i] = std::stof(splitSpace[i]);
 				}
 			}
 			// スペキュラー
 			else if (line.substr(0, 2) == "Ks") {
-				std::vector<std::string> splitSpace = SplitString::split(line.substr(3), ' ');
+				std::vector<std::string> splitSpace = StringSupport::split(line.substr(3), ' ');
 				for (UINT i = 0; i < splitSpace.size(); i++) {
 					mOBJData[aFileName].materials[newmtlName].specular[i] = std::stof(splitSpace[i]);
 				}
@@ -256,7 +256,7 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
 				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				TextureLoader::getInst()->load(texName.c_str());
+				ResourceManager::getInst()->Texture()->load(texName.c_str());
 			}
 		}
 	}

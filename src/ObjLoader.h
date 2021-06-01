@@ -6,7 +6,6 @@
 #include <fstream>
 #include <string>
 #include <unordered_map>
-#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -82,7 +81,7 @@ struct OBJData
 };
 
 /// OBJファイル読み込みクラス
-class OBJLoader : public Singleton<OBJLoader>
+class OBJLoader
 {
 public:
 	/// @name コンストラクタ/デストラクタ
@@ -99,7 +98,7 @@ public:
 
 	/// @name OBJデータを取得する
 	//@{
-	OBJData* getObjData(const char* const aFileName);
+	OBJData* getOBJData(const char* const aFileName);
 	//@}
 
 private:
