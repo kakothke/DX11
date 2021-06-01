@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "ConstantBuffer.h"
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -27,9 +26,9 @@ void Camera::update()
 //-------------------------------------------------------------------------------------------------
 void Camera::updateConstantBuffer()
 {
-	ConstantBuffer::getInst()->setMatrixV(mTransform);
-	ConstantBuffer::getInst()->setMatrixP(mFov, mNearZ, mFarZ);
-	ConstantBuffer::getInst()->updateCamera(mTransform);
+	Direct3D11::getInst()->getConstantBuffer()->setMatrixV(mTransform);
+	Direct3D11::getInst()->getConstantBuffer()->setMatrixP(mFov, mNearZ, mFarZ);
+	Direct3D11::getInst()->getConstantBuffer()->updateCamera(mTransform);
 }
 
 //-------------------------------------------------------------------------------------------------

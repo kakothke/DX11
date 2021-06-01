@@ -62,6 +62,9 @@
     <Filter Include="DX11Game\GameObject\Sprite">
       <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DX11Game\System\DirectX11">
+      <UniqueIdentifier>{10c9ac05-581d-4eac-a4c0-5fb00974952f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -78,9 +81,6 @@
     </ClInclude>
     <ClInclude Include="src\Define.h">
       <Filter>DX11Game\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Direct3D11.h">
-      <Filter>DX11Game\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
       <Filter>DX11Game\System</Filter>
@@ -139,9 +139,6 @@
     <ClInclude Include="src\TestObj.h">
       <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\ConstantBuffer.h">
-      <Filter>DX11Game\System</Filter>
-    </ClInclude>
     <ClInclude Include="src\DirectionalLight.h">
       <Filter>DX11Game\GameObject\Light</Filter>
     </ClInclude>
@@ -166,6 +163,12 @@
     <ClInclude Include="src\ResourceFileName.h">
       <Filter>DX11Game\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="src\Direct3D11.h">
+      <Filter>DX11Game\System\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConstantBuffer.h">
+      <Filter>DX11Game\System\DirectX11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -179,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="src\Define.cpp">
       <Filter>DX11Game\Comon</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Direct3D11.cpp">
-      <Filter>DX11Game\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>DX11Game\System</Filter>
@@ -228,9 +228,6 @@
     <ClCompile Include="src\TestObj.cpp">
       <Filter>DX11Game\GameObject\3D Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConstantBuffer.cpp">
-      <Filter>DX11Game\System</Filter>
-    </ClCompile>
     <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>DX11Game\GameObject\Light</Filter>
     </ClCompile>
@@ -257,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="src\ResourceFileName.cpp">
       <Filter>DX11Game\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConstantBuffer.cpp">
+      <Filter>DX11Game\System\DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3D11.cpp">
+      <Filter>DX11Game\System\DirectX11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

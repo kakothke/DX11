@@ -19,7 +19,7 @@ cbuffer CB_MATRIX : register(b0)
     float4x4 MATRIX_P;
 }
 
-cbuffer CB_DLIGHT : register(b2)
+cbuffer CB_DLIGHT : register(b3)
 {
     float4 LIGHT_VEC;
     float4 LIGHT_COL;
@@ -47,7 +47,7 @@ VS_OUT VS(VS_IN input)
 Texture2D Texture : register(t0);
 SamplerState Sampler : register(s0);
 
-cbuffer CB_MATERIAL : register(b3)
+cbuffer CB_MATERIAL : register(b5)
 {
     float4 MATERIAL_A;
     float4 MATERIAL_D;

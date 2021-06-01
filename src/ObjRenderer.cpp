@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "ConstantBuffer.h"
 #include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -54,9 +53,9 @@ bool OBJRenderer::render(const Transform& aTransform)
 		);
 
 		// コンスタントバッファを更新
-		ConstantBuffer::getInst()->setMatrixW(aTransform);
-		ConstantBuffer::getInst()->updateMatrix();
-		ConstantBuffer::getInst()->updateMaterial(mOBJData->materials[index.first]);
+		Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform);
+		Direct3D11::getInst()->getConstantBuffer()->updateMatrix();
+		Direct3D11::getInst()->getConstantBuffer()->updateMaterial(mOBJData->materials[index.first]);
 
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット

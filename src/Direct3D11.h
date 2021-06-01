@@ -4,8 +4,8 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "Singleton.h"
-#include "ObjLoader.h"
-#include "ShaderLoader.h"
+#include "ConstantBuffer.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 #pragma comment(lib, "D3D11.lib")
@@ -43,6 +43,8 @@ public:
 	ID3D11Device* getDevice() const;
 	/// コンテキストを返す
 	ID3D11DeviceContext* getContext() const;
+	/// コンスタントバッファーを参照する
+	ConstantBuffer* getConstantBuffer();
 	//@}
 
 private:
@@ -82,6 +84,8 @@ private:
 	ID3D11DepthStencilState* mDepthStencilState;
 	/// テクスチャサンプラー
 	ID3D11SamplerState* mSamplerState;
+	/// コンスタントバッファー
+	ConstantBuffer mConstantBuffer;
 	//@}
 
 };

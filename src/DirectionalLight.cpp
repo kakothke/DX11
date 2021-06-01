@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "ConstantBuffer.h"
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -24,7 +23,7 @@ void DirectionalLight::update()
 //-------------------------------------------------------------------------------------------------
 void DirectionalLight::updateConstantBuffer()
 {
-	ConstantBuffer::getInst()->updateDirectionalLight(mTransform.rot, mColor);
+	Direct3D11::getInst()->getConstantBuffer()->updateDirectionalLight(mTransform.rot, mColor);
 }
 
 //-------------------------------------------------------------------------------------------------

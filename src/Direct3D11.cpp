@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Define.h"
-#include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -18,6 +17,7 @@ Direct3D11::Direct3D11()
 	, mDepthStencilTexture(nullptr)
 	, mDepthStencilState(nullptr)
 	, mSamplerState(nullptr)
+	, mConstantBuffer()
 {
 }
 
@@ -92,7 +92,7 @@ bool Direct3D11::initialize()
 		return false;
 	}
 	// コンスタントバッファを作成する
-	if (!ConstantBuffer::getInst()->create()) {
+	if (!mConstantBuffer.create()) {
 		MessageBox(nullptr, TEXT("コンスタントバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
@@ -168,6 +168,12 @@ ID3D11Device* Direct3D11::getDevice() const
 ID3D11DeviceContext* Direct3D11::getContext() const
 {
 	return mContext;
+}
+
+//-------------------------------------------------------------------------------------------------
+ConstantBuffer* Direct3D11::getConstantBuffer()
+{
+	return &mConstantBuffer;
 }
 
 //-------------------------------------------------------------------------------------------------

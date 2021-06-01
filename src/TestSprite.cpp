@@ -29,7 +29,7 @@ void TestSprite::initialize()
 {
 	mRenderer.setSpriteAndShaderData(
 		ResourceFileName::Sprite.at(SpriteList::Test),
-		ResourceFileName::Shader.at(ShaderList::Standard)
+		ResourceFileName::Shader.at(ShaderList::Sprite)
 	);
 	mTransform.pos.x = 3;
 }

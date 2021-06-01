@@ -2,39 +2,29 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 ConstantBuffer::ConstantBuffer()
-	: mBufferMatrix(nullptr)
-	, mBufferCamera(nullptr)
-	, mBufferLight(nullptr)
-	, mBufferMaterial(nullptr)
+	: mBuffer()
 	, mData()
 {
+	mBuffer.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 ConstantBuffer::~ConstantBuffer()
 {
-	if (mBufferMatrix) {
-		mBufferMatrix->Release();
-		mBufferMatrix = nullptr;
+	for (auto buffer : mBuffer) {
+		if (buffer.second) {
+			buffer.second->Release();
+			buffer.second = nullptr;
+		}
 	}
-	if (mBufferCamera) {
-		mBufferCamera->Release();
-		mBufferCamera = nullptr;
-	}
-	if (mBufferLight) {
-		mBufferLight->Release();
-		mBufferLight = nullptr;
-	}
-	if (mBufferMaterial) {
-		mBufferMaterial->Release();
-		mBufferMaterial = nullptr;
-	}
+	mBuffer.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -47,22 +37,43 @@ bool ConstantBuffer::create()
 	bufferDesc.MiscFlags = 0;
 	bufferDesc.StructureByteStride = 0;
 
+	// 変換行列
 	bufferDesc.ByteWidth = sizeof(CB_MATRIX);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferMatrix))) {
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[MATRIX]))) {
 		return false;
 	}
+	// 変換行列2D
+	bufferDesc.ByteWidth = sizeof(CB_SPRITE);
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[SPRITE]))) {
+		return false;
+	}
+	// カメラ情報
 	bufferDesc.ByteWidth = sizeof(CB_CAMERA);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferCamera))) {
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[CAMERA]))) {
 		return false;
 	}
+	// ディレクショナルライト情報
 	bufferDesc.ByteWidth = sizeof(CB_DLIGHT);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferLight))) {
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[LIGHT]))) {
 		return false;
 	}
+	// マテリアル情報
 	bufferDesc.ByteWidth = sizeof(CB_MATERIAL);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBufferMaterial))) {
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[MATERIAL]))) {
 		return false;
 	}
+
+	// スプライト用プロジェクション行列をセット
+	float w = Define::ResolutionWidth;
+	float h = Define::ResolutionHeight;
+	DirectX::XMMATRIX proj2D = {
+	h / w , 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f
+	};
+	XMStoreFloat4x4(&mData.SPRITE.PROJ_2D, XMMatrixTranspose(proj2D));
+	updateSprite();
 
 	return true;
 }
@@ -114,15 +125,30 @@ void ConstantBuffer::setMatrixP(const float aFov, const float aNearZ, const floa
 void ConstantBuffer::updateMatrix()
 {
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBufferMatrix,
+		mBuffer[MATRIX],
 		0,
 		NULL,
 		&mData.MATRIX,
 		0,
 		0
 	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(0, 1, &mBufferMatrix);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(0, 1, &mBufferMatrix);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(MATRIX, 1, &mBuffer[MATRIX]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(MATRIX, 1, &mBuffer[MATRIX]);
+}
+
+//-------------------------------------------------------------------------------------------------
+void ConstantBuffer::updateSprite()
+{
+	Direct3D11::getInst()->getContext()->UpdateSubresource(
+		mBuffer[SPRITE],
+		0,
+		NULL,
+		&mData.SPRITE,
+		0,
+		0
+	);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(SPRITE, 1, &mBuffer[SPRITE]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(SPRITE, 1, &mBuffer[SPRITE]);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -148,15 +174,15 @@ void ConstantBuffer::updateCamera(const Transform& aTransform)
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBufferCamera,
+		mBuffer[CAMERA],
 		0,
 		NULL,
 		&mData.CAMERA,
 		0,
 		0
 	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(1, 1, &mBufferCamera);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(1, 1, &mBufferCamera);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(CAMERA, 1, &mBuffer[CAMERA]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(CAMERA, 1, &mBuffer[CAMERA]);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -178,21 +204,21 @@ void ConstantBuffer::updateDirectionalLight(const Vector3& aRot, const DirectX::
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBufferLight,
+		mBuffer[LIGHT],
 		0,
 		NULL,
 		&mData.DLIGHT,
 		0,
 		0
 	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(2, 1, &mBufferLight);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(2, 1, &mBufferLight);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(LIGHT, 1, &mBuffer[LIGHT]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(LIGHT, 1, &mBuffer[LIGHT]);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// マテリアルコンスタントバッファを更新する
 void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
-{	
+{
 	// アンビエント
 	mData.MATERIAL.A = DirectX::XMFLOAT4(
 		aMaterial.ambient[0],
@@ -219,15 +245,15 @@ void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBufferMaterial,
+		mBuffer[MATERIAL],
 		0,
 		NULL,
 		&mData.MATERIAL,
 		0,
 		0
 	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(3, 1, &mBufferMaterial);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(3, 1, &mBufferMaterial);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(MATERIAL, 1, &mBuffer[MATERIAL]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(MATERIAL, 1, &mBuffer[MATERIAL]);
 }
 
 } // namespace

@@ -1,35 +1,42 @@
-struct VS_INPUT
+struct appdata
 {
     float3 pos : POSITION;
     float2 uv : TEXCOORD;
 };
 
-struct VS_OUTPUT
+struct v2p
 {
     float4 pos : SV_POSITION;
     float2 uv : TEXCOORD1;
 };
 
-VS_OUTPUT VS(VS_INPUT input)
+cbuffer CB_MATRIX2D : register(b1)
 {
-    VS_OUTPUT output;
+    float4x4 PROJ_2D;
+}
+
+v2p VS(appdata v)
+{
+    v2p o;
 	
-    output.pos.xyz = input.pos.xyz;
-    output.pos.w = 1.0f;
-    output.uv = input.uv;
+    //o.pos.xyz = v.pos.xyz;
+    //o.pos.w = 1.0f;
+    o.pos = mul(float4(v.pos, 1.0f), PROJ_2D);
+    
+    o.uv = v.uv;
 	
-    return output;
+    return o;
 }
 
 Texture2D diffuse : register(t0);
 SamplerState samplerDiffuse : register(s0);
 
-float4 PS(VS_OUTPUT input) : SV_Target0
+float4 PS(v2p i) : SV_Target0
 {
-    float4 output;
+    float4 col;
 	
-    float4 tex = diffuse.Sample(samplerDiffuse, input.uv);
+    col = diffuse.Sample(samplerDiffuse, i.uv);
     //output = input.col * tex;
 	
-    return output;
+    return col;
 }

@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
+#include <DirectXMath.h>
 #include <vector>
 #include <unordered_map>
 
@@ -13,7 +14,6 @@ struct SpriteVertex
 {
 	float pos[3];
 	float uv[2];
-
 	SpriteVertex()
 		: pos{ 0,0,0 }
 		, uv{ 0,0 }

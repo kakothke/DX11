@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "ConstantBuffer.h"
 #include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -48,8 +47,8 @@ bool SpriteRenderer::render(const Transform& aTransform)
 	);
 
 	// コンスタントバッファを更新
-	ConstantBuffer::getInst()->setMatrixW(aTransform);
-	ConstantBuffer::getInst()->updateMatrix();
+	Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform);
+	Direct3D11::getInst()->getConstantBuffer()->updateMatrix();
 
 	// テクスチャーセット
 	Direct3D11::getInst()->setTexture(ResourceManager::getInst()->Texture()->getTexture(mSpriteData->fileName));
