@@ -94,23 +94,48 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 /// 入力レイアウト作成
 bool ShaderLoader::createInputLayout(const char* const aFileName)
 {
-	ID3DBlob* blob = nullptr;
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring fileName = cv.from_bytes(aFileName);
 
+	ID3DBlob* blob = nullptr;
 	if (FAILED(D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, &blob, nullptr))) {
 		return false;
 	}
 
-	D3D11_INPUT_ELEMENT_DESC vertexDesc[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXTURE",0, DXGI_FORMAT_R32G32_FLOAT, 0,	D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
+	ID3D11ShaderReflection* reflection = nullptr;
+	if (FAILED(D3DReflect(blob->GetBufferPointer(), blob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflection))) {
+		return false;
+	}
 
+	D3D11_SHADER_DESC shaderDesc;
+	reflection->GetDesc(&shaderDesc);
+
+	// リフレクションから頂点レイアウト作成
+	std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
+	for (UINT i = 0; i < shaderDesc.InputParameters; i++) {
+		D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
+		reflection->GetInputParameterDesc(i, &paramDesc);
+
+		auto format = getDxgiFormat(paramDesc);
+
+		D3D11_INPUT_ELEMENT_DESC elementDesc = {
+			paramDesc.SemanticName,
+			paramDesc.SemanticIndex,
+			format,
+			0,
+			D3D11_APPEND_ALIGNED_ELEMENT,
+			D3D11_INPUT_PER_VERTEX_DATA,
+			0
+		};
+		inputLayoutDesc.push_back(elementDesc);
+	}
+	reflection->Release();
+	reflection = nullptr;
+
+	// 頂点レイアウト作成
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateInputLayout(
-		vertexDesc,
-		ARRAYSIZE(vertexDesc),
+		&inputLayoutDesc[0],
+		inputLayoutDesc.size(),
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
 		&mShaderData[aFileName].inputLayout
@@ -122,6 +147,60 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 	blob = nullptr;
 
 	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// リフレクション内のDXGIFormatを検索する
+DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc)
+{
+	BYTE mask = aParamDesc.Mask;
+	D3D_REGISTER_COMPONENT_TYPE type = aParamDesc.ComponentType;
+	std::string sementicName = aParamDesc.SemanticName;
+
+	if (mask == 1) {
+		switch (type) {
+		case D3D_REGISTER_COMPONENT_UINT32:
+			return DXGI_FORMAT_R32_UINT;
+		case D3D_REGISTER_COMPONENT_SINT32:
+			return DXGI_FORMAT_R32_SINT;
+		case D3D_REGISTER_COMPONENT_FLOAT32:
+			return DXGI_FORMAT_R32_FLOAT;
+		}
+	} else if (mask <= 3) {
+		switch (type) {
+		case D3D_REGISTER_COMPONENT_UINT32:
+			return DXGI_FORMAT_R32G32_UINT;
+		case D3D_REGISTER_COMPONENT_SINT32:
+			return DXGI_FORMAT_R32G32_SINT;
+		case D3D_REGISTER_COMPONENT_FLOAT32:
+			return DXGI_FORMAT_R32G32_FLOAT;
+		}
+	} else if (mask <= 7) {
+		switch (type) {
+		case D3D_REGISTER_COMPONENT_UINT32:
+			return DXGI_FORMAT_R32G32B32_UINT;
+		case D3D_REGISTER_COMPONENT_SINT32:
+			return DXGI_FORMAT_R32G32B32_SINT;
+		case D3D_REGISTER_COMPONENT_FLOAT32:
+			return DXGI_FORMAT_R32G32B32_FLOAT;
+		}
+	} else if (mask <= 15) {
+		switch (type) {
+		case D3D_REGISTER_COMPONENT_UINT32:
+			return DXGI_FORMAT_R32G32B32A32_UINT;
+		case D3D_REGISTER_COMPONENT_SINT32:
+			return DXGI_FORMAT_R32G32B32A32_SINT;
+		case D3D_REGISTER_COMPONENT_FLOAT32:
+			if (sementicName == "POSITION" || sementicName == "NORMAL") {
+				return DXGI_FORMAT_R32G32B32_FLOAT;
+			} else {
+				return DXGI_FORMAT_R32G32B32A32_FLOAT;
+			}
+		}
+	}
+
+	MessageBox(nullptr, TEXT("入力レイアウトの作成処理関数の追記が必要です。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+	return DXGI_FORMAT_UNKNOWN;
 }
 
 //-------------------------------------------------------------------------------------------------

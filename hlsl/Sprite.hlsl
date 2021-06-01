@@ -1,14 +1,12 @@
 struct VS_INPUT
 {
     float3 pos : POSITION;
-    float4 col : COLOR;
     float2 uv : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
     float4 pos : SV_POSITION;
-    float4 col : TEXCOORD0;
     float2 uv : TEXCOORD1;
 };
 
@@ -18,7 +16,6 @@ VS_OUTPUT VS(VS_INPUT input)
 	
     output.pos.xyz = input.pos.xyz;
     output.pos.w = 1.0f;
-    output.col = input.col;
     output.uv = input.uv;
 	
     return output;
@@ -32,7 +29,7 @@ float4 PS(VS_OUTPUT input) : SV_Target0
     float4 output;
 	
     float4 tex = diffuse.Sample(samplerDiffuse, input.uv);
-    output = input.col * tex;
+    //output = input.col * tex;
 	
     return output;
 }

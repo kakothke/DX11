@@ -8,6 +8,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib")
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -59,6 +60,7 @@ public:
 private:
 	bool createVertexShader(const char* const aFileName);
 	bool createInputLayout(const char* const aFileName);
+	DXGI_FORMAT getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc);
 	bool createPixelShader(const char* const aFileName);
 
 	/// @name プライベートメンバ変数

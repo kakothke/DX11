@@ -14,12 +14,10 @@ struct SpriteVertex
 {
 	float pos[3];
 	float uv[2];
-	float nor[3];
 
 	SpriteVertex()
 		: pos{ 0,0,0 }
 		, uv{ 0,0 }
-		, nor{ 0,0,0 }
 	{
 	}
 };
