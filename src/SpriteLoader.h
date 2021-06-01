@@ -70,7 +70,7 @@ private:
 	/// 頂点バッファを作成する
 	bool createVertexBuffer(const char* const aFileName);
 	/// メッシュを作成する
-	void createMesh(SpriteVertex* aVertexes);
+	void createMesh(const char* const aFileName, SpriteVertex* aVertexes);
 	/// メッシュの大きさをテクスチャーのサイズに合わせる
 	//void resizeMesh();
 

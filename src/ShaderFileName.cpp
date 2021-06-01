@@ -7,6 +7,7 @@ std::unordered_map<ShaderList, const char*> ShaderFileName::mFileName =
 {
 	{ ShaderList::Unlit, "hlsl/Unlit.hlsl" },
 	{ ShaderList::Standard, "hlsl/Standard.hlsl" },
+	{ ShaderList::Sprite, "hlsl/Sprite.hlsl" },
 };
 
 } // namespace

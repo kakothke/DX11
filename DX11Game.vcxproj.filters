@@ -59,7 +59,7 @@
     <Filter Include="DX11Game\Resource\Mesh\Billboard">
       <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\GameObject\UI">
+    <Filter Include="DX11Game\GameObject\Sprite">
       <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -148,9 +148,6 @@
     <ClInclude Include="src\OBJFileName.h">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShaderFileName.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h">
       <Filter>ThirdParty</Filter>
     </ClInclude>
@@ -160,14 +157,20 @@
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="src\SpriteFileName.h">
-      <Filter>DX11Game\Resource\Sprite</Filter>
-    </ClInclude>
     <ClInclude Include="src\SpriteLoader.h">
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="src\TestSprite.h">
-      <Filter>DX11Game\GameObject\UI</Filter>
+      <Filter>DX11Game\GameObject\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderFileName.h">
+      <Filter>DX11Game\Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteFileName.h">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>DX11Game\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +243,6 @@
     <ClCompile Include="src\OBJFileName.cpp">
       <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="src\ShaderFileName.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>DX11Game</Filter>
     </ClCompile>
@@ -255,14 +255,20 @@
     <ClCompile Include="src\SpriteRenderer.cpp">
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="src\SpriteFileName.cpp">
-      <Filter>DX11Game\Resource\Sprite</Filter>
-    </ClCompile>
     <ClCompile Include="src\SpriteLoader.cpp">
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="src\TestSprite.cpp">
-      <Filter>DX11Game\GameObject\UI</Filter>
+      <Filter>DX11Game\GameObject\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteFileName.cpp">
+      <Filter>DX11Game\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderFileName.cpp">
+      <Filter>DX11Game\Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>DX11Game\Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

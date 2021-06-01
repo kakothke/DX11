@@ -156,6 +156,7 @@
     <ClInclude Include="src\OBJFileName.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
+    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\SceneList.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\ShaderFileName.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="src\OBJFileName.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\ShaderFileName.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />

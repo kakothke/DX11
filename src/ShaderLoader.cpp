@@ -116,12 +116,10 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 		D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
 		reflection->GetInputParameterDesc(i, &paramDesc);
 
-		auto format = getDxgiFormat(paramDesc);
-
 		D3D11_INPUT_ELEMENT_DESC elementDesc = {
 			paramDesc.SemanticName,
 			paramDesc.SemanticIndex,
-			format,
+			getDxgiFormat(paramDesc),
 			0,
 			D3D11_APPEND_ALIGNED_ELEMENT,
 			D3D11_INPUT_PER_VERTEX_DATA,
@@ -153,12 +151,8 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 /// ÉäÉtÉåÉNÉVÉáÉìì‡ÇÃDXGIFormatÇåüçıÇ∑ÇÈ
 DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc)
 {
-	BYTE mask = aParamDesc.Mask;
-	D3D_REGISTER_COMPONENT_TYPE type = aParamDesc.ComponentType;
-	std::string sementicName = aParamDesc.SemanticName;
-
-	if (mask == 1) {
-		switch (type) {
+	if (aParamDesc.Mask == 1) {
+		switch (aParamDesc.ComponentType) {
 		case D3D_REGISTER_COMPONENT_UINT32:
 			return DXGI_FORMAT_R32_UINT;
 		case D3D_REGISTER_COMPONENT_SINT32:
@@ -166,8 +160,8 @@ DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDes
 		case D3D_REGISTER_COMPONENT_FLOAT32:
 			return DXGI_FORMAT_R32_FLOAT;
 		}
-	} else if (mask <= 3) {
-		switch (type) {
+	} else if (aParamDesc.Mask <= 3) {
+		switch (aParamDesc.ComponentType) {
 		case D3D_REGISTER_COMPONENT_UINT32:
 			return DXGI_FORMAT_R32G32_UINT;
 		case D3D_REGISTER_COMPONENT_SINT32:
@@ -175,8 +169,8 @@ DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDes
 		case D3D_REGISTER_COMPONENT_FLOAT32:
 			return DXGI_FORMAT_R32G32_FLOAT;
 		}
-	} else if (mask <= 7) {
-		switch (type) {
+	} else if (aParamDesc.Mask <= 7) {
+		switch (aParamDesc.ComponentType) {
 		case D3D_REGISTER_COMPONENT_UINT32:
 			return DXGI_FORMAT_R32G32B32_UINT;
 		case D3D_REGISTER_COMPONENT_SINT32:
@@ -184,13 +178,14 @@ DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDes
 		case D3D_REGISTER_COMPONENT_FLOAT32:
 			return DXGI_FORMAT_R32G32B32_FLOAT;
 		}
-	} else if (mask <= 15) {
-		switch (type) {
+	} else if (aParamDesc.Mask <= 15) {
+		switch (aParamDesc.ComponentType) {
 		case D3D_REGISTER_COMPONENT_UINT32:
 			return DXGI_FORMAT_R32G32B32A32_UINT;
 		case D3D_REGISTER_COMPONENT_SINT32:
 			return DXGI_FORMAT_R32G32B32A32_SINT;
 		case D3D_REGISTER_COMPONENT_FLOAT32:
+			std::string sementicName = aParamDesc.SemanticName;
 			if (sementicName == "POSITION" || sementicName == "NORMAL") {
 				return DXGI_FORMAT_R32G32B32_FLOAT;
 			} else {

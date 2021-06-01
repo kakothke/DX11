@@ -65,7 +65,7 @@ SpriteData* SpriteLoader::getSpriteData(const char* const aFileName)
 bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 {
 	SpriteVertex vertexes[4];
-	createMesh(vertexes);
+	createMesh(aFileName, vertexes);
 	// バッファ情報
 	D3D11_BUFFER_DESC bufferDesc;
 	{
@@ -107,28 +107,44 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-void SpriteLoader::createMesh(SpriteVertex* aVertexes)
+void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)
 {
+
+	ID3D11Resource* res = nullptr;
+	TextureLoader::getInst()->getTexture(aFileName)->GetResource(&res);
+	ID3D11Texture2D* tex2D = nullptr;
+	res->QueryInterface(&tex2D);
+	D3D11_TEXTURE2D_DESC desc;
+	tex2D->GetDesc(&desc);
+
+	int width = desc.Width / 100;
+	int height = desc.Height / 100;
+
+	res->Release();
+	res = nullptr;
+	tex2D->Release();
+	tex2D = nullptr;
+
 	// 表面
 	{
 		// 頂点0
-		aVertexes[0].pos[0] = -1;
-		aVertexes[0].pos[1] = -1;
+		aVertexes[0].pos[0] = -width / 2;
+		aVertexes[0].pos[1] = -height / 2;
 		aVertexes[0].uv[0] = 0;
 		aVertexes[0].uv[1] = 1;
 		// 頂点1
-		aVertexes[1].pos[0] = -1;
-		aVertexes[1].pos[1] = 1;
+		aVertexes[1].pos[0] = -width / 2;
+		aVertexes[1].pos[1] = height / 2;
 		aVertexes[1].uv[0] = 0;
 		aVertexes[1].uv[1] = 0;
 		// 頂点2
-		aVertexes[2].pos[0] = 1;
-		aVertexes[2].pos[1] = -1;
+		aVertexes[2].pos[0] = width / 2;
+		aVertexes[2].pos[1] = -height / 2;
 		aVertexes[2].uv[0] = 1;
 		aVertexes[2].uv[1] = 1;
 		//// 頂点3
-		aVertexes[3].pos[0] = 1;
-		aVertexes[3].pos[1] = 1;
+		aVertexes[3].pos[0] = width / 2;
+		aVertexes[3].pos[1] = height / 2;
 		aVertexes[3].uv[0] = 1;
 		aVertexes[3].uv[1] = 0;
 	}

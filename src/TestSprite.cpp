@@ -32,7 +32,7 @@ void TestSprite::initialize()
 		SpriteFileName::fileName(SpriteList::TestTexture),
 		ShaderFileName::fileName(ShaderList::Standard)
 	);
-	mTransform.scale = 10;
+	mTransform.pos.x = 3;
 }
 
 //-------------------------------------------------------------------------------------------------
