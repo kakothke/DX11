@@ -120,6 +120,8 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 	// そのままだと大きすぎるので除算
 	float width = (float)desc.Width / 100;
 	float height = (float)desc.Height / 100;
+	width /= 2;
+	height /= 2;
 
 	res->Release();
 	res = nullptr;
@@ -129,23 +131,23 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 	// 表面
 	{
 		// 頂点0
-		aVertexes[0].pos[0] = -width / 2;
-		aVertexes[0].pos[1] = -height / 2;
+		aVertexes[0].pos[0] = -width;
+		aVertexes[0].pos[1] = -height;
 		aVertexes[0].uv[0] = 0;
 		aVertexes[0].uv[1] = 1;
 		// 頂点1
-		aVertexes[1].pos[0] = -width / 2;
-		aVertexes[1].pos[1] = height / 2;
-		aVertexes[1].uv[0] = 0;
-		aVertexes[1].uv[1] = 0;
+		aVertexes[1].pos[0] = width;
+		aVertexes[1].pos[1] = -height;
+		aVertexes[1].uv[0] = 1;
+		aVertexes[1].uv[1] = 1;
 		// 頂点2
-		aVertexes[2].pos[0] = width / 2;
-		aVertexes[2].pos[1] = -height / 2;
-		aVertexes[2].uv[0] = 1;
-		aVertexes[2].uv[1] = 1;
+		aVertexes[2].pos[0] = -width;
+		aVertexes[2].pos[1] = height;
+		aVertexes[2].uv[0] = 0;
+		aVertexes[2].uv[1] = 0;
 		//// 頂点3
-		aVertexes[3].pos[0] = width / 2;
-		aVertexes[3].pos[1] = height / 2;
+		aVertexes[3].pos[0] = width;
+		aVertexes[3].pos[1] = height;
 		aVertexes[3].uv[0] = 1;
 		aVertexes[3].uv[1] = 0;
 	}
