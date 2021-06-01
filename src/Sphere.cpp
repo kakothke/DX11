@@ -3,8 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Define.h"
-#include "OBJFileName.h"
-#include "ShaderFileName.h"
+#include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,8 +28,8 @@ Sphere::Sphere(Transform aTransform)
 void Sphere::initialize()
 {
 	mRenderer.setObjAndShaderData(
-		OBJFileName::fileName(OBJList::Sphere),
-		ShaderFileName::fileName(ShaderList::Standard)
+		ResourceFileName::OBJ.at(OBJList::Sphere),
+		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
 }
 

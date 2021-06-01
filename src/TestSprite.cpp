@@ -3,8 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Define.h"
-#include "SpriteFileName.h"
-#include "ShaderFileName.h"
+#include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,8 +28,8 @@ TestSprite::TestSprite(Transform aTransform)
 void TestSprite::initialize()
 {
 	mRenderer.setSpriteAndShaderData(
-		SpriteFileName::fileName(SpriteList::TestTexture),
-		ShaderFileName::fileName(ShaderList::Standard)
+		ResourceFileName::Sprite.at(SpriteList::Test),
+		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
 	mTransform.pos.x = 3;
 }

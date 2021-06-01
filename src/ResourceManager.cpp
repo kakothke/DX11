@@ -1,9 +1,7 @@
 #include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "OBJFileName.h"
-#include "SpriteFileName.h"
-#include "ShaderFileName.h"
+#include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -26,17 +24,17 @@ ResourceManager::~ResourceManager()
 void ResourceManager::initialize()
 {
 	// OBJs
-	mOBJ.load(OBJFileName::fileName(OBJList::Cube));
-	mOBJ.load(OBJFileName::fileName(OBJList::Sphere));
-	mOBJ.load(OBJFileName::fileName(OBJList::TestObj));
+	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Cube));
+	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
-	mSprite.load(SpriteFileName::fileName(SpriteList::TestTexture));
+	mSprite.load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
-	mShader.load(ShaderFileName::fileName(ShaderList::Unlit));
-	mShader.load(ShaderFileName::fileName(ShaderList::Standard));
-	mShader.load(ShaderFileName::fileName(ShaderList::Sprite));
+	mShader.load(ResourceFileName::Shader.at(ShaderList::Unlit));
+	mShader.load(ResourceFileName::Shader.at(ShaderList::Standard));
+	mShader.load(ResourceFileName::Shader.at(ShaderList::Sprite));
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -3,8 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Define.h"
-#include "OBJFileName.h"
-#include "ShaderFileName.h"
+#include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,8 +28,8 @@ Cube::Cube(Transform aTransform)
 void Cube::initialize()
 {
 	mRenderer.setObjAndShaderData(
-		OBJFileName::fileName(OBJList::Cube),
-		ShaderFileName::fileName(ShaderList::Standard)
+		ResourceFileName::OBJ.at(OBJList::Cube),
+		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
 }
 

@@ -3,8 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Define.h"
-#include "OBJFileName.h"
-#include "ShaderFileName.h"
+#include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,8 +28,8 @@ TestObj::TestObj(Transform aTransform)
 void TestObj::initialize()
 {
 	mRenderer.setObjAndShaderData(
-		OBJFileName::fileName(OBJList::TestObj),
-		ShaderFileName::fileName(ShaderList::Standard)
+		ResourceFileName::OBJ.at(OBJList::Test),
+		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
 	mTransform.scale = 20;
 }

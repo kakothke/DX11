@@ -145,9 +145,6 @@
     <ClInclude Include="src\DirectionalLight.h">
       <Filter>DX11Game\GameObject\Light</Filter>
     </ClInclude>
-    <ClInclude Include="src\OBJFileName.h">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
-    </ClInclude>
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h">
       <Filter>ThirdParty</Filter>
     </ClInclude>
@@ -163,13 +160,10 @@
     <ClInclude Include="src\TestSprite.h">
       <Filter>DX11Game\GameObject\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShaderFileName.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SpriteFileName.h">
-      <Filter>DX11Game\Resource\Sprite</Filter>
-    </ClInclude>
     <ClInclude Include="src\ResourceManager.h">
+      <Filter>DX11Game\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceFileName.h">
       <Filter>DX11Game\Resource</Filter>
     </ClInclude>
   </ItemGroup>
@@ -240,9 +234,6 @@
     <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>DX11Game\GameObject\Light</Filter>
     </ClCompile>
-    <ClCompile Include="src\OBJFileName.cpp">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>DX11Game</Filter>
     </ClCompile>
@@ -261,13 +252,10 @@
     <ClCompile Include="src\TestSprite.cpp">
       <Filter>DX11Game\GameObject\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="src\SpriteFileName.cpp">
-      <Filter>DX11Game\Resource\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShaderFileName.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>DX11Game\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceFileName.cpp">
       <Filter>DX11Game\Resource</Filter>
     </ClCompile>
   </ItemGroup>
