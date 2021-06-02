@@ -19,10 +19,7 @@ v2p VS(appdata v)
 {
     v2p o;
 	
-    //o.pos.xyz = v.pos.xyz;
-    //o.pos.w = 1.0f;
-    o.pos = mul(float4(v.pos, 1.0f), PROJ_2D);
-    
+    o.pos = mul(float4(v.pos, 1.0f), PROJ_2D);    
     o.uv = v.uv;
 	
     return o;

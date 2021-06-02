@@ -1,291 +1,291 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="DX11Game">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{595f6112-377d-47d3-99e7-0f0a63d0e5eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Comon">
-      <UniqueIdentifier>{ff7c137c-734d-4d4e-bbe6-d00b0e7f7fc2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\GameObject">
-      <UniqueIdentifier>{f6ff8239-72b9-493c-bb8d-6f70f1f9e55b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Resource">
-      <UniqueIdentifier>{0878d9fc-c493-4b1f-be88-30aef4eb4745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Scene">
-      <UniqueIdentifier>{d9c13801-32c7-4498-9b3f-7e5a5b6b973c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\System">
-      <UniqueIdentifier>{82cda6ef-86d7-4b41-b11f-b8d47afd6b4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Scene\SceneManager">
-      <UniqueIdentifier>{608668df-7e7c-477f-937d-5d13145263de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Resource\Mesh">
-      <UniqueIdentifier>{0805ee4c-e370-4862-9dd7-930424c3e1ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Resource\Mesh\FBX">
-      <UniqueIdentifier>{bca602bb-e06d-4680-af61-ad43093a47b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Resource\Mesh\OBJ">
-      <UniqueIdentifier>{9871ed1c-7b82-489b-bd4f-67c3c0e9c324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Resource\Shader">
-      <UniqueIdentifier>{fa62bd50-7ecf-48cf-8874-b699817f744c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\GameObject\3D Object">
-      <UniqueIdentifier>{7b8670bf-75fd-470b-929a-b5668d2da898}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\GameObject\Camera">
-      <UniqueIdentifier>{0d8b0f7e-d88c-447f-a6b5-ef9da065bd9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\GameObject\Light">
-      <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty">
       <UniqueIdentifier>{b3fb5c2b-c537-4db6-a612-47425a91208a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\Resource\Texture">
-      <UniqueIdentifier>{9af04d80-4b32-481a-a610-9e45fe077267}</UniqueIdentifier>
+    <Filter Include="Game">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="DX11Game\Resource\Sprite">
-      <UniqueIdentifier>{4892d28b-5d40-4e02-8205-852528645de3}</UniqueIdentifier>
+    <Filter Include="Game\Comon">
+      <UniqueIdentifier>{ff7c137c-734d-4d4e-bbe6-d00b0e7f7fc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\Resource\Mesh\Billboard">
-      <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\System\DirectX11">
-      <UniqueIdentifier>{10c9ac05-581d-4eac-a4c0-5fb00974952f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DX11Game\Comon\Math">
+    <Filter Include="Game\Comon\Math">
       <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\GameObject\2D Object">
+    <Filter Include="Game\GameObject">
+      <UniqueIdentifier>{f6ff8239-72b9-493c-bb8d-6f70f1f9e55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\3D Object">
+      <UniqueIdentifier>{7b8670bf-75fd-470b-929a-b5668d2da898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Camera">
+      <UniqueIdentifier>{0d8b0f7e-d88c-447f-a6b5-ef9da065bd9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Light">
+      <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\2D Object">
       <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene">
+      <UniqueIdentifier>{d9c13801-32c7-4498-9b3f-7e5a5b6b973c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene\SceneManager">
+      <UniqueIdentifier>{608668df-7e7c-477f-937d-5d13145263de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\System">
+      <UniqueIdentifier>{82cda6ef-86d7-4b41-b11f-b8d47afd6b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\System\Direct3D11">
+      <UniqueIdentifier>{10c9ac05-581d-4eac-a4c0-5fb00974952f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource">
+      <UniqueIdentifier>{0878d9fc-c493-4b1f-be88-30aef4eb4745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Mesh">
+      <UniqueIdentifier>{0805ee4c-e370-4862-9dd7-930424c3e1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Mesh\FBX">
+      <UniqueIdentifier>{bca602bb-e06d-4680-af61-ad43093a47b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Mesh\OBJ">
+      <UniqueIdentifier>{9871ed1c-7b82-489b-bd4f-67c3c0e9c324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Mesh\Billboard">
+      <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Shader">
+      <UniqueIdentifier>{fa62bd50-7ecf-48cf-8874-b699817f744c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Texture">
+      <UniqueIdentifier>{9af04d80-4b32-481a-a610-9e45fe077267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Sprite">
+      <UniqueIdentifier>{4892d28b-5d40-4e02-8205-852528645de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{595f6112-377d-47d3-99e7-0f0a63d0e5eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
-      <Filter>DX11Game\Scene\SceneManager</Filter>
+      <Filter>Game\Scene\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="src\BaseGameObject.h">
-      <Filter>DX11Game\GameObject</Filter>
+      <Filter>Game\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
-      <Filter>DX11Game\GameObject\Camera</Filter>
+      <Filter>Game\GameObject\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Cube.h">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Define.h">
-      <Filter>DX11Game\Comon</Filter>
+      <Filter>Game\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
-      <Filter>DX11Game\System</Filter>
+      <Filter>Game\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
-      <Filter>DX11Game</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObjectTag.h">
-      <Filter>DX11Game\GameObject</Filter>
+      <Filter>Game\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="src\IChangeScene.h">
-      <Filter>DX11Game\Scene\SceneManager</Filter>
+      <Filter>Game\Scene\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="src\OBJLoader.h">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+      <Filter>Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
     <ClInclude Include="src\OBJRenderer.h">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+      <Filter>Game\Resource\Mesh\OBJ</Filter>
     </ClInclude>
     <ClInclude Include="src\SceneList.h">
-      <Filter>DX11Game\Scene\SceneManager</Filter>
+      <Filter>Game\Scene\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="src\SceneManager.h">
-      <Filter>DX11Game\Scene\SceneManager</Filter>
+      <Filter>Game\Scene\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderLoader.h">
-      <Filter>DX11Game\Resource\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Singleton.h">
-      <Filter>DX11Game\Comon</Filter>
+      <Filter>Game\Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="src\StringSupport.h">
-      <Filter>DX11Game\Comon</Filter>
+      <Filter>Game\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\SystemMain.h">
-      <Filter>DX11Game</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\TestScene.h">
-      <Filter>DX11Game\Scene</Filter>
+      <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h">
-      <Filter>DX11Game\System</Filter>
+      <Filter>Game\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Sphere.h">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\TestObj.h">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectionalLight.h">
-      <Filter>DX11Game\GameObject\Light</Filter>
+      <Filter>Game\GameObject\Light</Filter>
     </ClInclude>
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h">
       <Filter>ThirdParty</Filter>
     </ClInclude>
     <ClInclude Include="src\TextureLoader.h">
-      <Filter>DX11Game\Resource\Texture</Filter>
+      <Filter>Game\Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="src\SpriteRenderer.h">
-      <Filter>DX11Game\Resource\Sprite</Filter>
+      <Filter>Game\Resource\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="src\SpriteLoader.h">
-      <Filter>DX11Game\Resource\Sprite</Filter>
+      <Filter>Game\Resource\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="src\TestSprite.h">
-      <Filter>DX11Game\GameObject\2D Object</Filter>
+      <Filter>Game\GameObject\2D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager.h">
-      <Filter>DX11Game\Resource</Filter>
+      <Filter>Game\Resource</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceFileName.h">
-      <Filter>DX11Game\Resource</Filter>
+      <Filter>Game\Resource</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3D11.h">
-      <Filter>DX11Game\System\DirectX11</Filter>
+      <Filter>Game\System\Direct3D11</Filter>
     </ClInclude>
     <ClInclude Include="src\ConstantBuffer.h">
-      <Filter>DX11Game\System\DirectX11</Filter>
+      <Filter>Game\System\Direct3D11</Filter>
     </ClInclude>
     <ClInclude Include="src\Transform.h">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector2.h">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector3.h">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Color.h">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Math.h">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Singleton.h">
+      <Filter>Game\Comon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
-      <Filter>DX11Game\GameObject</Filter>
+      <Filter>Game\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
-      <Filter>DX11Game\GameObject\Camera</Filter>
+      <Filter>Game\GameObject\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Cube.cpp">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Define.cpp">
-      <Filter>DX11Game\Comon</Filter>
+      <Filter>Game\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
-      <Filter>DX11Game\System</Filter>
+      <Filter>Game\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
-      <Filter>DX11Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\OBJLoader.cpp">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+      <Filter>Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
     <ClCompile Include="src\OBJRenderer.cpp">
-      <Filter>DX11Game\Resource\Mesh\OBJ</Filter>
+      <Filter>Game\Resource\Mesh\OBJ</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
-      <Filter>DX11Game\Scene\SceneManager</Filter>
+      <Filter>Game\Scene\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderLoader.cpp">
-      <Filter>DX11Game\Resource\Shader</Filter>
+      <Filter>Game\Resource\Shader</Filter>
     </ClCompile>
     <ClCompile Include="src\StringSupport.cpp">
-      <Filter>DX11Game\Comon</Filter>
+      <Filter>Game\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\SystemMain.cpp">
-      <Filter>DX11Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\TestScene.cpp">
-      <Filter>DX11Game\Scene</Filter>
+      <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
-      <Filter>DX11Game\System</Filter>
+      <Filter>Game\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Sphere.cpp">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\TestObj.cpp">
-      <Filter>DX11Game\GameObject\3D Object</Filter>
+      <Filter>Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\DirectionalLight.cpp">
-      <Filter>DX11Game\GameObject\Light</Filter>
+      <Filter>Game\GameObject\Light</Filter>
     </ClCompile>
     <ClCompile Include="src\Main.cpp">
-      <Filter>DX11Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp">
       <Filter>ThirdParty</Filter>
     </ClCompile>
     <ClCompile Include="src\TextureLoader.cpp">
-      <Filter>DX11Game\Resource\Texture</Filter>
+      <Filter>Game\Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteRenderer.cpp">
-      <Filter>DX11Game\Resource\Sprite</Filter>
+      <Filter>Game\Resource\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteLoader.cpp">
-      <Filter>DX11Game\Resource\Sprite</Filter>
+      <Filter>Game\Resource\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="src\TestSprite.cpp">
-      <Filter>DX11Game\GameObject\2D Object</Filter>
+      <Filter>Game\GameObject\2D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceManager.cpp">
-      <Filter>DX11Game\Resource</Filter>
+      <Filter>Game\Resource</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceFileName.cpp">
-      <Filter>DX11Game\Resource</Filter>
+      <Filter>Game\Resource</Filter>
     </ClCompile>
     <ClCompile Include="src\ConstantBuffer.cpp">
-      <Filter>DX11Game\System\DirectX11</Filter>
+      <Filter>Game\System\Direct3D11</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
-      <Filter>DX11Game\System\DirectX11</Filter>
+      <Filter>Game\System\Direct3D11</Filter>
     </ClCompile>
     <ClCompile Include="src\Transform.cpp">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Vector2.cpp">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Vector3.cpp">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Color.cpp">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
-      <Filter>DX11Game\Comon\Math</Filter>
+      <Filter>Game\Comon\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="hlsl\Standard.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Unlit.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Sprite.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
