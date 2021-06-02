@@ -1,7 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "Transform.h"
+#include <DirectXMath.h>
 #include "ObjLoader.h"
 #include "ShaderLoader.h"
 
@@ -18,7 +18,7 @@ public:
 	~OBJRenderer();
 	//@}
 
-	bool render(const Transform& aTransform);
+	bool render(const DirectX::XMFLOAT3X3& aTransform);
 	void setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName);
 
 private:

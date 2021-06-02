@@ -43,7 +43,7 @@ void Sphere::update()
 /// •`‰æ
 void Sphere::draw()
 {
-	mRenderer.render(mTransform);
+	mRenderer.render(mTransform.XMFLOAT3X3());
 }
 
 } // namespace

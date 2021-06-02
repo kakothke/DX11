@@ -9,7 +9,7 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 DirectionalLight::DirectionalLight()
-	: mColor(DirectX::XMFLOAT4(1, 0.95f, 0.83f, 1))
+	: mColor(255, 244, 214, 255)
 {
 	mTransform.rot = Vector3(50, -30, 0);
 }
@@ -23,7 +23,8 @@ void DirectionalLight::update()
 //-------------------------------------------------------------------------------------------------
 void DirectionalLight::updateConstantBuffer()
 {
-	Direct3D11::getInst()->getConstantBuffer()->updateDirectionalLight(mTransform.rot, mColor);
+	Vector3 rot = Vector3(-mTransform.rot.y, mTransform.rot.x, 0).Normalized();
+	Direct3D11::getInst()->getConstantBuffer()->updateDLight(rot.XMVECTOR(), mColor.XMFLOAT4());
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -44,7 +44,7 @@ void Cube::update()
 /// •`‰æ
 void Cube::draw()
 {
-	mRenderer.render(mTransform);
+	mRenderer.render(mTransform.XMFLOAT3X3());
 }
 
 } // namespace

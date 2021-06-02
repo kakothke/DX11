@@ -20,7 +20,7 @@ OBJRenderer::~OBJRenderer()
 }
 
 //-------------------------------------------------------------------------------------------------
-bool OBJRenderer::render(const Transform& aTransform)
+bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 {
 	// 読み込みチェック
 	if (!mOBJData || !mShaderData) {

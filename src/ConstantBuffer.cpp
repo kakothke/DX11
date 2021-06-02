@@ -54,7 +54,7 @@ bool ConstantBuffer::create()
 	}
 	// ディレクショナルライト情報
 	bufferDesc.ByteWidth = sizeof(CB_DLIGHT);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[LIGHT]))) {
+	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[DLIGHT]))) {
 		return false;
 	}
 	// マテリアル情報
@@ -67,10 +67,10 @@ bool ConstantBuffer::create()
 	float w = Define::ResolutionWidth;
 	float h = Define::ResolutionHeight;
 	DirectX::XMMATRIX proj2D = {
-	h / w , 0.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 1.0f
+	2 / w , 0     , 0, 0,
+	0     , 2 / h , 0, 0,
+	0     , 0     , 1, 0,
+	0     , 0     , 0, 1
 	};
 	XMStoreFloat4x4(&mData.SPRITE.PROJ_2D, XMMatrixTranspose(proj2D));
 	updateSprite();
@@ -80,27 +80,52 @@ bool ConstantBuffer::create()
 
 //-------------------------------------------------------------------------------------------------
 /// Worldマトリクス設定
-void ConstantBuffer::setMatrixW(const Transform& aTransform)
+void ConstantBuffer::setMatrixW(const DirectX::XMFLOAT3X3& aTransform)
 {
-	// ワールドマトリクス設定
-	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(aTransform.pos.x, aTransform.pos.y, aTransform.pos.z);
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, aTransform.rot.z);
-	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(aTransform.scale.x, aTransform.scale.y, aTransform.scale.z);
+	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
+		aTransform._11,
+		aTransform._12,
+		aTransform._13
+	);
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(
+		aTransform._21,
+		aTransform._22,
+		aTransform._23
+	);
+	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
+		aTransform._31,
+		aTransform._32,
+		aTransform._33
+	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
-
 	XMStoreFloat4x4(&mData.MATRIX.W, XMMatrixTranspose(worldMatrix));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// Viewマトリクス設定
-void ConstantBuffer::setMatrixV(const Transform& aTransform)
+void ConstantBuffer::setMatrixV(const DirectX::XMFLOAT3X3& aTransform)
 {
-	DirectX::XMVECTOR pos = { aTransform.pos.x, aTransform.pos.y, aTransform.pos.z, 0 };
-	DirectX::XMVECTOR forcus = { aTransform.pos.x, aTransform.pos.y, aTransform.pos.z + 1, 0 };
-	DirectX::XMVECTOR upVec = { 0, 1, 0, 0 };
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(aTransform.rot.x, aTransform.rot.y, -aTransform.rot.z);
+	DirectX::XMVECTOR pos = {
+		aTransform._11,
+		aTransform._12,
+		aTransform._13
+	};
+	DirectX::XMVECTOR forcus = {
+		aTransform._11,
+		aTransform._12,
+		aTransform._13 + 1
+	};
+	DirectX::XMVECTOR upVec = {
+		0,
+		1,
+		0
+	};
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(
+		aTransform._21,
+		aTransform._22,
+		-aTransform._23
+	);
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
-
 	XMStoreFloat4x4(&mData.MATRIX.V, XMMatrixTranspose(viewMatrix));
 }
 
@@ -153,24 +178,10 @@ void ConstantBuffer::updateSprite()
 
 //-------------------------------------------------------------------------------------------------
 /// カメラコンスタントバッファを更新する
-void ConstantBuffer::updateCamera(const Transform& aTransform)
+void ConstantBuffer::updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot)
 {
-	// カメラ位置
-	DirectX::XMVECTOR pos = DirectX::XMVectorSet(
-		aTransform.pos.x,
-		aTransform.pos.y,
-		aTransform.pos.z,
-		0
-	);
-	XMStoreFloat4(&mData.CAMERA.POS, pos);
-	// カメラ向き
-	DirectX::XMVECTOR rot = DirectX::XMVectorSet(
-		aTransform.rot.x,
-		aTransform.rot.y,
-		aTransform.rot.z,
-		0
-	);
-	XMStoreFloat4(&mData.CAMERA.ROT, pos);
+	XMStoreFloat4(&mData.CAMERA.POS, aPos);
+	XMStoreFloat4(&mData.CAMERA.ROT, aRot);
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
@@ -186,33 +197,23 @@ void ConstantBuffer::updateCamera(const Transform& aTransform)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ライトコンスタントバッファを更新する
-void ConstantBuffer::updateDirectionalLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol)
+/// ディレクショナルライトを更新する
+void ConstantBuffer::updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol)
 {
-	// ライト向き
-	DirectX::XMVECTOR rot = DirectX::XMVector3Normalize(
-		DirectX::XMVectorSet(
-			-aRot.y,
-			aRot.x,
-			0,
-			0
-		)
-	);
-	XMStoreFloat4(&mData.DLIGHT.ROT, rot);
-	// ライトカラー
+	XMStoreFloat4(&mData.DLIGHT.ROT, aRot);
 	mData.DLIGHT.COL = aCol;
 
 	// 更新
 	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[LIGHT],
+		mBuffer[DLIGHT],
 		0,
 		NULL,
 		&mData.DLIGHT,
 		0,
 		0
 	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(LIGHT, 1, &mBuffer[LIGHT]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(LIGHT, 1, &mBuffer[LIGHT]);
+	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(DLIGHT, 1, &mBuffer[DLIGHT]);
+	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(DLIGHT, 1, &mBuffer[DLIGHT]);
 }
 
 //-------------------------------------------------------------------------------------------------

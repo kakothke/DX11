@@ -1,6 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
+#include <DirectXMath.h>
 #include "Vector3.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -14,6 +15,12 @@ public:
 	//@{
 	Transform();
 	Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale);
+	//@}
+
+	//@ name •ÏŠ·ŠÖ”
+	//@{
+	/// XMFLOAT3X3Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
+	DirectX::XMFLOAT3X3 XMFLOAT3X3() const;
 	//@}
 
 	/// @name ƒƒ“ƒo•Ï”

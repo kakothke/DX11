@@ -45,7 +45,7 @@ void TestSprite::update()
 /// •`‰æ
 void TestSprite::draw()
 {
-	mRenderer.render(mTransform);
+	mRenderer.render(mTransform.XMFLOAT3X3());
 }
 
 } // namespace

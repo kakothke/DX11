@@ -12,7 +12,7 @@ namespace DX11 {
 TextureLoader::TextureLoader()
 	: mTexture()
 {
-	load("res/texture/error.png");
+	load("res/image/error.png");
 }
 
 //-------------------------------------------------------------------------------------------------

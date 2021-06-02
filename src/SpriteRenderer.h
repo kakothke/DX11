@@ -1,7 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "Transform.h"
+#include <DirectXMath.h>
 #include "SpriteLoader.h"
 #include "ShaderLoader.h"
 
@@ -18,7 +18,7 @@ public:
 	~SpriteRenderer();
 	//@}
 
-	bool render(const Transform& aTransform);
+	bool render(const DirectX::XMFLOAT3X3& aTransform);
 	void setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName);
 
 private:

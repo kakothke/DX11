@@ -24,5 +24,16 @@ Transform::Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale)
 {
 }
 
+//-------------------------------------------------------------------------------------------------
+/// XMFLOAT3X3Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
+DirectX::XMFLOAT3X3 Transform::XMFLOAT3X3() const
+{
+	return {
+		pos.x, pos.y, pos.z,
+		rot.x, rot.y, rot.z,
+		scale.x, scale.y, scale.z
+	};
+}
+
 } // namespace
 // EOF

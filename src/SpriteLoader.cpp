@@ -118,8 +118,8 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 	tex2D->GetDesc(&desc);
 
 	// ‚»‚Ì‚Ü‚Ü‚¾‚Æ‘å‚«‚·‚¬‚é‚Ì‚ÅœZ
-	float width = (float)desc.Width / 1000;
-	float height = (float)desc.Height / 1000;
+	float width = (float)desc.Width;
+	float height = (float)desc.Height;
 	width /= 2;
 	height /= 2;
 

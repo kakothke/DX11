@@ -4,7 +4,6 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <unordered_map>
-#include "Transform.h"
 #include "OBJLoader.h"
 
 namespace DX11 {
@@ -64,13 +63,13 @@ public:
 	~ConstantBuffer();
 
 	bool create();
-	void setMatrixW(const Transform& aTransform);
-	void setMatrixV(const Transform& aTransform);
+	void setMatrixW(const DirectX::XMFLOAT3X3& aTransform);
+	void setMatrixV(const DirectX::XMFLOAT3X3& aTransform);
 	void setMatrixP(const float aFov, const float aNearZ, const float aFarZ);
 	void updateMatrix();
 	void updateSprite();
-	void updateCamera(const Transform& aTransform);
-	void updateDirectionalLight(const Vector3& aRot, const DirectX::XMFLOAT4& aCol);
+	void updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot);
+	void updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol);
 	void updateMaterial(const OBJMaterial& aMaterial);
 
 private:
@@ -78,7 +77,7 @@ private:
 		MATRIX,
 		SPRITE,
 		CAMERA,
-		LIGHT,
+		DLIGHT,
 		COLOR,
 		MATERIAL,
 	};

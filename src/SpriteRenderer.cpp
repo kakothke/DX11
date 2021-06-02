@@ -20,7 +20,7 @@ SpriteRenderer::~SpriteRenderer()
 }
 
 //-------------------------------------------------------------------------------------------------
-bool SpriteRenderer::render(const Transform& aTransform)
+bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 {
 	// 読み込みチェック
 	if (!mSpriteData || !mShaderData) {
@@ -47,8 +47,8 @@ bool SpriteRenderer::render(const Transform& aTransform)
 	);
 
 	// コンスタントバッファを更新
-	Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform);
-	Direct3D11::getInst()->getConstantBuffer()->updateMatrix();
+	/*Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform.pos.XMFLOAT3(), aTransform.rot.XMFLOAT3(), aTransform.scale.XMFLOAT3());
+	Direct3D11::getInst()->getConstantBuffer()->updateMatrix();*/
 
 	// テクスチャーセット
 	Direct3D11::getInst()->setTexture(ResourceManager::getInst()->Texture()->getTexture(mSpriteData->fileName));

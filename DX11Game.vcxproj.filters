@@ -59,11 +59,14 @@
     <Filter Include="DX11Game\Resource\Mesh\Billboard">
       <UniqueIdentifier>{e8e6efa3-a0e9-42d5-8cd2-6c1e37276324}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DX11Game\GameObject\Sprite">
-      <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DX11Game\System\DirectX11">
       <UniqueIdentifier>{10c9ac05-581d-4eac-a4c0-5fb00974952f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11Game\Comon\Math">
+      <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX11Game\GameObject\2D Object">
+      <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,15 +124,6 @@
     <ClInclude Include="src\TestScene.h">
       <Filter>DX11Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>DX11Game\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector3.h">
-      <Filter>DX11Game\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector3Math.h">
-      <Filter>DX11Game\Comon</Filter>
-    </ClInclude>
     <ClInclude Include="src\Window.h">
       <Filter>DX11Game\System</Filter>
     </ClInclude>
@@ -155,7 +149,7 @@
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="src\TestSprite.h">
-      <Filter>DX11Game\GameObject\Sprite</Filter>
+      <Filter>DX11Game\GameObject\2D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager.h">
       <Filter>DX11Game\Resource</Filter>
@@ -168,6 +162,21 @@
     </ClInclude>
     <ClInclude Include="src\ConstantBuffer.h">
       <Filter>DX11Game\System\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector2.h">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3.h">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Color.h">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math.h">
+      <Filter>DX11Game\Comon\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,15 +219,6 @@
     <ClCompile Include="src\TestScene.cpp">
       <Filter>DX11Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>DX11Game\Comon</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Vector3.cpp">
-      <Filter>DX11Game\Comon</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Vector3Math.cpp">
-      <Filter>DX11Game\Comon</Filter>
-    </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>DX11Game\System</Filter>
     </ClCompile>
@@ -247,7 +247,7 @@
       <Filter>DX11Game\Resource\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="src\TestSprite.cpp">
-      <Filter>DX11Game\GameObject\Sprite</Filter>
+      <Filter>DX11Game\GameObject\2D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceManager.cpp">
       <Filter>DX11Game\Resource</Filter>
@@ -260,6 +260,21 @@
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
       <Filter>DX11Game\System\DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector2.cpp">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector3.cpp">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Color.cpp">
+      <Filter>DX11Game\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math.cpp">
+      <Filter>DX11Game\Comon\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

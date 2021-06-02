@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
 #include "GameObjectTag.h"
+#include "Color.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -25,7 +26,7 @@ public:
 
 protected:
 	void updateConstantBuffer();
-	DirectX::XMFLOAT4 mColor;
+	Color mColor;
 
 };
 
