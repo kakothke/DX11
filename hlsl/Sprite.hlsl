@@ -1,6 +1,6 @@
 struct appdata
 {
-    float3 pos : POSITION;
+    float4 pos : POSITION;
     float2 uv : TEXCOORD;
 };
 
@@ -28,7 +28,10 @@ v2p VS(appdata v)
     v2p o;
 	
     // World
-    o.pos = mul(float4(v.pos, 1.0f), MATRIX_W);
+    o.pos = mul(v.pos, MATRIX_W);
+    // Projection
+    o.pos = mul(o.pos, MATRIX_P);
+    
     // zŽ²‚ð-1~1‚ÌŠÔ‚ÉŽû‚ß‚é
     float nearZ = 0.3f;
     float farZ = 1000;
@@ -36,9 +39,6 @@ v2p VS(appdata v)
     float minZ = -1;
     float maxZ = 1;
     o.pos.z = o.pos.z * (maxZ - minZ) + minZ;
-    
-    // Projection
-    o.pos = mul(o.pos, MATRIX_P);
     
     // UV_Split
     o.uv.x = v.uv.x / SPLIT.x;
