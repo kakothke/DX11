@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -11,6 +10,10 @@ namespace DX11 {
 SpriteRenderer::SpriteRenderer()
 	: mSpriteData()
 	, mShaderData()
+	, mColor(1, 1, 1, 1)
+	, mPivot(0.5f, 0.5f)
+	, mAnchor(-1, -1)
+	, mSplit(1, 1)
 {
 }
 
@@ -47,11 +50,11 @@ bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	);
 
 	// コンスタントバッファを更新
-	/*Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform.pos.XMFLOAT3(), aTransform.rot.XMFLOAT3(), aTransform.scale.XMFLOAT3());
-	Direct3D11::getInst()->getConstantBuffer()->updateMatrix();*/
+	Direct3D11::getInst()->getConstantBuffer()->updateColor(mColor, mColor);
+	Direct3D11::getInst()->getConstantBuffer()->updateSprite(aTransform, mAnchor, mPivot, mSplit);
 
 	// テクスチャーセット
-	Direct3D11::getInst()->setTexture(ResourceManager::getInst()->Texture()->getTexture(mSpriteData->fileName));
+	Direct3D11::getInst()->setTexture(Resource::getInst()->Texture()->getTexture(mSpriteData->fileName));
 
 	// 描画
 	Direct3D11::getInst()->getContext()->Draw(4, 0);
@@ -62,8 +65,32 @@ bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 //-------------------------------------------------------------------------------------------------
 void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
 {
-	mSpriteData = ResourceManager::getInst()->Sprite()->getSpriteData(aSpriteFileName);
-	mShaderData = ResourceManager::getInst()->Shader()->getShaderData(aShaderFileName);
+	mSpriteData = Resource::getInst()->Sprite()->getSpriteData(aSpriteFileName);
+	mShaderData = Resource::getInst()->Shader()->getShaderData(aShaderFileName);
+}
+
+//-------------------------------------------------------------------------------------------------
+void SpriteRenderer::setColor(const DirectX::XMFLOAT4& aColor)
+{
+	mColor = aColor;
+}
+
+//-------------------------------------------------------------------------------------------------
+void SpriteRenderer::setPivot(const DirectX::XMFLOAT2& aPivot)
+{
+	mPivot = aPivot;
+}
+
+//-------------------------------------------------------------------------------------------------
+void SpriteRenderer::setAnchor(const DirectX::XMFLOAT2& aAnchor)
+{
+	mAnchor = aAnchor;
+}
+
+//-------------------------------------------------------------------------------------------------
+void SpriteRenderer::setSplit(const DirectX::XMINT2& aSplit)
+{
+	mSplit = aSplit;
 }
 
 } // namespace

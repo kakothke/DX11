@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Game.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -30,7 +30,7 @@ bool SystemMain::initialize()
 	}
 
 	// リソースの初期化
-	ResourceManager::getInst()->initialize();
+	Resource::getInst()->initialize();
 
 	// ウィンドウを表示
 	ShowWindow(mWindow.hWnd(), SW_SHOW);

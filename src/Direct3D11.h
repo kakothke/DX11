@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include "Singleton.h"
 #include "ConstantBuffer.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 #pragma comment(lib, "D3D11.lib")

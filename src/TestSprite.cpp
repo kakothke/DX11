@@ -31,14 +31,15 @@ void TestSprite::initialize()
 		ResourceFileName::Sprite.at(SpriteList::Test),
 		ResourceFileName::Shader.at(ShaderList::Sprite)
 	);
-	mTransform.pos.x = 3;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// çXêV
 void TestSprite::update()
 {
-	mTransform.rot.y += 0.01f;
+	mTransform.pos.x += 1;
+	mTransform.pos.y += 1;
+	mTransform.rot += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------

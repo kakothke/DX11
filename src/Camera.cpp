@@ -26,8 +26,8 @@ void Camera::update()
 //-------------------------------------------------------------------------------------------------
 void Camera::updateConstantBuffer()
 {
-	Direct3D11::getInst()->getConstantBuffer()->setMatrixV(mTransform.XMFLOAT3X3());
-	Direct3D11::getInst()->getConstantBuffer()->setMatrixP(mFov, mNearZ, mFarZ);
+	DirectX::XMFLOAT3 camera(mFov, mNearZ, mFarZ);
+	Direct3D11::getInst()->getConstantBuffer()->setMatrixVP(mTransform.XMFLOAT3X3(), camera);
 	Direct3D11::getInst()->getConstantBuffer()->updateCamera(mTransform.pos.XMVECTOR(), mTransform.rot.XMVECTOR());
 }
 

@@ -7,7 +7,7 @@
 #include <iomanip>
 #include "StringSupport.h"
 #include "Direct3D11.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -256,7 +256,7 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
 				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				ResourceManager::getInst()->Texture()->load(texName.c_str());
+				Resource::getInst()->Texture()->load(texName.c_str());
 			}
 		}
 	}

@@ -148,7 +148,7 @@
     <ClInclude Include="src\TestSprite.h">
       <Filter>Game\GameObject\2D Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\ResourceManager.h">
+    <ClInclude Include="src\Resource.h">
       <Filter>Game\Resource</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceFileName.h">
@@ -249,7 +249,7 @@
     <ClCompile Include="src\TestSprite.cpp">
       <Filter>Game\GameObject\2D Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResourceManager.cpp">
+    <ClCompile Include="src\Resource.cpp">
       <Filter>Game\Resource</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceFileName.cpp">

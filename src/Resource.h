@@ -11,11 +11,11 @@
 namespace DX11 {
 
 /// リソース管理クラス
-class ResourceManager : public Singleton<ResourceManager>
+class Resource : public Singleton<Resource>
 {
 public:
-	ResourceManager();
-	~ResourceManager();
+	Resource();
+	~Resource();
 
 	void initialize();
 

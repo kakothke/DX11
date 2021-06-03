@@ -1,4 +1,4 @@
-#include "ResourceManager.h"
+#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -7,7 +7,7 @@
 namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
-ResourceManager::ResourceManager()
+Resource::Resource()
 	: mOBJ()
 	, mSprite()
 	, mTexture()
@@ -16,12 +16,12 @@ ResourceManager::ResourceManager()
 }
 
 //-------------------------------------------------------------------------------------------------
-ResourceManager::~ResourceManager()
+Resource::~Resource()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-void ResourceManager::initialize()
+void Resource::initialize()
 {
 	// OBJs
 	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Cube));
@@ -38,25 +38,25 @@ void ResourceManager::initialize()
 }
 
 //-------------------------------------------------------------------------------------------------
-OBJLoader* ResourceManager::OBJ()
+OBJLoader* Resource::OBJ()
 {
 	return &mOBJ;
 }
 
 //-------------------------------------------------------------------------------------------------
-SpriteLoader* ResourceManager::Sprite()
+SpriteLoader* Resource::Sprite()
 {
 	return &mSprite;
 }
 
 //-------------------------------------------------------------------------------------------------
-TextureLoader* ResourceManager::Texture()
+TextureLoader* Resource::Texture()
 {
 	return &mTexture;
 }
 
 //-------------------------------------------------------------------------------------------------
-ShaderLoader* ResourceManager::Shader()
+ShaderLoader* Resource::Shader()
 {
 	return &mShader;
 }
