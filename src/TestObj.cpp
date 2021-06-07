@@ -31,7 +31,7 @@ void TestObj::initialize()
 		ResourceFileName::OBJ.at(OBJList::Test),
 		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
-	mTransform.scale = 20;
+	mTransform.pos.y = -2;
 }
 
 //-------------------------------------------------------------------------------------------------
