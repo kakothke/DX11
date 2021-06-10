@@ -20,14 +20,13 @@ Game::Game()
 bool Game::mainLoop()
 {
 	Direct3D11::getInst()->drawStart();
-
-	mFps.update();
 	mSceneManager.update();
 	mSceneManager.draw();
+	Direct3D11::getInst()->drawEnd();
+
+	mFps.update();
 	mFps.wait();
 	mFps.draw();
-
-	Direct3D11::getInst()->drawEnd();
 
 	return true;
 }

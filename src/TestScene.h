@@ -23,13 +23,14 @@ public:
 	//@{
 	void update() override;
 	void draw() override;
+	void draw2D() override;
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
 	TestObj mTestObj;
-	TestSprite mTestSprite;
+	TestSprite mTestSprite, mT2;
 	Camera mCamera;
 	DirectionalLight mDirectionalLight;
 	

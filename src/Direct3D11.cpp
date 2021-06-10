@@ -12,10 +12,11 @@ Direct3D11::Direct3D11()
 	: mDevice(nullptr)
 	, mContext(nullptr)
 	, mSwapChain(nullptr)
-	, mRenderTargetView(nullptr)
+	, mRenderTargetViews()
 	, mDepthStencilView(nullptr)
 	, mDepthStencilTexture(nullptr)
 	, mDepthStencilState(nullptr)
+	, mDepthDisabledStencilState(nullptr)
 	, mSamplerState(nullptr)
 	, mConstantBuffer()
 {
@@ -29,9 +30,9 @@ Direct3D11::~Direct3D11()
 		mSwapChain->Release();
 		mSwapChain = nullptr;
 	}
-	if (mRenderTargetView) {
-		mRenderTargetView->Release();
-		mRenderTargetView = nullptr;
+	if (mRenderTargetViews) {
+		mRenderTargetViews->Release();
+		mRenderTargetViews = nullptr;
 	}
 	if (mContext) {
 		mContext->ClearState();
@@ -54,6 +55,10 @@ Direct3D11::~Direct3D11()
 	if (mDepthStencilState) {
 		mDepthStencilState->Release();
 		mDepthStencilState = nullptr;
+	}
+	if (mDepthDisabledStencilState) {
+		mDepthDisabledStencilState->Release();
+		mDepthDisabledStencilState = nullptr;
 	}
 	if (mDevice) {
 		mDevice->Release();
@@ -108,7 +113,7 @@ bool Direct3D11::initialize()
 /// 描画開始
 void Direct3D11::drawStart()
 {
-	mContext->ClearRenderTargetView(mRenderTargetView, Define::ClearColor);
+	mContext->ClearRenderTargetView(mRenderTargetViews, Define::ClearColor);
 	mContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
@@ -137,15 +142,20 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 		0
 	);
 
-	// OutputMangerRnderTagetの指定
-	mContext->OMSetRenderTargets(
-		1,
-		&mRenderTargetView,
-		mDepthStencilView
-	);
-
 	// InputAssemblerStageに入力レイアウトを設定する
 	mContext->IASetInputLayout(aShaderData->inputLayout);
+}
+
+//-------------------------------------------------------------------------------------------------
+void Direct3D11::zBufferOn()
+{
+	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+}
+
+//-------------------------------------------------------------------------------------------------
+void Direct3D11::zBufferOff()
+{
+	mContext->OMSetDepthStencilState(mDepthDisabledStencilState, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -229,7 +239,7 @@ bool Direct3D11::createRenderTargetView()
 	if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer))) {
 		return false;
 	}
-	if (FAILED(mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetView))) {
+	if (FAILED(mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetViews))) {
 		return false;
 	}
 	backBuffer->Release();
@@ -263,8 +273,8 @@ bool Direct3D11::createDepthAndStencil()
 		return false;
 	}
 
-	// レンダーターゲットビューと深度ステンシルビューをパイプラインにバインド
-	mContext->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
+	// OutputMangerRnderTagetの指定
+	mContext->OMSetRenderTargets(1, &mRenderTargetViews, mDepthStencilView);
 
 	return true;
 }
@@ -286,6 +296,11 @@ bool Direct3D11::createDepthStencilState()
 		return false;
 	}
 
+	dc.DepthEnable = false;
+	if (FAILED(mDevice->CreateDepthStencilState(&dc, &mDepthDisabledStencilState))) {
+		return false;
+	}
+
 	// 深度ステンシルステートを適用
 	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
 
@@ -303,7 +318,7 @@ bool Direct3D11::createTextureSampler()
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
-	if (FAILED(mDevice->CreateSamplerState(&samplerDesc, &mSamplerState)))	{
+	if (FAILED(mDevice->CreateSamplerState(&samplerDesc, &mSamplerState))) {
 		return false;
 	}
 
@@ -330,8 +345,9 @@ void Direct3D11::setUpRasterize()
 {
 	D3D11_RASTERIZER_DESC rdc;
 	ZeroMemory(&rdc, sizeof(rdc));
-	rdc.CullMode = D3D11_CULL_NONE;
+	rdc.CullMode = D3D11_CULL_BACK;
 	rdc.FillMode = D3D11_FILL_SOLID;
+	rdc.FrontCounterClockwise = true;
 
 	ID3D11RasterizerState* rs = nullptr;
 	mDevice->CreateRasterizerState(&rdc, &rs);

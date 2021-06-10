@@ -32,14 +32,6 @@ v2p VS(appdata v)
     // Projection
     o.pos = mul(o.pos, MATRIX_P);
     
-    // zŽ²‚ð-1~1‚ÌŠÔ‚ÉŽû‚ß‚é
-    float nearZ = 0.3f;
-    float farZ = 1000;
-    o.pos.z = (o.pos.z - nearZ) / (farZ - nearZ);
-    float minZ = -1;
-    float maxZ = 1;
-    o.pos.z = o.pos.z * (maxZ - minZ) + minZ;
-    
     // UV_Split
     o.uv.x = v.uv.x / SPLIT.x;
     o.uv.y = v.uv.y / SPLIT.y;
@@ -55,7 +47,7 @@ float4 PS(v2p i) : SV_Target0
     float4 col;
 	
     col = diffuse.Sample(samplerDiffuse, i.uv);
-    col.a *= COLOR;
+    col *= COLOR;
 	
     return col;
 }

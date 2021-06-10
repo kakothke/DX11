@@ -39,6 +39,7 @@ void TestObj::initialize()
 void TestObj::update()
 {
 	mTransform.rot.y += 0.01f;
+	mTransform.pos.z -= 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------

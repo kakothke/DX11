@@ -8,7 +8,7 @@
 #include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
-#pragma comment(lib, "D3D11.lib")
+#pragma comment(lib, "d3d11.lib")
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -36,6 +36,9 @@ public:
 
 	void setUpContext(const ShaderData* aShaderData);
 	void setTexture(ID3D11ShaderResourceView* aTexture);
+
+	void zBufferOn();
+	void zBufferOff();
 
 	/// @name アクセサ
 	//@{
@@ -75,13 +78,14 @@ private:
 	/// スワップチェーンのインターフェース
 	IDXGISwapChain* mSwapChain;
 	/// レンダーターゲットビューのインターフェース
-	ID3D11RenderTargetView* mRenderTargetView;
+	ID3D11RenderTargetView* mRenderTargetViews;
 	/// 深度ステンシルビュー
 	ID3D11DepthStencilView* mDepthStencilView;
 	/// 深度ステンシルビューを生成する為のテクスチャ
 	ID3D11Texture2D* mDepthStencilTexture;
 	/// 深度ステンシルステート
 	ID3D11DepthStencilState* mDepthStencilState;
+	ID3D11DepthStencilState* mDepthDisabledStencilState;
 	/// テクスチャサンプラー
 	ID3D11SamplerState* mSamplerState;
 	/// コンスタントバッファー
