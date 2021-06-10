@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "TestObj.h"
 #include "TestSprite.h"
+#include "TestSky.h"
 #include "DirectionalLight.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -31,6 +32,7 @@ private:
 	//@{
 	TestObj mTestObj;
 	TestSprite mTestSprite, mT2;
+	TestSky mTestSky;
 	Camera mCamera;
 	DirectionalLight mDirectionalLight;
 	

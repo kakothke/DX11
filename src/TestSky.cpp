@@ -1,4 +1,4 @@
-#include "TestSprite.h"
+#include "TestSky.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -8,14 +8,14 @@ namespace DX11 {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-TestSprite::TestSprite()
+TestSky::TestSky()
 {
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 引数付きコンストラクタ
-TestSprite::TestSprite(Transform aTransform)
+TestSky::TestSky(Transform aTransform)
 {
 	mTransform = aTransform;
 	initialize();
@@ -23,27 +23,24 @@ TestSprite::TestSprite(Transform aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void TestSprite::initialize()
+void TestSky::initialize()
 {
-	mRenderer.setSpriteAndShaderData(
-		ResourceFileName::Sprite.at(SpriteList::Test),
-		ResourceFileName::Shader.at(ShaderList::Sprite)
+	mRenderer.setObjAndShaderData(
+		ResourceFileName::OBJ.at(OBJList::SkyDome),
+		ResourceFileName::Shader.at(ShaderList::Standard)
 	);
-	mRenderer.setAnchor({ 0, 0 });
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void TestSprite::update()
+void TestSky::update()
 {
-	//mTransform.pos.x += 1;
-	//mTransform.pos.y += 1;
-	mTransform.rot += 0.01f;
+	mTransform.rot.y += 0.001f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void TestSprite::draw()
+void TestSky::draw()
 {
 	mRenderer.render(mTransform.XMFLOAT3X3());
 }

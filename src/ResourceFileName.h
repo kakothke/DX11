@@ -11,6 +11,7 @@ enum class OBJList
 {
 	Cube,
 	Sphere,
+	SkyDome,
 	Test
 };
 

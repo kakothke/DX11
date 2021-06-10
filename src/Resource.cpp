@@ -26,6 +26,7 @@ void Resource::initialize()
 	// OBJs
 	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Cube));
 	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	mOBJ.load(ResourceFileName::OBJ.at(OBJList::SkyDome));
 	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites

@@ -170,6 +170,7 @@
     <ClInclude Include="src\SystemMain.h" />
     <ClInclude Include="src\TestObj.h" />
     <ClInclude Include="src\TestScene.h" />
+    <ClInclude Include="src\TestSky.h" />
     <ClInclude Include="src\TestSprite.h" />
     <ClInclude Include="src\TextureLoader.h" />
     <ClInclude Include="src\ThirdParty\WICTextureLoader11.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="src\SystemMain.cpp" />
     <ClCompile Include="src\TestObj.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
+    <ClCompile Include="src\TestSky.cpp" />
     <ClCompile Include="src\TestSprite.cpp" />
     <ClCompile Include="src\TextureLoader.cpp" />
     <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp" />

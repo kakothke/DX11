@@ -68,6 +68,9 @@
     <Filter Include="HLSL">
       <UniqueIdentifier>{595f6112-377d-47d3-99e7-0f0a63d0e5eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\SkyDome">
+      <UniqueIdentifier>{1ad4e6e2-8e1d-4fb9-b013-881222cdb750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -178,6 +181,9 @@
     <ClInclude Include="src\Singleton.h">
       <Filter>Game\Comon</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestSky.h">
+      <Filter>Game\GameObject\SkyDome</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -275,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
       <Filter>Game\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestSky.cpp">
+      <Filter>Game\GameObject\SkyDome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

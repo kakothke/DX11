@@ -6,8 +6,8 @@ namespace DX11 {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
-, mTestSprite({ Vector3(-100,0,0),Vector3(),Vector3(1) })
-, mT2({ Vector3(100,0,0),Vector3(),Vector3(1) })
+, mTestSprite({ Vector3(-100,0,0),Vector3(),Vector3(0.2f) })
+, mT2({ Vector3(100,0,0),Vector3(),Vector3(0.2f) })
 {
 }
 
@@ -24,6 +24,7 @@ void TestScene::update()
 	mCamera.update();
 	mDirectionalLight.update();
 	mTestObj.update();
+	mTestSky.update();
 	mTestSprite.update();
 	mT2.update();
 }
@@ -32,6 +33,7 @@ void TestScene::update()
 /// 描画
 void TestScene::draw()
 {
+	mTestSky.draw();
 	mTestObj.draw();
 }
 
