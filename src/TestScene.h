@@ -25,6 +25,7 @@ public:
 	void update() override;
 	void draw() override;
 	void draw2D() override;
+	void drawBackground() override;
 	//@}
 
 private:

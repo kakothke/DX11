@@ -26,8 +26,8 @@ TestSky::TestSky(Transform aTransform)
 void TestSky::initialize()
 {
 	mRenderer.setObjAndShaderData(
-		ResourceFileName::OBJ.at(OBJList::SkyDome),
-		ResourceFileName::Shader.at(ShaderList::Standard)
+		ResourceFileName::OBJ.at(OBJList::SkyBox),
+		ResourceFileName::Shader.at(ShaderList::Unlit)
 	);
 }
 

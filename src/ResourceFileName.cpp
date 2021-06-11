@@ -8,7 +8,7 @@ const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =
 {
 	{ OBJList::Cube, "res/mesh/cube.obj" },
 	{ OBJList::Sphere, "res/mesh/sphere.obj" },
-	{ OBJList::SkyDome, "res/mesh/skydome/sky.obj" },
+	{ OBJList::SkyBox, "res/mesh/testSky/skyBox.obj" },
 	{ OBJList::Test, "res/mesh/kabocha/kabocha.obj" },
 };
 

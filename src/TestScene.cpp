@@ -6,6 +6,7 @@ namespace DX11 {
 //-------------------------------------------------------------------------------------------------
 /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
+, mTestObj({ Vector3(0,0,0),Vector3(),Vector3(1) })
 , mTestSprite({ Vector3(-100,0,0),Vector3(),Vector3(0.2f) })
 , mT2({ Vector3(100,0,0),Vector3(),Vector3(0.2f) })
 {
@@ -33,7 +34,6 @@ void TestScene::update()
 /// •`‰æ
 void TestScene::draw()
 {
-	mTestSky.draw();
 	mTestObj.draw();
 }
 
@@ -43,6 +43,13 @@ void TestScene::draw2D()
 {
 	mTestSprite.draw();
 	mT2.draw();
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ”wŒi•`‰æ
+void TestScene::drawBackground()
+{
+	mTestSky.draw();
 }
 
 } // namespace
