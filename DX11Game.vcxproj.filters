@@ -296,5 +296,8 @@
     <FxCompile Include="hlsl\Sprite.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="hlsl\SkyBox.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

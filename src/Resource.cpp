@@ -36,6 +36,7 @@ void Resource::initialize()
 	mShader.load(ResourceFileName::Shader.at(ShaderList::Unlit));
 	mShader.load(ResourceFileName::Shader.at(ShaderList::Standard));
 	mShader.load(ResourceFileName::Shader.at(ShaderList::Sprite));
+	mShader.load(ResourceFileName::Shader.at(ShaderList::SkyBox));
 }
 
 //-------------------------------------------------------------------------------------------------

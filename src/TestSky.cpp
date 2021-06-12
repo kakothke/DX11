@@ -27,7 +27,7 @@ void TestSky::initialize()
 {
 	mRenderer.setObjAndShaderData(
 		ResourceFileName::OBJ.at(OBJList::SkyBox),
-		ResourceFileName::Shader.at(ShaderList::Unlit)
+		ResourceFileName::Shader.at(ShaderList::SkyBox)
 	);
 }
 

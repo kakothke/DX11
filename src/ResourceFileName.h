@@ -27,6 +27,7 @@ enum class ShaderList
 	Unlit,
 	Standard,
 	Sprite,
+	SkyBox,
 };
 
 /// リソースファイル名取得用クラス

@@ -35,7 +35,10 @@ bool ShaderLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("シェーダーファイルの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-
+	if (!std::ifstream(aFileName)) {
+		MessageBox(nullptr, TEXT("読み込もうとしているhlslが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return false;
+	}
 	if (!createVertexShader(aFileName)) {
 		MessageBox(nullptr, TEXT("VertexShaderの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;

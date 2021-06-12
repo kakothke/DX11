@@ -24,6 +24,7 @@ const std::unordered_map<ShaderList, const char*> ResourceFileName::Shader =
 	{ ShaderList::Unlit, "hlsl/Unlit.hlsl" },
 	{ ShaderList::Standard, "hlsl/Standard.hlsl" },
 	{ ShaderList::Sprite, "hlsl/Sprite.hlsl" },
+	{ ShaderList::SkyBox, "hlsl/SkyBox.hlsl" },
 };
 
 } // namespace

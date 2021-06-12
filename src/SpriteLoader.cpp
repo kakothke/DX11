@@ -28,6 +28,10 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("スプライトの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
+	if (!std::ifstream(aFileName)) {
+		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return false;
+	}
 	if (!Resource::getInst()->Texture()->load(aFileName)) {
 		return false;
 	}

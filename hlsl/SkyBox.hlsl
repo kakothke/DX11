@@ -1,14 +1,14 @@
 struct VS_IN
 {
     float4 pos : POSITION0;
-    float2 uv : TEXCORD0;
+    float2 uv : TEXTURE0;
     float4 nor : NORMAL0;
 };
  
 struct VS_OUT
 {
     float4 pos : SV_POSITION;
-    float2 uv : TEXCORD0;
+    float2 uv : TEXTURE0;
     float4 col : COLOR0;
 };
  
@@ -23,8 +23,18 @@ VS_OUT VS(VS_IN input)
 {
     VS_OUT output;
     
+    // ViewçsóÒÇÃÉJÉÅÉâà íuÇ0Ç…å≈íË
+    float4x4 view =
+    {
+        1, 1, 1, 1,
+        1, 1, 1, 1,
+        1, 1, 1, 1,
+        0, 0, 0, 1,
+    };    
+    view *= MATRIX_V;
+    
     output.pos = mul(input.pos, MATRIX_W);
-    output.pos = mul(output.pos, MATRIX_V);
+    output.pos = mul(output.pos, view);
     output.pos = mul(output.pos, MATRIX_P);
     
     output.col = float4(1, 1, 1, 1);
@@ -37,7 +47,7 @@ Texture2D diffuse : register(t0);
 SamplerState samplerDiffuse : register(s0);
 
 float4 PS(VS_OUT input) : SV_Target
-{    
+{
     float4 col;
     
     col = diffuse.Sample(samplerDiffuse, input.uv);
