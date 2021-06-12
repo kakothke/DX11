@@ -16,6 +16,11 @@ public:
 	Game();
 	//@}
 
+	/// @name 初期化処理
+	//{
+	bool initialize();
+	//@}
+
 	/// @name ゲームのメインループ
 	//@{
 	bool mainLoop();

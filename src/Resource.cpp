@@ -21,22 +21,26 @@ Resource::~Resource()
 }
 
 //-------------------------------------------------------------------------------------------------
-void Resource::initialize()
+bool Resource::initialize()
 {
+	bool result;
+
 	// OBJs
-	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Cube));
-	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Sphere));
-	mOBJ.load(ResourceFileName::OBJ.at(OBJList::SkyBox));
-	mOBJ.load(ResourceFileName::OBJ.at(OBJList::Test));
+	result = mOBJ.load(ResourceFileName::OBJ.at(OBJList::Cube));
+	result = mOBJ.load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	result = mOBJ.load(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	result = mOBJ.load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
-	mSprite.load(ResourceFileName::Sprite.at(SpriteList::Test));
+	result = mSprite.load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
-	mShader.load(ResourceFileName::Shader.at(ShaderList::Unlit));
-	mShader.load(ResourceFileName::Shader.at(ShaderList::Standard));
-	mShader.load(ResourceFileName::Shader.at(ShaderList::Sprite));
-	mShader.load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+	result = mShader.load(ResourceFileName::Shader.at(ShaderList::Unlit));
+	result = mShader.load(ResourceFileName::Shader.at(ShaderList::Standard));
+	result = mShader.load(ResourceFileName::Shader.at(ShaderList::Sprite));
+	result = mShader.load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+
+	return result;
 }
 
 //-------------------------------------------------------------------------------------------------

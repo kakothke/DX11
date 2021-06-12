@@ -154,6 +154,7 @@
     <ClInclude Include="src\GameObjectTag.h" />
     <ClInclude Include="src\IChangeScene.h" />
     <ClInclude Include="src\DirectionalLight.h" />
+    <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />

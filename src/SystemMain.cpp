@@ -3,7 +3,6 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Game.h"
-#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -29,13 +28,6 @@ bool SystemMain::initialize()
 		return false;
 	}
 
-	// リソースの初期化
-	Resource::getInst()->initialize();
-
-	// ウィンドウを表示
-	ShowWindow(mWindow.hWnd(), SW_SHOW);
-	UpdateWindow(mWindow.hWnd());
-
 	return true;
 }
 
@@ -44,6 +36,14 @@ bool SystemMain::initialize()
 void SystemMain::msgLoop()
 {
 	Game game;
+	if (!game.initialize()) {
+		return;
+	}
+
+	// ウィンドウを表示
+	ShowWindow(mWindow.hWnd(), SW_SHOW);
+	UpdateWindow(mWindow.hWnd());
+
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 

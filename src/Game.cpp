@@ -2,6 +2,8 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include "Input.h"
+#include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -15,10 +17,30 @@ Game::Game()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 初期化処理
+bool Game::initialize()
+{
+	if (!Input::getInst()->initialize()) {
+		MessageBox(nullptr, TEXT("Inputの生成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return false;
+	}
+	if (!Resource::getInst()->initialize()) {
+		return false;
+	}
+
+	// 最初に読み込むシーンをセット
+	mSceneManager.changeScene(SceneList::Test);
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// アプリケーションのメインループ
 /// @return メインループを抜けてアプリケーションが終了する(false)
 bool Game::mainLoop()
 {
+	Input::getInst()->update();
+
 	Direct3D11::getInst()->drawStart();
 	mSceneManager.update();
 	mSceneManager.draw();

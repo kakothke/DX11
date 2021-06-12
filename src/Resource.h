@@ -17,7 +17,7 @@ public:
 	Resource();
 	~Resource();
 
-	void initialize();
+	bool initialize();
 
 	OBJLoader* OBJ();
 	SpriteLoader* Sprite();

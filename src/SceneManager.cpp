@@ -13,8 +13,6 @@ namespace DX11 {
 SceneManager::SceneManager()
 	: mSceneStack()
 {
-	// 最初に読み込むシーンをプッシュ
-	mSceneStack.push(std::make_shared<TestScene>(this));
 }
 
 //-------------------------------------------------------------------------------------------------
