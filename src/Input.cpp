@@ -11,8 +11,17 @@ Input::Input()
 	: mInterface(nullptr)
 	, mKeyDevice(nullptr)
 	, mMouseDevice(nullptr)
+	, mKeyState()
+	, mPrevKeyState()
 	, mMouseState()
 	, mPrevMouseState()
+	, mMousePos()
+	, mMouseVelocity()
+	, mMouseWheel(0)
+	, mXInputState()
+	, mPrevXInputState()
+	, mXInputThumbL()
+	, mXInputThumbR()
 {
 }
 
@@ -43,47 +52,17 @@ bool Input::initialize()
 	// インターフェースを作成する
 	hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mInterface, NULL);
 	if (FAILED(hr)) {
+		MessageBox(nullptr, TEXT("DirectInputの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-
-	// デバイスを作成する
-	hr = mInterface->CreateDevice(GUID_SysKeyboard, &mKeyDevice, NULL);
-	if (FAILED(hr)) {
+	// キーボード初期化
+	if (!initializeKey()) {
+		MessageBox(nullptr, TEXT("InputKeyの初期化に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	hr = mInterface->CreateDevice(GUID_SysMouse, &mMouseDevice, NULL);
-	if (FAILED(hr)) {
-		return false;
-	}
-
-	// デバイスのフォーマットを設定する
-	hr = mKeyDevice->SetDataFormat(&c_dfDIKeyboard);
-	if (FAILED(hr)) {
-		return false;
-	}
-	hr = mMouseDevice->SetDataFormat(&c_dfDIMouse);
-	if (FAILED(hr)) {
-		return false;
-	}
-
-	// 協調モードの設定をする
-	HWND hWnd = FindWindow(Define::WindowName, nullptr);
-	hr = mKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
-	if (FAILED(hr)) {
-		return false;
-	}
-	hr = mMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
-	if (FAILED(hr)) {
-		return false;
-	}
-
-	// デバイスの取得開始
-	hr = mKeyDevice->Acquire();
-	if (FAILED(hr)) {
-		return false;
-	}
-	hr = mMouseDevice->Acquire();
-	if (FAILED(hr)) {
+	// マウス初期化
+	if (!initializeMouse()) {
+		MessageBox(nullptr, TEXT("InputMouseの初期化に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
 
@@ -95,6 +74,73 @@ void Input::update()
 {
 	updateKey();
 	updateMouse();
+	updatePad();
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::initializeKey()
+{
+	HRESULT hr;
+
+	// デバイスを作成する
+	hr = mInterface->CreateDevice(GUID_SysKeyboard, &mKeyDevice, NULL);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// デバイスのフォーマットを設定する
+	hr = mKeyDevice->SetDataFormat(&c_dfDIKeyboard);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 協調モードの設定をする
+	HWND hWnd = FindWindow(Define::WindowName, nullptr);
+	hr = mKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// デバイスの取得開始
+	hr = mKeyDevice->Acquire();
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::initializeMouse()
+{
+	HRESULT hr;
+
+	// デバイスを作成する
+	hr = mInterface->CreateDevice(GUID_SysMouse, &mMouseDevice, NULL);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// デバイスのフォーマットを設定する
+	hr = mMouseDevice->SetDataFormat(&c_dfDIMouse);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 協調モードの設定をする
+	HWND hWnd = FindWindow(Define::WindowName, nullptr);
+	hr = mMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// デバイスの取得開始
+	hr = mMouseDevice->Acquire();
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -138,10 +184,45 @@ void Input::updateMouse()
 	// 変換した座標を保存
 	mMousePos.x = (float)mousePos.x;
 	mMousePos.y = (float)mousePos.y;
+
+	// 前フレームからの移動量
+	mMouseVelocity.x = (float)mMouseState.lX;
+	mMouseVelocity.y = (float)mMouseState.lY;
+
+	// マウスのホイール量
+	mMouseWheel = (int)mMouseState.lZ;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKey(DWORD aCord) const
+void Input::updatePad()
+{
+	// 更新前に最新ゲームパッド情報を保存する
+	mPrevXInputState = mXInputState;
+
+	// ゲームパッドの状態を取得
+	XInputGetState(0, &mXInputState);
+
+	// スティックのデッドゾーン内の入力を0に丸める
+	if ((mXInputState.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(mXInputState.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) {
+		mXInputState.Gamepad.sThumbLX = 0;
+		mXInputState.Gamepad.sThumbLY = 0;
+	}
+	if ((mXInputState.Gamepad.sThumbRX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(mXInputState.Gamepad.sThumbRY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) {
+		mXInputState.Gamepad.sThumbRX = 0;
+		mXInputState.Gamepad.sThumbRY = 0;
+	}
+
+	// スティック情報を更新する
+	mXInputThumbL.x = (float)mXInputState.Gamepad.sThumbLX;
+	mXInputThumbL.y = (float)mXInputState.Gamepad.sThumbLY;
+	mXInputThumbR.x = (float)mXInputState.Gamepad.sThumbRX;
+	mXInputThumbR.y = (float)mXInputState.Gamepad.sThumbRY;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getKey(const int& aCord) const
 {
 	if (mKeyState[aCord] & 0x80) {
 		return true;
@@ -150,9 +231,9 @@ bool Input::getKey(DWORD aCord) const
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKeyDown(DWORD aCord) const
+bool Input::getKeyDown(const int& aCord) const
 {
-	if (mKeyState[aCord] & 0x80 && !(mPrevKeyState[aCord] & 0x80)) {
+	if ((mKeyState[aCord] & 0x80) && !(mPrevKeyState[aCord] & 0x80)) {
 		return true;
 	}
 	return false;
@@ -160,36 +241,36 @@ bool Input::getKeyDown(DWORD aCord) const
 
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKeyUp(DWORD aCord) const
+bool Input::getKeyUp(const int& aCord) const
 {
-	if (!(mKeyState[aCord] & 0x80) && mPrevKeyState[aCord] & 0x80) {
+	if (!(mKeyState[aCord] & 0x80) && (mPrevKeyState[aCord] & 0x80)) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButton(MouseCord aCord) const
+bool Input::getMouseButton(const int& aCord) const
 {
-	if (mMouseState.rgbButtons[(int)aCord] == 0x80) {
+	if (mMouseState.rgbButtons[aCord] == 0x80) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButtonDown(MouseCord aCord) const
+bool Input::getMouseButtonDown(const int& aCord) const
 {
-	if (mMouseState.rgbButtons[(int)aCord] & 0x80 && !(mPrevMouseState.rgbButtons[(int)aCord] & 0x80)) {
+	if ((mMouseState.rgbButtons[aCord] & 0x80) && !(mPrevMouseState.rgbButtons[aCord] & 0x80)) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButtonUp(MouseCord aCord) const
+bool Input::getMouseButtonUp(const int& aCord) const
 {
-	if (!(mMouseState.rgbButtons[(int)aCord] & 0x80) && mPrevMouseState.rgbButtons[(int)aCord] & 0x80) {
+	if (!(mMouseState.rgbButtons[aCord] & 0x80) && (mPrevMouseState.rgbButtons[aCord] & 0x80)) {
 		return true;
 	}
 	return false;
@@ -204,16 +285,112 @@ const Vector2& Input::getMousePos() const
 //-------------------------------------------------------------------------------------------------
 const Vector2& Input::getMouseVelocity() const
 {
-	return {
-		(float)mMouseState.lX,
-		(float)mMouseState.lY
-	};
+	return mMouseVelocity;
 }
 
 //-------------------------------------------------------------------------------------------------
 const int& Input::getMouseWheel() const
 {
-	return (int)mMouseState.lZ;
+	return mMouseWheel;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputButton(const int& aCord) const
+{
+	if (mXInputState.Gamepad.wButtons & aCord) {
+		return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputButtonDown(const int& aCord) const
+{
+	if ((mXInputState.Gamepad.wButtons & aCord) && !(mPrevXInputState.Gamepad.wButtons & aCord)) {
+		return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputButtonUp(const int& aCord) const
+{
+	if (!(mXInputState.Gamepad.wButtons & aCord) && (mPrevXInputState.Gamepad.wButtons & aCord)) {
+		return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputTrigger(const int& aLR) const
+{
+	switch (aLR) {
+	case 0:
+		if (mXInputState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+			return true;
+		}
+		break;
+	case 1:
+		if (mXInputState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+			return true;
+		}
+		break;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputTriggerDown(const int& aLR) const
+{
+	switch (aLR) {
+	case 0:
+		if ((mXInputState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			!(mPrevXInputState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) {
+			return true;
+		}
+		break;
+	case 1:
+		if ((mXInputState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			!(mPrevXInputState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) {
+			return true;
+		}
+		break;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Input::getXInputTriggerUp(const int& aLR) const
+{
+	switch (aLR) {
+	case 0:
+		if (!(mXInputState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(mPrevXInputState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) {
+			return true;
+		}
+		break;
+	case 1:
+		if (!(mXInputState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(mPrevXInputState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) {
+			return true;
+		}
+		break;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+const Vector2& Input::getThumb(const int& aLR) const
+{
+	switch (aLR) {
+	case 0:
+		return mXInputThumbL;
+		break;
+	case 1:
+		return mXInputThumbR;
+		break;
+	}
+	return mXInputThumbL;
 }
 
 } // namespace

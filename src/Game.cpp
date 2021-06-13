@@ -21,7 +21,6 @@ Game::Game()
 bool Game::initialize()
 {
 	if (!Input::getInst()->initialize()) {
-		MessageBox(nullptr, TEXT("Input‚Ì¶¬‚ÉŽ¸”s‚µ‚Ü‚µ‚½B"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
 	if (!Resource::getInst()->initialize()) {
