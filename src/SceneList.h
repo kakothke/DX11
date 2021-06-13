@@ -11,8 +11,6 @@ enum class SceneList
 	Test,
 	Title,
 	Game,
-
-	TERM
 };
 
 } // namespace

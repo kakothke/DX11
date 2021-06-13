@@ -203,14 +203,16 @@ void Input::updatePad()
 	XInputGetState(0, &mXInputState);
 
 	// スティックのデッドゾーン内の入力を0に丸める
-	if ((mXInputState.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(mXInputState.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) {
+	if (mXInputState.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 		mXInputState.Gamepad.sThumbLX = 0;
+	}
+	if (mXInputState.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 		mXInputState.Gamepad.sThumbLY = 0;
 	}
-	if ((mXInputState.Gamepad.sThumbRX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(mXInputState.Gamepad.sThumbRY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) {
+	if (mXInputState.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
 		mXInputState.Gamepad.sThumbRX = 0;
+	}
+	if (mXInputState.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && mXInputState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
 		mXInputState.Gamepad.sThumbRY = 0;
 	}
 
@@ -222,18 +224,18 @@ void Input::updatePad()
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKey(const int& aCord) const
+bool Input::getKey(const int& aCode) const
 {
-	if (mKeyState[aCord] & 0x80) {
+	if (mKeyState[aCode] & 0x80) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKeyDown(const int& aCord) const
+bool Input::getKeyDown(const int& aCode) const
 {
-	if ((mKeyState[aCord] & 0x80) && !(mPrevKeyState[aCord] & 0x80)) {
+	if ((mKeyState[aCode] & 0x80) && !(mPrevKeyState[aCode] & 0x80)) {
 		return true;
 	}
 	return false;
@@ -241,36 +243,36 @@ bool Input::getKeyDown(const int& aCord) const
 
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getKeyUp(const int& aCord) const
+bool Input::getKeyUp(const int& aCode) const
 {
-	if (!(mKeyState[aCord] & 0x80) && (mPrevKeyState[aCord] & 0x80)) {
+	if (!(mKeyState[aCode] & 0x80) && (mPrevKeyState[aCode] & 0x80)) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButton(const int& aCord) const
+bool Input::getMouseButton(const int& aCode) const
 {
-	if (mMouseState.rgbButtons[aCord] == 0x80) {
+	if (mMouseState.rgbButtons[aCode] == 0x80) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButtonDown(const int& aCord) const
+bool Input::getMouseButtonDown(const int& aCode) const
 {
-	if ((mMouseState.rgbButtons[aCord] & 0x80) && !(mPrevMouseState.rgbButtons[aCord] & 0x80)) {
+	if ((mMouseState.rgbButtons[aCode] & 0x80) && !(mPrevMouseState.rgbButtons[aCode] & 0x80)) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getMouseButtonUp(const int& aCord) const
+bool Input::getMouseButtonUp(const int& aCode) const
 {
-	if (!(mMouseState.rgbButtons[aCord] & 0x80) && (mPrevMouseState.rgbButtons[aCord] & 0x80)) {
+	if (!(mMouseState.rgbButtons[aCode] & 0x80) && (mPrevMouseState.rgbButtons[aCode] & 0x80)) {
 		return true;
 	}
 	return false;
@@ -295,27 +297,27 @@ const int& Input::getMouseWheel() const
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getXInputButton(const int& aCord) const
+bool Input::getXInputButton(const int& aCode) const
 {
-	if (mXInputState.Gamepad.wButtons & aCord) {
+	if (mXInputState.Gamepad.wButtons & aCode) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getXInputButtonDown(const int& aCord) const
+bool Input::getXInputButtonDown(const int& aCode) const
 {
-	if ((mXInputState.Gamepad.wButtons & aCord) && !(mPrevXInputState.Gamepad.wButtons & aCord)) {
+	if ((mXInputState.Gamepad.wButtons & aCode) && !(mPrevXInputState.Gamepad.wButtons & aCode)) {
 		return true;
 	}
 	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Input::getXInputButtonUp(const int& aCord) const
+bool Input::getXInputButtonUp(const int& aCode) const
 {
-	if (!(mXInputState.Gamepad.wButtons & aCord) && (mPrevXInputState.Gamepad.wButtons & aCord)) {
+	if (!(mXInputState.Gamepad.wButtons & aCode) && (mPrevXInputState.Gamepad.wButtons & aCode)) {
 		return true;
 	}
 	return false;
@@ -380,7 +382,7 @@ bool Input::getXInputTriggerUp(const int& aLR) const
 }
 
 //-------------------------------------------------------------------------------------------------
-const Vector2& Input::getThumb(const int& aLR) const
+const Vector2& Input::getXInputThumb(const int& aLR) const
 {
 	switch (aLR) {
 	case 0:

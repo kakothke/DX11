@@ -32,16 +32,16 @@ public:
 
 	/// @name キーボード情報
 	//@{
-	bool getKey(const int& aCord) const;
-	bool getKeyDown(const int& aCord) const;
-	bool getKeyUp(const int& aCord) const;
+	bool getKey(const int& aCode) const;
+	bool getKeyDown(const int& aCode) const;
+	bool getKeyUp(const int& aCode) const;
 	//@}
 
 	/// @マウス情報
 	//@{
-	bool getMouseButton(const int& aCord) const;
-	bool getMouseButtonDown(const int& aCord) const;
-	bool getMouseButtonUp(const int& aCord) const;
+	bool getMouseButton(const int& aCode) const;
+	bool getMouseButtonDown(const int& aCode) const;
+	bool getMouseButtonUp(const int& aCode) const;
 	const Vector2& getMousePos() const;
 	const Vector2& getMouseVelocity() const;
 	const int& getMouseWheel() const;
@@ -49,17 +49,17 @@ public:
 
 	/// @ゲームパッド情報
 	//@{
-	bool getXInputButton(const int& aCord) const;
-	bool getXInputButtonDown(const int& aCord) const;
-	bool getXInputButtonUp(const int& aCord) const;
+	bool getXInputButton(const int& aCode) const;
+	bool getXInputButtonDown(const int& aCode) const;
+	bool getXInputButtonUp(const int& aCode) const;
 	bool getXInputTrigger(const int& aLR) const;
 	bool getXInputTriggerDown(const int& aLR) const;
 	bool getXInputTriggerUp(const int& aLR) const;
-	const Vector2& getThumb(const int& aLR) const;
+	const Vector2& getXInputThumb(const int& aLR) const;
 	//@}
 
 private:
-	/// @name 内部実装関数
+	/// @name 内部実装
 	//@{
 	bool initializeKey();
 	bool initializeMouse();

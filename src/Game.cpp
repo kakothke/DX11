@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
 #include "Input.h"
+#include "InputManager.h"
 #include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -38,13 +39,19 @@ bool Game::initialize()
 /// @return メインループを抜けてアプリケーションが終了する(false)
 bool Game::mainLoop()
 {
+	// 入力状況
 	Input::getInst()->update();
+	InputManager::getInst()->update();
 
+	InputManager::getInst()->getInputUp(InputCode::Cancel);
+
+	// ゲーム内部
 	Direct3D11::getInst()->drawStart();
 	mSceneManager.update();
 	mSceneManager.draw();
 	Direct3D11::getInst()->drawEnd();
 
+	// fps制御
 	mFps.update();
 	mFps.wait();
 	mFps.draw();

@@ -190,6 +190,9 @@
     <ClInclude Include="src\Input.h">
       <Filter>App\Input</Filter>
     </ClInclude>
+    <ClInclude Include="src\InputManager.h">
+      <Filter>App\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -292,6 +295,9 @@
       <Filter>App\GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="src\Input.cpp">
+      <Filter>App\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputManager.cpp">
       <Filter>App\Input</Filter>
     </ClCompile>
   </ItemGroup>
