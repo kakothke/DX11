@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="lib\include\WICTextureLoader11.h" />
     <ClInclude Include="src\AbstractScene.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Camera.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Singleton.h" />
+    <ClInclude Include="src\Sound.h" />
     <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\StringSupport.h" />
     <ClInclude Include="src\SpriteLoader.h" />
@@ -175,13 +177,13 @@
     <ClInclude Include="src\TestSky.h" />
     <ClInclude Include="src\TestSprite.h" />
     <ClInclude Include="src\TextureLoader.h" />
-    <ClInclude Include="src\ThirdParty\WICTextureLoader11.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lib\include\WICTextureLoader11.cpp" />
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Color.cpp" />
@@ -202,6 +204,7 @@
     <ClCompile Include="src\Resource.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
+    <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\StringSupport.cpp" />
     <ClCompile Include="src\SpriteLoader.cpp" />
@@ -212,7 +215,6 @@
     <ClCompile Include="src\TestSky.cpp" />
     <ClCompile Include="src\TestSprite.cpp" />
     <ClCompile Include="src\TextureLoader.cpp" />
-    <ClCompile Include="src\ThirdParty\WICTextureLoader11.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
     <ClCompile Include="src\Vector3.cpp" />

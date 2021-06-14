@@ -2,7 +2,7 @@
 #include <codecvt>
 
 //-------------------------------------------------------------------------------------------------
-#include <../../src/ThirdParty/WICTextureLoader11.h>
+#include <WICTextureLoader11.h>
 #include "Direct3D11.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ namespace DX11 {
 TextureLoader::TextureLoader()
 	: mTexture()
 {
-	load("res/image/error.png");
+	load("res/img/error.png");
 }
 
 //-------------------------------------------------------------------------------------------------
