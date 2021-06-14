@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "InputManager.h"
 #include "Resource.h"
+#include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace DX11 {
@@ -27,6 +28,13 @@ bool Game::initialize()
 	if (!Resource::getInst()->initialize()) {
 		return false;
 	}
+	if (!Sound::getInst()->initialize()) {
+		return false;
+	}
+	Sound::getInst()->load("res/bgm/test.wav");
+	Sound::getInst()->load("res/se/test.wav");
+	Sound::getInst()->load("res/se/test.wav");
+	Sound::getInst()->play(0);
 
 	// 最初に読み込むシーンをセット
 	mSceneManager.changeScene(SceneList::Test);
@@ -43,7 +51,18 @@ bool Game::mainLoop()
 	Input::getInst()->update();
 	InputManager::getInst()->update();
 
-	InputManager::getInst()->getInputUp(InputCode::Cancel);
+	if (Input::getInst()->getKeyDown(DIK_Z)) {
+		Sound::getInst()->playOneShot(1, false);
+	}
+	if (Input::getInst()->getKeyDown(DIK_A)) {
+		Sound::getInst()->playOneShot(1, true);
+	}
+	if (Input::getInst()->getKeyDown(DIK_X)) {
+		Sound::getInst()->pause(1);
+	}
+	if (Input::getInst()->getKeyDown(DIK_S)) {
+		Sound::getInst()->stop(1);
+	}
 
 	// ゲーム内部
 	Direct3D11::getInst()->drawStart();

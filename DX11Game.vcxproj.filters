@@ -74,7 +74,7 @@
     <Filter Include="DX11Game\Resource\Sound">
       <UniqueIdentifier>{41ededce-629f-42ed-9ddc-d8c4fa1ea542}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Library">
+    <Filter Include="Lib">
       <UniqueIdentifier>{b3fb5c2b-c537-4db6-a612-47425a91208a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -197,7 +197,10 @@
       <Filter>DX11Game\Resource\Sound</Filter>
     </ClInclude>
     <ClInclude Include="lib\include\WICTextureLoader11.h">
-      <Filter>Library</Filter>
+      <Filter>Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handle.h">
+      <Filter>DX11Game\Comon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -307,7 +310,10 @@
       <Filter>DX11Game\Resource\Sound</Filter>
     </ClCompile>
     <ClCompile Include="lib\include\WICTextureLoader11.cpp">
-      <Filter>Library</Filter>
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Handle.cpp">
+      <Filter>DX11Game\Comon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

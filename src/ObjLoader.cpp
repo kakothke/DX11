@@ -1,7 +1,6 @@
 #include "OBJLoader.h"
 
 //-------------------------------------------------------------------------------------------------
-#include <../../src/ThirdParty/WICTextureLoader11.h>
 #include <codecvt>
 #include <sstream>
 #include <iomanip>
