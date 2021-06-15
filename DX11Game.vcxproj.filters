@@ -80,6 +80,9 @@
     <Filter Include="Game\Resource\Shader">
       <UniqueIdentifier>{595f6112-377d-47d3-99e7-0f0a63d0e5eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Resource\Font">
+      <UniqueIdentifier>{c888f48f-16d3-4eda-bc92-c1137dce0976}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">

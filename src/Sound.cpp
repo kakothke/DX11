@@ -411,10 +411,10 @@ const bool& Sound::checkIsPlaying(const int& aHandle)
 bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 {
 	HMMIO hMmio = NULL;
-	DWORD waveSize = 0;
+	DWORD wavSize = 0;
 	MMCKINFO ckInfo = {};
 	MMCKINFO riffckInfo = {};
-	PCMWAVEFORMAT pcmWaveFmt = {};
+	PCMWAVEFORMAT pcmWavFmt = {};
 
 	// .wavファイル内のヘッダー情報（音データ以外）の確認と読み込み
 	hMmio = mmioOpenA((char*)aFileName, NULL, MMIO_ALLOCBUF | MMIO_READ);
@@ -439,9 +439,9 @@ bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 	}
 
 	// フォーマットを読み込む
-	mmioRead(hMmio, (HPSTR)&pcmWaveFmt, sizeof(pcmWaveFmt));
+	mmioRead(hMmio, (HPSTR)&pcmWavFmt, sizeof(pcmWavFmt));
 	mSrc[aHandle].wavFmtEx = (WAVEFORMATEX*)new CHAR[sizeof(WAVEFORMATEX)];
-	memcpy(mSrc[aHandle].wavFmtEx, &pcmWaveFmt, sizeof(pcmWaveFmt));
+	memcpy(mSrc[aHandle].wavFmtEx, &pcmWavFmt, sizeof(pcmWavFmt));
 	mSrc[aHandle].wavFmtEx->cbSize = 0;
 	mmr = mmioAscend(hMmio, &ckInfo, 0);
 	if (mmr != MMSYSERR_NOERROR) {
@@ -456,7 +456,7 @@ bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 		mmioClose(hMmio, MMIO_FHOPEN);
 		return false;
 	}
-	waveSize = ckInfo.cksize;
+	wavSize = ckInfo.cksize;
 
 	// ソースボイス作成
 	HRESULT hr = mXAudio2->CreateSourceVoice(&mSrc[aHandle].srcVoice, mSrc[aHandle].wavFmtEx);
@@ -466,11 +466,11 @@ bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 	}
 
 	// バッファーの設定
-	mSrc[aHandle].wavBuffer = new BYTE[waveSize];
-	mmioRead(hMmio, (HPSTR)mSrc[aHandle].wavBuffer, waveSize);
+	mSrc[aHandle].wavBuffer = new BYTE[wavSize];
+	mmioRead(hMmio, (HPSTR)mSrc[aHandle].wavBuffer, wavSize);
 	mSrc[aHandle].buffer.pAudioData = mSrc[aHandle].wavBuffer;
 	mSrc[aHandle].buffer.Flags = XAUDIO2_END_OF_STREAM;
-	mSrc[aHandle].buffer.AudioBytes = waveSize;
+	mSrc[aHandle].buffer.AudioBytes = wavSize;
 
 	// 閉じる
 	mmioClose(hMmio, MMIO_FHOPEN);
