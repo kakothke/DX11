@@ -102,10 +102,7 @@ bool Input::initializeKey()
 	}
 
 	// デバイスの取得開始
-	hr = mKeyDevice->Acquire();
-	if (FAILED(hr)) {
-		return false;
-	}
+	mKeyDevice->Acquire();
 
 	return true;
 }
@@ -135,10 +132,7 @@ bool Input::initializeMouse()
 	}
 
 	// デバイスの取得開始
-	hr = mMouseDevice->Acquire();
-	if (FAILED(hr)) {
-		return false;
-	}
+	mMouseDevice->Acquire();
 
 	return true;
 }
@@ -146,7 +140,7 @@ bool Input::initializeMouse()
 //-------------------------------------------------------------------------------------------------
 void Input::updateKey()
 {
-	HRESULT	hr;
+	HRESULT hr;
 
 	// 更新前に最新キーボード情報を保存する
 	memcpy(mPrevKeyState, mKeyState, sizeof(mKeyState));
@@ -155,7 +149,7 @@ void Input::updateKey()
 	hr = mKeyDevice->GetDeviceState(KEY_NUM, &mKeyState);
 	if (FAILED(hr)) {
 		mKeyDevice->Acquire();
-		return;
+		mKeyDevice->GetDeviceState(KEY_NUM, &mKeyState);
 	}
 }
 
@@ -171,7 +165,7 @@ void Input::updateMouse()
 	hr = mMouseDevice->GetDeviceState(sizeof(DIMOUSESTATE), &mMouseState);
 	if (FAILED(hr)) {
 		mMouseDevice->Acquire();
-		return;
+		mMouseDevice->GetDeviceState(sizeof(DIMOUSESTATE), &mMouseState);
 	}
 
 	// マウス座標(スクリーン座標)を取得する
