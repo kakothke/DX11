@@ -31,9 +31,11 @@ bool Game::initialize()
 	if (!Sound::getInst()->initialize()) {
 		return false;
 	}
-	Sound::getInst()->load("res/bgm/test.wav");
+	Sound::getInst()->load("res/bgm/music_0.wav");
 	Sound::getInst()->load("res/se/test.wav");
 	Sound::getInst()->load("res/se/test.wav");
+	Sound::getInst()->setLoop(0, true, 2);
+	Sound::getInst()->setLoopPos(0, 855273, 2565818);
 	Sound::getInst()->play(0);
 
 	// 最初に読み込むシーンをセット
@@ -51,8 +53,10 @@ bool Game::mainLoop()
 	Input::getInst()->update();
 	InputManager::getInst()->update();
 
+	static float vol = 1;
+
 	if (Input::getInst()->getKeyDown(DIK_Z)) {
-		Sound::getInst()->playOneShot(1, false);
+		Sound::getInst()->playOneShot(1);
 	}
 	if (Input::getInst()->getKeyDown(DIK_A)) {
 		Sound::getInst()->playOneShot(1, true);
@@ -62,6 +66,17 @@ bool Game::mainLoop()
 	}
 	if (Input::getInst()->getKeyDown(DIK_S)) {
 		Sound::getInst()->stop(1);
+	}
+	if (Input::getInst()->getKeyDown(DIK_C)) {
+		Sound::getInst()->setLoop(1, false);
+	}
+	if (Input::getInst()->getKeyDown(DIK_UP)) {
+		vol += 0.05f;
+		Sound::getInst()->setVolume(1,vol);
+	}
+	if (Input::getInst()->getKeyDown(DIK_DOWN)) {
+		vol -= 0.05f;
+		Sound::getInst()->setVolume(1, vol);
 	}
 
 	// ゲーム内部

@@ -40,6 +40,18 @@ public:
 	void stop(const int& aHandle);
 	/// 一時停止
 	void pause(const int& aHandle);
+	/// ボリュームを設定する
+	void setVolume(const int& aHandle, float aVolume);
+	/// パンを設定する
+	void setPan(const int& aHandle, float aPan);
+	/// ループの設定をする
+	void setLoop(const int& aHandle, const bool& aLoopFlag = true, const int& aLoopCount = 0);
+	/// ループの位置の設定をする
+	void setLoopPos(const int& aHandle, const UINT32& aBeginPos, const UINT32& aEndPos = 0);
+	/// 再生開始位置を設定する
+	void setBeginPos(const int& aHandle, const UINT32& aBeginPos);
+	/// 再生中かどうか調べる
+	const bool& checkIsPlaying(const int& aHandle);
 	//@}
 
 private:
