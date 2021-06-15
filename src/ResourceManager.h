@@ -6,29 +6,19 @@
 #include "SpriteLoader.h"
 #include "TextureLoader.h"
 #include "ShaderLoader.h"
+#include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// リソース管理クラス
-class Resource : public Singleton<Resource>
+class ResourceManager : public Singleton<ResourceManager>
 {
 public:
-	Resource();
-	~Resource();
+	ResourceManager();
+	~ResourceManager();
 
 	bool initialize();
-
-	OBJLoader* OBJ();
-	SpriteLoader* Sprite();
-	TextureLoader* Texture();
-	ShaderLoader* Shader();
-
-private:
-	OBJLoader mOBJ;
-	SpriteLoader mSprite;
-	TextureLoader mTexture;
-	ShaderLoader mShader;
 
 };
 

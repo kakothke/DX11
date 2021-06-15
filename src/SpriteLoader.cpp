@@ -2,7 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "Resource.h"
+#include "TextureLoader.h"
 
 namespace KDXK {
 
@@ -32,7 +32,7 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!Resource::getInst()->Texture()->load(aFileName)) {
+	if (!TextureLoader::getInst()->load(aFileName)) {
 		return false;
 	}
 	if (!createVertexBuffer(aFileName)) {
@@ -115,7 +115,7 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	Resource::getInst()->Texture()->getTexture(aFileName)->GetResource(&res);
+	TextureLoader::getInst()->getTexture(aFileName)->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
 	res->QueryInterface(&tex2D);
 	D3D11_TEXTURE2D_DESC desc;

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <unordered_map>
+#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -81,7 +82,7 @@ struct OBJData
 };
 
 /// OBJファイル読み込みクラス
-class OBJLoader
+class OBJLoader : public Singleton<OBJLoader>
 {
 public:
 	/// @name コンストラクタ/デストラクタ

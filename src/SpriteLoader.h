@@ -5,6 +5,7 @@
 #include <DirectXMath.h>
 #include <vector>
 #include <unordered_map>
+#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -46,7 +47,7 @@ struct SpriteData
 };
 
 /// スプライト読み込みクラス
-class SpriteLoader
+class SpriteLoader : public Singleton<SpriteLoader>
 {
 public:
 	/// @name コンストラクタ/デストラクタ

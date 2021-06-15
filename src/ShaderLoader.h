@@ -4,6 +4,7 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <unordered_map>
+#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 #pragma comment(lib, "d3dcompiler.lib")
@@ -35,7 +36,7 @@ struct ShaderData
 };
 
 /// シェーダーデータ読み込みクラス
-class ShaderLoader
+class ShaderLoader : public Singleton<ShaderLoader>
 {
 public:
 	/// @name コンストラクタ/デストラクタ

@@ -4,8 +4,7 @@
 #include "Direct3D11.h"
 #include "Input.h"
 #include "InputManager.h"
-#include "Resource.h"
-#include "Sound.h"
+#include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -25,7 +24,7 @@ bool Game::initialize()
 	if (!Input::getInst()->initialize()) {
 		return false;
 	}
-	if (!Resource::getInst()->initialize()) {
+	if (!ResourceManager::getInst()->initialize()) {
 		return false;
 	}
 	if (!Sound::getInst()->initialize()) {

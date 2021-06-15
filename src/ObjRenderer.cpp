@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -59,7 +60,7 @@ bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット
 			const char* texName = mOBJData->materials[index.first].textureFileName.c_str();
-			Direct3D11::getInst()->setTexture(Resource::getInst()->Texture()->getTexture(texName));
+			Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(texName));
 		} else {
 			Direct3D11::getInst()->setTexture(nullptr);
 		}
@@ -76,8 +77,8 @@ bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 //-------------------------------------------------------------------------------------------------
 void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
 {
-	mOBJData = Resource::getInst()->OBJ()->getOBJData(aOBJFileName);
-	mShaderData = Resource::getInst()->Shader()->getShaderData(aShaderFileName);
+	mOBJData = OBJLoader::getInst()->getOBJData(aOBJFileName);
+	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
 }
 
 } // namespace

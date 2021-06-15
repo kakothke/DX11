@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -54,7 +55,7 @@ bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	Direct3D11::getInst()->getConstantBuffer()->updateSprite(aTransform, mAnchor, mPivot, mSplit);
 
 	// テクスチャーセット
-	Direct3D11::getInst()->setTexture(Resource::getInst()->Texture()->getTexture(mSpriteData->fileName));
+	Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(mSpriteData->fileName));
 
 	// 描画
 	Direct3D11::getInst()->getContext()->Draw(4, 0);
@@ -65,8 +66,8 @@ bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 //-------------------------------------------------------------------------------------------------
 void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
 {
-	mSpriteData = Resource::getInst()->Sprite()->getSpriteData(aSpriteFileName);
-	mShaderData = Resource::getInst()->Shader()->getShaderData(aShaderFileName);
+	mSpriteData = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
+	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
 }
 
 //-------------------------------------------------------------------------------------------------

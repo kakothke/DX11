@@ -3,12 +3,13 @@
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
 #include <unordered_map>
+#include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// テクスチャー読み込みクラス
-class TextureLoader
+class TextureLoader : public Singleton<TextureLoader>
 {
 public:
 	/// @name コンストラクタ/デストラクタ
