@@ -49,7 +49,7 @@ private:
 	/// 多重起動をチェックする
 	bool checkMultiple();
 	/// ウィンドウを作成する
-	bool createWindow();
+	bool createWindow(const USHORT& aWidth, const USHORT& aHeight);
 	/// ウィンドウクラスを登録する
 	bool registerClass();
 	//@}
@@ -57,7 +57,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// ウィンドウハンドル
-	HWND mWindowHandle;
+	HWND mHWnd;
 	/// ミューテックス
 	HANDLE mMutex;
 	/// ウィンドウ名

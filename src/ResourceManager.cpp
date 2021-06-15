@@ -2,6 +2,10 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
+#include "OBJLoader.h"
+#include "SpriteLoader.h"
+#include "ShaderLoader.h"
+#include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -35,6 +39,9 @@ bool ResourceManager::initialize()
 	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::Standard));
 	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::Sprite));
 	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+
+	// Sound
+
 
 	return result;
 }

@@ -2,11 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Singleton.h"
-#include "OBJLoader.h"
-#include "SpriteLoader.h"
-#include "TextureLoader.h"
-#include "ShaderLoader.h"
-#include "Sound.h"
+
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
