@@ -8,7 +8,7 @@
 #include "ShaderLoader.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// リソース管理クラス
 class Resource : public Singleton<Resource>

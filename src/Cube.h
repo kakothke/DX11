@@ -5,7 +5,7 @@
 #include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// —§•û‘Ì
 class Cube : public BaseGameObject

@@ -1,7 +1,7 @@
 #include "ResourceFileName.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// OBJ
 const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =

@@ -5,7 +5,7 @@
 #include "GameObjectTag.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// 全てのゲームオブジェクトの基底クラス
 class BaseGameObject

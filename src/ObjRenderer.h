@@ -5,7 +5,7 @@
 #include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// .objファイル描画クラス
 class OBJRenderer

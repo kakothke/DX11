@@ -5,7 +5,7 @@
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// ウィンドウプロシージャ
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

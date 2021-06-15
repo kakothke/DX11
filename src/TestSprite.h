@@ -5,7 +5,7 @@
 #include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// テスト用のゲームオブジェクト
 class TestSprite : public BaseGameObject

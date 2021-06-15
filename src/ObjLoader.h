@@ -8,7 +8,7 @@
 #include <unordered_map>
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// 頂点データ構造体
 struct OBJVertex

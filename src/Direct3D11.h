@@ -11,7 +11,7 @@
 #pragma comment(lib, "d3d11.lib")
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// Direct3D11ÇÃä«óù
 class Direct3D11 : public Singleton<Direct3D11>

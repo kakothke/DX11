@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "OBJLoader.h"
 
-namespace DX11 {
+namespace KDXK {
 
 /// çsóÒ
 struct CB_MATRIX

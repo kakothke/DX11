@@ -6,7 +6,7 @@
 #include "Color.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// 全てのゲームオブジェクトの基底クラス
 class DirectionalLight : public BaseGameObject

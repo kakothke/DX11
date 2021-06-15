@@ -5,7 +5,7 @@
 #include "Resource.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// スプライト描画クラス
 class SpriteRenderer

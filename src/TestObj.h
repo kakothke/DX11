@@ -5,7 +5,7 @@
 #include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// テスト用のゲームオブジェクト
 class TestObj : public BaseGameObject

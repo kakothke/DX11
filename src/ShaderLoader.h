@@ -9,7 +9,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// シェーダー構造体
 struct ShaderData

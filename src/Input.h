@@ -12,7 +12,7 @@
 #pragma comment(lib, "xinput.lib")
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// InputƒNƒ‰ƒX
 class Input : public Singleton<Input>

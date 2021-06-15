@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DX11 {
+namespace KDXK {
 
 /// ”ŠwŠÖ”ŒQ
 class Math

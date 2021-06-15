@@ -4,7 +4,7 @@
 #include "IChangeScene.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// シーンの基本クラス
 class AbstractScene

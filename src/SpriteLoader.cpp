@@ -4,7 +4,7 @@
 #include "Direct3D11.h"
 #include "Resource.h"
 
-namespace DX11 {
+namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 SpriteLoader::SpriteLoader()

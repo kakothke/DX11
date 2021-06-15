@@ -7,7 +7,7 @@
 #include "Handle.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// ÉTÉEÉìÉhêßå‰
 class Sound : public Singleton<Sound>

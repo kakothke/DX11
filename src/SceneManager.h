@@ -9,7 +9,7 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11{
+namespace KDXK{
 
 /// ƒV[ƒ“ŠÇ—
 class SceneManager : public IChangeScene

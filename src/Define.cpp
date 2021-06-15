@@ -2,7 +2,7 @@
 #include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 const LPCTSTR Define::WindowName = TEXT("MyGame");
 

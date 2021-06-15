@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// OBJ
 enum class OBJList

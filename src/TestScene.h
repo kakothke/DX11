@@ -9,7 +9,7 @@
 #include "DirectionalLight.h"
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 class TestScene : public AbstractScene
 {

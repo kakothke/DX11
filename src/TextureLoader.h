@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 //-------------------------------------------------------------------------------------------------
-namespace DX11 {
+namespace KDXK {
 
 /// テクスチャー読み込みクラス
 class TextureLoader
