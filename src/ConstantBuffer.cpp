@@ -2,19 +2,10 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "Define.h"
+#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
-
-//-------------------------------------------------------------------------------------------------
-/// 定数
-const static DirectX::XMMATRIX PROJ_2D = {
-	2.0f / Define::ResolutionWidth, 0, 0, 0,
-	0, 2.0f / Define::ResolutionHeight, 0, 0,
-	0, 0, 1, 0,
-	0, 0, 0, 1
-};
 
 //-------------------------------------------------------------------------------------------------
 ConstantBuffer::ConstantBuffer()
@@ -76,9 +67,6 @@ bool ConstantBuffer::create()
 	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[MATERIAL]))) {
 		return false;
 	}
-
-	// スプライト用プロジェクション行列をセット
-	XMStoreFloat4x4(&mData.SPRITE.MATRIX_P, XMMatrixTranspose(PROJ_2D));
 
 	return true;
 }
@@ -177,7 +165,13 @@ void ConstantBuffer::updateSprite(
 		0, 0, 1, 0,
 		aAnchor.x, -aAnchor.y, 0, 1
 	};
-	DirectX::XMMATRIX projMatrix = PROJ_2D * anchor;
+	DirectX::XMMATRIX proj2D = {
+		2.0f / Window::getInst()->windowWidth(), 0, 0, 0,
+		0, 2.0f / Window::getInst()->windowHeight(), 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
+	};
+	DirectX::XMMATRIX projMatrix = proj2D * anchor;
 	XMStoreFloat4x4(&mData.SPRITE.MATRIX_P, XMMatrixTranspose(projMatrix));
 
 	// Pivot

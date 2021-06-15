@@ -1,7 +1,7 @@
 #include "Input.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Define.h"
+#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -95,8 +95,7 @@ bool Input::initializeKey()
 	}
 
 	// 協調モードの設定をする
-	HWND hWnd = FindWindow(Define::WindowName, nullptr);
-	hr = mKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	hr = mKeyDevice->SetCooperativeLevel(Window::getInst()->hWnd(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -125,8 +124,7 @@ bool Input::initializeMouse()
 	}
 
 	// 協調モードの設定をする
-	HWND hWnd = FindWindow(Define::WindowName, nullptr);
-	hr = mMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	hr = mMouseDevice->SetCooperativeLevel(Window::getInst()->hWnd(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -173,7 +171,7 @@ void Input::updateMouse()
 	GetCursorPos(&mousePos);
 
 	// スクリーン座標をクライアント座標に変換する
-	ScreenToClient(FindWindow(Define::WindowName, nullptr), &mousePos);
+	ScreenToClient(Window::getInst()->hWnd(), &mousePos);
 
 	// 変換した座標を保存
 	mMousePos.x = (float)mousePos.x;

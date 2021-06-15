@@ -20,14 +20,10 @@ public:
     const static LPCTSTR WindowName;
     //@}
 
-    /// @name DirectX設定
+    /// @name ゲーム設定
     //@{
-    /// ウィンドウモードにするか
-    const static bool WindowModeFlag = true;
     /// 画面クリア色
     const static float ClearColor[4];
-    /// 視野角
-    const static float Zoom;
     //@}
 
     /// @name ゲーム設定

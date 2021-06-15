@@ -1,7 +1,7 @@
 #include "Direct3D11.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Define.h"
+#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -111,9 +111,9 @@ bool Direct3D11::initialize()
 
 //-------------------------------------------------------------------------------------------------
 /// •`‰æŠJŽn
-void Direct3D11::drawStart()
+void Direct3D11::drawStart(const float aClearCol[4])
 {
-	mContext->ClearRenderTargetView(mRenderTargetViews, Define::ClearColor);
+	mContext->ClearRenderTargetView(mRenderTargetViews, aClearCol);
 	mContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
@@ -191,15 +191,15 @@ ConstantBuffer* Direct3D11::getConstantBuffer()
 /// @return ì¬Œ‹‰Ê ¬Œ÷(true)
 bool Direct3D11::createDeviceAndSwapChain()
 {
-	HWND hWnd = FindWindow(Define::WindowName, nullptr);
+	HWND hWnd = Window::getInst()->hWnd();
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
 	sd.BufferCount = 1;
-	sd.BufferDesc.Width = Define::ResolutionWidth;
-	sd.BufferDesc.Height = Define::ResolutionHeight;
+	sd.BufferDesc.Width = Window::getInst()->windowWidth();
+	sd.BufferDesc.Height = Window::getInst()->windowHeight();
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	sd.BufferDesc.RefreshRate.Numerator = Define::Fps;
+	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.OutputWindow = hWnd;
@@ -254,8 +254,8 @@ bool Direct3D11::createRenderTargetView()
 bool Direct3D11::createDepthAndStencil()
 {
 	D3D11_TEXTURE2D_DESC descDepth;
-	descDepth.Width = Define::ResolutionWidth;
-	descDepth.Height = Define::ResolutionHeight;
+	descDepth.Width = Window::getInst()->windowWidth();
+	descDepth.Height = Window::getInst()->windowHeight();
 	descDepth.MipLevels = 1;
 	descDepth.ArraySize = 1;
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -330,8 +330,8 @@ bool Direct3D11::createTextureSampler()
 void Direct3D11::setUpViewPort()
 {
 	D3D11_VIEWPORT vp;
-	vp.Width = Define::ResolutionWidth;
-	vp.Height = Define::ResolutionHeight;
+	vp.Width = Window::getInst()->windowWidth();
+	vp.Height = Window::getInst()->windowHeight();
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;

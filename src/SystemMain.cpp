@@ -1,8 +1,10 @@
 #include "SystemMain.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "Window.h"
 #include "Direct3D11.h"
 #include "Game.h"
+#include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -10,7 +12,6 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SystemMain::SystemMain()
-	: mWindow()
 {
 }
 
@@ -20,7 +21,7 @@ SystemMain::SystemMain()
 bool SystemMain::initialize()
 {
 	// ウィンドウ初期化
-	if (!mWindow.initialize()) {
+	if (!Window::getInst()->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
 		return false;
 	}
 	// Direct3D11初期化
@@ -41,8 +42,8 @@ void SystemMain::msgLoop()
 	}
 
 	// ウィンドウを表示
-	ShowWindow(mWindow.hWnd(), SW_SHOW);
-	UpdateWindow(mWindow.hWnd());
+	ShowWindow(Window::getInst()->hWnd(), SW_SHOW);
+	UpdateWindow(Window::getInst()->hWnd());
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));

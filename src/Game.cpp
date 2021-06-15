@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
+#include "Define.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -79,7 +80,7 @@ bool Game::mainLoop()
 	}
 
 	// ƒQ[ƒ€“à•”
-	Direct3D11::getInst()->drawStart();
+	Direct3D11::getInst()->drawStart(Define::ClearColor);
 	mSceneManager.update();
 	mSceneManager.draw();
 	Direct3D11::getInst()->drawEnd();

@@ -31,6 +31,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 Window::Window()
 	: mWindowHandle(nullptr)
 	, mMutex(nullptr)
+	, mWindowName(TEXT("NULL"))
+	, mWindowWidth(0)
+	, mWindowHeight(0)
 {
 }
 
@@ -41,7 +44,7 @@ Window::~Window()
 	// ウィンドウの破棄
 	if (mWindowHandle) {
 		DestroyWindow(mWindowHandle);
-		UnregisterClass(Define::WindowName, GetModuleHandle(NULL));
+		UnregisterClass(mWindowName, GetModuleHandle(NULL));
 	}
 	// ミューテックスの開放
 	if (mMutex) {
@@ -52,9 +55,17 @@ Window::~Window()
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
+/// @param aWindowName ウィンドウ名
+/// @param aWidth ウィンドウ横サイズ
+/// @param aHeight ウィンドウ縦サイズ
 /// @return 初期化結果 成功(true)
-bool Window::initialize()
+bool Window::initialize(const LPCTSTR aWindowName, const USHORT& aWidth, const USHORT& aHeight)
 {
+	/// ウィンドウ情報を保存
+	mWindowName = aWindowName;
+	mWindowWidth = aWidth;
+	mWindowHeight = aHeight;
+
 	// 多重起動をチェックする
 	if (!checkMultiple()) {
 		// 既に起動されているアプリケーションを前面に表示して終了
@@ -70,6 +81,36 @@ bool Window::initialize()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// ウィンドウのサイズを設定する
+/// @param aWidth 縦サイズ
+/// @param aHeight 横サイズ
+/// @param aCenter 中央に表示
+void Window::setSize(const USHORT& aWidth, const USHORT& aHeight, const bool& aCenter)
+{
+	// ウィンドウサイズを保存する
+	mWindowWidth = aWidth;
+	mWindowHeight = aHeight;
+
+	// 非クライアント領域を加算したウィンドウサイズを計算
+	RECT wndRect, cltRect;
+	GetWindowRect(mWindowHandle, &wndRect);
+	GetClientRect(mWindowHandle, &cltRect);
+	int resizeW = ((wndRect.right - wndRect.left) - (cltRect.right - cltRect.left)) + mWindowWidth;
+	int resizeH = ((wndRect.bottom - wndRect.top) - (cltRect.bottom - cltRect.top)) + mWindowHeight;
+
+	// 作成したウィンドウの位置とサイズを変更
+	SetWindowPos(
+		mWindowHandle,
+		nullptr,
+		(GetSystemMetrics(SM_CXSCREEN) - resizeW) / 2, // モニターの中央に表示
+		(GetSystemMetrics(SM_CYSCREEN) - resizeH) / 2, // モニターの中央に表示
+		resizeW,
+		resizeH,
+		SWP_NOZORDER | SWP_NOOWNERZORDER
+	);
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 作成したウィンドウハンドルを返す
 const HWND Window::hWnd() const
 {
@@ -77,16 +118,37 @@ const HWND Window::hWnd() const
 }
 
 //-------------------------------------------------------------------------------------------------
+/// ウィンドウ名を返す
+const LPCTSTR Window::windowName() const
+{
+	return mWindowName;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ウィンドウ横サイズを返す
+const USHORT& Window::windowWidth() const
+{
+	return mWindowWidth;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ウィンドウ縦サイズを返す
+const USHORT& Window::windowHeight() const
+{
+	return mWindowHeight;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 多重起動をチェックする
 /// @return チェック結果 既に起動されているウィンドウが存在しない(true)
 bool Window::checkMultiple()
 {
-	mMutex = CreateMutex(nullptr, FALSE, Define::WindowName);
+	mMutex = CreateMutex(nullptr, FALSE, mWindowName);
 
 	DWORD theErr = GetLastError();
 	if (theErr == ERROR_ALREADY_EXISTS) {
 		// 既に起動されているウィンドウを取得
-		HWND hWnd = FindWindow(Define::WindowName, nullptr);
+		HWND hWnd = FindWindow(mWindowName, nullptr);
 		if (IsIconic(hWnd)) {
 			// 最小化されていれば元に戻す
 			ShowWindowAsync(hWnd, SW_RESTORE);
@@ -113,8 +175,8 @@ bool Window::createWindow()
 	// ウィンドウ作成
 	mWindowHandle =
 		CreateWindow(
-			Define::WindowName,
-			Define::WindowName,
+			mWindowName,
+			mWindowName,
 			// 最大化ボタンとサイズ変更を無効
 			WS_OVERLAPPEDWINDOW & ~(WS_THICKFRAME | WS_MAXIMIZEBOX),
 			CW_USEDEFAULT,
@@ -133,7 +195,7 @@ bool Window::createWindow()
 	}
 
 	// ウィンドウのサイズを調整する
-	resizeWindow();
+	setSize(mWindowWidth, mWindowHeight);
 
 	return true;
 }
@@ -153,7 +215,7 @@ bool Window::registerClass()
 	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
-	wc.lpszClassName = Define::WindowName;
+	wc.lpszClassName = mWindowName;
 	wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
 
 	// ウィンドウクラスを登録
@@ -162,29 +224,6 @@ bool Window::registerClass()
 	}
 
 	return true;
-}
-
-//-------------------------------------------------------------------------------------------------
-/// ウィンドウのサイズを調整する
-void Window::resizeWindow()
-{
-	// 非クライアント領域を加算したウィンドウサイズを計算
-	RECT wndRect, cltRect;
-	GetWindowRect(mWindowHandle, &wndRect);
-	GetClientRect(mWindowHandle, &cltRect);
-	int resizeW = ((wndRect.right - wndRect.left) - (cltRect.right - cltRect.left)) + Define::ResolutionWidth;
-	int resizeH = ((wndRect.bottom - wndRect.top) - (cltRect.bottom - cltRect.top)) + Define::ResolutionHeight;
-
-	// 作成したウィンドウの位置とサイズを変更
-	SetWindowPos(
-		mWindowHandle,
-		nullptr,
-		(GetSystemMetrics(SM_CXSCREEN) - resizeW) / 2, // モニターの中央に表示
-		(GetSystemMetrics(SM_CYSCREEN) - resizeH) / 2, // モニターの中央に表示
-		resizeW,
-		resizeH,
-		SWP_NOZORDER | SWP_NOOWNERZORDER
-	);
 }
 
 } // namespace

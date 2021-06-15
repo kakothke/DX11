@@ -159,6 +159,7 @@
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Math.h" />
+    <ClInclude Include="src\MyOutputDebugString.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
     <ClInclude Include="src\ResourceFileName.h" />

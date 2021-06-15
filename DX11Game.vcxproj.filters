@@ -50,9 +50,6 @@
     <Filter Include="System\Input">
       <UniqueIdentifier>{12313ad4-9481-45bb-994e-e5354247f4c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Fps">
-      <UniqueIdentifier>{e075ab60-c532-4fb4-bee9-baaef0421e9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Window">
       <UniqueIdentifier>{436931fa-9f16-49d6-9318-a3f699cfae62}</UniqueIdentifier>
     </Filter>
@@ -83,6 +80,9 @@
     <Filter Include="System\Resource\Font">
       <UniqueIdentifier>{c888f48f-16d3-4eda-bc92-c1137dce0976}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Comon">
+      <UniqueIdentifier>{767d1150-e214-43fd-ace2-4be985246383}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -96,9 +96,6 @@
     </ClInclude>
     <ClInclude Include="src\Cube.h">
       <Filter>Game\GameObject\3D Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Define.h">
-      <Filter>System\Comon</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
       <Filter>Game</Filter>
@@ -181,9 +178,6 @@
     <ClInclude Include="src\Input.h">
       <Filter>System\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fps.h">
-      <Filter>System\Fps</Filter>
-    </ClInclude>
     <ClInclude Include="src\Window.h">
       <Filter>System\Window</Filter>
     </ClInclude>
@@ -208,6 +202,15 @@
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>System\Resource\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="src\MyOutputDebugString.h">
+      <Filter>System\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fps.h">
+      <Filter>Game\Comon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Define.h">
+      <Filter>Game\Comon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -218,9 +221,6 @@
     </ClCompile>
     <ClCompile Include="src\Cube.cpp">
       <Filter>Game\GameObject\3D Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Define.cpp">
-      <Filter>System\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>Game</Filter>
@@ -294,9 +294,6 @@
     <ClCompile Include="src\Input.cpp">
       <Filter>System\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fps.cpp">
-      <Filter>System\Fps</Filter>
-    </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>System\Window</Filter>
     </ClCompile>
@@ -320,6 +317,12 @@
     </ClCompile>
     <ClCompile Include="src\SpriteRenderer.cpp">
       <Filter>System\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fps.cpp">
+      <Filter>Game\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Define.cpp">
+      <Filter>Game\Comon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

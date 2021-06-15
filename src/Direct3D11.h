@@ -30,7 +30,7 @@ public:
 
 	/// @name •`‰æŠJn/•`‰æI—¹
 	//@{
-	void drawStart();
+	void drawStart(const float aClearCol[4]);
 	void drawEnd();
 	//@}
 
