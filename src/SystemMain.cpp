@@ -21,11 +21,13 @@ SystemMain::SystemMain()
 bool SystemMain::initialize()
 {
 	// ウィンドウ初期化
-	if (!Window::getInst()->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
+	auto window = Window::getInst();
+	if (!window->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
 		return false;
 	}
 	// Direct3D11初期化
-	if (!Direct3D11::getInst()->initialize()) {
+	auto d3d11 = Direct3D11::getInst();
+	if (!d3d11->initialize()) {
 		return false;
 	}
 
@@ -42,8 +44,9 @@ void SystemMain::msgLoop()
 	}
 
 	// ウィンドウを表示
-	ShowWindow(Window::getInst()->hWnd(), SW_SHOW);
-	UpdateWindow(Window::getInst()->hWnd());
+	auto hWnd = Window::getInst()->hWnd();
+	ShowWindow(hWnd, SW_SHOW);
+	UpdateWindow(hWnd);
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));

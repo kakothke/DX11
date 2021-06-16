@@ -51,7 +51,7 @@ public:
 	/// Ä¶ŠJnˆÊ’u‚ğİ’è‚·‚é
 	void setBeginPos(const int& aHandle, const UINT32& aBeginPos);
 	/// Ä¶’†‚©‚Ç‚¤‚©’²‚×‚é
-	const bool& checkIsPlaying(const int& aHandle);
+	bool checkIsPlaying(const int& aHandle);
 	//@}
 
 private:

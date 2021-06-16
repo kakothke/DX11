@@ -26,28 +26,30 @@ void InputManager::update()
 		memcpy(mPrevState, mState, sizeof(mState));
 	}
 
+	static auto input = Input::getInst();
+
 	// 方向入力
 	mAxes = 0;
-	mAxes.x -= Input::getInst()->getKey(DIK_LEFT);
-	mAxes.x += Input::getInst()->getKey(DIK_RIGHT);
-	mAxes.y -= Input::getInst()->getKey(DIK_DOWN);
-	mAxes.y += Input::getInst()->getKey(DIK_UP);
-	mAxes.x -= Input::getInst()->getXInputButton(XINPUT_GAMEPAD_DPAD_LEFT);
-	mAxes.x += Input::getInst()->getXInputButton(XINPUT_GAMEPAD_DPAD_RIGHT);
-	mAxes.y -= Input::getInst()->getXInputButton(XINPUT_GAMEPAD_DPAD_DOWN);
-	mAxes.y += Input::getInst()->getXInputButton(XINPUT_GAMEPAD_DPAD_UP);
-	mAxes.x += Math::Clamp(Input::getInst()->getXInputThumb(0).x, -1.0f, 1.0f);
-	mAxes.y += Math::Clamp(Input::getInst()->getXInputThumb(0).y, -1.0f, 1.0f);
+	mAxes.x -= input->getKey(DIK_LEFT);
+	mAxes.x += input->getKey(DIK_RIGHT);
+	mAxes.y -= input->getKey(DIK_DOWN);
+	mAxes.y += input->getKey(DIK_UP);
+	mAxes.x -= input->getXInputButton(XINPUT_GAMEPAD_DPAD_LEFT);
+	mAxes.x += input->getXInputButton(XINPUT_GAMEPAD_DPAD_RIGHT);
+	mAxes.y -= input->getXInputButton(XINPUT_GAMEPAD_DPAD_DOWN);
+	mAxes.y += input->getXInputButton(XINPUT_GAMEPAD_DPAD_UP);
+	mAxes.x += Math::Clamp(input->getXInputThumb(0).x, -1.0f, 1.0f);
+	mAxes.y += Math::Clamp(input->getXInputThumb(0).y, -1.0f, 1.0f);
 	mAxes.x = Math::Clamp(mAxes.x, -1.0f, 1.0f);
 	mAxes.y = Math::Clamp(mAxes.y, -1.0f, 1.0f);
 
 	// 決定ボタン
 	mState[(int)InputCode::OK] =
-		Input::getInst()->getKey(DIK_Z) || Input::getInst()->getXInputButton(XINPUT_GAMEPAD_B);
+		input->getKey(DIK_Z) || input->getXInputButton(XINPUT_GAMEPAD_B);
 
 	// キャンセルボタン
 	mState[(int)InputCode::Cancel] =
-		Input::getInst()->getKey(DIK_X) || Input::getInst()->getXInputButton(XINPUT_GAMEPAD_A);
+		input->getKey(DIK_X) || input->getXInputButton(XINPUT_GAMEPAD_A);
 
 }
 

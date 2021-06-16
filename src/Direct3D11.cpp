@@ -97,7 +97,7 @@ bool Direct3D11::initialize()
 		return false;
 	}
 	// コンスタントバッファを作成する
-	if (!mConstantBuffer.create()) {
+	if (!mConstantBuffer.initialize(mDevice, mContext)) {
 		MessageBox(nullptr, TEXT("コンスタントバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
@@ -181,6 +181,7 @@ ID3D11DeviceContext* Direct3D11::getContext() const
 }
 
 //-------------------------------------------------------------------------------------------------
+/// コンスタントバッファを返す
 ConstantBuffer* Direct3D11::getConstantBuffer()
 {
 	return &mConstantBuffer;
@@ -191,13 +192,14 @@ ConstantBuffer* Direct3D11::getConstantBuffer()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDeviceAndSwapChain()
 {
-	HWND hWnd = Window::getInst()->hWnd();
+	auto window = Window::getInst();
+	HWND hWnd = window->hWnd();
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
 	sd.BufferCount = 1;
-	sd.BufferDesc.Width = Window::getInst()->windowWidth();
-	sd.BufferDesc.Height = Window::getInst()->windowHeight();
+	sd.BufferDesc.Width = window->windowWidth();
+	sd.BufferDesc.Height = window->windowHeight();
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -210,7 +212,8 @@ bool Direct3D11::createDeviceAndSwapChain()
 	D3D_FEATURE_LEVEL featureLevels = D3D_FEATURE_LEVEL_11_0;
 	D3D_FEATURE_LEVEL* featureLevel = nullptr;
 
-	if (FAILED(D3D11CreateDeviceAndSwapChain(
+	HRESULT hr;
+	hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
@@ -223,7 +226,8 @@ bool Direct3D11::createDeviceAndSwapChain()
 		&mDevice,
 		featureLevel,
 		&mContext
-	))) {
+	);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -235,11 +239,14 @@ bool Direct3D11::createDeviceAndSwapChain()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createRenderTargetView()
 {
+	HRESULT hr;
 	ID3D11Texture2D* backBuffer;
-	if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer))) {
+	hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+	if (FAILED(hr)) {
 		return false;
 	}
-	if (FAILED(mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetViews))) {
+	hr = mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetViews);
+	if (FAILED(hr)) {
 		return false;
 	}
 	backBuffer->Release();
@@ -253,9 +260,11 @@ bool Direct3D11::createRenderTargetView()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDepthAndStencil()
 {
+	auto window = Window::getInst();
+
 	D3D11_TEXTURE2D_DESC descDepth;
-	descDepth.Width = Window::getInst()->windowWidth();
-	descDepth.Height = Window::getInst()->windowHeight();
+	descDepth.Width = window->windowWidth();
+	descDepth.Height = window->windowHeight();
 	descDepth.MipLevels = 1;
 	descDepth.ArraySize = 1;
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -266,10 +275,13 @@ bool Direct3D11::createDepthAndStencil()
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
 
-	if (FAILED(mDevice->CreateTexture2D(&descDepth, NULL, &mDepthStencilTexture))) {
+	HRESULT hr;
+	hr = mDevice->CreateTexture2D(&descDepth, NULL, &mDepthStencilTexture);
+	if (FAILED(hr)) {
 		return false;
 	}
-	if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilTexture, nullptr, &mDepthStencilView))) {
+	hr = mDevice->CreateDepthStencilView(mDepthStencilTexture, nullptr, &mDepthStencilView);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -292,12 +304,17 @@ bool Direct3D11::createDepthStencilState()
 	dc.DepthFunc = D3D11_COMPARISON_LESS;
 	dc.StencilEnable = false;
 
-	if (FAILED(mDevice->CreateDepthStencilState(&dc, &mDepthStencilState))) {
+	// Zバッファ有り
+	HRESULT hr;
+	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState);
+	if (FAILED(hr)) {
 		return false;
 	}
 
+	// Zバッファ無し
 	dc.DepthEnable = false;
-	if (FAILED(mDevice->CreateDepthStencilState(&dc, &mDepthDisabledStencilState))) {
+	hr = mDevice->CreateDepthStencilState(&dc, &mDepthDisabledStencilState);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -318,7 +335,9 @@ bool Direct3D11::createTextureSampler()
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
-	if (FAILED(mDevice->CreateSamplerState(&samplerDesc, &mSamplerState))) {
+	HRESULT hr;
+	hr = mDevice->CreateSamplerState(&samplerDesc, &mSamplerState);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -329,9 +348,11 @@ bool Direct3D11::createTextureSampler()
 /// ビューポートを設定する
 void Direct3D11::setUpViewPort()
 {
+	auto window = Window::getInst();
+
 	D3D11_VIEWPORT vp;
-	vp.Width = Window::getInst()->windowWidth();
-	vp.Height = Window::getInst()->windowHeight();
+	vp.Width = window->windowWidth();
+	vp.Height = window->windowHeight();
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;

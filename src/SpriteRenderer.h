@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
+#include "Direct3D11.h"
 #include "SpriteLoader.h"
 #include "ShaderLoader.h"
 

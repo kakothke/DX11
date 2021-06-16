@@ -211,6 +211,12 @@
     <ClInclude Include="src\Define.h">
       <Filter>Game\Comon</Filter>
     </ClInclude>
+    <ClInclude Include="src\FontLoader.h">
+      <Filter>System\Resource\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FontRenderer.h">
+      <Filter>System\Resource\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -323,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="src\Define.cpp">
       <Filter>Game\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontLoader.cpp">
+      <Filter>System\Resource\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontRenderer.cpp">
+      <Filter>System\Resource\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

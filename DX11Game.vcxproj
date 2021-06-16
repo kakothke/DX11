@@ -152,6 +152,8 @@
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\Define.h" />
     <ClInclude Include="src\Direct3D11.h" />
+    <ClInclude Include="src\FontRenderer.h" />
+    <ClInclude Include="src\FontLoader.h" />
     <ClInclude Include="src\Fps.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObjectTag.h" />
@@ -195,6 +197,8 @@
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Define.cpp" />
     <ClCompile Include="src\Direct3D11.cpp" />
+    <ClCompile Include="src\FontRenderer.cpp" />
+    <ClCompile Include="src\FontLoader.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />

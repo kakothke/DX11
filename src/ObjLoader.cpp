@@ -255,7 +255,8 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
 				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				TextureLoader::getInst()->load(texName.c_str());
+				static auto texture = TextureLoader::getInst();
+				texture->load(texName.c_str());
 			}
 		}
 	}
@@ -299,11 +300,10 @@ bool OBJLoader::createVertexBuffer(const char* const aFileName, const std::vecto
 	}
 
 	// バッファ作成
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
-		&bufferDesc,
-		&subResource,
-		&mOBJData[aFileName].vertexBuffer
-	))) {
+	HRESULT hr;
+	static auto device = Direct3D11::getInst()->getDevice();
+	hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].vertexBuffer);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -348,11 +348,10 @@ bool OBJLoader::createIndexBuffer(const char* const aFileName)
 		}
 
 		// バッファ作成
-		if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
-			&bufferDesc,
-			&subResource,
-			&mOBJData[aFileName].indexBuffers[cnt]
-		))) {
+		HRESULT hr;
+		static auto device = Direct3D11::getInst()->getDevice();
+		hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].indexBuffers[cnt]);
+		if (FAILED(hr)) {
 			return false;
 		}
 

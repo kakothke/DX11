@@ -1,7 +1,6 @@
 #include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Direct3D11.h"
 #include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -9,27 +8,37 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 ConstantBuffer::ConstantBuffer()
-	: mBuffer()
-	, mData()
+	: mContext(nullptr)
+	, mBuffers()
+	, mMATRIX()
+	, mSPRITE()
+	, mCAMERA()
+	, mDLIGHT()
+	, mCOLOR()
+	, mMATERIAL()
 {
-	mBuffer.clear();
+	mBuffers.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 ConstantBuffer::~ConstantBuffer()
 {
-	for (auto buffer : mBuffer) {
+	for (auto buffer : mBuffers) {
 		if (buffer.second) {
 			buffer.second->Release();
 			buffer.second = nullptr;
 		}
 	}
-	mBuffer.clear();
+	mBuffers.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
-bool ConstantBuffer::create()
+bool ConstantBuffer::initialize(ID3D11Device* aDevice, ID3D11DeviceContext* aContext)
 {
+	// コンテキストをリンク
+	mContext = aContext;
+
+	// コンスタントバッファ作成
 	D3D11_BUFFER_DESC bufferDesc;
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -37,34 +46,41 @@ bool ConstantBuffer::create()
 	bufferDesc.MiscFlags = 0;
 	bufferDesc.StructureByteStride = 0;
 
+	HRESULT hr;
 	// 変換行列
 	bufferDesc.ByteWidth = sizeof(CB_MATRIX);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[MATRIX]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[MATRIX]);
+	if (FAILED(hr)) {
 		return false;
 	}
 	// 変換行列2D
 	bufferDesc.ByteWidth = sizeof(CB_SPRITE);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[SPRITE]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[SPRITE]);
+	if (FAILED(hr)) {
 		return false;
 	}
 	// カメラ情報
 	bufferDesc.ByteWidth = sizeof(CB_CAMERA);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[CAMERA]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[CAMERA]);
+	if (FAILED(hr)) {
 		return false;
 	}
 	// ディレクショナルライト情報
 	bufferDesc.ByteWidth = sizeof(CB_DLIGHT);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[DLIGHT]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[DLIGHT]);
+	if (FAILED(hr)) {
 		return false;
 	}
 	// カラー情報
 	bufferDesc.ByteWidth = sizeof(CB_COLOR);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[COLOR]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[COLOR]);
+	if (FAILED(hr)) {
 		return false;
 	}
 	// マテリアル情報
 	bufferDesc.ByteWidth = sizeof(CB_MATERIAL);
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer[MATERIAL]))) {
+	hr = aDevice->CreateBuffer(&bufferDesc, nullptr, &mBuffers[MATERIAL]);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -85,7 +101,7 @@ void ConstantBuffer::setMatrixW(const DirectX::XMFLOAT3X3& aTransform)
 		aTransform._31, aTransform._32, aTransform._33
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
-	XMStoreFloat4x4(&mData.MATRIX.W, XMMatrixTranspose(worldMatrix));
+	XMStoreFloat4x4(&mMATRIX.W, XMMatrixTranspose(worldMatrix));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -104,36 +120,29 @@ void ConstantBuffer::setMatrixVP(const DirectX::XMFLOAT3X3& aTransform, const Di
 	);
 	DirectX::XMVECTOR upVec = { 0, 1, 0 };
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
-	XMStoreFloat4x4(&mData.MATRIX.V, XMMatrixTranspose(viewMatrix));
+	XMStoreFloat4x4(&mMATRIX.V, XMMatrixTranspose(viewMatrix));
 
 	// Projection
 	D3D11_VIEWPORT vp;
 	UINT numVierports = 1;
-	Direct3D11::getInst()->getContext()->RSGetViewports(&numVierports, &vp);
+	mContext->RSGetViewports(&numVierports, &vp);
 
-	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
-		DirectX::XMConvertToRadians(aCamera.x), // Fov
-		vp.Width / vp.Height,
-		aCamera.y, // NearZ
-		aCamera.z  // FarZ
-	);
+	auto fov = DirectX::XMConvertToRadians(aCamera.x);
+	auto nearZ = aCamera.y;
+	auto farZ = aCamera.z;
 
-	XMStoreFloat4x4(&mData.MATRIX.P, XMMatrixTranspose(projMatrix));
+	DirectX::XMMATRIX projMatrix;
+	projMatrix = DirectX::XMMatrixPerspectiveFovLH(fov, vp.Width / vp.Height, nearZ, farZ);
+
+	XMStoreFloat4x4(&mMATRIX.P, XMMatrixTranspose(projMatrix));
 }
 //-------------------------------------------------------------------------------------------------
 /// 変換行列情報を更新する
 void ConstantBuffer::updateMatrix()
 {
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[MATRIX],
-		0,
-		NULL,
-		&mData.MATRIX,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(MATRIX, 1, &mBuffer[MATRIX]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(MATRIX, 1, &mBuffer[MATRIX]);
+	mContext->UpdateSubresource(mBuffers[MATRIX], 0, NULL, &mMATRIX, 0, 0);
+	mContext->VSSetConstantBuffers(MATRIX, 1, &mBuffers[MATRIX]);
+	mContext->PSSetConstantBuffers(MATRIX, 1, &mBuffers[MATRIX]);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -156,7 +165,7 @@ void ConstantBuffer::updateSprite(
 		aTransform._31, aTransform._32, 0
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
-	XMStoreFloat4x4(&mData.SPRITE.MATRIX_W, XMMatrixTranspose(worldMatrix));
+	XMStoreFloat4x4(&mSPRITE.MATRIX_W, XMMatrixTranspose(worldMatrix));
 
 	// Projection
 	DirectX::XMMATRIX anchor = {
@@ -165,92 +174,66 @@ void ConstantBuffer::updateSprite(
 		0, 0, 1, 0,
 		aAnchor.x, -aAnchor.y, 0, 1
 	};
+	static auto width = Window::getInst()->windowWidth();
+	static auto height = Window::getInst()->windowHeight();
 	DirectX::XMMATRIX proj2D = {
-		2.0f / Window::getInst()->windowWidth(), 0, 0, 0,
-		0, 2.0f / Window::getInst()->windowHeight(), 0, 0,
+		2.0f / width , 0, 0, 0,
+		0, 2.0f / height, 0, 0,
 		0, 0, 1, 0,
 		0, 0, 0, 1
 	};
 	DirectX::XMMATRIX projMatrix = proj2D * anchor;
-	XMStoreFloat4x4(&mData.SPRITE.MATRIX_P, XMMatrixTranspose(projMatrix));
+	XMStoreFloat4x4(&mSPRITE.MATRIX_P, XMMatrixTranspose(projMatrix));
 
 	// Pivot
-	mData.SPRITE.PIVOT = DirectX::XMFLOAT4(aPivot.x, aPivot.y, 0, 0);
+	mSPRITE.PIVOT = DirectX::XMFLOAT4(aPivot.x, aPivot.y, 0, 0);
 
 	// Split
-	mData.SPRITE.SPLIT = DirectX::XMINT4(aSplit.x, aSplit.y, 0, 0);
+	mSPRITE.SPLIT = DirectX::XMINT4(aSplit.x, aSplit.y, 0, 0);
 
 	// 更新
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[SPRITE],
-		0,
-		NULL,
-		&mData.SPRITE,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(SPRITE, 1, &mBuffer[SPRITE]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(SPRITE, 1, &mBuffer[SPRITE]);
+	mContext->UpdateSubresource(mBuffers[SPRITE], 0, NULL, &mSPRITE, 0, 0);
+	mContext->VSSetConstantBuffers(SPRITE, 1, &mBuffers[SPRITE]);
+	mContext->PSSetConstantBuffers(SPRITE, 1, &mBuffers[SPRITE]);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// カメラ情報を更新する
 void ConstantBuffer::updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot)
 {
-	XMStoreFloat4(&mData.CAMERA.POS, aPos);
-	XMStoreFloat4(&mData.CAMERA.ROT, aRot);
+	XMStoreFloat4(&mCAMERA.POS, aPos);
+	XMStoreFloat4(&mCAMERA.ROT, aRot);
 
 	// 更新
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[CAMERA],
-		0,
-		NULL,
-		&mData.CAMERA,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(CAMERA, 1, &mBuffer[CAMERA]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(CAMERA, 1, &mBuffer[CAMERA]);
+	mContext->UpdateSubresource(mBuffers[CAMERA], 0, NULL, &mCAMERA, 0, 0);
+	mContext->VSSetConstantBuffers(CAMERA, 1, &mBuffers[CAMERA]);
+	mContext->PSSetConstantBuffers(CAMERA, 1, &mBuffers[CAMERA]);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// ディレクショナルライト情報を更新する
 void ConstantBuffer::updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol)
 {
-	XMStoreFloat4(&mData.DLIGHT.ROT, aRot);
-	mData.DLIGHT.COL = aCol;
+	XMStoreFloat4(&mDLIGHT.ROT, aRot);
+	mDLIGHT.COL = aCol;
 
 	// 更新
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[DLIGHT],
-		0,
-		NULL,
-		&mData.DLIGHT,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(DLIGHT, 1, &mBuffer[DLIGHT]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(DLIGHT, 1, &mBuffer[DLIGHT]);
+	mContext->UpdateSubresource(mBuffers[DLIGHT], 0, NULL, &mDLIGHT, 0, 0);
+	mContext->VSSetConstantBuffers(DLIGHT, 1, &mBuffers[DLIGHT]);
+	mContext->PSSetConstantBuffers(DLIGHT, 1, &mBuffers[DLIGHT]);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// カラー情報を更新する
 void ConstantBuffer::updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::XMFLOAT4& aCol1)
 {
-	mData.COLOR.COL0 = aCol0;
-	mData.COLOR.COL1 = aCol1;
+	mCOLOR.COL0 = aCol0;
+	mCOLOR.COL1 = aCol1;
 
 	// 更新
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[COLOR],
-		0,
-		NULL,
-		&mData.COLOR,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(COLOR, 1, &mBuffer[COLOR]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(COLOR, 1, &mBuffer[COLOR]);
+	mContext->UpdateSubresource(mBuffers[COLOR], 0, NULL, &mCOLOR, 0, 0);
+	mContext->VSSetConstantBuffers(COLOR, 1, &mBuffers[COLOR]);
+	mContext->PSSetConstantBuffers(COLOR, 1, &mBuffers[COLOR]);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -258,29 +241,22 @@ void ConstantBuffer::updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::
 void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
 {
 	// アンビエント
-	mData.MATERIAL.A = DirectX::XMFLOAT4(
+	mMATERIAL.A = DirectX::XMFLOAT4(
 		aMaterial.ambient[0], aMaterial.ambient[1], aMaterial.ambient[2], 1
 	);
 	// ディフューズ
-	mData.MATERIAL.D = DirectX::XMFLOAT4(
+	mMATERIAL.D = DirectX::XMFLOAT4(
 		aMaterial.diffuse[0], aMaterial.diffuse[1], aMaterial.diffuse[2], 1
 	);
 	// スペキュラー
-	mData.MATERIAL.S = DirectX::XMFLOAT4(
+	mMATERIAL.S = DirectX::XMFLOAT4(
 		aMaterial.specular[0], aMaterial.specular[1], aMaterial.specular[2], 1
 	);
 
 	// 更新
-	Direct3D11::getInst()->getContext()->UpdateSubresource(
-		mBuffer[MATERIAL],
-		0,
-		NULL,
-		&mData.MATERIAL,
-		0,
-		0
-	);
-	Direct3D11::getInst()->getContext()->VSSetConstantBuffers(MATERIAL, 1, &mBuffer[MATERIAL]);
-	Direct3D11::getInst()->getContext()->PSSetConstantBuffers(MATERIAL, 1, &mBuffer[MATERIAL]);
+	mContext->UpdateSubresource(mBuffers[MATERIAL], 0, NULL, &mMATERIAL, 0, 0);
+	mContext->VSSetConstantBuffers(MATERIAL, 1, &mBuffers[MATERIAL]);
+	mContext->PSSetConstantBuffers(MATERIAL, 1, &mBuffers[MATERIAL]);
 }
 
 } // namespace

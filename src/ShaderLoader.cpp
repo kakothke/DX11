@@ -74,15 +74,14 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring fileName = cv.from_bytes(aFileName);
 
-	if (FAILED(D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, &blob, nullptr))) {
+	HRESULT hr;
+	hr = D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, &blob, nullptr);
+	if (FAILED(hr)) {
 		return false;
 	}
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateVertexShader(
-		blob->GetBufferPointer(),
-		blob->GetBufferSize(),
-		nullptr,
-		&mShaderData[aFileName].vs
-	))) {
+	static auto device = Direct3D11::getInst()->getDevice();
+	hr = device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].vs);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -99,13 +98,16 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring fileName = cv.from_bytes(aFileName);
 
+	HRESULT hr;
 	ID3DBlob* blob = nullptr;
-	if (FAILED(D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, &blob, nullptr))) {
+	hr = D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "VS", "vs_5_0", 0, 0, &blob, nullptr);
+	if (FAILED(hr)) {
 		return false;
 	}
 
 	ID3D11ShaderReflection* reflection = nullptr;
-	if (FAILED(D3DReflect(blob->GetBufferPointer(), blob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflection))) {
+	hr = D3DReflect(blob->GetBufferPointer(), blob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflection);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -133,13 +135,15 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 	reflection = nullptr;
 
 	// 頂点レイアウト作成
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateInputLayout(
+	static auto device = Direct3D11::getInst()->getDevice();
+	hr = device->CreateInputLayout(
 		&inputLayoutDesc[0],
 		inputLayoutDesc.size(),
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
 		&mShaderData[aFileName].inputLayout
-	))) {
+	);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -208,15 +212,14 @@ bool ShaderLoader::createPixelShader(const char* const aFileName)
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring fileName = cv.from_bytes(aFileName);
 
-	if (FAILED(D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "PS", "ps_5_0", 0, 0, &blob, nullptr))) {
+	HRESULT hr;
+	hr = D3DCompileFromFile(fileName.c_str(), nullptr, nullptr, "PS", "ps_5_0", 0, 0, &blob, nullptr);
+	if (FAILED(hr)) {
 		return false;
 	}
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreatePixelShader(
-		blob->GetBufferPointer(),
-		blob->GetBufferSize(),
-		nullptr,
-		&mShaderData[aFileName].ps
-	))) {
+	static auto device = Direct3D11::getInst()->getDevice();
+	hr = device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].ps);
+	if (FAILED(hr)) {
 		return false;
 	}
 

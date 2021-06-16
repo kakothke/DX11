@@ -380,7 +380,7 @@ void Sound::setBeginPos(const int& aHandle, const UINT32& aBeginPos)
 /// 再生中かどうか調べる
 /// @param aHandle 調べたいサウンドの管理番号
 /// @return 結果 再生中（true）
-const bool& Sound::checkIsPlaying(const int& aHandle)
+bool Sound::checkIsPlaying(const int& aHandle)
 {
 	// エラーチェック
 	if (!mSrc.count(aHandle) || !mXAudio2) {

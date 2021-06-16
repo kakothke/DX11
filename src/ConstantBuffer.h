@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "OBJLoader.h"
 
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// 行列
@@ -58,40 +59,44 @@ struct CB_MATERIAL
 class ConstantBuffer
 {
 public:
+	/// @name コンストラクタ/デストラクタ
+	//@{
 	ConstantBuffer();
 	~ConstantBuffer();
+	//@}
 
-	bool create();
+	/// @name 初期化
+	//@{
+	bool initialize(ID3D11Device* aDevice, ID3D11DeviceContext* aContext);
+	//@}
 
-	// 変換行列
+	/// @name コンスタントバッファ制御
+	//@{
+	/// 変換行列
 	void setMatrixW(const DirectX::XMFLOAT3X3& aTransform);
 	void setMatrixVP(const DirectX::XMFLOAT3X3& aTransform, const DirectX::XMFLOAT3& aCamera);
 	void updateMatrix();
-
-	// スプライト
+	/// スプライト
 	void updateSprite(
 		const DirectX::XMFLOAT3X3& aTransform,
 		const DirectX::XMFLOAT2& aAnchor,
 		const DirectX::XMFLOAT2& aPivot,
 		const DirectX::XMINT2 aSplit
 	);
-
-	// その他
+	/// カメラ
 	void updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot);
+	/// ディレクショナルライト
 	void updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol);
+	/// カラー
 	void updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::XMFLOAT4& aCol1);
+	/// OBJマテリアル
 	void updateMaterial(const OBJMaterial& aMaterial);
+	//@}
 
 private:
-	struct CB_DATA
-	{
-		CB_MATRIX MATRIX;
-		CB_SPRITE SPRITE;
-		CB_CAMERA CAMERA;
-		CB_DLIGHT DLIGHT;
-		CB_COLOR COLOR;
-		CB_MATERIAL MATERIAL;
-	};
+	/// @name 内部列挙型
+	//@{
+	/// コンスタントバッファの種類
 	enum BufferList
 	{
 		MATRIX,
@@ -101,9 +106,22 @@ private:
 		COLOR,
 		MATERIAL,
 	};
-	std::unordered_map<int, ID3D11Buffer*> mBuffer;
-	CB_DATA mData;
-	DirectX::XMMATRIX mProj2D;
+	//@}
+
+	/// @name プライベートメンバ変数
+	//@{
+	/// デバイスコンテキスト
+	ID3D11DeviceContext* mContext;
+	/// 各種コンスタントバッファをまとめた連想配列
+	std::unordered_map<BufferList, ID3D11Buffer*> mBuffers;
+	/// 各種バッファのデータ
+	CB_MATRIX mMATRIX;
+	CB_SPRITE mSPRITE;
+	CB_CAMERA mCAMERA;
+	CB_DLIGHT mDLIGHT;
+	CB_COLOR mCOLOR;
+	CB_MATERIAL mMATERIAL;
+	//@}
 
 };
 

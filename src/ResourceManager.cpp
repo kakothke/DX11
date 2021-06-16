@@ -26,19 +26,22 @@ bool ResourceManager::initialize()
 	bool result;
 
 	// OBJs
-	result = OBJLoader::getInst()->load(ResourceFileName::OBJ.at(OBJList::Cube));
-	result = OBJLoader::getInst()->load(ResourceFileName::OBJ.at(OBJList::Sphere));
-	result = OBJLoader::getInst()->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
-	result = OBJLoader::getInst()->load(ResourceFileName::OBJ.at(OBJList::Test));
+	auto obj = OBJLoader::getInst();
+	result = obj->load(ResourceFileName::OBJ.at(OBJList::Cube));
+	result = obj->load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	result = obj->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	result = obj->load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
-	result = SpriteLoader::getInst()->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	auto sprite = SpriteLoader::getInst();
+	result = sprite->load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
-	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::Unlit));
-	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::Standard));
-	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::Sprite));
-	result = ShaderLoader::getInst()->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+	auto shader = ShaderLoader::getInst();
+	result = shader->load(ResourceFileName::Shader.at(ShaderList::Unlit));
+	result = shader->load(ResourceFileName::Shader.at(ShaderList::Standard));
+	result = shader->load(ResourceFileName::Shader.at(ShaderList::Sprite));
+	result = shader->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
 
 	// Sound
 

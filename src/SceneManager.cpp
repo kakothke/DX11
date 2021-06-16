@@ -39,11 +39,12 @@ void SceneManager::update()
 void SceneManager::draw()
 {
 	if (!mSceneStack.empty()) {
-		Direct3D11::getInst()->zBufferOff();
+		static auto d3d11 = Direct3D11::getInst();
+		d3d11->zBufferOff();
 		mSceneStack.top()->drawBackground();
-		Direct3D11::getInst()->zBufferOn();
+		d3d11->zBufferOn();
 		mSceneStack.top()->draw();
-		Direct3D11::getInst()->zBufferOff();
+		d3d11->zBufferOff();
 		mSceneStack.top()->draw2D();
 	}
 }

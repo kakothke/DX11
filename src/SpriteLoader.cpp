@@ -10,7 +10,7 @@ namespace KDXK {
 SpriteLoader::SpriteLoader()
 	: mSpriteData()
 {
-	mSpriteData.clear();	
+	mSpriteData.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -32,7 +32,8 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	if (!TextureLoader::getInst()->load(aFileName)) {
+	static auto texture = TextureLoader::getInst();
+	if (!texture->load(aFileName)) {
 		return false;
 	}
 	if (!createVertexBuffer(aFileName)) {
@@ -99,11 +100,10 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 	}
 
 	// バッファ作成
-	if (FAILED(Direct3D11::getInst()->getDevice()->CreateBuffer(
-		&bufferDesc,
-		&subResource,
-		&mSpriteData[aFileName].vertexBuffer
-	))) {
+	HRESULT hr;
+	static auto device = Direct3D11::getInst()->getDevice();
+	hr = device->CreateBuffer(&bufferDesc, &subResource, &mSpriteData[aFileName].vertexBuffer);
+	if (FAILED(hr)) {
 		return false;
 	}
 
@@ -115,17 +115,15 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	TextureLoader::getInst()->getTexture(aFileName)->GetResource(&res);
+	static auto texture = TextureLoader::getInst();
+	texture->getTexture(aFileName)->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
 	res->QueryInterface(&tex2D);
 	D3D11_TEXTURE2D_DESC desc;
 	tex2D->GetDesc(&desc);
 
-	// そのままだと大きすぎるので除算
 	float width = (float)desc.Width;
 	float height = (float)desc.Height;
-	width /= 2;
-	height /= 2;
 
 	res->Release();
 	res = nullptr;

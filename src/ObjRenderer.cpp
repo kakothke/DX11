@@ -1,7 +1,6 @@
 #include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Direct3D11.h"
 #include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -27,11 +26,16 @@ bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 		return false;
 	}
 
+	// Direct3D11取得
+	static auto d3d11 = Direct3D11::getInst();
+	static auto context = d3d11->getContext();
+	static auto constantBuf = d3d11->getConstantBuffer();
+
 	// プリミティブの形状を指定
-	Direct3D11::getInst()->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// シェーダーの指定
-	Direct3D11::getInst()->setUpContext(mShaderData);
+	d3d11->setUpContext(mShaderData);
 
 	int cnt = 0;
 	UINT strides = sizeof(OBJVertex);
@@ -39,34 +43,25 @@ bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 
 	for (auto index : mOBJData->indexes) {
 		// IAに設定する頂点バッファの指定
-		Direct3D11::getInst()->getContext()->IASetVertexBuffers(
-			0,
-			1,
-			&mOBJData->vertexBuffer,
-			&strides,
-			&offsets
-		);
-		Direct3D11::getInst()->getContext()->IASetIndexBuffer(
-			mOBJData->indexBuffers[cnt],
-			DXGI_FORMAT_R32_UINT,
-			0
-		);
+		context->IASetVertexBuffers(0, 1, &mOBJData->vertexBuffer, &strides, &offsets);
+		context->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);
 
 		// コンスタントバッファを更新
-		Direct3D11::getInst()->getConstantBuffer()->setMatrixW(aTransform);
-		Direct3D11::getInst()->getConstantBuffer()->updateMatrix();
-		Direct3D11::getInst()->getConstantBuffer()->updateMaterial(mOBJData->materials[index.first]);
+		constantBuf->setMatrixW(aTransform);
+		constantBuf->updateMatrix();
+		constantBuf->updateMaterial(mOBJData->materials[index.first]);
 
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット
 			const char* texName = mOBJData->materials[index.first].textureFileName.c_str();
-			Direct3D11::getInst()->setTexture(TextureLoader::getInst()->getTexture(texName));
+			static auto texture = TextureLoader::getInst();
+			d3d11->setTexture(texture->getTexture(texName));
 		} else {
-			Direct3D11::getInst()->setTexture(nullptr);
+			d3d11->setTexture(nullptr);
 		}
 
 		// 描画
-		Direct3D11::getInst()->getContext()->DrawIndexed((UINT)index.second.size(), 0, 0);
+		context->DrawIndexed((UINT)index.second.size(), 0, 0);
 
 		cnt++;
 	}
@@ -77,8 +72,10 @@ bool OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 //-------------------------------------------------------------------------------------------------
 void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
 {
-	mOBJData = OBJLoader::getInst()->getOBJData(aOBJFileName);
-	mShaderData = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	auto obj = OBJLoader::getInst()->getOBJData(aOBJFileName);
+	mOBJData = obj;
+	auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	mShaderData = shader;
 }
 
 } // namespace

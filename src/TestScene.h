@@ -6,6 +6,7 @@
 #include "TestObj.h"
 #include "TestSprite.h"
 #include "TestSky.h"
+#include "Cube.h"
 #include "DirectionalLight.h"
 
 //-------------------------------------------------------------------------------------------------

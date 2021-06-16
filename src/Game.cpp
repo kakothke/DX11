@@ -7,6 +7,9 @@
 #include "ResourceManager.h"
 #include "Define.h"
 #include "Sound.h"
+#include "FontRenderer.h"
+
+#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -23,21 +26,33 @@ Game::Game()
 /// 初期化処理
 bool Game::initialize()
 {
-	if (!Input::getInst()->initialize()) {
+	auto input = Input::getInst();
+	if (!input->initialize()) {
 		return false;
 	}
-	if (!Sound::getInst()->initialize()) {
+	auto sound = Sound::getInst();
+	if (!sound->initialize()) {
 		return false;
 	}
-	if (!ResourceManager::getInst()->initialize()) {
+	auto resource = ResourceManager::getInst();
+	if (!resource->initialize()) {
 		return false;
 	}
 
+	// フォントテスト
+	auto font = FontLoader::getInst();
+	// あんずもじ湛(res/font/APJapanesefontF.ttf)
+	if (!font->load(TEXT("ＭＳ Ｐ明朝"))) {
+		return false;
+	}
+	FontRenderer tset;
+	tset.draw(TEXT("あ"));
+
 	// テストサウンド
-	Sound::getInst()->load("res/bgm/music_0.wav");
-	Sound::getInst()->setLoop(0, true, 2);
-	Sound::getInst()->setLoopPos(0, 855273, 2565818);
-	Sound::getInst()->play(0);
+	sound->load("res/bgm/music_0.wav");
+	sound->setLoop(0, true, 2);
+	sound->setLoopPos(0, 855273, 2565818);
+	sound->play(0);
 
 	// 最初に読み込むシーンをセット
 	mSceneManager.changeScene(SceneList::Test);
@@ -51,14 +66,17 @@ bool Game::initialize()
 bool Game::mainLoop()
 {
 	// 入力状況
-	Input::getInst()->update();
-	InputManager::getInst()->update();
+	static auto input = Input::getInst();
+	static auto inputManager = InputManager::getInst();
+	input->update();
+	inputManager->update();
 
 	// ゲーム内部
-	Direct3D11::getInst()->drawStart(Define::ClearColor);
+	static auto d3d11 = Direct3D11::getInst();
+	d3d11->drawStart(Define::ClearColor);
 	mSceneManager.update();
 	mSceneManager.draw();
-	Direct3D11::getInst()->drawEnd();
+	d3d11->drawEnd();
 
 	// fps制御
 	mFps.update();
