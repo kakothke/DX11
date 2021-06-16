@@ -14,33 +14,18 @@ namespace KDXK {
 /// 頂点データ構造体
 struct OBJVertex
 {
-	float pos[3];
-	float uv[2];
-	float nor[3];
-
-	OBJVertex()
-		: pos{ 0,0,0 }
-		, uv{ 0,0 }
-		, nor{ 0,0,0 }
-	{
-	}
+	float pos[3] = {};
+	float uv[2] = {};
+	float nor[3] = {};
 };
 
 /// マテリアルデータ構造体
 struct OBJMaterial
 {
-	float ambient[3];
-	float diffuse[3];
-	float specular[3];
+	float ambient[3] = {};
+	float diffuse[3] = {};
+	float specular[3] = {};
 	std::string textureFileName;
-
-	OBJMaterial()
-		: ambient{ 0,0,0 }
-		, diffuse{ 0,0,0 }
-		, specular{ 0,0,0 }
-		, textureFileName()
-	{
-	}
 };
 
 /// OBJファイルデータ保存用構造体
@@ -55,16 +40,6 @@ struct OBJData
 	/// マテリアル
 	std::unordered_map<std::string, OBJMaterial> materials;
 
-	/// コンストラクタ
-	OBJData()
-		: vertexBuffer(nullptr)
-		, indexBuffers()
-		, indexes()
-	{
-		indexBuffers.clear();
-		indexes.clear();
-	}
-	/// デストラクタ
 	~OBJData()
 	{
 		if (vertexBuffer) {
@@ -97,13 +72,14 @@ public:
 	void release(const char* const aFileName);
 	//@}
 
-	/// @name OBJデータを取得する
+	/// @name アクセサ
 	//@{
+	/// OBJデータを取得する
 	OBJData* getOBJData(const char* const aFileName);
 	//@}
 
 private:
-	/// @name 内部実装関数
+	/// @name 内部実装
 	//@{
 	/// メッシュを作成する
 	bool createMesh(const char* const aFileName, std::vector<OBJVertex>& aVertexes, std::vector<std::string>& aMtlNames);

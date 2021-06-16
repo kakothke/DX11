@@ -13,13 +13,8 @@ namespace KDXK {
 /// 頂点データ構造体
 struct SpriteVertex
 {
-	float pos[3];
-	float uv[2];
-	SpriteVertex()
-		: pos{ 0,0,0 }
-		, uv{ 0,0 }
-	{
-	}
+	float pos[3] = {};
+	float uv[2] = {};
 };
 
 /// スプライトデータ構造体
@@ -29,13 +24,6 @@ struct SpriteData
 	ID3D11Buffer* vertexBuffer;
 	/// ファイル名
 	const char* fileName;
-
-	/// コンストラクタ
-	SpriteData()
-		: vertexBuffer(nullptr)
-		, fileName("")
-	{
-	}
 	/// デストラクタ
 	~SpriteData()
 	{
@@ -62,18 +50,20 @@ public:
 	void release(const char* const aFileName);
 	//@}
 
-	/// @name OBJデータを取得する
+	/// @name アクセサ
 	//@{
+	/// スプライトデータを取得する
 	SpriteData* getSpriteData(const char* const aFileName);
 	//@}
 
 private:
+	/// @name 内部実装
+	//@{
 	/// 頂点バッファを作成する
 	bool createVertexBuffer(const char* const aFileName);
 	/// メッシュを作成する
 	void createMesh(const char* const aFileName, SpriteVertex* aVertexes);
-	/// メッシュの大きさをテクスチャーのサイズに合わせる
-	//void resizeMesh();
+	//@}
 
 	/// @name プライベートメンバ変数
 	//@{

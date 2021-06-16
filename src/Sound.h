@@ -57,6 +57,7 @@ public:
 private:
 	/// @name “à•”À‘•
 	//@{
+	/// Waveƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
 	bool loadWaveFile(const char* const aFileName, const int& aHandle);
 	//@}
 

@@ -193,7 +193,7 @@ ConstantBuffer* Direct3D11::getConstantBuffer()
 bool Direct3D11::createDeviceAndSwapChain()
 {
 	auto window = Window::getInst();
-	HWND hWnd = window->hWnd();
+	auto hWnd = window->hWnd();
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
