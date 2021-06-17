@@ -1,14 +1,15 @@
 #include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "TextureLoader.h"
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SpriteRenderer::SpriteRenderer()
-	: mD3D11(Direct3D11::getInst())
-	, mTex(TextureLoader::getInst())
-	, mSpriteData()
+	: mSpriteData()
 	, mShaderData()
 	, mColor(1, 1, 1, 1)
 	, mPivot(0.5f, 0.5f)
@@ -33,28 +34,33 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 		return;
 	}
 
+	// Direct3D11取得
+	const static auto d3D11 = Direct3D11::getInst();
+	const static auto context = d3D11->getContext();
+	const static auto cBuf = d3D11->getConstantBuffer();
+
 	// プリミティブの形状を指定
-	mD3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// シェーダーの指定
-	mD3D11->setUpContext(mShaderData);
+	d3D11->setUpContext(mShaderData);
 
-	int cnt = 0;
 	UINT strides = sizeof(SpriteVertex);
 	UINT offsets = 0;
 
 	// IAに設定する頂点バッファの指定
-	mD3D11->getContext()->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
+	context->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
-	mD3D11->getConstantBuffer()->updateColor(mColor, mColor);
-	mD3D11->getConstantBuffer()->updateSprite(aTransform, mAnchor, mPivot, mSplit);
+	cBuf->updateColor(mColor, mColor);
+	cBuf->updateSprite(aTransform, mAnchor, mPivot, mSplit);
 
 	// テクスチャーセット
-	mD3D11->setTexture(mTex->getTexture(mSpriteData->fileName));
+	const static auto tex = TextureLoader::getInst();
+	d3D11->setTexture(tex->getTexture(mSpriteData->fileName));
 
 	// 描画
-	mD3D11->getContext()->Draw(4, 0);
+	context->Draw(4, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -63,9 +69,9 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 /// @param aShaderFileName シェーダーのファイルパス
 void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
 {
-	auto sprite = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
+	const auto sprite = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
 	mSpriteData = sprite;
-	auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	const auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
 	mShaderData = shader;
 }
 

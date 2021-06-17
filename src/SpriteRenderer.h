@@ -5,7 +5,6 @@
 #include "Direct3D11.h"
 #include "SpriteLoader.h"
 #include "ShaderLoader.h"
-#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -42,10 +41,6 @@ public:
 private:
 	/// プライベートメンバ変数
 	//@{
-	/// Direct3D11
-	Direct3D11* mD3D11;
-	/// TextureLoader
-	TextureLoader* mTex;
 	/// スプライトデータ
 	SpriteData* mSpriteData;
 	/// シェーダーデータ

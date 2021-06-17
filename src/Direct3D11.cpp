@@ -192,8 +192,8 @@ ConstantBuffer* Direct3D11::getConstantBuffer()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDeviceAndSwapChain()
 {
-	auto window = Window::getInst();
-	auto hWnd = window->hWnd();
+	const auto window = Window::getInst();
+	const auto hWnd = window->hWnd();
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
@@ -260,7 +260,7 @@ bool Direct3D11::createRenderTargetView()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDepthAndStencil()
 {
-	auto window = Window::getInst();
+	const auto window = Window::getInst();
 
 	D3D11_TEXTURE2D_DESC descDepth;
 	descDepth.Width = window->windowWidth();
@@ -348,7 +348,7 @@ bool Direct3D11::createTextureSampler()
 /// ビューポートを設定する
 void Direct3D11::setUpViewPort()
 {
-	auto window = Window::getInst();
+	const auto window = Window::getInst();
 
 	D3D11_VIEWPORT vp;
 	vp.Width = window->windowWidth();

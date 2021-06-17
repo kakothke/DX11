@@ -26,15 +26,15 @@ Game::Game()
 /// ‰Šú‰»ˆ—
 bool Game::initialize()
 {
-	auto input = Input::getInst();
+	const auto input = Input::getInst();
 	if (!input->initialize()) {
 		return false;
 	}
-	auto sound = Sound::getInst();
+	const auto sound = Sound::getInst();
 	if (!sound->initialize()) {
 		return false;
 	}
-	auto resource = ResourceManager::getInst();
+	const auto resource = ResourceManager::getInst();
 	if (!resource->initialize()) {
 		return false;
 	}
@@ -49,8 +49,8 @@ bool Game::initialize()
 	sound->play(0);
 
 	// ƒtƒHƒ“ƒgƒeƒXƒg
-	auto font = FontLoader::getInst();
-	// ‚ ‚ñ‚¸‚à‚¶’X(res/font/APJapanesefontF.ttf)
+	const auto font = FontLoader::getInst();
+	// TEXT("‚ ‚ñ‚¸‚à‚¶’X"),TEXT("res/font/APJapanesefontF.ttf")
 	if (!font->load(TEXT("‚l‚r ‚o–¾’©"))) {
 		return false;
 	}
@@ -66,13 +66,13 @@ bool Game::initialize()
 bool Game::mainLoop()
 {
 	// “ü—Íó‹µ
-	static auto input = Input::getInst();
-	static auto inputManager = InputManager::getInst();
+	const static auto input = Input::getInst();
+	const static auto inputManager = InputManager::getInst();
 	input->update();
 	inputManager->update();
 
 	// ƒQ[ƒ€“à•”
-	static auto d3d11 = Direct3D11::getInst();
+	const static auto d3d11 = Direct3D11::getInst();
 	d3d11->drawStart(Define::ClearColor);
 	mSceneManager.update();
 	mSceneManager.draw();

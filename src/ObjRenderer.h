@@ -5,7 +5,6 @@
 #include "Direct3D11.h"
 #include "OBJLoader.h"
 #include "ShaderLoader.h"
-#include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -33,10 +32,6 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	/// Direct3D11
-	Direct3D11* mD3D11;
-	/// TextureLoader
-	TextureLoader* mTex;
 	/// OBJデータ
 	OBJData* mOBJData;
 	/// シェーダーデータ

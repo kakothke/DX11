@@ -37,7 +37,7 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	auto texture = TextureLoader::getInst();
+	const auto texture = TextureLoader::getInst();
 	if (!texture->load(aFileName)) {
 		return false;
 	}
@@ -113,7 +113,7 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 
 	// バッファ作成
 	HRESULT hr;
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateBuffer(&bufferDesc, &subResource, &mSpriteData[aFileName].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
@@ -130,7 +130,7 @@ void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertex
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	auto texture = TextureLoader::getInst();
+	const auto texture = TextureLoader::getInst();
 	texture->getTexture(aFileName)->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
 	res->QueryInterface(&tex2D);

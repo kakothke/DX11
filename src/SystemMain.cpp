@@ -21,12 +21,12 @@ SystemMain::SystemMain()
 bool SystemMain::initialize()
 {
 	// ウィンドウ初期化
-	auto window = Window::getInst();
+	const auto window = Window::getInst();
 	if (!window->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
 		return false;
 	}
 	// Direct3D11初期化
-	auto d3d11 = Direct3D11::getInst();
+	const auto d3d11 = Direct3D11::getInst();
 	if (!d3d11->initialize()) {
 		return false;
 	}
@@ -46,7 +46,7 @@ void SystemMain::msgLoop()
 
 	// ウィンドウを表示
 	{
-		auto hWnd = Window::getInst()->hWnd();
+		const auto hWnd = Window::getInst()->hWnd();
 		ShowWindow(hWnd, SW_SHOW);
 		UpdateWindow(hWnd);
 	}

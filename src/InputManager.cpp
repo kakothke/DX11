@@ -26,7 +26,7 @@ void InputManager::update()
 		memcpy(mPrevState, mState, sizeof(mState));
 	}
 
-	static auto input = Input::getInst();
+	const static auto input = Input::getInst();
 
 	// •ûŒü“ü—Í
 	mAxes = 0;

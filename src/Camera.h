@@ -3,7 +3,6 @@
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
 #include "GameObjectTag.h"
-#include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -40,13 +39,6 @@ protected:
 	float mFov;
 	float mNearZ;
 	float mFarZ;
-	//@}
-
-private:
-	/// @name プライベートメンバ変数
-	//@{
-	/// コンスタントバッファ
-	ConstantBuffer* mCBuf;
 	//@}
 
 };

@@ -42,7 +42,7 @@ bool TextureLoader::load(const char* const aFileName)
 	std::wstring wFileName = cv.from_bytes(aFileName);
 
 	HRESULT hr;
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = DirectX::CreateWICTextureFromFile(device, wFileName.c_str(), nullptr, &mTexture[aFileName]);
 	if (FAILED(hr)) {
 		MessageBox(nullptr, TEXT("テクスチャーの作成に失敗しました"), TEXT("ERROR"), MB_OK | MB_ICONHAND);

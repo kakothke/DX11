@@ -174,8 +174,8 @@ void ConstantBuffer::updateSprite(
 		0, 0, 1, 0,
 		aAnchor.x, -aAnchor.y, 0, 1
 	};
-	static auto width = Window::getInst()->windowWidth();
-	static auto height = Window::getInst()->windowHeight();
+	const static auto width = Window::getInst()->windowWidth();
+	const static auto height = Window::getInst()->windowHeight();
 	DirectX::XMMATRIX proj2D = {
 		2.0f / width , 0, 0, 0,
 		0, 2.0f / height, 0, 0,

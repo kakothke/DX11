@@ -13,7 +13,6 @@ Camera::Camera()
 	: mFov(60)
 	, mNearZ(0.3f)
 	, mFarZ(1000)
-	, mCBuf(Direct3D11::getInst()->getConstantBuffer())
 {
 	mTransform.pos = Vector3(0, 1, -10);
 	setTag(GameObjectTag::Camera);
@@ -26,7 +25,6 @@ Camera::Camera(Transform aTransform)
 	: mFov(60)
 	, mNearZ(0.3f)
 	, mFarZ(1000)
-	, mCBuf(Direct3D11::getInst()->getConstantBuffer())
 {
 	mTransform = aTransform;
 	setTag(GameObjectTag::Camera);
@@ -39,7 +37,6 @@ Camera::Camera(Vector3 aCameraParam)
 	: mFov(aCameraParam.x)
 	, mNearZ(aCameraParam.y)
 	, mFarZ(aCameraParam.z)
-	, mCBuf(Direct3D11::getInst()->getConstantBuffer())
 {
 	mTransform.pos = Vector3(0, 1, -10);
 	setTag(GameObjectTag::Camera);
@@ -53,7 +50,6 @@ Camera::Camera(Transform aTransform, Vector3 aCameraParam)
 	: mFov(aCameraParam.x)
 	, mNearZ(aCameraParam.y)
 	, mFarZ(aCameraParam.z)
-	, mCBuf(Direct3D11::getInst()->getConstantBuffer())
 {
 	mTransform = aTransform;
 	setTag(GameObjectTag::Camera);
@@ -77,8 +73,9 @@ void Camera::draw()
 void Camera::updateConstantBuffer()
 {
 	DirectX::XMFLOAT3 camera(mFov, mNearZ, mFarZ);
-	mCBuf->setMatrixVP(mTransform.XMFLOAT3X3(), camera);
-	mCBuf->updateCamera(mTransform.pos.XMVECTOR(), mTransform.rot.XMVECTOR());
+	const static auto cBuf = Direct3D11::getInst()->getConstantBuffer();
+	cBuf->setMatrixVP(mTransform.XMFLOAT3X3(), camera);
+	cBuf->updateCamera(mTransform.pos.XMVECTOR(), mTransform.rot.XMVECTOR());
 }
 
 } // namespace

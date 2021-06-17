@@ -83,7 +83,7 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].vs);
 	if (FAILED(hr)) {
 		return false;
@@ -141,7 +141,7 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 	reflection = nullptr;
 
 	// 頂点レイアウト作成
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateInputLayout(
 		&inputLayoutDesc[0],
 		inputLayoutDesc.size(),
@@ -227,7 +227,7 @@ bool ShaderLoader::createPixelShader(const char* const aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].ps);
 	if (FAILED(hr)) {
 		return false;

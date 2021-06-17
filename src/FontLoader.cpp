@@ -8,13 +8,16 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+const static LPCTSTR DEFAULT_FONT = TEXT("ＭＳ　ゴシック");
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 FontLoader::FontLoader()
 	: mFontData()
 {
 	mFontData.clear();
 	// デフォルトフォント作成
-	load(NULL);
+	load(DEFAULT_FONT);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -43,16 +46,29 @@ bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 		}
 	}
 
+	// 文字コード取得
+	UINT code = 0;
+#if _UNICODE
+	code = (UINT)*aFontName;
+#else
+	if (IsDBCSLeadByte(*aFontName)) {
+		code = (BYTE)aFontName[0] << 8 | (BYTE)aFontName[1];
+	} else {
+		code = aFontName[0];
+	}	
+#endif
+
 	// フォントの生成
+	const int size = 256;
 	LOGFONT lf = {
-		256,
+		size,
 		0, 0, 0, 0, 0, 0, 0,
 		SHIFTJIS_CHARSET,
 		OUT_TT_ONLY_PRECIS,
 		CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY,
 		DEFAULT_PITCH | FF_MODERN,
-		TEXT("ＭＳ Ｐ明朝")// テスト
+		code
 	};
 	HFONT hFont = CreateFontIndirect(&lf);
 	if (hFont == NULL) {
@@ -74,7 +90,7 @@ bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 const HDC FontLoader::hdc(const LPCTSTR aFontName)
 {
 	if (!mFontData.count(aFontName)) {
-		return mFontData[NULL].hdc;
+		return mFontData[DEFAULT_FONT].hdc;
 	}
 	return mFontData[aFontName].hdc;
 }

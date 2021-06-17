@@ -1,14 +1,15 @@
 #include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "TextureLoader.h"
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 OBJRenderer::OBJRenderer()
-	: mD3D11(Direct3D11::getInst())
-	, mTex(TextureLoader::getInst())
-	, mOBJData()
+	: mOBJData()
 	, mShaderData()
 {
 }
@@ -29,11 +30,16 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 		return;
 	}
 
+	// Direct3D11取得
+	const static auto d3D11 = Direct3D11::getInst();
+	const static auto context = d3D11->getContext();
+	const static auto cBuf = d3D11->getConstantBuffer();
+
 	// プリミティブの形状を指定
-	mD3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// シェーダーの指定
-	mD3D11->setUpContext(mShaderData);
+	d3D11->setUpContext(mShaderData);
 
 	int cnt = 0;
 	UINT strides = sizeof(OBJVertex);
@@ -41,24 +47,25 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 
 	for (auto index : mOBJData->indexes) {
 		// IAに設定する頂点バッファの指定
-		mD3D11->getContext()->IASetVertexBuffers(0, 1, &mOBJData->vertexBuffer, &strides, &offsets);
-		mD3D11->getContext()->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);
+		context->IASetVertexBuffers(0, 1, &mOBJData->vertexBuffer, &strides, &offsets);
+		context->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);
 
 		// コンスタントバッファを更新
-		mD3D11->getConstantBuffer()->setMatrixW(aTransform);
-		mD3D11->getConstantBuffer()->updateMatrix();
-		mD3D11->getConstantBuffer()->updateMaterial(mOBJData->materials[index.first]);
+		cBuf->setMatrixW(aTransform);
+		cBuf->updateMatrix();
+		cBuf->updateMaterial(mOBJData->materials[index.first]);
 
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット
 			const char* texName = mOBJData->materials[index.first].textureFileName.c_str();
-			mD3D11->setTexture(mTex->getTexture(texName));
+			const static auto tex = TextureLoader::getInst();
+			d3D11->setTexture(tex->getTexture(texName));
 		} else {
-			mD3D11->setTexture(nullptr);
+			d3D11->setTexture(nullptr);
 		}
 
 		// 描画
-		mD3D11->getContext()->DrawIndexed((UINT)index.second.size(), 0, 0);
+		context->DrawIndexed((UINT)index.second.size(), 0, 0);
 
 		cnt++;
 	}
@@ -70,9 +77,9 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 /// @param aShaderFileName シェーダーファイルパス
 void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
 {
-	auto obj = OBJLoader::getInst()->getOBJData(aOBJFileName);
+	const auto obj = OBJLoader::getInst()->getOBJData(aOBJFileName);
 	mOBJData = obj;
-	auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	const auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
 	mShaderData = shader;
 }
 

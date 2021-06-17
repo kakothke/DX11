@@ -46,7 +46,7 @@ bool FontRenderer::cretaeTexture()
 #endif
 
 	// フォントビットマップ取得
-	auto hdc = FontLoader::getInst()->hdc(mFontName);
+	const auto hdc = FontLoader::getInst()->hdc(mFontName);
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc, &tm);
 	GLYPHMETRICS gm;
@@ -70,14 +70,14 @@ bool FontRenderer::cretaeTexture()
 
 	HRESULT hr;
 	ID3D11Texture2D* tex2D;
-	auto device = Direct3D11::getInst()->getDevice();
+	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateTexture2D(&desc, 0, &tex2D);
 	if (FAILED(hr)) {
 		return false;
 	}
 
 	D3D11_MAPPED_SUBRESOURCE hMappedResource;
-	auto context = Direct3D11::getInst()->getContext();
+	const auto context = Direct3D11::getInst()->getContext();
 	hr = context->Map(tex2D, 0, D3D11_MAP_WRITE_DISCARD, 0, &hMappedResource);
 	if (FAILED(hr)) {
 		return false;
