@@ -20,7 +20,7 @@ public:
 
 	/// @name 読み込み
 	//@{
-	bool load(const LPCTSTR aFontName, const LPCTSTR aFileName = NULL);
+	bool load(const LPCTSTR aFontName, const LPCTSTR aFileName);
 	//@}
 
 	/// @name アクセサ

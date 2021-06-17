@@ -8,7 +8,7 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static LPCTSTR DEFAULT_FONT = TEXT("ＭＳ　ゴシック");
+const static LPCTSTR DEFAULT_FONT = TEXT("ＭＳ ゴシック");
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -17,7 +17,7 @@ FontLoader::FontLoader()
 {
 	mFontData.clear();
 	// デフォルトフォント作成
-	load(DEFAULT_FONT);
+	load(DEFAULT_FONT, NULL);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -27,7 +27,9 @@ FontLoader::~FontLoader()
 	for (auto fontData : mFontData) {
 		SelectObject(fontData.second.hdc, fontData.second.oldFont);
 		ReleaseDC(NULL, fontData.second.hdc);
-		RemoveFontResourceEx(fontData.second.fileName, FR_PRIVATE, NULL);
+		if (fontData.second.fileName) {
+			RemoveFontResourceEx(fontData.second.fileName, FR_PRIVATE, NULL);
+		}
 	}
 	mFontData.clear();
 }
@@ -46,18 +48,6 @@ bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 		}
 	}
 
-	// 文字コード取得
-	UINT code = 0;
-#if _UNICODE
-	code = (UINT)*aFontName;
-#else
-	if (IsDBCSLeadByte(*aFontName)) {
-		code = (BYTE)aFontName[0] << 8 | (BYTE)aFontName[1];
-	} else {
-		code = aFontName[0];
-	}	
-#endif
-
 	// フォントの生成
 	const int size = 256;
 	LOGFONT lf = {
@@ -68,8 +58,14 @@ bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 		CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY,
 		DEFAULT_PITCH | FF_MODERN,
-		code
+		NULL
 	};
+#if UNICODE
+	wmemcpy(lf.lfFaceName, aFontName, lstrlen(aFontName));
+#else
+	memcpy(lf.lfFaceName, aFontName, lstrlen(aFontName));
+#endif
+
 	HFONT hFont = CreateFontIndirect(&lf);
 	if (hFont == NULL) {
 		return false;

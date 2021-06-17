@@ -10,6 +10,7 @@ TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mTestSprite({ Vector3(-100,0,0),Vector3(),Vector3(0.2f) })
 , mT2({ Vector3(100,0,0),Vector3(),Vector3(0.2f) })
 {
+	mFont.setShaderData("hlsl/Sprite.hlsl");
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -50,6 +51,8 @@ void TestScene::draw2D()
 void TestScene::drawBackground()
 {
 	mTestSky.draw();
+	DirectX::XMFLOAT3X3 a = {0,0,0,0,0,0,1,1,1};
+	mFont.draw(TEXT("‚ ‚¢‚¤‚¦"),a, TEXT("‚ ‚ñ‚¸‚à‚¶’X"));
 }
 
 } // namespace

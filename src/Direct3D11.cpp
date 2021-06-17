@@ -18,6 +18,7 @@ Direct3D11::Direct3D11()
 	, mDepthStencilState(nullptr)
 	, mDepthDisabledStencilState(nullptr)
 	, mSamplerState(nullptr)
+	, mBlendState(nullptr)
 	, mConstantBuffer()
 {
 }
@@ -26,39 +27,43 @@ Direct3D11::Direct3D11()
 /// デストラクタ
 Direct3D11::~Direct3D11()
 {
-	if (mSwapChain) {
-		mSwapChain->Release();
-		mSwapChain = nullptr;
+	if (mBlendState) {
+		mBlendState->Release();
+		mBlendState = nullptr;
+	}
+	if (mSamplerState) {
+		mSamplerState->Release();
+		mSamplerState = nullptr;
+	}
+	if (mDepthDisabledStencilState) {
+		mDepthDisabledStencilState->Release();
+		mDepthDisabledStencilState = nullptr;
+	}
+	if (mDepthStencilState) {
+		mDepthStencilState->Release();
+		mDepthStencilState = nullptr;
+	}
+	if (mDepthStencilTexture) {
+		mDepthStencilTexture->Release();
+		mDepthStencilTexture = nullptr;
+	}
+	if (mDepthStencilView) {
+		mDepthStencilView->Release();
+		mDepthStencilView = nullptr;
 	}
 	if (mRenderTargetViews) {
 		mRenderTargetViews->Release();
 		mRenderTargetViews = nullptr;
+	}
+	if (mSwapChain) {
+		mSwapChain->Release();
+		mSwapChain = nullptr;
 	}
 	if (mContext) {
 		mContext->ClearState();
 		mContext->Flush();
 		mContext->Release();
 		mContext = nullptr;
-	}
-	if (mSamplerState) {
-		mSamplerState->Release();
-		mSamplerState = nullptr;
-	}
-	if (mDepthStencilView) {
-		mDepthStencilView->Release();
-		mDepthStencilView = nullptr;
-	}
-	if (mDepthStencilTexture) {
-		mDepthStencilTexture->Release();
-		mDepthStencilTexture = nullptr;
-	}
-	if (mDepthStencilState) {
-		mDepthStencilState->Release();
-		mDepthStencilState = nullptr;
-	}
-	if (mDepthDisabledStencilState) {
-		mDepthDisabledStencilState->Release();
-		mDepthDisabledStencilState = nullptr;
 	}
 	if (mDevice) {
 		mDevice->Release();
@@ -71,32 +76,30 @@ Direct3D11::~Direct3D11()
 /// @return 初期化結果 成功(true)
 bool Direct3D11::initialize()
 {
-	// デバイスとスワップチェーンを作成する
 	if (!createDeviceAndSwapChain()) {
 		MessageBox(nullptr, TEXT("デバイスとスワップチェーンの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	// レンダーターゲットビューを作成する
 	if (!createRenderTargetView()) {
 		MessageBox(nullptr, TEXT("レンダーターゲットビューの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	// 深度ステンシルビューを作成する
 	if (!createDepthAndStencil()) {
 		MessageBox(nullptr, TEXT("深度ステンシルビューの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	// 深度ステンシルステートを作成する
 	if (!createDepthStencilState()) {
 		MessageBox(nullptr, TEXT("深度ステンシルステートの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	// テクスチャサンプラーの作成
 	if (!createTextureSampler()) {
 		MessageBox(nullptr, TEXT("テクスチャサンプラーの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	// コンスタントバッファを作成する
+	if (!createBlendState()) {
+		MessageBox(nullptr, TEXT("ブレンドステートの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return false;
+	}
 	if (!mConstantBuffer.initialize(mDevice, mContext)) {
 		MessageBox(nullptr, TEXT("コンスタントバッファの作成に失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
@@ -111,6 +114,7 @@ bool Direct3D11::initialize()
 
 //-------------------------------------------------------------------------------------------------
 /// 描画開始
+/// @param aClearCol 描画クリア色
 void Direct3D11::drawStart(const float aClearCol[4])
 {
 	mContext->ClearRenderTargetView(mRenderTargetViews, aClearCol);
@@ -125,8 +129,9 @@ void Direct3D11::drawEnd()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンテキストを設定する
-void Direct3D11::setUpContext(const ShaderData* aShaderData)
+/// シェーダーを設定する
+/// @param aShaderData シェーダーデータ
+void Direct3D11::setShader(const ShaderData* aShaderData)
 {
 	// VertexShaderを設定
 	mContext->VSSetShader(
@@ -147,19 +152,8 @@ void Direct3D11::setUpContext(const ShaderData* aShaderData)
 }
 
 //-------------------------------------------------------------------------------------------------
-void Direct3D11::zBufferOn()
-{
-	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
-}
-
-//-------------------------------------------------------------------------------------------------
-void Direct3D11::zBufferOff()
-{
-	mContext->OMSetDepthStencilState(mDepthDisabledStencilState, 0);
-}
-
-//-------------------------------------------------------------------------------------------------
 /// テクスチャーを設定する
+/// @param aTexture テクスチャー
 void Direct3D11::setTexture(ID3D11ShaderResourceView* aTexture)
 {
 	mContext->PSSetSamplers(0, 1, &mSamplerState);
@@ -167,21 +161,38 @@ void Direct3D11::setTexture(ID3D11ShaderResourceView* aTexture)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// デバイスを返す
+/// Zバッファを有効化する
+void Direct3D11::zBufferOn()
+{
+	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// Zバッファを無効化する
+void Direct3D11::zBufferOff()
+{
+	mContext->OMSetDepthStencilState(mDepthDisabledStencilState, 0);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// デバイスを取得する
+/// @return デバイス
 ID3D11Device* Direct3D11::getDevice() const
 {
 	return mDevice;
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンテキストを返す
+/// コンテキストを取得する
+/// @return コンテキスト
 ID3D11DeviceContext* Direct3D11::getContext() const
 {
 	return mContext;
 }
 
 //-------------------------------------------------------------------------------------------------
-/// コンスタントバッファを返す
+/// コンスタントバッファを取得する
+/// @return コンスタントバッファ
 ConstantBuffer* Direct3D11::getConstantBuffer()
 {
 	return &mConstantBuffer;
@@ -325,6 +336,8 @@ bool Direct3D11::createDepthStencilState()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// テクスチャーサンプラーを作成する
+/// @return 作成結果 成功(true)
 bool Direct3D11::createTextureSampler()
 {
 	D3D11_SAMPLER_DESC samplerDesc;
@@ -340,6 +353,34 @@ bool Direct3D11::createTextureSampler()
 	if (FAILED(hr)) {
 		return false;
 	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ブレンドステートを作成する
+/// @return 作成結果 成功(true)
+bool Direct3D11::createBlendState()
+{
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
+	blendDesc.AlphaToCoverageEnable = false;
+	blendDesc.IndependentBlendEnable = false;
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	HRESULT hr;
+	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState);
+	if (FAILED(hr)) {
+		return false;
+	}
+	mContext->OMSetBlendState(mBlendState, 0, 0xffffffff);
 
 	return true;
 }

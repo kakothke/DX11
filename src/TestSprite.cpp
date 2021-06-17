@@ -29,7 +29,6 @@ void TestSprite::initialize()
 		ResourceFileName::Sprite.at(SpriteList::Test),
 		ResourceFileName::Shader.at(ShaderList::Sprite)
 	);
-	mRenderer.setAnchor({ 0, 0 });
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 #include "TestSky.h"
 #include "Cube.h"
 #include "DirectionalLight.h"
+#include "FontRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -37,6 +38,7 @@ private:
 	TestSky mTestSky;
 	Camera mCamera;
 	DirectionalLight mDirectionalLight;
+	FontRenderer mFont;
 	
 	//@}
 

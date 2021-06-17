@@ -50,12 +50,9 @@ bool Game::initialize()
 
 	// ƒtƒHƒ“ƒgƒeƒXƒg
 	const auto font = FontLoader::getInst();
-	// TEXT("‚ ‚ñ‚¸‚à‚¶’X"),TEXT("res/font/APJapanesefontF.ttf")
-	if (!font->load(TEXT("‚l‚r ‚o–¾’©"))) {
+	if (!font->load(TEXT("‚ ‚ñ‚¸‚à‚¶’X"), TEXT("res/font/APJapanesefontF.ttf"))) {
 		return false;
 	}
-	FontRenderer tset;
-	tset.draw(TEXT("‚ "));
 
 	return true;
 }

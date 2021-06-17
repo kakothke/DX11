@@ -39,7 +39,7 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// シェーダーの指定
-	d3D11->setUpContext(mShaderData);
+	d3D11->setShader(mShaderData);
 
 	int cnt = 0;
 	UINT strides = sizeof(OBJVertex);
@@ -75,7 +75,7 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 /// OBJとシェーダーを設定する
 /// @param aOBJFileName OBJファイルパス
 /// @param aShaderFileName シェーダーファイルパス
-void OBJRenderer::setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName)
+void OBJRenderer::setObjAndShaderData(const char* const aOBJFileName, const char* const aShaderFileName)
 {
 	const auto obj = OBJLoader::getInst()->getOBJData(aOBJFileName);
 	mOBJData = obj;

@@ -27,7 +27,9 @@ public:
 	/// @name 描画設定
 	//@{
 	/// スプライトとシェーダーを設定する
-	void setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName);
+	void setSpriteAndShaderData(
+		const char* const aSpriteFileName,
+		const char* const aShaderFileName);
 	/// カラーを設定する 
 	void setColor(const DirectX::XMFLOAT4& aColor);
 	/// 描画中心位置を設定する

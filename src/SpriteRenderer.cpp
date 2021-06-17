@@ -13,7 +13,7 @@ SpriteRenderer::SpriteRenderer()
 	, mShaderData()
 	, mColor(1, 1, 1, 1)
 	, mPivot(0.5f, 0.5f)
-	, mAnchor(-1, -1)
+	, mAnchor(0, 0)
 	, mSplit(1, 1)
 {
 }
@@ -43,7 +43,7 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// シェーダーの指定
-	d3D11->setUpContext(mShaderData);
+	d3D11->setShader(mShaderData);
 
 	UINT strides = sizeof(SpriteVertex);
 	UINT offsets = 0;
@@ -67,7 +67,9 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 /// スプライトとシェーダーを設定する
 /// @param aSpriteFileName スプライトのファイルパス
 /// @param aShaderFileName シェーダーのファイルパス
-void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
+void SpriteRenderer::setSpriteAndShaderData(
+	const char* const aSpriteFileName,
+	const char* const aShaderFileName)
 {
 	const auto sprite = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
 	mSpriteData = sprite;

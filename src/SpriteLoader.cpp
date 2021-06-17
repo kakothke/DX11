@@ -76,7 +76,7 @@ SpriteData* SpriteLoader::getSpriteData(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 頂点バッファ作成
+/// 頂点バッファを作成する
 /// @param aFileName ファイルパス
 /// @return 作成結果 成功(true)
 bool SpriteLoader::createVertexBuffer(const char* const aFileName)
@@ -123,7 +123,7 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// メッシュ作成
+/// メッシュを作成する
 /// @param aFileName ファイルパス
 /// @param aVertexes 頂点データ
 void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)

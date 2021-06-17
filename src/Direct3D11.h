@@ -34,19 +34,25 @@ public:
 	void drawEnd();
 	//@}
 
-	void setUpContext(const ShaderData* aShaderData);
+	/// @name 描画設定
+	//@{
+	/// シェーダーを設定する
+	void setShader(const ShaderData* aShaderData);
+	/// テクスチャーをセットする
 	void setTexture(ID3D11ShaderResourceView* aTexture);
-
+	/// Zバッファを有効化する
 	void zBufferOn();
+	/// Zバッファを無効化する
 	void zBufferOff();
+	//@}
 
 	/// @name アクセサ
 	//@{
-	/// デバイスを返す
+	/// デバイスを取得する
 	ID3D11Device* getDevice() const;
-	/// コンテキストを返す
+	/// コンテキストを取得する
 	ID3D11DeviceContext* getContext() const;
-	/// コンスタントバッファーを参照する
+	/// コンスタントバッファーを取得する
 	ConstantBuffer* getConstantBuffer();
 	//@}
 
@@ -63,6 +69,8 @@ private:
 	bool createDepthStencilState();
 	/// テクスチャサンプラーを作成する
 	bool createTextureSampler();
+	/// ブレンドステートを作成する
+	bool createBlendState();
 	/// ビューポートを設定する
 	void setUpViewPort();
 	/// ラスタライズを設定する
@@ -88,6 +96,8 @@ private:
 	ID3D11DepthStencilState* mDepthDisabledStencilState;
 	/// テクスチャサンプラー
 	ID3D11SamplerState* mSamplerState;
+	/// ブレンドステート
+	ID3D11BlendState* mBlendState;
 	/// コンスタントバッファー
 	ConstantBuffer mConstantBuffer;
 	//@}
