@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------------------------------------
 #include "Window.h"
 #include "Direct3D11.h"
+#include "Input.h"
+#include "Sound.h"
 #include "Game.h"
 #include "Define.h"
 
@@ -28,6 +30,16 @@ bool SystemMain::initialize()
 	// Direct3D11‰Šú‰»
 	const auto d3d11 = Direct3D11::getInst();
 	if (!d3d11->initialize()) {
+		return false;
+	}
+	// Input‰Šú‰»
+	const auto input = Input::getInst();
+	if (!input->initialize()) {
+		return false;
+	}
+	// Sound‰Šú‰»
+	const auto sound = Sound::getInst();
+	if (!sound->initialize()) {
 		return false;
 	}
 

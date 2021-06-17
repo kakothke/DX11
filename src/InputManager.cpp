@@ -27,6 +27,7 @@ void InputManager::update()
 	}
 
 	const static auto input = Input::getInst();
+	input->update();
 
 	// •ûŒü“ü—Í
 	mAxes = 0;

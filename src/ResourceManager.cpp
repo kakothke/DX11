@@ -1,52 +1,67 @@
 #include "ResourceManager.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "ResourceFileName.h"
-#include "OBJLoader.h"
-#include "SpriteLoader.h"
-#include "ShaderLoader.h"
-#include "Sound.h"
-
-//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
 ResourceManager::ResourceManager()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
 ResourceManager::~ResourceManager()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-bool ResourceManager::initialize()
+/// 初期読み込み
+void ResourceManager::initialize()
 {
-	bool result;
-
 	// OBJs
 	const auto obj = OBJLoader::getInst();
-	result = obj->load(ResourceFileName::OBJ.at(OBJList::Cube));
-	result = obj->load(ResourceFileName::OBJ.at(OBJList::Sphere));
-	result = obj->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
-	result = obj->load(ResourceFileName::OBJ.at(OBJList::Test));
+	obj->load(ResourceFileName::OBJ.at(OBJList::Cube));
+	obj->load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	obj->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	obj->load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
 	const auto sprite = SpriteLoader::getInst();
-	result = sprite->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	sprite->load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
 	const auto shader = ShaderLoader::getInst();
-	result = shader->load(ResourceFileName::Shader.at(ShaderList::Unlit));
-	result = shader->load(ResourceFileName::Shader.at(ShaderList::Standard));
-	result = shader->load(ResourceFileName::Shader.at(ShaderList::Sprite));
-	result = shader->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+	shader->load(ResourceFileName::Shader.at(ShaderList::Unlit));
+	shader->load(ResourceFileName::Shader.at(ShaderList::Standard));
+	shader->load(ResourceFileName::Shader.at(ShaderList::Sprite));
+	shader->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
 
-	// Sound
+	// BGM
+	const auto sound = Sound::getInst();
+	mBGMHandle[BGMList::Test] = sound->load(ResourceFileName::BGM.at(BGMList::Test));
+	sound->setLoop(mBGMHandle[BGMList::Test], true, 2);
+	sound->setLoopPos(mBGMHandle[BGMList::Test], 855273, 2565818);
 
+	// SE
+	const auto font = FontLoader::getInst();
+	mSEHandle[SEList::Test] = sound->load(ResourceFileName::SE.at(SEList::Test));
 
-	return result;
+	// Font
+	font->load(TEXT("あんずもじ湛"), TEXT("res/font/APJapanesefontF.ttf"));
+
+}
+
+//-------------------------------------------------------------------------------------------------
+const int& ResourceManager::BGMHandle(const BGMList& aList) const
+{
+	return mBGMHandle.at(aList);
+}
+
+//-------------------------------------------------------------------------------------------------
+const int& ResourceManager::SEHandle(const SEList& aList) const
+{
+	return mSEHandle.at(aList);
 }
 
 } // namespace

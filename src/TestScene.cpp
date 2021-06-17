@@ -1,6 +1,9 @@
 #include "TestScene.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "ResourceManager.h"
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
@@ -10,7 +13,11 @@ TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mTestSprite({ Vector3(-100,0,0),Vector3(),Vector3(0.2f) })
 , mT2({ Vector3(100,0,0),Vector3(),Vector3(0.2f) })
 {
-	mFont.setShaderData("hlsl/Sprite.hlsl");
+	mFont.setShaderData(ResourceFileName::Shader.at(ShaderList::Sprite));
+	// テストサウンド
+	const auto sound = Sound::getInst();
+	const auto resource = ResourceManager::getInst();
+	sound->play(resource->BGMHandle(BGMList::Test));
 }
 
 //-------------------------------------------------------------------------------------------------

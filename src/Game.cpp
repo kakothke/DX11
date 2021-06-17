@@ -2,14 +2,9 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include "Input.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "Define.h"
-#include "Sound.h"
-#include "FontRenderer.h"
-
-#include "Window.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -26,33 +21,12 @@ Game::Game()
 /// 初期化処理
 bool Game::initialize()
 {
-	const auto input = Input::getInst();
-	if (!input->initialize()) {
-		return false;
-	}
-	const auto sound = Sound::getInst();
-	if (!sound->initialize()) {
-		return false;
-	}
+	// リソース初期化
 	const auto resource = ResourceManager::getInst();
-	if (!resource->initialize()) {
-		return false;
-	}
+	resource->initialize();
 
 	// 最初に読み込むシーンをセット
 	mSceneManager.changeScene(SceneList::Test);
-
-	// テストサウンド
-	sound->load("res/bgm/music_0.wav");
-	sound->setLoop(0, true, 2);
-	sound->setLoopPos(0, 855273, 2565818);
-	sound->play(0);
-
-	// フォントテスト
-	const auto font = FontLoader::getInst();
-	if (!font->load(TEXT("あんずもじ湛"), TEXT("res/font/APJapanesefontF.ttf"))) {
-		return false;
-	}
 
 	return true;
 }
@@ -63,9 +37,7 @@ bool Game::initialize()
 bool Game::mainLoop()
 {
 	// 入力状況
-	const static auto input = Input::getInst();
 	const static auto inputManager = InputManager::getInst();
-	input->update();
 	inputManager->update();
 
 	// ゲーム内部

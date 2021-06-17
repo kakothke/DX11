@@ -27,5 +27,17 @@ const std::unordered_map<ShaderList, const char*> ResourceFileName::Shader =
 	{ ShaderList::SkyBox, "hlsl/SkyBox.hlsl" },
 };
 
+/// BGM
+const std::unordered_map<BGMList, const char*> ResourceFileName::BGM =
+{
+	{ BGMList::Test, "res/bgm/music_0.wav" },
+};
+
+/// SE
+const std::unordered_map<SEList, const char*> ResourceFileName::SE =
+{
+	{ SEList::Test, "res/se/test.wav" },
+};
+
 } // namespace
 // EOF
