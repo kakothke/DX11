@@ -38,19 +38,22 @@ bool SystemMain::initialize()
 /// メッセージループ
 void SystemMain::msgLoop()
 {
+	// ゲーム初期化
 	Game game;
 	if (!game.initialize()) {
 		return;
 	}
 
 	// ウィンドウを表示
-	auto hWnd = Window::getInst()->hWnd();
-	ShowWindow(hWnd, SW_SHOW);
-	UpdateWindow(hWnd);
+	{
+		auto hWnd = Window::getInst()->hWnd();
+		ShowWindow(hWnd, SW_SHOW);
+		UpdateWindow(hWnd);
+	}
 
+	// メッセージループ
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
-
 	while (msg.message != WM_QUIT) {
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			// OSからのメッセージをウィンドウプロシージャーに渡す

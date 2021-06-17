@@ -8,6 +8,7 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
 FontLoader::FontLoader()
 	: mFontData()
 {
@@ -17,6 +18,7 @@ FontLoader::FontLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
 FontLoader::~FontLoader()
 {
 	for (auto fontData : mFontData) {
@@ -27,7 +29,11 @@ FontLoader::~FontLoader()
 	mFontData.clear();
 }
 
-//-------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------
+/// フォントを読み込む
+/// @param aFontName フォント名
+/// @param aFileName ファイルパス
+/// @return 結果 成功(true)
 bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 {
 	// フォントリソースの読み込み
@@ -62,6 +68,9 @@ bool FontLoader::load(const LPCTSTR aFontName, const LPCTSTR aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// HDCを取得する
+/// @param aFontName フォント名
+/// @return HDC
 const HDC FontLoader::hdc(const LPCTSTR aFontName)
 {
 	if (!mFontData.count(aFontName)) {

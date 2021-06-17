@@ -31,6 +31,7 @@ OBJLoader::~OBJLoader()
 //-------------------------------------------------------------------------------------------------
 /// OBJファイルを読み込む
 /// @param aFileName 読み込みたいOBJのファイルパス
+/// @return 結果 成功(true)
 bool OBJLoader::load(const char* const aFileName)
 {
 	if (mOBJData.count(aFileName)) {
@@ -67,11 +68,10 @@ bool OBJLoader::load(const char* const aFileName)
 /// @param aFileName 破棄したいOBJのファイルパス
 void OBJLoader::release(const char* const aFileName)
 {
-	if (mOBJData.count(aFileName)) {
-		mOBJData.erase(aFileName);
-	} else {
+	if (!mOBJData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないOBJデータを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 	}
+	mOBJData.erase(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -79,11 +79,11 @@ void OBJLoader::release(const char* const aFileName)
 /// @param aFileName 取得したいOBJのファイルパス
 OBJData* OBJLoader::getOBJData(const char* const aFileName)
 {
-	if (mOBJData.count(aFileName)) {
-		return &mOBJData[aFileName];
+	if (!mOBJData.count(aFileName)) {
+		MessageBox(nullptr, TEXT("存在しないOBJデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return nullptr;
 	}
-	MessageBox(nullptr, TEXT("存在しないOBJデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
-	return nullptr;
+	return &mOBJData[aFileName];
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -188,6 +188,10 @@ bool OBJLoader::createMesh(const char* const aFileName, std::vector<OBJVertex>& 
 }
 
 //-------------------------------------------------------------------------------------------------
+/// .mtlファイルを読み込む
+/// @param aFileName ファイルパス
+/// @param aMtlNames マテリアル名
+/// @return 結果 成功(true)
 bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::string>& aMtlNames)
 {
 	// マテリアルが存在しないとき
@@ -255,7 +259,7 @@ bool OBJLoader::loadMtlFile(const char* const aFileName, const std::vector<std::
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
 				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				static auto texture = TextureLoader::getInst();
+				auto texture = TextureLoader::getInst();
 				texture->load(texName.c_str());
 			}
 		}
@@ -301,7 +305,7 @@ bool OBJLoader::createVertexBuffer(const char* const aFileName, const std::vecto
 
 	// バッファ作成
 	HRESULT hr;
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
@@ -349,7 +353,7 @@ bool OBJLoader::createIndexBuffer(const char* const aFileName)
 
 		// バッファ作成
 		HRESULT hr;
-		static auto device = Direct3D11::getInst()->getDevice();
+		auto device = Direct3D11::getInst()->getDevice();
 		hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].indexBuffers[cnt]);
 		if (FAILED(hr)) {
 			return false;

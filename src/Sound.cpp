@@ -97,7 +97,7 @@ int Sound::load(const char* const aFileName)
 		return -1;
 	}
 
-	const int handle = mHandle.update();
+	const auto handle = mHandle.update();
 	if (!loadWaveFile(aFileName, handle)) {
 		MessageBox(nullptr, TEXT(".wavファイルの読み込みに失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		mHandle.release(handle);

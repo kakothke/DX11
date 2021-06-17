@@ -59,9 +59,13 @@ public:
 private:
 	/// @name 内部実装
 	//@{
+	/// 頂点シェーダーを作成する
 	bool createVertexShader(const char* const aFileName);
+	/// 入力レイアウトを作成する
 	bool createInputLayout(const char* const aFileName);
+	/// リフレクション内のDXGIFormatを検索する
 	DXGI_FORMAT getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc);
+	/// ピクセルシェーダーを作成する
 	bool createPixelShader(const char* const aFileName);
 	//@}
 

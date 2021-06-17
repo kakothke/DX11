@@ -70,14 +70,14 @@ bool FontRenderer::cretaeTexture()
 
 	HRESULT hr;
 	ID3D11Texture2D* tex2D;
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateTexture2D(&desc, 0, &tex2D);
 	if (FAILED(hr)) {
 		return false;
 	}
 
 	D3D11_MAPPED_SUBRESOURCE hMappedResource;
-	static auto context = Direct3D11::getInst()->getContext();
+	auto context = Direct3D11::getInst()->getContext();
 	hr = context->Map(tex2D, 0, D3D11_MAP_WRITE_DISCARD, 0, &hMappedResource);
 	if (FAILED(hr)) {
 		return false;

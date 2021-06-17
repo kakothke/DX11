@@ -1,14 +1,14 @@
 #include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "TextureLoader.h"
-
-//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
 SpriteRenderer::SpriteRenderer()
-	: mSpriteData()
+	: mD3D11(Direct3D11::getInst())
+	, mTex(TextureLoader::getInst())
+	, mSpriteData()
 	, mShaderData()
 	, mColor(1, 1, 1, 1)
 	, mPivot(0.5f, 0.5f)
@@ -18,51 +18,49 @@ SpriteRenderer::SpriteRenderer()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
 SpriteRenderer::~SpriteRenderer()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-bool SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
+/// 描画
+/// @param aTransform トランスフォーム
+void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 {
 	// 読み込みチェック
 	if (!mSpriteData || !mShaderData) {
-		return false;
+		return;
 	}
 
-	// Direct3D11取得
-	static auto d3d11 = Direct3D11::getInst();
-	static auto context = d3d11->getContext();
-	static auto constantBuf = d3d11->getConstantBuffer();
-
 	// プリミティブの形状を指定
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	mD3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// シェーダーの指定
-	d3d11->setUpContext(mShaderData);
+	mD3D11->setUpContext(mShaderData);
 
 	int cnt = 0;
 	UINT strides = sizeof(SpriteVertex);
 	UINT offsets = 0;
 
 	// IAに設定する頂点バッファの指定
-	context->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
+	mD3D11->getContext()->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
-	constantBuf->updateColor(mColor, mColor);
-	constantBuf->updateSprite(aTransform, mAnchor, mPivot, mSplit);
+	mD3D11->getConstantBuffer()->updateColor(mColor, mColor);
+	mD3D11->getConstantBuffer()->updateSprite(aTransform, mAnchor, mPivot, mSplit);
 
 	// テクスチャーセット
-	static auto texture = TextureLoader::getInst();
-	d3d11->setTexture(texture->getTexture(mSpriteData->fileName));
+	mD3D11->setTexture(mTex->getTexture(mSpriteData->fileName));
 
 	// 描画
-	context->Draw(4, 0);
-
-	return true;
+	mD3D11->getContext()->Draw(4, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
+/// スプライトとシェーダーを設定する
+/// @param aSpriteFileName スプライトのファイルパス
+/// @param aShaderFileName シェーダーのファイルパス
 void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const char* aShaderFileName)
 {
 	auto sprite = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
@@ -72,24 +70,32 @@ void SpriteRenderer::setSpriteAndShaderData(const char* aSpriteFileName, const c
 }
 
 //-------------------------------------------------------------------------------------------------
+/// カラーを設定する
+/// @param aColor 色(0~1)
 void SpriteRenderer::setColor(const DirectX::XMFLOAT4& aColor)
 {
 	mColor = aColor;
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 描画中心位置を設定する
+/// @param aPivot 中心位置(x,y){0~1}
 void SpriteRenderer::setPivot(const DirectX::XMFLOAT2& aPivot)
 {
 	mPivot = aPivot;
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 描画開始位置を設定する
+/// @param aAnchor 開始位置(x,y){-1~1}
 void SpriteRenderer::setAnchor(const DirectX::XMFLOAT2& aAnchor)
 {
 	mAnchor = aAnchor;
 }
 
 //-------------------------------------------------------------------------------------------------
+/// UV分割数を設定する
+/// @param aSplit 分割数(x,y)
 void SpriteRenderer::setSplit(const DirectX::XMINT2& aSplit)
 {
 	mSplit = aSplit;

@@ -3,17 +3,22 @@
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
 #include "GameObjectTag.h"
+#include "ConstantBuffer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 全てのゲームオブジェクトの基底クラス
+/// カメラ基底クラス
+/// @brief 静的なカメラとしても使用可能
 class Camera : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ
 	//@{
 	Camera();
+	Camera(Transform aTransform);
+	Camera(Vector3 aCameraParam);
+	Camera(Transform aTransform, Vector3 aCameraParam);
 	//@}
 
 	/// @name 更新/描画
@@ -26,6 +31,7 @@ public:
 protected:
 	/// @name プロテクテッドメンバ関数
 	//@{
+	/// コンスタントバッファを更新する
 	void updateConstantBuffer();
 	//@}
 
@@ -34,6 +40,13 @@ protected:
 	float mFov;
 	float mNearZ;
 	float mFarZ;
+	//@}
+
+private:
+	/// @name プライベートメンバ変数
+	//@{
+	/// コンスタントバッファ
+	ConstantBuffer* mCBuf;
 	//@}
 
 };

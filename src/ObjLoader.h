@@ -32,7 +32,7 @@ struct OBJMaterial
 struct OBJData
 {
 	/// 頂点バッファ(Shader送信用)
-	ID3D11Buffer* vertexBuffer;
+	ID3D11Buffer* vertexBuffer = nullptr;
 	/// インデックスバッファ(Shader送信用)
 	std::vector<ID3D11Buffer*> indexBuffers;
 	/// インデックスバッファ

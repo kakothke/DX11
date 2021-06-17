@@ -9,12 +9,14 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
 TextureLoader::TextureLoader()
 	: mTexture()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
 TextureLoader::~TextureLoader()
 {
 	for (auto tex : mTexture) {
@@ -26,7 +28,9 @@ TextureLoader::~TextureLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// テクスチャ作成
+/// テクスチャを作成する
+/// @param aFileName ファイルパス
+/// @return 結果 成功(true)
 bool TextureLoader::load(const char* const aFileName)
 {
 	if (mTexture.count(aFileName)) {
@@ -38,7 +42,7 @@ bool TextureLoader::load(const char* const aFileName)
 	std::wstring wFileName = cv.from_bytes(aFileName);
 
 	HRESULT hr;
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = DirectX::CreateWICTextureFromFile(device, wFileName.c_str(), nullptr, &mTexture[aFileName]);
 	if (FAILED(hr)) {
 		MessageBox(nullptr, TEXT("テクスチャーの作成に失敗しました"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -49,25 +53,30 @@ bool TextureLoader::load(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 破棄
+/// @param aFileName ファイルパス
 void TextureLoader::release(const char* const aFileName)
 {
-	if (mTexture.count(aFileName)) {
-		mTexture[aFileName]->Release();
-		mTexture[aFileName] = nullptr;
-		mTexture.erase(aFileName);
-	} else {
+	if (!mTexture.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないテクスチャーを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return;
 	}
+	mTexture[aFileName]->Release();
+	mTexture[aFileName] = nullptr;
+	mTexture.erase(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
+/// テクスチャーを取得する
+/// @param aFileName ファイルパス
+/// @return テクスチャー
 ID3D11ShaderResourceView* TextureLoader::getTexture(const char* const aFileName)
 {
-	if (mTexture.count(aFileName)) {
-		return mTexture[aFileName];
+	if (!mTexture.count(aFileName)) {
+		// 描画時に毎フレーム呼ばれる処理なのでエラー告知はしない
+		return nullptr;
 	}
-	// 描画時に毎フレーム呼ばれる処理なのでエラー告知はしない
-	return nullptr;
+	return mTexture[aFileName];
 }
 
 } // namespace

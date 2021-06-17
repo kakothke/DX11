@@ -7,6 +7,7 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
 SpriteLoader::SpriteLoader()
 	: mSpriteData()
 {
@@ -14,6 +15,7 @@ SpriteLoader::SpriteLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
 SpriteLoader::~SpriteLoader()
 {
 	if (!mSpriteData.empty()) {
@@ -22,6 +24,9 @@ SpriteLoader::~SpriteLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// スプライトを読み込む
+/// @param aFileName ファイルパス
+/// @return 結果 成功（true）
 bool SpriteLoader::load(const char* const aFileName)
 {
 	if (mSpriteData.count(aFileName)) {
@@ -32,7 +37,7 @@ bool SpriteLoader::load(const char* const aFileName)
 		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
 	}
-	static auto texture = TextureLoader::getInst();
+	auto texture = TextureLoader::getInst();
 	if (!texture->load(aFileName)) {
 		return false;
 	}
@@ -47,26 +52,33 @@ bool SpriteLoader::load(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 破棄
+/// @param aFileName ファイルパス
 void SpriteLoader::release(const char* const aFileName)
 {
-	if (mSpriteData.count(aFileName)) {
-		mSpriteData.erase(aFileName);
-	} else {
+	if (!mSpriteData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないスプライトを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 	}
+	mSpriteData.erase(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
+/// スプライトデータを取得する
+/// @param aFileName ファイルパス
+/// @return スプライトデータ
 SpriteData* SpriteLoader::getSpriteData(const char* const aFileName)
 {
-	if (mSpriteData.count(aFileName)) {
-		return &mSpriteData[aFileName];
+	if (!mSpriteData.count(aFileName)) {
+		MessageBox(nullptr, TEXT("存在しないスプライトを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return nullptr;
 	}
-	MessageBox(nullptr, TEXT("存在しないスプライトを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
-	return nullptr;
+	return &mSpriteData[aFileName];
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 頂点バッファ作成
+/// @param aFileName ファイルパス
+/// @return 作成結果 成功(true)
 bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 {
 	SpriteVertex vertexes[4];
@@ -101,7 +113,7 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 
 	// バッファ作成
 	HRESULT hr;
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateBuffer(&bufferDesc, &subResource, &mSpriteData[aFileName].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
@@ -111,11 +123,14 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// メッシュ作成
+/// @param aFileName ファイルパス
+/// @param aVertexes 頂点データ
 void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	static auto texture = TextureLoader::getInst();
+	auto texture = TextureLoader::getInst();
 	texture->getTexture(aFileName)->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
 	res->QueryInterface(&tex2D);

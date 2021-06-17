@@ -39,6 +39,15 @@ bool Game::initialize()
 		return false;
 	}
 
+	// 最初に読み込むシーンをセット
+	mSceneManager.changeScene(SceneList::Test);
+
+	// テストサウンド
+	sound->load("res/bgm/music_0.wav");
+	sound->setLoop(0, true, 2);
+	sound->setLoopPos(0, 855273, 2565818);
+	sound->play(0);
+
 	// フォントテスト
 	auto font = FontLoader::getInst();
 	// あんずもじ湛(res/font/APJapanesefontF.ttf)
@@ -47,15 +56,6 @@ bool Game::initialize()
 	}
 	FontRenderer tset;
 	tset.draw(TEXT("あ"));
-
-	// テストサウンド
-	sound->load("res/bgm/music_0.wav");
-	sound->setLoop(0, true, 2);
-	sound->setLoopPos(0, 855273, 2565818);
-	sound->play(0);
-
-	// 最初に読み込むシーンをセット
-	mSceneManager.changeScene(SceneList::Test);
 
 	return true;
 }

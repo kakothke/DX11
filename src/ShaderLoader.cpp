@@ -28,7 +28,7 @@ ShaderLoader::~ShaderLoader()
 //-------------------------------------------------------------------------------------------------
 /// シェーダーを読み込む
 /// @param aFileName 読み込みたいシェーダーのファイルパス
-/// @return 作成結果 成功(true)
+/// @return 結果 成功(true)
 bool ShaderLoader::load(const char* const aFileName)
 {
 	if (mShaderData.count(aFileName)) {
@@ -57,17 +57,21 @@ bool ShaderLoader::load(const char* const aFileName)
 
 //-------------------------------------------------------------------------------------------------
 /// シェーダーデータを取得する
+/// @param aFileName 取得したいシェーダーのファイルパス
+/// @return シェーダーデータ
 ShaderData* ShaderLoader::getShaderData(const char* const aFileName)
 {
-	if (mShaderData.count(aFileName)) {
-		return &mShaderData[aFileName];
+	if (!mShaderData.count(aFileName)) {
+		MessageBox(nullptr, TEXT("存在しないシェーダーデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
+		return nullptr;
 	}
-	MessageBox(nullptr, TEXT("存在しないシェーダーデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
-	return nullptr;
+	return &mShaderData[aFileName];
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 頂点シェーダー作成
+/// 頂点シェーダーを作成する
+/// @param aFileName 読み込みたいシェーダーのファイルパス
+/// @return 作成結果 成功(true)
 bool ShaderLoader::createVertexShader(const char* const aFileName)
 {
 	ID3DBlob* blob = nullptr;
@@ -79,7 +83,7 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].vs);
 	if (FAILED(hr)) {
 		return false;
@@ -92,7 +96,9 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 入力レイアウト作成
+/// 入力レイアウトを作成する
+/// @param aFileName 読み込みたいシェーダーのファイルパス
+/// @return 作成結果 成功(true)
 bool ShaderLoader::createInputLayout(const char* const aFileName)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
@@ -135,7 +141,7 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 	reflection = nullptr;
 
 	// 頂点レイアウト作成
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateInputLayout(
 		&inputLayoutDesc[0],
 		inputLayoutDesc.size(),
@@ -155,6 +161,8 @@ bool ShaderLoader::createInputLayout(const char* const aFileName)
 
 //-------------------------------------------------------------------------------------------------
 /// リフレクション内のDXGIFormatを検索する
+/// @param aParamDesc 読み込むDesc
+/// @return DXGI_FORMAT
 DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc)
 {
 	if (aParamDesc.Mask == 1) {
@@ -205,7 +213,9 @@ DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDes
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ピクセルシェーダー作成
+/// ピクセルシェーダーを作成する
+/// @param aFileName 読み込みたいシェーダーのファイルパス
+/// @return 作成結果 成功(true)
 bool ShaderLoader::createPixelShader(const char* const aFileName)
 {
 	ID3DBlob* blob = nullptr;
@@ -217,7 +227,7 @@ bool ShaderLoader::createPixelShader(const char* const aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	static auto device = Direct3D11::getInst()->getDevice();
+	auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].ps);
 	if (FAILED(hr)) {
 		return false;
