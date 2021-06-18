@@ -59,8 +59,7 @@ void TestScene::draw2D()
 void TestScene::drawBackground()
 {
 	mTestSky.draw();
-	DirectX::XMFLOAT3X3 a = {0,-200,0,0,0,0,1,1,1};
-	mFont.draw(TEXT("‚ ABC’ˆ"),a);
+	mFont.draw(TEXT("‰F’ˆ"), { 0, -200, 0, 0, 0, 0, 1, 1, 1 });
 }
 
 } // namespace

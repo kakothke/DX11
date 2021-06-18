@@ -2,7 +2,6 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
-#include <mbstring.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -145,21 +144,20 @@ bool FontRenderer::cretaeTexture()
 	}
 #else
 	LPCTSTR str = mString;
-	for (int i = 0; i < lstrlen(mString); i++) {
-		if (_mbclen((BYTE*)str) == 1) {
-			code = mString[i];
-			if (!createFontTexture(code)) {
-				return false;
-			}
-		} else {
+	for (int i = 0; i < lstrlen(mString); i++, str++) {
+		if (IsDBCSLeadByte(*str)) {
+			// 2バイト文字
 			code = (BYTE)mString[i] << 8 | (BYTE)mString[i + 1];
-			if (!createFontTexture(code)) {
-				return false;
-			}
+			// 次を無視する
 			i++;
 			str++;
+		} else {
+			// 1バイト文字
+			code = mString[i];
 		}
-		str++;		
+		if (!createFontTexture(code)) {
+			return false;
+		}
 	}
 #endif
 
