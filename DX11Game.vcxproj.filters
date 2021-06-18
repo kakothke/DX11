@@ -74,14 +74,14 @@
     <Filter Include="System\Lib">
       <UniqueIdentifier>{b3fb5c2b-c537-4db6-a612-47425a91208a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Resource\Shader">
-      <UniqueIdentifier>{595f6112-377d-47d3-99e7-0f0a63d0e5eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Resource\Font">
       <UniqueIdentifier>{c888f48f-16d3-4eda-bc92-c1137dce0976}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Comon">
       <UniqueIdentifier>{767d1150-e214-43fd-ace2-4be985246383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Shader">
+      <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
       <Filter>Game\Resource</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3D11.h">
-      <Filter>System\Direct3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConstantBuffer.h">
       <Filter>System\Direct3D11</Filter>
     </ClInclude>
     <ClInclude Include="src\Transform.h">
@@ -217,6 +214,9 @@
     <ClInclude Include="src\FontRenderer.h">
       <Filter>System\Resource\Font</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConstantBuffer.h">
+      <Filter>System\Direct3D11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -260,9 +260,6 @@
     </ClCompile>
     <ClCompile Include="src\ResourceFileName.cpp">
       <Filter>Game\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ConstantBuffer.cpp">
-      <Filter>System\Direct3D11</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3D11.cpp">
       <Filter>System\Direct3D11</Filter>
@@ -336,19 +333,22 @@
     <ClCompile Include="src\FontRenderer.cpp">
       <Filter>System\Resource\Font</Filter>
     </ClCompile>
+    <ClCompile Include="src\ConstantBuffer.cpp">
+      <Filter>System\Direct3D11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="hlsl\Standard.hlsl">
-      <Filter>Game\Resource\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="hlsl\Unlit.hlsl">
-      <Filter>Game\Resource\Shader</Filter>
+    <FxCompile Include="hlsl\SkyBox.hlsl">
+      <Filter>System\Shader</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Sprite.hlsl">
-      <Filter>Game\Resource\Shader</Filter>
+      <Filter>System\Shader</Filter>
     </FxCompile>
-    <FxCompile Include="hlsl\SkyBox.hlsl">
-      <Filter>Game\Resource\Shader</Filter>
+    <FxCompile Include="hlsl\Standard.hlsl">
+      <Filter>System\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="hlsl\Unlit.hlsl">
+      <Filter>System\Shader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

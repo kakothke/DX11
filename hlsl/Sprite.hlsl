@@ -14,7 +14,6 @@ cbuffer CB_SPRITE : register(b1)
 {
     float4x4 MATRIX_P;
     float4x4 MATRIX_W;
-    float4 PIVOT;
     int2 SPLIT;
 }
 

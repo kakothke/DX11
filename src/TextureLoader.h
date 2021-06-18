@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
 #include <unordered_map>
+#include <DirectXMath.h>
 #include "Singleton.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -28,6 +29,8 @@ public:
 	//@{
 	/// テクスチャーを取得する
 	ID3D11ShaderResourceView* getTexture(const char* const aFileName);
+	/// テクスチャーのサイズを取得する
+	const DirectX::XMFLOAT2 getTextureSize(const char* const aFileName);
 	//@}
 
 private:

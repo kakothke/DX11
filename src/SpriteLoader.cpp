@@ -129,21 +129,11 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)
 {
 	// テクスチャーのサイズを参照
-	ID3D11Resource* res = nullptr;
 	const auto texture = TextureLoader::getInst();
-	texture->getTexture(aFileName)->GetResource(&res);
-	ID3D11Texture2D* tex2D = nullptr;
-	res->QueryInterface(&tex2D);
-	D3D11_TEXTURE2D_DESC desc;
-	tex2D->GetDesc(&desc);
+	DirectX::XMFLOAT2 size = texture->getTextureSize(aFileName);
 
-	float width = (float)desc.Width;
-	float height = (float)desc.Height;
-
-	res->Release();
-	res = nullptr;
-	tex2D->Release();
-	tex2D = nullptr;
+	float width = (float)size.x / 2;
+	float height = (float)size.y / 2;
 
 	// 表面
 	{

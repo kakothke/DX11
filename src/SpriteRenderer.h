@@ -31,13 +31,13 @@ public:
 		const char* const aSpriteFileName,
 		const char* const aShaderFileName);
 	/// カラーを設定する 
-	void setColor(const DirectX::XMFLOAT4& aColor);
-	/// 描画中心位置を設定する
-	void setPivot(const DirectX::XMFLOAT2& aPivot);
+	void setColor(DirectX::XMFLOAT4& aColor);
+	/// 描画原点を設定する
+	void setPivot(float aX, float aY);
 	/// 描画開始位置を設定する
-	void setAnchor(const DirectX::XMFLOAT2& aAnchor);
+	void setAnchor(float aX, float aY);
 	/// UV分割数を設定する
-	void setSplit(const DirectX::XMINT2& aSplit);
+	void setSplit(const UINT& aX, const UINT& aY);
 	//@}
 
 private:

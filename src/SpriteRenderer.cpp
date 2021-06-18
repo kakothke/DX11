@@ -1,6 +1,7 @@
 #include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "Math.h"
 #include "TextureLoader.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -79,34 +80,54 @@ void SpriteRenderer::setSpriteAndShaderData(
 
 //-------------------------------------------------------------------------------------------------
 /// カラーを設定する
-/// @param aColor 色(0~1)
-void SpriteRenderer::setColor(const DirectX::XMFLOAT4& aColor)
+/// @param aColor カラー(0~1)
+void SpriteRenderer::setColor(DirectX::XMFLOAT4& aColor)
 {
+	aColor.x = Math::Clamp(aColor.x, -1.0f, 1.0f);
+	aColor.y = Math::Clamp(aColor.y, -1.0f, 1.0f);
+	aColor.z = Math::Clamp(aColor.z, -1.0f, 1.0f);
+	aColor.w = Math::Clamp(aColor.w, -1.0f, 1.0f);
+
 	mColor = aColor;
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 描画中心位置を設定する
-/// @param aPivot 中心位置(x,y){0~1}
-void SpriteRenderer::setPivot(const DirectX::XMFLOAT2& aPivot)
+/// 描画原点を設定する
+/// @param aX 原点x(-1~1)
+/// @param aY 原点y(-1~1)
+void SpriteRenderer::setPivot(float aX, float aY)
 {
-	mPivot = aPivot;
+	aX = Math::Clamp(aX, -1.0f, 1.0f);
+	aY = Math::Clamp(aY, -1.0f, 1.0f);
+
+	const auto tex = TextureLoader::getInst();
+	DirectX::XMFLOAT2 size = tex->getTextureSize(mSpriteData->fileName);
+
+	mPivot.x = (size.x / 2) * -aX;
+	mPivot.y = (size.y / 2) * aY;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画開始位置を設定する
-/// @param aAnchor 開始位置(x,y){-1~1}
-void SpriteRenderer::setAnchor(const DirectX::XMFLOAT2& aAnchor)
+/// @param aX 描画開始位置x(-1~1)
+/// @param aY 描画開始位置y(-1~1)
+void SpriteRenderer::setAnchor(float aX, float aY)
 {
-	mAnchor = aAnchor;
+	aX = Math::Clamp(aX, -1.0f, 1.0f);
+	aY = Math::Clamp(aY, -1.0f, 1.0f);
+
+	mAnchor.x = aX;
+	mAnchor.y = aY;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// UV分割数を設定する
-/// @param aSplit 分割数(x,y)
-void SpriteRenderer::setSplit(const DirectX::XMINT2& aSplit)
+/// @param aX 分割数x
+/// @param aY 分割数y
+void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 {
-	mSplit = aSplit;
+	mSplit.x = aX;
+	mSplit.y = aY;
 }
 
 } // namespace

@@ -134,7 +134,7 @@ bool FontRenderer::cretaeTexture()
 	// 文字コード取得
 	UINT code = 0;
 #if _UNICODE
-	code = (UINT)*mString;
+	code = (UINT)mString[0];
 #else
 	if (IsDBCSLeadByte(*mString)) {
 		code = (BYTE)mString[0] << 8 | (BYTE)mString[1];
@@ -142,7 +142,6 @@ bool FontRenderer::cretaeTexture()
 		code = mString[0];
 	}
 #endif
-
 	// フォントビットマップ取得
 	const auto hdc = FontLoader::getInst()->hdc(mFontName);
 	TEXTMETRIC tm;
@@ -183,17 +182,17 @@ bool FontRenderer::cretaeTexture()
 
 	// フォント情報の書き込み
 	BYTE* pBits = (BYTE*)hMappedResource.pData;
-	int iOfs_x = gm.gmptGlyphOrigin.x;
-	int iOfs_y = tm.tmAscent - gm.gmptGlyphOrigin.y;
-	int iBmp_w = (gm.gmBlackBoxX + 3) / 4 * 4;
-	int iBmp_h = gm.gmBlackBoxY;
-	int level = 16;
+	int iOfsX = gm.gmptGlyphOrigin.x;
+	int iOfsY = tm.tmAscent - gm.gmptGlyphOrigin.y;
+	int iBmpW = (gm.gmBlackBoxX + 3) / 4 * 4;
+	int iBmpH = gm.gmBlackBoxY;
+	int grad = 16;
 	int x, y;
 	DWORD alpha, col;
 	memset(pBits, 0, hMappedResource.RowPitch * tm.tmHeight);
-	for (y = iOfs_y; y < iOfs_y + iBmp_h; y++) {
-		for (x = iOfs_x; x < iOfs_x + iBmp_w; x++) {
-			alpha = (255 * ptr[x - iOfs_x + iBmp_w * (y - iOfs_y)]) / level;
+	for (y = iOfsY; y < iOfsY + iBmpH; y++) {
+		for (x = iOfsX; x < iOfsX + iBmpW; x++) {
+			alpha = (255 * ptr[x - iOfsX + iBmpW * (y - iOfsY)]) / grad;
 			col = 0x00ffffff | (alpha << 24);
 			memcpy((BYTE*)pBits + hMappedResource.RowPitch * y + 4 * x, &col, sizeof(DWORD));
 		}
@@ -286,8 +285,8 @@ void FontRenderer::createMesh(FontVertex* aVertexes)
 	D3D11_TEXTURE2D_DESC desc;
 	tex2D->GetDesc(&desc);
 
-	float width = (float)desc.Width;
-	float height = (float)desc.Height;
+	float width = (float)desc.Width / 2;
+	float height = (float)desc.Height / 2;
 
 	res->Release();
 	res = nullptr;

@@ -29,6 +29,8 @@ void TestSprite::initialize()
 		ResourceFileName::Sprite.at(SpriteList::Test),
 		ResourceFileName::Shader.at(ShaderList::Sprite)
 	);
+	mRenderer.setAnchor(-1, -1);
+	mRenderer.setPivot(-1, -1);
 }
 
 //-------------------------------------------------------------------------------------------------

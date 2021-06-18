@@ -162,9 +162,12 @@ void ConstantBuffer::updateSprite(
 		aTransform._21, aTransform._22, aTransform._23
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform._31, aTransform._32, 0
+		aTransform._31 / aSplit.x, aTransform._32 / aSplit.y, 0
 	);
-	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
+	DirectX::XMMATRIX pivot = DirectX::XMMatrixTranslation(
+		aPivot.x * (aTransform._31 / aSplit.x), aPivot.y * (aTransform._32 / aSplit.y), 1
+	);
+	DirectX::XMMATRIX worldMatrix = scale * rot * pos * pivot;
 	XMStoreFloat4x4(&mSPRITE.MATRIX_W, XMMatrixTranspose(worldMatrix));
 
 	// Projection
@@ -184,9 +187,6 @@ void ConstantBuffer::updateSprite(
 	};
 	DirectX::XMMATRIX projMatrix = proj2D * anchor;
 	XMStoreFloat4x4(&mSPRITE.MATRIX_P, XMMatrixTranspose(projMatrix));
-
-	// Pivot
-	mSPRITE.PIVOT = DirectX::XMFLOAT4(aPivot.x, aPivot.y, 0, 0);
 
 	// Split
 	mSPRITE.SPLIT = DirectX::XMINT4(aSplit.x, aSplit.y, 0, 0);

@@ -79,5 +79,31 @@ ID3D11ShaderResourceView* TextureLoader::getTexture(const char* const aFileName)
 	return mTexture[aFileName];
 }
 
+//-------------------------------------------------------------------------------------------------
+/// テクスチャーのサイズを取得する
+const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const char* const aFileName)
+{
+	if (!mTexture.count(aFileName)) {
+		return {
+			0.0f,
+			0.0f
+		};
+	}
+	ID3D11Resource* res = nullptr;
+	ID3D11Texture2D* tex2D = nullptr;
+	D3D11_TEXTURE2D_DESC desc = {};
+	mTexture[aFileName]->GetResource(&res);
+	res->QueryInterface(&tex2D);
+	tex2D->GetDesc(&desc);
+	res->Release();
+	res = nullptr;
+	tex2D->Release();
+	tex2D = nullptr;
+	return {
+		(float)desc.Width,
+		(float)desc.Height
+	};
+}
+
 } // namespace
 // EOF

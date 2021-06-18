@@ -22,7 +22,6 @@ struct CB_SPRITE
 {
 	DirectX::XMFLOAT4X4 MATRIX_P;
 	DirectX::XMFLOAT4X4 MATRIX_W;
-	DirectX::XMFLOAT4 PIVOT;
 	DirectX::XMINT4 SPLIT;
 };
 
