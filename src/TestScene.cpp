@@ -14,6 +14,7 @@ TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mT2({ Vector3(0,0,0),Vector3(),Vector3(0.5f) })
 {
 	mFont.setShaderData(ResourceFileName::Shader.at(ShaderList::Sprite));
+	mFont.setFont(TEXT("あんずもじ湛"));
 	// テストサウンド
 	const auto sound = Sound::getInst();
 	const auto resource = ResourceManager::getInst();
@@ -59,7 +60,7 @@ void TestScene::drawBackground()
 {
 	mTestSky.draw();
 	DirectX::XMFLOAT3X3 a = {0,-200,0,0,0,0,1,1,1};
-	mFont.draw(TEXT("宇宙"),a, TEXT("あんずもじ湛"));
+	mFont.draw(TEXT("あABC宙"),a);
 }
 
 } // namespace

@@ -9,54 +9,53 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 行列
-struct CB_MATRIX
-{
-	DirectX::XMFLOAT4X4 W;
-	DirectX::XMFLOAT4X4 V;
-	DirectX::XMFLOAT4X4 P;
-};
-
-/// スプライト
-struct CB_SPRITE
-{
-	DirectX::XMFLOAT4X4 MATRIX_P;
-	DirectX::XMFLOAT4X4 MATRIX_W;
-	DirectX::XMINT4 SPLIT;
-};
-
-/// カメラ
-struct CB_CAMERA
-{
-	DirectX::XMFLOAT4 POS;
-	DirectX::XMFLOAT4 ROT;
-};
-
-/// ライト
-struct CB_DLIGHT
-{
-	DirectX::XMFLOAT4 ROT;
-	DirectX::XMFLOAT4 COL;
-};
-
-/// カラー
-struct CB_COLOR
-{
-	DirectX::XMFLOAT4 COL0;
-	DirectX::XMFLOAT4 COL1;
-};
-
-/// マテリアル
-struct CB_MATERIAL
-{
-	DirectX::XMFLOAT4 A;
-	DirectX::XMFLOAT4 D;
-	DirectX::XMFLOAT4 S;
-};
-
 /// コンスタントバッファ
 class ConstantBuffer
 {
+private:
+	/// @name 内部構造体
+	//@{
+	/// 変換行列
+	struct CB_MATRIX
+	{
+		DirectX::XMFLOAT4X4 W;
+		DirectX::XMFLOAT4X4 V;
+		DirectX::XMFLOAT4X4 P;
+	};
+	/// スプライト
+	struct CB_SPRITE
+	{
+		DirectX::XMFLOAT4X4 MATRIX_P;
+		DirectX::XMFLOAT4X4 MATRIX_W;
+		DirectX::XMINT4 SPLIT;
+	};
+	/// カメラ
+	struct CB_CAMERA
+	{
+		DirectX::XMFLOAT4 POS;
+		DirectX::XMFLOAT4 ROT;
+	};
+	/// ライト
+	struct CB_DLIGHT
+	{
+		DirectX::XMFLOAT4 ROT;
+		DirectX::XMFLOAT4 COL;
+	};
+	/// カラー
+	struct CB_COLOR
+	{
+		DirectX::XMFLOAT4 COL0;
+		DirectX::XMFLOAT4 COL1;
+	};
+	/// マテリアル
+	struct CB_MATERIAL
+	{
+		DirectX::XMFLOAT4 A;
+		DirectX::XMFLOAT4 D;
+		DirectX::XMFLOAT4 S;
+	};
+	//@}
+
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
@@ -113,7 +112,7 @@ private:
 	ID3D11DeviceContext* mContext;
 	/// 各種コンスタントバッファをまとめた連想配列
 	std::unordered_map<BufferList, ID3D11Buffer*> mBuffers;
-	/// 各種バッファのデータ
+	/// 各種バッファの構造体
 	CB_MATRIX mMATRIX;
 	CB_SPRITE mSPRITE;
 	CB_CAMERA mCAMERA;

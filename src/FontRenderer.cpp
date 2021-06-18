@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
+#include <mbstring.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -38,29 +39,18 @@ FontRenderer::~FontRenderer()
 /// 描画
 /// @param aString 表示文字
 /// @param aTransform 表示位置
-/// @param aFontName フォント名
-void FontRenderer::draw(
-	const LPCTSTR aString,
-	const DirectX::XMFLOAT3X3& aTransform,
-	const LPCTSTR aFontName)
+void FontRenderer::draw(const LPCTSTR aString, const DirectX::XMFLOAT3X3& aTransform)
 {
 	// チェック
-	if (!mShaderData) {
+	if (!mShaderData && mString) {
 		return;
 	}
 
 	// テクスチャー作成
-	if (mString != aString || mFontName != aFontName) {
+	if (mString != aString) {
 		mString = aString;
-		mFontName = aFontName;
 		if (!cretaeTexture()) {
 			mString = NULL;
-			mFontName = NULL;
-			return;
-		}
-		if (!createVertexBuffer()) {
-			mString = NULL;
-			mFontName = NULL;
 			return;
 		}
 	}
@@ -103,6 +93,19 @@ void FontRenderer::setShaderData(const char* const aShaderFileName)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// フォントを設定する
+void FontRenderer::setFont(const LPCTSTR aFontName)
+{
+	// テクスチャー作成
+	if (mFontName != aFontName) {
+		mFontName = aFontName;
+		if (mString) {
+			!cretaeTexture();
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 /// カラーを設定する
 /// @param aColor 色(0~1)
 void FontRenderer::setColor(const DirectX::XMFLOAT4& aColor)
@@ -131,26 +134,53 @@ void FontRenderer::setAnchor(const DirectX::XMFLOAT2& aAnchor)
 /// @return 結果 成功(true)
 bool FontRenderer::cretaeTexture()
 {
-	// 文字コード取得
 	UINT code = 0;
+
 #if _UNICODE
-	code = (UINT)mString[0];
+	for (int i = 0; i < lstrlen(mString); i++) {
+		code = (UINT)mString[i];
+		if (!createFontTexture(code)) {
+			return false;
+		}
+	}
 #else
-	if (IsDBCSLeadByte(*mString)) {
-		code = (BYTE)mString[0] << 8 | (BYTE)mString[1];
-	} else {
-		code = mString[0];
+	LPCTSTR str = mString;
+	for (int i = 0; i < lstrlen(mString); i++) {
+		if (_mbclen((BYTE*)str) == 1) {
+			code = mString[i];
+			if (!createFontTexture(code)) {
+				return false;
+			}
+		} else {
+			code = (BYTE)mString[i] << 8 | (BYTE)mString[i + 1];
+			if (!createFontTexture(code)) {
+				return false;
+			}
+			i++;
+			str++;
+		}
+		str++;		
 	}
 #endif
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// フォントテクスチャーを作成する
+/// @param aCode 文字のコード
+/// @return 結果 成功(true)
+bool FontRenderer::createFontTexture(const UINT& aCode)
+{
 	// フォントビットマップ取得
 	const auto hdc = FontLoader::getInst()->hdc(mFontName);
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc, &tm);
 	GLYPHMETRICS gm;
-	CONST MAT2 Mat = { {0,1}, {0,0}, {0,0}, {0,1} };
-	DWORD size = GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, 0, NULL, &Mat);
-	BYTE* ptr = new BYTE[size];
-	GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, size, ptr, &Mat);
+	CONST MAT2 mat = { {0,1}, {0,0}, {0,0}, {0,1} };
+	DWORD size = GetGlyphOutline(hdc, aCode, GGO_GRAY4_BITMAP, &gm, 0, NULL, &mat);
+	BYTE* pMono = new BYTE[size];
+	GetGlyphOutline(hdc, aCode, GGO_GRAY4_BITMAP, &gm, size, pMono, &mat);
 
 	// テクスチャ作成
 	D3D11_TEXTURE2D_DESC desc;
@@ -192,13 +222,13 @@ bool FontRenderer::cretaeTexture()
 	memset(pBits, 0, hMappedResource.RowPitch * tm.tmHeight);
 	for (y = iOfsY; y < iOfsY + iBmpH; y++) {
 		for (x = iOfsX; x < iOfsX + iBmpW; x++) {
-			alpha = (255 * ptr[x - iOfsX + iBmpW * (y - iOfsY)]) / grad;
+			alpha = (255 * pMono[x - iOfsX + iBmpW * (y - iOfsY)]) / grad;
 			col = 0x00ffffff | (alpha << 24);
 			memcpy((BYTE*)pBits + hMappedResource.RowPitch * y + 4 * x, &col, sizeof(DWORD));
 		}
 	}
 	context->Unmap(tex2D, 0);
-	delete[] ptr;
+	delete[] pMono;
 
 	// ShaderResourceViewの情報を作成する
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
@@ -215,6 +245,11 @@ bool FontRenderer::cretaeTexture()
 	}
 	hr = device->CreateShaderResourceView(tex2D, &srvDesc, &mTexture);
 	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 頂点バッファを作成する
+	if (!createVertexBuffer()) {
 		return false;
 	}
 
@@ -273,7 +308,6 @@ bool FontRenderer::createVertexBuffer()
 
 //-------------------------------------------------------------------------------------------------
 /// メッシュ作成
-/// @param aFileName ファイルパス
 /// @param aVertexes 頂点データ
 void FontRenderer::createMesh(FontVertex* aVertexes)
 {
@@ -284,14 +318,13 @@ void FontRenderer::createMesh(FontVertex* aVertexes)
 	res->QueryInterface(&tex2D);
 	D3D11_TEXTURE2D_DESC desc;
 	tex2D->GetDesc(&desc);
-
-	float width = (float)desc.Width / 2;
-	float height = (float)desc.Height / 2;
-
 	res->Release();
 	res = nullptr;
 	tex2D->Release();
 	tex2D = nullptr;
+
+	float width = (float)desc.Width / 4;
+	float height = (float)desc.Height / 4;
 
 	// 表面
 	{

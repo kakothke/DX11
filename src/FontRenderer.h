@@ -29,14 +29,15 @@ public:
 	//@{
 	void draw(
 		const LPCTSTR aString,
-		const DirectX::XMFLOAT3X3& aTransform = { 0,0,0,0,0,0,1,1,1 },
-		const LPCTSTR aFontName = NULL);
+		const DirectX::XMFLOAT3X3& aTransform = { 0,0,0,0,0,0,1,1,1 });
 	//@}
 
 	/// @name 描画設定
 	//@{
 	/// シェーダーを設定する
 	void setShaderData(const char* const aShaderFileName);
+	/// フォントを変更する
+	void setFont(const LPCTSTR aFontName);
 	/// カラーを設定する 
 	void setColor(const DirectX::XMFLOAT4& aColor);
 	/// 描画中心位置を設定する
@@ -50,6 +51,7 @@ private:
 	//@{
 	/// ビットマップ作成
 	bool cretaeTexture();
+	bool createFontTexture(const UINT& aCode);
 	bool createVertexBuffer();
 	void createMesh(FontVertex* aVertexes);
 	//@}
