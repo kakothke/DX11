@@ -37,7 +37,7 @@ public:
 	/// @name 描画設定
 	//@{
 	/// シェーダーを設定する
-	void setShader(const ShaderData* aShaderData);
+	void setShader(const ShaderLoader::ShaderData* aShaderData);
 	/// テクスチャーをセットする
 	void setTexture(ID3D11ShaderResourceView* aTexture);
 	/// Zバッファを有効化する

@@ -25,10 +25,8 @@ Cube::Cube(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Cube::initialize()
 {
-	mRenderer.setObjAndShaderData(
-		ResourceFileName::OBJ.at(OBJList::Cube),
-		ResourceFileName::Shader.at(ShaderList::Standard)
-	);
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Cube));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 }
 
 //-------------------------------------------------------------------------------------------------

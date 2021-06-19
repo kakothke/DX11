@@ -26,10 +26,28 @@ ShaderLoader::~ShaderLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
+ShaderLoader::ShaderData::~ShaderData()
+{
+	if (vs) {
+		vs->Release();
+		vs = nullptr;
+	}
+	if (ps) {
+		ps->Release();
+		ps = nullptr;
+	}
+	if (inputLayout) {
+		inputLayout->Release();
+		inputLayout = nullptr;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 /// シェーダーを読み込む
 /// @param aFileName 読み込みたいシェーダーのファイルパス
 /// @return 結果 成功(true)
-bool ShaderLoader::load(const char* const aFileName)
+bool ShaderLoader::load(const LPCSTR aFileName)
 {
 	if (mShaderData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("シェーダーファイルの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -59,7 +77,7 @@ bool ShaderLoader::load(const char* const aFileName)
 /// シェーダーデータを取得する
 /// @param aFileName 取得したいシェーダーのファイルパス
 /// @return シェーダーデータ
-ShaderData* ShaderLoader::getShaderData(const char* const aFileName)
+ShaderLoader::ShaderData* ShaderLoader::getShaderData(const LPCSTR aFileName)
 {
 	if (!mShaderData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないシェーダーデータを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -72,7 +90,7 @@ ShaderData* ShaderLoader::getShaderData(const char* const aFileName)
 /// 頂点シェーダーを作成する
 /// @param aFileName 読み込みたいシェーダーのファイルパス
 /// @return 作成結果 成功(true)
-bool ShaderLoader::createVertexShader(const char* const aFileName)
+bool ShaderLoader::createVertexShader(const LPCSTR aFileName)
 {
 	ID3DBlob* blob = nullptr;
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
@@ -99,7 +117,7 @@ bool ShaderLoader::createVertexShader(const char* const aFileName)
 /// 入力レイアウトを作成する
 /// @param aFileName 読み込みたいシェーダーのファイルパス
 /// @return 作成結果 成功(true)
-bool ShaderLoader::createInputLayout(const char* const aFileName)
+bool ShaderLoader::createInputLayout(const LPCSTR aFileName)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring fileName = cv.from_bytes(aFileName);
@@ -216,7 +234,7 @@ DXGI_FORMAT ShaderLoader::getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDes
 /// ピクセルシェーダーを作成する
 /// @param aFileName 読み込みたいシェーダーのファイルパス
 /// @return 作成結果 成功(true)
-bool ShaderLoader::createPixelShader(const char* const aFileName)
+bool ShaderLoader::createPixelShader(const LPCSTR aFileName)
 {
 	ID3DBlob* blob = nullptr;
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;

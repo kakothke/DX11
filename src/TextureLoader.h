@@ -21,16 +21,16 @@ public:
 
 	/// @name シェーダーを作成する
 	//@{
-	bool load(const char* const aFileName);
-	void release(const char* const aFileName);
+	bool load(const LPCSTR aFileName);
+	void release(const LPCSTR aFileName);
 	//@}
 
 	/// @name アクセサ
 	//@{
 	/// テクスチャーを取得する
-	ID3D11ShaderResourceView* getTexture(const char* const aFileName);
+	ID3D11ShaderResourceView* getTexture(const LPCSTR aFileName) const;
 	/// テクスチャーのサイズを取得する
-	const DirectX::XMFLOAT2 getTextureSize(const char* const aFileName);
+	const DirectX::XMFLOAT2 getTextureSize(const LPCSTR aFileName) const;
 	//@}
 
 private:

@@ -9,13 +9,7 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 頂点データ構造体
-struct FontVertex
-{
-	float pos[3] = {};
-	float uv[2] = {};
-};
-
+/// フォント描画
 class FontRenderer
 {
 public:
@@ -35,7 +29,7 @@ public:
 	/// @name 描画設定
 	//@{
 	/// シェーダーを設定する
-	void setShaderData(const char* const aShaderFileName);
+	void setShader(const LPCSTR aFileName);
 	/// フォントを変更する
 	void setFont(const LPCTSTR aFontName);
 	/// カラーを設定する 
@@ -47,6 +41,16 @@ public:
 	//@}
 
 private:
+	/// @name 内部構造体
+	//@{
+	/// 頂点データ構造体
+	struct FontVertex
+	{
+		float pos[3] = {};
+		float uv[2] = {};
+	};
+	//@}
+
 	/// @name 内部実装
 	//@{
 	/// ビットマップ作成
@@ -67,7 +71,7 @@ private:
 	/// テクスチャー
 	ID3D11ShaderResourceView* mTexture;
 	/// シェーダーデータ
-	ShaderData* mShaderData;
+	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
 	DirectX::XMFLOAT4 mColor;
 	/// 描画中心位置

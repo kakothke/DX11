@@ -25,10 +25,8 @@ TestObj::TestObj(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void TestObj::initialize()
 {
-	mRenderer.setObjAndShaderData(
-		ResourceFileName::OBJ.at(OBJList::Test),
-		ResourceFileName::Shader.at(ShaderList::Standard)
-	);
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Test));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 	mTransform.pos.y = -2;
 }
 

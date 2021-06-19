@@ -42,7 +42,7 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	d3D11->setShader(mShaderData);
 
 	int cnt = 0;
-	UINT strides = sizeof(OBJVertex);
+	UINT strides = sizeof(OBJLoader::OBJVertex);
 	UINT offsets = 0;
 
 	for (auto index : mOBJData->indexes) {
@@ -72,14 +72,20 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// OBJとシェーダーを設定する
-/// @param aOBJFileName OBJファイルパス
-/// @param aShaderFileName シェーダーファイルパス
-void OBJRenderer::setObjAndShaderData(const char* const aOBJFileName, const char* const aShaderFileName)
+/// OBJを設定する
+/// @param aFileName ファイルパス
+void OBJRenderer::setOBJ(const LPCSTR aFileName)
 {
-	const auto obj = OBJLoader::getInst()->getOBJData(aOBJFileName);
+	const auto obj = OBJLoader::getInst()->getOBJData(aFileName);
 	mOBJData = obj;
-	const auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// シェーダーを設定する
+/// @param aFileName ファイルパス
+void OBJRenderer::setShader(const LPCSTR aFileName)
+{
+	const auto shader = ShaderLoader::getInst()->getShaderData(aFileName);
 	mShaderData = shader;
 }
 

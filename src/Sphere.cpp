@@ -25,10 +25,8 @@ Sphere::Sphere(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void Sphere::initialize()
 {
-	mRenderer.setObjAndShaderData(
-		ResourceFileName::OBJ.at(OBJList::Sphere),
-		ResourceFileName::Shader.at(ShaderList::Standard)
-	);
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Sphere));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 }
 
 //-------------------------------------------------------------------------------------------------

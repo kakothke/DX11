@@ -46,7 +46,7 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	// シェーダーの指定
 	d3D11->setShader(mShaderData);
 
-	UINT strides = sizeof(SpriteVertex);
+	UINT strides = sizeof(SpriteLoader::SpriteVertex);
 	UINT offsets = 0;
 
 	// IAに設定する頂点バッファの指定
@@ -65,16 +65,20 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// スプライトとシェーダーを設定する
-/// @param aSpriteFileName スプライトのファイルパス
-/// @param aShaderFileName シェーダーのファイルパス
-void SpriteRenderer::setSpriteAndShaderData(
-	const char* const aSpriteFileName,
-	const char* const aShaderFileName)
+/// スプライトを設定する
+/// @param aFileName ファイルパス
+void SpriteRenderer::setSprite(const LPCSTR aFileName)
 {
-	const auto sprite = SpriteLoader::getInst()->getSpriteData(aSpriteFileName);
+	const auto sprite = SpriteLoader::getInst()->getSpriteData(aFileName);
 	mSpriteData = sprite;
-	const auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// シェーダーを設定する
+/// @param aFileName ファイルパス
+void SpriteRenderer::setShader(const LPCSTR aFileName)
+{
+	const auto shader = ShaderLoader::getInst()->getShaderData(aFileName);
 	mShaderData = shader;
 }
 

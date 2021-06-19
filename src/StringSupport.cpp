@@ -1,4 +1,6 @@
 #pragma once
+
+//-------------------------------------------------------------------------------------------------
 #include "StringSupport.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -17,7 +19,7 @@ std::vector<std::string> StringSupport::split(const std::string& aStr, const cha
     std::vector<std::string> v;
     std::istringstream iss(aStr);
     std::string buf;
-
+    
     while (getline(iss, buf, aDelim)) {
         v.push_back(buf);
     }

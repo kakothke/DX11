@@ -24,10 +24,20 @@ SpriteLoader::~SpriteLoader()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
+SpriteLoader::SpriteData::~SpriteData()
+{
+	if (vertexBuffer) {
+		vertexBuffer->Release();
+		vertexBuffer = nullptr;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 /// スプライトを読み込む
 /// @param aFileName ファイルパス
 /// @return 結果 成功（true）
-bool SpriteLoader::load(const char* const aFileName)
+bool SpriteLoader::load(const LPCSTR aFileName)
 {
 	if (mSpriteData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("スプライトの二重読み込み。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -54,7 +64,7 @@ bool SpriteLoader::load(const char* const aFileName)
 //-------------------------------------------------------------------------------------------------
 /// 破棄
 /// @param aFileName ファイルパス
-void SpriteLoader::release(const char* const aFileName)
+void SpriteLoader::release(const LPCSTR aFileName)
 {
 	if (!mSpriteData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないスプライトを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -66,7 +76,7 @@ void SpriteLoader::release(const char* const aFileName)
 /// スプライトデータを取得する
 /// @param aFileName ファイルパス
 /// @return スプライトデータ
-SpriteData* SpriteLoader::getSpriteData(const char* const aFileName)
+SpriteLoader::SpriteData* SpriteLoader::getSpriteData(const LPCSTR aFileName)
 {
 	if (!mSpriteData.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないスプライトを取得しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -79,7 +89,7 @@ SpriteData* SpriteLoader::getSpriteData(const char* const aFileName)
 /// 頂点バッファを作成する
 /// @param aFileName ファイルパス
 /// @return 作成結果 成功(true)
-bool SpriteLoader::createVertexBuffer(const char* const aFileName)
+bool SpriteLoader::createVertexBuffer(const LPCSTR aFileName)
 {
 	SpriteVertex vertexes[4];
 	createMesh(aFileName, vertexes);
@@ -126,7 +136,7 @@ bool SpriteLoader::createVertexBuffer(const char* const aFileName)
 /// メッシュを作成する
 /// @param aFileName ファイルパス
 /// @param aVertexes 頂点データ
-void SpriteLoader::createMesh(const char* const aFileName, SpriteVertex* aVertexes)
+void SpriteLoader::createMesh(const LPCSTR aFileName, SpriteVertex* aVertexes)
 {
 	// テクスチャーのサイズを参照
 	const auto texture = TextureLoader::getInst();

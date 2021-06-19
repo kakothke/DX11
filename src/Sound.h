@@ -26,7 +26,7 @@ public:
 
 	/// @name 読み込み/破棄
 	//@{
-	int load(const char* const aFileName);
+	int load(const LPCSTR aFileName);
 	void release(const int& aHandle);
 	//@}
 
@@ -42,8 +42,6 @@ public:
 	void pause(const int& aHandle);
 	/// ボリュームを設定する
 	void setVolume(const int& aHandle, float aVolume);
-	/// パンを設定する
-	void setPan(const int& aHandle, float aPan);
 	/// ループの設定をする
 	void setLoop(const int& aHandle, const bool& aLoopFlag = true, const int& aLoopCount = 0);
 	/// ループの位置の設定をする
@@ -58,12 +56,12 @@ private:
 	/// @name 内部実装
 	//@{
 	/// Waveファイルを読み込む
-	bool loadWaveFile(const char* const aFileName, const int& aHandle);
+	bool loadWaveFile(const LPCSTR aFileName, const int& aHandle);
 	//@}
 
 	/// @name 内部構造体
 	//@{
-	/// サウンドソース
+	/// メインソース構造体
 	struct SrcData
 	{
 		/// ソースボイス
@@ -74,14 +72,8 @@ private:
 		WAVEFORMATEX* wavFmtEx;
 		/// Waveバッファー
 		BYTE* wavBuffer;
-	};
-	/// 多重再生用ソース
-	struct OneShotSrcData
-	{
-		/// ソースボイス
-		IXAudio2SourceVoice* srcVoice;
-		/// 管理番号
-		int handle;
+		/// デストラクタ
+		~SrcData();
 	};
 	//@}
 
@@ -91,10 +83,10 @@ private:
 	IXAudio2* mXAudio2;
 	/// マスタリングボイス
 	IXAudio2MasteringVoice* mMasteringVoice;
-	/// サウンドソース
-	std::unordered_map<int, SrcData> mSrc;
+	/// メインソース
+	std::unordered_map<int, SrcData> mMainSrc;
 	/// 多重再生用ソース
-	std::vector<OneShotSrcData> mOneShotSrc;
+	std::unordered_map<int, std::vector<IXAudio2SourceVoice*>> mSubSrc;
 	/// 管理番号用ハンドル
 	Handle mHandle;
 	//@}

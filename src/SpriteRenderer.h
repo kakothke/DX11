@@ -26,10 +26,10 @@ public:
 
 	/// @name 描画設定
 	//@{
-	/// スプライトとシェーダーを設定する
-	void setSpriteAndShaderData(
-		const char* const aSpriteFileName,
-		const char* const aShaderFileName);
+	/// スプライトを設定する
+	void setSprite(const LPCSTR aFileName);
+	/// シェーダーを設定する
+	void setShader(const LPCSTR aFileName);
 	/// カラーを設定する 
 	void setColor(DirectX::XMFLOAT4& aColor);
 	/// 描画原点を設定する
@@ -44,9 +44,9 @@ private:
 	/// プライベートメンバ変数
 	//@{
 	/// スプライトデータ
-	SpriteData* mSpriteData;
+	SpriteLoader::SpriteData* mSpriteData;
 	/// シェーダーデータ
-	ShaderData* mShaderData;
+	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
 	DirectX::XMFLOAT4 mColor;
 	/// 描画中心位置

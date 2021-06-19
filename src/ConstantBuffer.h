@@ -88,7 +88,7 @@ public:
 	/// カラー
 	void updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::XMFLOAT4& aCol1);
 	/// OBJマテリアル
-	void updateMaterial(const OBJMaterial& aMaterial);
+	void updateMaterial(const OBJLoader::OBJMaterial& aMaterial);
 	//@}
 
 private:

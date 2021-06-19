@@ -13,7 +13,7 @@ TestScene::TestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mTestSprite({ Vector3(100,100,0),Vector3(),Vector3(0.25f) })
 , mT2({ Vector3(0,0,0),Vector3(),Vector3(0.5f) })
 {
-	mFont.setShaderData(ResourceFileName::Shader.at(ShaderList::Sprite));
+	mFont.setShader(ResourceFileName::Shader.at(ShaderList::Sprite));
 	mFont.setFont(TEXT("あんずもじ湛"));
 	// テストサウンド
 	const auto sound = Sound::getInst();

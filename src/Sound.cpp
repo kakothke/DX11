@@ -11,38 +11,26 @@ namespace KDXK {
 Sound::Sound()
 	: mXAudio2(nullptr)
 	, mMasteringVoice(nullptr)
-	, mSrc()
-	, mOneShotSrc()
+	, mMainSrc()
+	, mSubSrc()
 	, mHandle()
 {
-	mSrc.clear();
-	mOneShotSrc.clear();
+	mMainSrc.clear();
+	mSubSrc.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
 Sound::~Sound()
 {
-	for (auto src : mOneShotSrc) {
-		src.srcVoice->DestroyVoice();
-		src.srcVoice = nullptr;
-	}
-	mOneShotSrc.clear();
-	for (auto src : mSrc) {
-		if (src.second.srcVoice) {
-			src.second.srcVoice->DestroyVoice();
-			src.second.srcVoice = nullptr;
-		}
-		if (src.second.wavFmtEx) {
-			delete src.second.wavFmtEx;
-			src.second.wavFmtEx = nullptr;
-		}
-		if (src.second.wavBuffer) {
-			delete src.second.wavBuffer;
-			src.second.wavBuffer = nullptr;
+	for (auto sub : mSubSrc) {
+		for (auto src : sub.second) {
+			src->DestroyVoice();
+			src = nullptr;
 		}
 	}
-	mSrc.clear();
+	mSubSrc.clear();
+	mMainSrc.clear();
 	if (mMasteringVoice) {
 		mMasteringVoice->DestroyVoice();
 		mMasteringVoice = nullptr;
@@ -52,6 +40,24 @@ Sound::~Sound()
 		mXAudio2 = nullptr;
 	}
 	CoUninitialize();
+}
+
+//-------------------------------------------------------------------------------------------------
+/// デストラクタ
+Sound::SrcData::~SrcData()
+{
+	if (srcVoice) {
+		srcVoice->DestroyVoice();
+		srcVoice = nullptr;
+	}
+	if (wavFmtEx) {
+		delete wavFmtEx;
+		wavFmtEx = nullptr;
+	}
+	if (wavBuffer) {
+		delete wavBuffer;
+		wavBuffer = nullptr;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -90,7 +96,7 @@ bool Sound::initialize()
 /// @brief 現在はwavファイルのみ対応。後々oggも読み込めるようにしたい
 /// @param aFileName 読み込みたいファイルのパス
 /// @return 読み込み失敗（-1）/ 成功（管理番号）
-int Sound::load(const char* const aFileName)
+int Sound::load(const LPCSTR aFileName)
 {
 	// エラーチェック
 	if (!mXAudio2) {
@@ -113,32 +119,20 @@ int Sound::load(const char* const aFileName)
 void Sound::release(const int& aHandle)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
 
+	// ハンドル破棄
 	mHandle.release(aHandle);
-	mSrc[aHandle].srcVoice->DestroyVoice();
-	mSrc[aHandle].srcVoice = nullptr;
-	mSrc.erase(aHandle);
 
-	auto itr = mOneShotSrc.begin();
-	while (itr != mOneShotSrc.end()) {
-		auto src = *(itr);
-		if (src.handle == aHandle) {
-			XAUDIO2_VOICE_STATE state;
-			src.srcVoice->GetState(&state);
-			if (state.BuffersQueued == 0) {
-				src.srcVoice->DestroyVoice();
-				src.srcVoice = nullptr;
-				itr = mOneShotSrc.erase(itr);
-			} else {
-				itr++;
-			}
-		} else {
-			itr++;
-		}
+	// ソース破棄
+	mMainSrc.erase(aHandle);
+	for (auto src : mSubSrc[aHandle]) {
+		src->DestroyVoice();
+		src = nullptr;
 	}
+	mSubSrc.erase(aHandle);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -148,18 +142,18 @@ void Sound::release(const int& aHandle)
 void Sound::play(const int& aHandle)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
 
 	XAUDIO2_VOICE_STATE state;
-	mSrc[aHandle].srcVoice->GetState(&state);
+	mMainSrc[aHandle].srcVoice->GetState(&state);
 	// キューにバッファーを追加
 	if (state.BuffersQueued == 0) {
-		mSrc[aHandle].srcVoice->SubmitSourceBuffer(&mSrc[aHandle].buffer);
+		mMainSrc[aHandle].srcVoice->SubmitSourceBuffer(&mMainSrc[aHandle].buffer);
 	}
 	// 再生
-	mSrc[aHandle].srcVoice->Start();
+	mMainSrc[aHandle].srcVoice->Start();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -170,44 +164,44 @@ void Sound::play(const int& aHandle)
 void Sound::playOneShot(const int& aHandle, const bool& aPlayPausingFlag)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
 
-	// 複製されたデータの中に既に終了している物があれば破棄する
-	auto itr = mOneShotSrc.begin();
-	while (itr != mOneShotSrc.end()) {
-		auto src = *(itr);
+	// 複製されたデータの状況を調べる
+	for (auto sub : mSubSrc) {
 		XAUDIO2_VOICE_STATE state;
-		src.srcVoice->GetState(&state);
-		if (state.BuffersQueued == 0) {
-			src.srcVoice->DestroyVoice();
-			src.srcVoice = nullptr;
-			itr = mOneShotSrc.erase(itr);
-		} else {
-			itr++;
+		auto itr = mSubSrc[sub.first].begin();
+		while (itr != mSubSrc[sub.first].end()) {
+			auto src = (*itr);
+			src->GetState(&state);
+			if (state.BuffersQueued == 0) {
+				// 再生終了していたら破棄
+				src->DestroyVoice();
+				src = nullptr;
+				itr = mSubSrc[sub.first].erase(itr);
+			} else {
+				itr++;
+			}
 		}
 	}
 
-	// ソースボイスを複製
 	if (!aPlayPausingFlag) {
-		// 複製
-		OneShotSrcData data;
-		data.handle = aHandle;
-		mXAudio2->CreateSourceVoice(&data.srcVoice, mSrc[aHandle].wavFmtEx);
-		mOneShotSrc.emplace_back(data);
-		data.srcVoice->SubmitSourceBuffer(&mSrc[aHandle].buffer);
+		// ソースボイスを複製する
+		IXAudio2SourceVoice* src;
+		mXAudio2->CreateSourceVoice(&src, mMainSrc[aHandle].wavFmtEx);
+		src->SubmitSourceBuffer(&mMainSrc[aHandle].buffer);
 		// ボリュームをコピー
 		float volume;
-		mSrc[aHandle].srcVoice->GetVolume(&volume);
-		data.srcVoice->SetVolume(volume);
+		mMainSrc[aHandle].srcVoice->GetVolume(&volume);
+		src->SetVolume(volume);
+		// vectorに追加
+		mSubSrc[aHandle].emplace_back(src);
 	}
 
 	// 再生
-	for (auto src : mOneShotSrc) {
-		if (src.handle == aHandle) {
-			src.srcVoice->Start();
-		}
+	for (auto src : mSubSrc[aHandle]) {
+		src->Start();
 	}
 }
 
@@ -218,17 +212,15 @@ void Sound::playOneShot(const int& aHandle, const bool& aPlayPausingFlag)
 void Sound::stop(const int& aHandle)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
-	mSrc[aHandle].srcVoice->Stop(0, 0);
-	mSrc[aHandle].srcVoice->FlushSourceBuffers();
-	for (auto src : mOneShotSrc) {
-		if (src.handle == aHandle) {
-			src.srcVoice->Stop(0, 0);
-			src.srcVoice->FlushSourceBuffers();
-		}
+	// 停止
+	mMainSrc[aHandle].srcVoice->Stop(0, 0);
+	mMainSrc[aHandle].srcVoice->FlushSourceBuffers();
+	for (auto src : mSubSrc[aHandle]) {
+		src->Stop(0, 0);
+		src->FlushSourceBuffers();
 	}
 }
 
@@ -239,15 +231,13 @@ void Sound::stop(const int& aHandle)
 void Sound::pause(const int& aHandle)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
-	mSrc[aHandle].srcVoice->Stop(0, 0);
-	for (auto src : mOneShotSrc) {
-		if (src.handle == aHandle) {
-			src.srcVoice->Stop(0, 0);
-		}
+	// 一時停止
+	mMainSrc[aHandle].srcVoice->Stop(0, 0);
+	for (auto src : mSubSrc[aHandle]) {
+		src->Stop(0, 0);
 	}
 }
 
@@ -258,56 +248,20 @@ void Sound::pause(const int& aHandle)
 void Sound::setVolume(const int& aHandle, float aVolume)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
+	// ボリュームを変更する
 	aVolume = Math::Clamp(aVolume, 0.0f, 2.0f);
 	float nowVolume;
-	mSrc[aHandle].srcVoice->GetVolume(&nowVolume);
+	mMainSrc[aHandle].srcVoice->GetVolume(&nowVolume);
+
 	if (nowVolume != aVolume) {
-		mSrc[aHandle].srcVoice->SetVolume(aVolume);
-		for (auto src : mOneShotSrc) {
-			if (src.handle == aHandle) {
-				src.srcVoice->SetVolume(aVolume);
-			}
+		mMainSrc[aHandle].srcVoice->SetVolume(aVolume);
+		for (auto src : mSubSrc[aHandle]) {
+			src->SetVolume(aVolume);
 		}
 	}
-}
-
-//-------------------------------------------------------------------------------------------------
-/// パンを設定する（未完成）
-/// @param aHandle 変更したいサウンドの管理番号
-/// @param aPan 設定するパン（-1~1）
-void Sound::setPan(const int& aHandle, float aPan)
-{
-	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
-		return;
-	}
-
-	aPan = Math::Clamp(aPan, -1.0f, 1.0f);
-
-	XAUDIO2_VOICE_DETAILS details;
-	mSrc[aHandle].srcVoice->GetVoiceDetails(&details);
-	int inCh = details.InputChannels;
-	mMasteringVoice->GetVoiceDetails(&details);
-	int outCh = details.InputChannels;
-
-	float* volumes = new float[inCh];
-	for (int i = 0; i > inCh; i++) {
-
-	}
-
-	//mSrc[aHandle].srcVoice->SetOutputMatrix(NULL, inCh, outCh, volumes);
-	for (auto src : mOneShotSrc) {
-		if (src.handle == aHandle) {
-			//src.srcVoice->SetOutputMatrix(NULL, inCh, outCh, volumes);
-		}
-	}
-
-	delete volumes;
-	volumes = nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -318,26 +272,24 @@ void Sound::setPan(const int& aHandle, float aPan)
 void Sound::setLoop(const int& aHandle, const bool& aLoopFlag, const int& aLoopCount)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
+	// ループ設定
 	if (aLoopFlag) {
 		if (aLoopCount == 0) {
 			// 無限ループ
-			mSrc[aHandle].buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+			mMainSrc[aHandle].buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 		} else {
 			// 回数付きループ
-			mSrc[aHandle].buffer.LoopCount = aLoopCount;
+			mMainSrc[aHandle].buffer.LoopCount = aLoopCount;
 		}
-	} else if (mSrc[aHandle].buffer.LoopCount != 0) {
+	} else if (mMainSrc[aHandle].buffer.LoopCount != 0) {
 		// ループ解除
-		mSrc[aHandle].buffer.LoopCount = 0;
-		mSrc[aHandle].srcVoice->ExitLoop();
-		for (auto src : mOneShotSrc) {
-			if (src.handle == aHandle) {
-				src.srcVoice->ExitLoop();
-			}
+		mMainSrc[aHandle].buffer.LoopCount = 0;
+		mMainSrc[aHandle].srcVoice->ExitLoop();
+		for (auto src : mSubSrc[aHandle]) {
+			src->ExitLoop();
 		}
 	}
 }
@@ -350,15 +302,15 @@ void Sound::setLoop(const int& aHandle, const bool& aLoopFlag, const int& aLoopC
 void Sound::setLoopPos(const int& aHandle, const UINT32& aBeginPos, const UINT32& aEndPos)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
+	// ループ位置設定
 	if (aBeginPos != 0) {
-		mSrc[aHandle].buffer.LoopBegin = aBeginPos;
+		mMainSrc[aHandle].buffer.LoopBegin = aBeginPos;
 	}
 	if (aEndPos != 0 || aBeginPos < aEndPos) {
-		mSrc[aHandle].buffer.LoopLength = aEndPos - aBeginPos;
+		mMainSrc[aHandle].buffer.LoopLength = aEndPos - aBeginPos;
 	}
 }
 
@@ -369,11 +321,11 @@ void Sound::setLoopPos(const int& aHandle, const UINT32& aBeginPos, const UINT32
 void Sound::setBeginPos(const int& aHandle, const UINT32& aBeginPos)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return;
 	}
-
-	mSrc[aHandle].buffer.PlayBegin = aBeginPos;
+	// 再生開始位置設定
+	mMainSrc[aHandle].buffer.PlayBegin = aBeginPos;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -383,21 +335,19 @@ void Sound::setBeginPos(const int& aHandle, const UINT32& aBeginPos)
 bool Sound::checkIsPlaying(const int& aHandle)
 {
 	// エラーチェック
-	if (!mSrc.count(aHandle) || !mXAudio2) {
+	if (!mMainSrc.count(aHandle) || !mXAudio2) {
 		return false;
 	}
-
+	// 再生中か調べる
 	XAUDIO2_VOICE_STATE state;
-	mSrc[aHandle].srcVoice->GetState(&state);
+	mMainSrc[aHandle].srcVoice->GetState(&state);
 	if (state.BuffersQueued > 0) {
 		return true;
 	}
-	for (auto src : mOneShotSrc) {
-		if (src.handle == aHandle) {
-			src.srcVoice->GetState(&state);
-			if (state.BuffersQueued > 0) {
-				return true;
-			}
+	for (auto src : mSubSrc[aHandle]) {
+		src->GetState(&state);
+		if (state.BuffersQueued > 0) {
+			return true;
 		}
 	}
 	return false;
@@ -408,7 +358,7 @@ bool Sound::checkIsPlaying(const int& aHandle)
 /// @param aFileName ファイル名
 /// @param aHandle 管理番号
 /// @return 結果 成功（true）
-bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
+bool Sound::loadWaveFile(const LPCSTR aFileName, const int& aHandle)
 {
 	HMMIO hMmio = NULL;
 	DWORD wavSize = 0;
@@ -440,9 +390,9 @@ bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 
 	// フォーマットを読み込む
 	mmioRead(hMmio, (HPSTR)&pcmWavFmt, sizeof(pcmWavFmt));
-	mSrc[aHandle].wavFmtEx = (WAVEFORMATEX*)new CHAR[sizeof(WAVEFORMATEX)];
-	memcpy(mSrc[aHandle].wavFmtEx, &pcmWavFmt, sizeof(pcmWavFmt));
-	mSrc[aHandle].wavFmtEx->cbSize = 0;
+	mMainSrc[aHandle].wavFmtEx = (WAVEFORMATEX*)new CHAR[sizeof(WAVEFORMATEX)];
+	memcpy(mMainSrc[aHandle].wavFmtEx, &pcmWavFmt, sizeof(pcmWavFmt));
+	mMainSrc[aHandle].wavFmtEx->cbSize = 0;
 	mmr = mmioAscend(hMmio, &ckInfo, 0);
 	if (mmr != MMSYSERR_NOERROR) {
 		mmioClose(hMmio, MMIO_FHOPEN);
@@ -459,18 +409,18 @@ bool Sound::loadWaveFile(const char* const aFileName, const int& aHandle)
 	wavSize = ckInfo.cksize;
 
 	// ソースボイス作成
-	HRESULT hr = mXAudio2->CreateSourceVoice(&mSrc[aHandle].srcVoice, mSrc[aHandle].wavFmtEx);
+	HRESULT hr = mXAudio2->CreateSourceVoice(&mMainSrc[aHandle].srcVoice, mMainSrc[aHandle].wavFmtEx);
 	if (FAILED(hr)) {
 		mmioClose(hMmio, MMIO_FHOPEN);
 		return false;
 	}
 
 	// バッファーの設定
-	mSrc[aHandle].wavBuffer = new BYTE[wavSize];
-	mmioRead(hMmio, (HPSTR)mSrc[aHandle].wavBuffer, wavSize);
-	mSrc[aHandle].buffer.pAudioData = mSrc[aHandle].wavBuffer;
-	mSrc[aHandle].buffer.Flags = XAUDIO2_END_OF_STREAM;
-	mSrc[aHandle].buffer.AudioBytes = wavSize;
+	mMainSrc[aHandle].wavBuffer = new BYTE[wavSize];
+	mmioRead(hMmio, (HPSTR)mMainSrc[aHandle].wavBuffer, wavSize);
+	mMainSrc[aHandle].buffer.pAudioData = mMainSrc[aHandle].wavBuffer;
+	mMainSrc[aHandle].buffer.Flags = XAUDIO2_END_OF_STREAM;
+	mMainSrc[aHandle].buffer.AudioBytes = wavSize;
 
 	// 閉じる
 	mmioClose(hMmio, MMIO_FHOPEN);

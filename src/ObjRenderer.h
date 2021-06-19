@@ -24,18 +24,21 @@ public:
 	void render(const DirectX::XMFLOAT3X3& aTransform);
 	//@}
 
-	/// @name OBJとシェーダーを設定する
+	/// @name 描画設定
 	//@{
-	void setObjAndShaderData(const char* aOBJFileName, const char* aShaderFileName);
+	/// OBJを設定する
+	void setOBJ(const LPCSTR aFileName);
+	/// シェーダーを設定する
+	void setShader(const LPCSTR aFileName);
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// OBJデータ
-	OBJData* mOBJData;
+	OBJLoader::OBJData* mOBJData;
 	/// シェーダーデータ
-	ShaderData* mShaderData;
+	ShaderLoader::ShaderData* mShaderData;
 	//@}
 
 };

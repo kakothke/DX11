@@ -84,10 +84,10 @@ void FontRenderer::draw(const LPCTSTR aString, const DirectX::XMFLOAT3X3& aTrans
 
 //-------------------------------------------------------------------------------------------------
 /// シェーダーを設定する
-/// @param aShaderFileName シェーダーのファイルパス
-void FontRenderer::setShaderData(const char* const aShaderFileName)
+/// @param aFileName シェーダーのファイルパス
+void FontRenderer::setShader(const LPCSTR aFileName)
 {
-	const auto shader = ShaderLoader::getInst()->getShaderData(aShaderFileName);
+	const auto shader = ShaderLoader::getInst()->getShaderData(aFileName);
 	mShaderData = shader;
 }
 

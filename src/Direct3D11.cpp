@@ -131,7 +131,7 @@ void Direct3D11::drawEnd()
 //-------------------------------------------------------------------------------------------------
 /// シェーダーを設定する
 /// @param aShaderData シェーダーデータ
-void Direct3D11::setShader(const ShaderData* aShaderData)
+void Direct3D11::setShader(const ShaderLoader::ShaderData* aShaderData)
 {
 	// VertexShaderを設定
 	mContext->VSSetShader(

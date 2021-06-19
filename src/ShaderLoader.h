@@ -12,29 +12,6 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// シェーダー構造体
-struct ShaderData
-{
-	ID3D11VertexShader* vs;
-	ID3D11PixelShader* ps;
-	ID3D11InputLayout* inputLayout;
-	~ShaderData()
-	{
-		if (vs) {
-			vs->Release();
-			vs = nullptr;
-		}
-		if (ps) {
-			ps->Release();
-			ps = nullptr;
-		}
-		if (inputLayout) {
-			inputLayout->Release();
-			inputLayout = nullptr;
-		}
-	}
-};
-
 /// シェーダーデータ読み込みクラス
 class ShaderLoader : public Singleton<ShaderLoader>
 {
@@ -47,32 +24,48 @@ public:
 
 	/// @name シェーダーを読み込む
 	//@{
-	bool load(const char* const aFileName);
+	bool load(const LPCSTR aFileName);
+	//@}
+
+	/// @name 構造体
+	//@{
+	/// シェーダー構造体
+	struct ShaderData
+	{
+		/// 頂点シェーダー
+		ID3D11VertexShader* vs;
+		/// ピクセルシェーダー
+		ID3D11PixelShader* ps;
+		/// 入力レイアウト
+		ID3D11InputLayout* inputLayout;
+		/// デストラクタ
+		~ShaderData();
+	};
 	//@}
 
 	/// @name アクセサ
 	//@{
 	/// シェーダーデータを取得する
-	ShaderData* getShaderData(const char* const aFileName);
+	ShaderData* getShaderData(const LPCSTR aFileName);
 	//@}
 
 private:
 	/// @name 内部実装
 	//@{
 	/// 頂点シェーダーを作成する
-	bool createVertexShader(const char* const aFileName);
+	bool createVertexShader(const LPCSTR aFileName);
 	/// 入力レイアウトを作成する
-	bool createInputLayout(const char* const aFileName);
+	bool createInputLayout(const LPCSTR aFileName);
 	/// リフレクション内のDXGIFormatを検索する
 	DXGI_FORMAT getDxgiFormat(D3D11_SIGNATURE_PARAMETER_DESC aParamDesc);
 	/// ピクセルシェーダーを作成する
-	bool createPixelShader(const char* const aFileName);
+	bool createPixelShader(const LPCSTR aFileName);
 	//@}
 
 	/// @name プライベートメンバ変数
 	//@{
 	/// シェーダー構造体
-	std::unordered_map<const char*, ShaderData> mShaderData;
+	std::unordered_map<LPCSTR, ShaderData> mShaderData;
 	//@}
 
 };

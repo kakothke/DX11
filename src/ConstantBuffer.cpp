@@ -238,7 +238,7 @@ void ConstantBuffer::updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::
 
 //-------------------------------------------------------------------------------------------------
 /// マテリアル情報を更新する
-void ConstantBuffer::updateMaterial(const OBJMaterial& aMaterial)
+void ConstantBuffer::updateMaterial(const OBJLoader::OBJMaterial& aMaterial)
 {
 	// アンビエント
 	mMATERIAL.A = DirectX::XMFLOAT4(

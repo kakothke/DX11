@@ -25,10 +25,8 @@ TestSky::TestSky(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void TestSky::initialize()
 {
-	mRenderer.setObjAndShaderData(
-		ResourceFileName::OBJ.at(OBJList::SkyBox),
-		ResourceFileName::Shader.at(ShaderList::SkyBox)
-	);
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::SkyBox));
 }
 
 //-------------------------------------------------------------------------------------------------

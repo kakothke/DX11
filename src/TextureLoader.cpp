@@ -31,7 +31,7 @@ TextureLoader::~TextureLoader()
 /// テクスチャを作成する
 /// @param aFileName ファイルパス
 /// @return 結果 成功(true)
-bool TextureLoader::load(const char* const aFileName)
+bool TextureLoader::load(const LPCSTR aFileName)
 {
 	if (mTexture.count(aFileName)) {
 		// テクスチャーは二重読み込みのエラー告知をしない
@@ -55,7 +55,7 @@ bool TextureLoader::load(const char* const aFileName)
 //-------------------------------------------------------------------------------------------------
 /// 破棄
 /// @param aFileName ファイルパス
-void TextureLoader::release(const char* const aFileName)
+void TextureLoader::release(const LPCSTR aFileName)
 {
 	if (!mTexture.count(aFileName)) {
 		MessageBox(nullptr, TEXT("存在しないテクスチャーを破棄しようとしています。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
@@ -70,18 +70,18 @@ void TextureLoader::release(const char* const aFileName)
 /// テクスチャーを取得する
 /// @param aFileName ファイルパス
 /// @return テクスチャー
-ID3D11ShaderResourceView* TextureLoader::getTexture(const char* const aFileName)
+ID3D11ShaderResourceView* TextureLoader::getTexture(const LPCSTR aFileName) const
 {
 	if (!mTexture.count(aFileName)) {
 		// 描画時に毎フレーム呼ばれる処理なのでエラー告知はしない
 		return nullptr;
 	}
-	return mTexture[aFileName];
+	return mTexture.at(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// テクスチャーのサイズを取得する
-const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const char* const aFileName)
+const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const LPCSTR aFileName) const
 {
 	if (!mTexture.count(aFileName)) {
 		return {
@@ -93,7 +93,7 @@ const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const char* const aFileNam
 	ID3D11Resource* res = nullptr;
 	ID3D11Texture2D* tex2D = nullptr;
 	D3D11_TEXTURE2D_DESC desc = {};
-	mTexture[aFileName]->GetResource(&res);
+	mTexture.at(aFileName)->GetResource(&res);
 	res->QueryInterface(&tex2D);
 	tex2D->GetDesc(&desc);
 	res->Release();

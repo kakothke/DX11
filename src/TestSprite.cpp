@@ -25,10 +25,8 @@ TestSprite::TestSprite(Transform aTransform)
 /// ‰Šú‰»ˆ—
 void TestSprite::initialize()
 {
-	mRenderer.setSpriteAndShaderData(
-		ResourceFileName::Sprite.at(SpriteList::Test),
-		ResourceFileName::Shader.at(ShaderList::Sprite)
-	);
+	mRenderer.setSprite(ResourceFileName::Sprite.at(SpriteList::Test));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Sprite));
 	mRenderer.setAnchor(-1, -1);
 	mRenderer.setPivot(-1, -1);
 }
@@ -37,8 +35,6 @@ void TestSprite::initialize()
 /// XV
 void TestSprite::update()
 {
-	//mTransform.pos.x += 1;
-	//mTransform.pos.y += 1;
 	mTransform.rot += 0.01f;
 }
 
