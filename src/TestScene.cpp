@@ -52,6 +52,9 @@ void TestScene::draw2D()
 {
 	mT2.draw();
 	mTestSprite.draw();
+	static Transform font(Vector3(0, -200, 0), Vector3(0), Vector3(1));
+	//font.rot.y += 0.05f;
+	mFont.draw(TEXT("‚¨‚â‚·‚Ý‚È‚³‚¢"), font.XMFLOAT3X3());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -59,7 +62,6 @@ void TestScene::draw2D()
 void TestScene::drawBackground()
 {
 	mTestSky.draw();
-	mFont.draw(TEXT("‰F’ˆ"), { 0, -200, 0, 0, 0, 0, 1, 1, 1 });
 }
 
 } // namespace

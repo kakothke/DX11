@@ -49,7 +49,7 @@ private:
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
 	DirectX::XMFLOAT4 mColor;
-	/// 描画中心位置
+	/// 描画原点
 	DirectX::XMFLOAT2 mPivot;
 	/// 描画開始位置
 	DirectX::XMFLOAT2 mAnchor;

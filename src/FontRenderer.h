@@ -23,7 +23,7 @@ public:
 	//@{
 	void draw(
 		const LPCTSTR aString,
-		const DirectX::XMFLOAT3X3& aTransform = { 0,0,0,0,0,0,1,1,1 });
+		DirectX::XMFLOAT3X3 aTransform = { 0,0,0,0,0,0,1,1,1 });
 	//@}
 
 	/// @name 描画設定
@@ -33,11 +33,11 @@ public:
 	/// フォントを変更する
 	void setFont(const LPCTSTR aFontName);
 	/// カラーを設定する 
-	void setColor(const DirectX::XMFLOAT4& aColor);
-	/// 描画中心位置を設定する
-	void setPivot(const DirectX::XMFLOAT2& aPivot);
+	void setColor(DirectX::XMFLOAT4& aColor);
+	/// 描画原点を設定する
+	void setPivot(float aX, float aY);
 	/// 描画開始位置を設定する
-	void setAnchor(const DirectX::XMFLOAT2& aAnchor);
+	void setAnchor(float aX, float aY);
 	//@}
 
 private:
@@ -49,15 +49,28 @@ private:
 		float pos[3] = {};
 		float uv[2] = {};
 	};
+	/// テクスチャーデータ
+	struct TextureData
+	{
+		/// テクスチャー
+		ID3D11ShaderResourceView* texture;
+		/// 頂点バッファ(Shader送信用)
+		ID3D11Buffer* vertexBuffer;
+		/// 次の描画位置
+		float nextPos;
+	};
 	//@}
 
 	/// @name 内部実装
 	//@{
-	/// ビットマップ作成
-	bool cretaeTexture();
+	/// フォントメッシュを作成する
+	bool cretaeFontMesh();
+	/// フォントテクスチャーを作成する
 	bool createFontTexture(const UINT& aCode);
-	bool createVertexBuffer();
-	void createMesh(FontVertex* aVertexes);
+	/// 頂点バッファを作成する
+	bool createVertexBuffer(const int& aIndexNum);
+	/// メッシュを作成する
+	void createMesh(FontVertex* aVertexes, const int& aIndexNum);
 	//@}
 
 	/// @name プライベートメンバ変数
@@ -66,18 +79,18 @@ private:
 	LPCTSTR mString;
 	/// フォント名
 	LPCTSTR mFontName;
-	/// 頂点バッファ(Shader送信用)
-	ID3D11Buffer* mVertexBuffer;
 	/// テクスチャー
-	ID3D11ShaderResourceView* mTexture;
+	std::vector<TextureData> mTextures;
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
 	DirectX::XMFLOAT4 mColor;
-	/// 描画中心位置
+	/// 描画原点
 	DirectX::XMFLOAT2 mPivot;
 	/// 描画開始位置
 	DirectX::XMFLOAT2 mAnchor;
+	/// 文字と文字の間
+
 	//@}
 
 };
