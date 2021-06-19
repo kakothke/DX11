@@ -89,6 +89,7 @@ const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const char* const aFileNam
 			0.0f
 		};
 	}
+
 	ID3D11Resource* res = nullptr;
 	ID3D11Texture2D* tex2D = nullptr;
 	D3D11_TEXTURE2D_DESC desc = {};
@@ -99,6 +100,7 @@ const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const char* const aFileNam
 	res = nullptr;
 	tex2D->Release();
 	tex2D = nullptr;
+
 	return {
 		(float)desc.Width,
 		(float)desc.Height

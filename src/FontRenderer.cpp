@@ -95,9 +95,9 @@ void FontRenderer::setShaderData(const char* const aShaderFileName)
 /// フォントを設定する
 void FontRenderer::setFont(const LPCTSTR aFontName)
 {
-	// テクスチャー作成
 	if (mFontName != aFontName) {
 		mFontName = aFontName;
+		// テクスチャー作成
 		if (mString) {
 			!cretaeTexture();
 		}
@@ -311,10 +311,10 @@ void FontRenderer::createMesh(FontVertex* aVertexes)
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
-	mTexture->GetResource(&res);
 	ID3D11Texture2D* tex2D = nullptr;
+	D3D11_TEXTURE2D_DESC desc = {};
+	mTexture->GetResource(&res);
 	res->QueryInterface(&tex2D);
-	D3D11_TEXTURE2D_DESC desc;
 	tex2D->GetDesc(&desc);
 	res->Release();
 	res = nullptr;
