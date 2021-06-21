@@ -25,14 +25,16 @@ FontRenderer::FontRenderer()
 /// デストラクタ
 FontRenderer::~FontRenderer()
 {
-	for (auto tex : mTextures) {
-		if (tex.vertexBuffer) {
-			tex.vertexBuffer->Release();
-			tex.vertexBuffer = nullptr;
-		}
-		if (tex.texture) {
-			tex.texture->Release();
-			tex.texture = nullptr;
+	for (auto line : mTextures) {
+		for (auto tex : line) {
+			if (tex.vertexBuffer) {
+				tex.vertexBuffer->Release();
+				tex.vertexBuffer = nullptr;
+			}
+			if (tex.texture) {
+				tex.texture->Release();
+				tex.texture = nullptr;
+			}
 		}
 	}
 	mTextures.clear();
@@ -72,29 +74,44 @@ void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
 	UINT strides = sizeof(FontVertex);
 	UINT offsets = 0;
 
+	float initPosX = aTransform._11;
+
 	// 描画初期位置を変更
-	for (int i = 0; i < mTextures.size(); i++) {
-		if (i > 0) {
-			aTransform._11 -= mTextures[i].nextPos / 2;
+	for (auto line : mTextures) {
+		aTransform._11 = initPosX;
+		// 初期位置計算
+		for (int i = 0; i < line.size(); i++) {
+			if (i > 0) {
+				aTransform._11 -= line[i].nextPos / 2;
+			}
 		}
-	}
-	// 描画
-	for (auto tex : mTextures) {
-		// IAに設定する頂点バッファの指定
-		context->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
-
-		// コンスタントバッファを更新
-		cBuf->updateColor(mColor, mColor);
-		cBuf->updateSprite(aTransform, mAnchor, mPivot, { 1,1 });
-
-		// テクスチャーセット
-		d3D11->setTexture(tex.texture);
-
 		// 描画
-		context->Draw(8, 0);
+		float nextPos = 0;
+		for (auto tex : line) {
+			if (!tex.hideFlag) {
+				// IAに設定する頂点バッファの指定
+				context->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
 
-		// 描画位置をずらす
-		aTransform._11 += tex.nextPos;
+				// コンスタントバッファを更新
+				cBuf->updateColor(mColor, mColor);
+				cBuf->updateSprite(aTransform, mAnchor, mPivot, { 1,1 });
+
+				// テクスチャーセット
+				d3D11->setTexture(tex.texture);
+
+				// 描画
+				context->Draw(8, 0);
+			}
+
+			// 描画位置をずらす
+			nextPos += tex.nextPos;
+			aTransform._11 += tex.nextPos;
+			if (tex.newLine != 0) {
+				aTransform._11 -= nextPos;
+				nextPos = 0;
+				aTransform._12 += tex.newLine;
+			}
+		}
 	}
 }
 
@@ -144,8 +161,10 @@ void FontRenderer::setPivot(float aX, float aY)
 	aY = Math::Clamp(aY, -1.0f, 1.0f);
 
 	DirectX::XMFLOAT2 size(0, 0);
-	for (auto tex : mTextures) {
-		size.x += tex.nextPos;
+	for (auto line : mTextures) {
+		for (auto tex : line) {
+			size.x += tex.nextPos;
+		}
 	}
 
 	mPivot.x = (size.x / 2) * -aX;
@@ -171,34 +190,30 @@ void FontRenderer::setAnchor(float aX, float aY)
 bool FontRenderer::cretaeFontMesh()
 {
 	// フォントメッシュ初期化
-	for (auto tex : mTextures) {
-		if (tex.vertexBuffer) {
-			tex.vertexBuffer->Release();
-			tex.vertexBuffer = nullptr;
-		}
-		if (tex.texture) {
-			tex.texture->Release();
-			tex.texture = nullptr;
+	for (auto line : mTextures) {
+		for (auto tex : line) {
+			if (tex.vertexBuffer) {
+				tex.vertexBuffer->Release();
+				tex.vertexBuffer = nullptr;
+			}
+			if (tex.texture) {
+				tex.texture->Release();
+				tex.texture = nullptr;
+			}
 		}
 	}
 	mTextures.clear();
+	mTextures.emplace_back();
 
 	// テクスチャー作成
 	UINT code = 0;
-#if _UNICODE
-	for (int i = 0; i < lstrlen(mString); i++) {
-		code = (UINT)mString[i];
-		if (!createFontTexture(code)) {
-			return false;
-		}
-		if (!createVertexBuffer(i)) {
-			return false;
-		}
-	}
-#else
-	LPCTSTR str = mString;
+	int lineCount = 0;
 	int indexNum = 0;
-	for (int i = 0; i < lstrlen(mString); i++, str++) {
+	LPCTSTR str = mString;
+	for (int i = 0; i < lstrlen(mString); i++) {
+#if _UNICODE
+		code = (UINT)mString[i];
+#else
 		if (IsDBCSLeadByte(*str)) {
 			// 2バイト文字
 			code = (BYTE)mString[i] << 8 | (BYTE)mString[i + 1];
@@ -209,15 +224,22 @@ bool FontRenderer::cretaeFontMesh()
 			// 1バイト文字
 			code = mString[i];
 		}
-		if (!createFontTexture(code)) {
+		str++;
+#endif
+		if (!createFontTexture(code, lineCount)) {
 			return false;
 		}
-		if (!createVertexBuffer(indexNum)) {
+		if (!createVertexBuffer(indexNum, lineCount)) {
 			return false;
 		}
 		indexNum++;
+		// 改行
+		if (code == 10) {
+			indexNum = 0;
+			lineCount++;
+			mTextures.emplace_back();
+		}
 	}
-#endif
 
 	return true;
 }
@@ -226,7 +248,7 @@ bool FontRenderer::cretaeFontMesh()
 /// フォントテクスチャーを作成する
 /// @param aCode 文字コード
 /// @return 結果 成功(true)
-bool FontRenderer::createFontTexture(const UINT& aCode)
+bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 {
 	// フォントビットマップ取得
 	const auto hdc = FontLoader::getInst()->hdc(mFontName);
@@ -305,7 +327,22 @@ bool FontRenderer::createFontTexture(const UINT& aCode)
 	TextureData texData;
 	texData.texture = texture;
 	texData.nextPos = iBmpW / 2;
-	mTextures.emplace_back(texData);
+	texData.newLine = 0;
+	texData.hideFlag = false;
+	if (aCode == 32 || aCode == 12288) {
+		// スペース
+		texData.nextPos = gm.gmCellIncX / 2;
+		texData.hideFlag = true;
+	} else if (aCode == 9) {
+		// インデント
+		texData.nextPos = gm.gmCellIncX * 2;
+		texData.hideFlag = true;
+	} else if (aCode == 10) {
+		// 改行
+		texData.newLine = gm.gmptGlyphOrigin.y;
+		texData.hideFlag = true;
+	}
+	mTextures[aLineCount].emplace_back(texData);
 
 	return true;
 }
@@ -314,10 +351,10 @@ bool FontRenderer::createFontTexture(const UINT& aCode)
 /// 頂点バッファを作成する
 /// @param aIndexNum 配列番号
 /// @return 作成結果 成功(true)
-bool FontRenderer::createVertexBuffer(const int& aIndexNum)
+bool FontRenderer::createVertexBuffer(const int& aIndexNum, const int& aLineCount)
 {
 	FontVertex vertexes[8];
-	createMesh(vertexes, aIndexNum);
+	createMesh(vertexes, aIndexNum, aLineCount);
 	// バッファ情報
 	D3D11_BUFFER_DESC bufferDesc;
 	{
@@ -349,7 +386,7 @@ bool FontRenderer::createVertexBuffer(const int& aIndexNum)
 	// バッファ作成
 	HRESULT hr;
 	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateBuffer(&bufferDesc, &subResource, &mTextures[aIndexNum].vertexBuffer);
+	hr = device->CreateBuffer(&bufferDesc, &subResource, &mTextures[aLineCount][aIndexNum].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -361,13 +398,13 @@ bool FontRenderer::createVertexBuffer(const int& aIndexNum)
 /// メッシュ作成
 /// @param aVertexes 頂点データ
 /// @param aIndexNum 配列番号
-void FontRenderer::createMesh(FontVertex* aVertexes, const int& aIndexNum)
+void FontRenderer::createMesh(FontVertex* aVertexes, const int& aIndexNum, const int& aLineCount)
 {
 	// テクスチャーのサイズを参照
 	ID3D11Resource* res = nullptr;
 	ID3D11Texture2D* tex2D = nullptr;
 	D3D11_TEXTURE2D_DESC desc = {};
-	mTextures[aIndexNum].texture->GetResource(&res);
+	mTextures[aLineCount][aIndexNum].texture->GetResource(&res);
 	res->QueryInterface(&tex2D);
 	tex2D->GetDesc(&desc);
 	res->Release();

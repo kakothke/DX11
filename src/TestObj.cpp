@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
+#include "InputManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -34,6 +35,8 @@ void TestObj::initialize()
 /// XV
 void TestObj::update()
 {
+	mTransform.pos.x += InputManager::getInst()->getAxes().x * 0.5f;
+	mTransform.pos.y += InputManager::getInst()->getAxes().y * 0.5f;
 	mTransform.rot.y += 0.01f;
 }
 

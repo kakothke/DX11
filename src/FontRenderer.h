@@ -58,6 +58,10 @@ private:
 		ID3D11Buffer* vertexBuffer;
 		/// 次の描画位置
 		float nextPos;
+		/// 改行位置
+		float newLine;
+		/// 描画しないフラグ
+		bool hideFlag;
 	};
 	//@}
 
@@ -66,11 +70,11 @@ private:
 	/// フォントメッシュを作成する
 	bool cretaeFontMesh();
 	/// フォントテクスチャーを作成する
-	bool createFontTexture(const UINT& aCode);
+	bool createFontTexture(const UINT& aCode, const int& aLineCount);
 	/// 頂点バッファを作成する
-	bool createVertexBuffer(const int& aIndexNum);
+	bool createVertexBuffer(const int& aIndexNum, const int& aLineCount);
 	/// メッシュを作成する
-	void createMesh(FontVertex* aVertexes, const int& aIndexNum);
+	void createMesh(FontVertex* aVertexes, const int& aIndexNum, const int& aLineCount);
 	//@}
 
 	/// @name プライベートメンバ変数
@@ -80,7 +84,7 @@ private:
 	/// フォント名
 	LPCTSTR mFontName;
 	/// テクスチャー
-	std::vector<TextureData> mTextures;
+	std::vector<std::vector<TextureData>> mTextures;
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
