@@ -54,7 +54,7 @@ void TestScene::draw2D()
 	mTestSprite.draw();
 	static Transform font(Vector3(0, -200, 0), Vector3(0), Vector3(1));
 	//font.rot.y += 0.05f;
-	mFont.draw(TEXT("テストテストア"), font.XMFLOAT3X3());
+	mFont.draw(TEXT("テスト　テスト\nTEST TSET\nてすと"), font.XMFLOAT3X3());
 }
 
 //-------------------------------------------------------------------------------------------------
