@@ -14,6 +14,7 @@ public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
 	BaseGameObject();
+	BaseGameObject(Transform aTransform);
 	virtual ~BaseGameObject();
 	//@}
 

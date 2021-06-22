@@ -7,19 +7,17 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 立方体
-class TestSky : public BaseGameObject
+/// ボス
+class Boss : public BaseGameObject
 {
 public:
 	/// name コンストラクタ
 	//@{
-	TestSky();
-	TestSky(Transform aTransform);
+	Boss();
 	//@}
 
 	/// @name 初期化/更新/描画
 	//@{
-	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}

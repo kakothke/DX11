@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Player.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -8,37 +8,32 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-Cube::Cube()
+Player::Player()
 {
-	initialize();
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 引数付きコンストラクタ
-Cube::Cube(Transform aTransform)
-{
-	mTransform = aTransform;
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void Cube::initialize()
+void Player::initialize()
 {
-	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Cube));
+	// 初期位置
+	mTransform.pos.z = 20;
+
+	// 描画設定
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Player));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void Cube::update()
+void Player::update()
 {
-	mTransform.rot.y += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void Cube::draw()
+void Player::draw()
 {
 	mRenderer.render(mTransform.XMFLOAT3X3());
 }

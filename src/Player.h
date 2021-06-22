@@ -7,14 +7,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// テスト用のゲームオブジェクト
-class TestObj : public BaseGameObject
+/// プレイヤー
+class Player : public BaseGameObject
 {
 public:
 	/// name コンストラクタ
 	//@{
-	TestObj();
-	TestObj(Transform aTransform);
+	Player();
 	//@}
 
 	/// @name 初期化/更新/描画

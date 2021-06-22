@@ -13,6 +13,15 @@ BaseGameObject::BaseGameObject()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// @param aTransform トランスフォーム
+BaseGameObject::BaseGameObject(Transform aTransform)
+	: mTransform(aTransform)
+	, mTag(GameObjectTag::Untagged)
+	, mIsActive(true)
+{
+}
+
+//-------------------------------------------------------------------------------------------------
 /// デストラクタ
 BaseGameObject::~BaseGameObject()
 {

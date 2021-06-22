@@ -21,10 +21,9 @@ void ResourceManager::initialize()
 {
 	// OBJs
 	const auto obj = OBJLoader::getInst();
-	obj->load(ResourceFileName::OBJ.at(OBJList::Cube));
-	obj->load(ResourceFileName::OBJ.at(OBJList::Sphere));
+	obj->load(ResourceFileName::OBJ.at(OBJList::Boss));
+	obj->load(ResourceFileName::OBJ.at(OBJList::Player));
 	obj->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
-	obj->load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
 	const auto sprite = SpriteLoader::getInst();

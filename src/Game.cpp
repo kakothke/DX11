@@ -26,7 +26,7 @@ bool Game::initialize()
 	resource->initialize();
 
 	// 最初に読み込むシーンをセット
-	mSceneManager.changeScene(SceneList::Test);
+	mSceneManager.changeScene(SceneList::Game);
 
 	return true;
 }

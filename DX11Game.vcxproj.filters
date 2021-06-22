@@ -14,9 +14,6 @@
     <Filter Include="Game\GameObject">
       <UniqueIdentifier>{f6ff8239-72b9-493c-bb8d-6f70f1f9e55b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\GameObject\3D Object">
-      <UniqueIdentifier>{7b8670bf-75fd-470b-929a-b5668d2da898}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\GameObject\Camera">
       <UniqueIdentifier>{0d8b0f7e-d88c-447f-a6b5-ef9da065bd9c}</UniqueIdentifier>
     </Filter>
@@ -83,6 +80,12 @@
     <Filter Include="System\Shader">
       <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\Player">
+      <UniqueIdentifier>{35a84ac6-5f0b-42f5-adbc-a5d4cf112fbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Enemy">
+      <UniqueIdentifier>{3c555d54-045f-4d59-8127-8855af061df5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -93,9 +96,6 @@
     </ClInclude>
     <ClInclude Include="src\Camera.h">
       <Filter>Game\GameObject\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cube.h">
-      <Filter>Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
       <Filter>Game</Filter>
@@ -117,15 +117,6 @@
     </ClInclude>
     <ClInclude Include="src\SystemMain.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestScene.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sphere.h">
-      <Filter>Game\GameObject\3D Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestObj.h">
-      <Filter>Game\GameObject\3D Object</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectionalLight.h">
       <Filter>Game\GameObject\Light</Filter>
@@ -156,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="src\Singleton.h">
       <Filter>System\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestSky.h">
-      <Filter>Game\GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="src\InputManager.h">
       <Filter>Game\Input</Filter>
@@ -217,6 +205,21 @@
     <ClInclude Include="src\ConstantBuffer.h">
       <Filter>System\Direct3D11</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSkyBox.h">
+      <Filter>Game\GameObject\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameCamera.h">
+      <Filter>Game\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Boss.h">
+      <Filter>Game\GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -224,9 +227,6 @@
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cube.cpp">
-      <Filter>Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>Game</Filter>
@@ -239,15 +239,6 @@
     </ClCompile>
     <ClCompile Include="src\SystemMain.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TestScene.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sphere.cpp">
-      <Filter>Game\GameObject\3D Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TestObj.cpp">
-      <Filter>Game\GameObject\3D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>Game\GameObject\Light</Filter>
@@ -278,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
       <Filter>System\Comon\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TestSky.cpp">
-      <Filter>Game\GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="src\InputManager.cpp">
       <Filter>Game\Input</Filter>
@@ -335,6 +323,21 @@
     </ClCompile>
     <ClCompile Include="src\ConstantBuffer.cpp">
       <Filter>System\Direct3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSkyBox.cpp">
+      <Filter>Game\GameObject\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameCamera.cpp">
+      <Filter>Game\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Boss.cpp">
+      <Filter>Game\GameObject\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

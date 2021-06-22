@@ -7,14 +7,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 立方体
-class Cube : public BaseGameObject
+/// スカイボックス
+class GameSkyBox : public BaseGameObject
 {
 public:
 	/// name コンストラクタ
 	//@{
-	Cube();
-	Cube(Transform aTransform);
+	GameSkyBox();
 	//@}
 
 	/// @name 初期化/更新/描画

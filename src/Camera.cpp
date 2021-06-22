@@ -32,7 +32,7 @@ Camera::Camera(Transform aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-/// @param aCameraParam カメラパラメータ
+/// @param aCameraParam カメラパラメータ x(Fov) / y(Near) / z(Far)
 Camera::Camera(Vector3 aCameraParam)
 	: mFov(aCameraParam.x)
 	, mNearZ(aCameraParam.y)
@@ -45,7 +45,7 @@ Camera::Camera(Vector3 aCameraParam)
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 /// @param aTransform トランスフォーム
-/// @param aCameraParam カメラパラメータ
+/// @param aCameraParam カメラパラメータ x(Fov) / y(Near) / z(Far)
 Camera::Camera(Transform aTransform, Vector3 aCameraParam)
 	: mFov(aCameraParam.x)
 	, mNearZ(aCameraParam.y)

@@ -1,34 +1,31 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "BaseGameObject.h"
-#include "OBJRenderer.h"
+#include "Camera.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 球
-class Sphere : public BaseGameObject
+/// カメラ基底クラス
+/// @brief 静的なカメラとしても使用可能
+class GameCamera : public Camera
 {
 public:
-	/// name コンストラクタ
+	/// @name コンストラクタ
 	//@{
-	Sphere();
-	Sphere(Transform aTransform);
+	GameCamera();
+	GameCamera(Transform aTransform);
+	GameCamera(Vector3 aCameraParam);
+	GameCamera(Transform aTransform, Vector3 aCameraParam);
 	//@}
 
-	/// @name 初期化/更新/描画
+	/// @name 更新/描画
 	//@{
-	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}
 
 private:
-	/// @name プライベートメンバ変数
-	//@{
-	OBJRenderer mRenderer;
-	//@}
 
 };
 

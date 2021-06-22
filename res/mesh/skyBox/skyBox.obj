@@ -1,6 +1,6 @@
 # Blender v2.93.0 OBJ File: 'SkyBox.blend'
 # www.blender.org
-mtllib skyBox.mtl
+mtllib SkyBox.mtl
 o SkyBox_Cube.003
 v -256.000000 -256.000000 256.000000
 v -256.000000 256.000000 256.000000

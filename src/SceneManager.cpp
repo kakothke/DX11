@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include <Windows.h>
 #include "Direct3D11.h"
-#include "TestScene.h"
+#include "GameScene.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -59,8 +59,8 @@ void SceneManager::changeScene(const SceneList aSceneList)
 		// 現在のシーンをポップする
 		mSceneStack.pop();
 		break;
-	case SceneList::Test:
-		mSceneStack.push(std::make_shared<TestScene>(this));
+	case SceneList::Game:
+		mSceneStack.push(std::make_shared<GameScene>(this));
 		break;
 	default:
 		// エラーメッセージ

@@ -1,4 +1,4 @@
-#include "TestSky.h"
+#include "Boss.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -8,37 +8,25 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-TestSky::TestSky()
+Boss::Boss()
 {
-	initialize();
-}
+	// 初期位置
+	mTransform.pos.z = 200;
 
-//-------------------------------------------------------------------------------------------------
-/// 引数付きコンストラクタ
-TestSky::TestSky(Transform aTransform)
-{
-	mTransform = aTransform;
-	initialize();
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 初期化処理
-void TestSky::initialize()
-{
-	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::SkyBox));
-	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::SkyBox));
+	// 描画設定
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Boss));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void TestSky::update()
+void Boss::update()
 {
-	mTransform.rot.y += 0.001f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void TestSky::draw()
+void Boss::draw()
 {
 	mRenderer.render(mTransform.XMFLOAT3X3());
 }

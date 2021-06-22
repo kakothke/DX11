@@ -8,8 +8,6 @@ enum class SceneList
 {
 	POP,
 
-	Test,
-	Title,
 	Game,
 };
 

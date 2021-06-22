@@ -1,4 +1,4 @@
-#include "Sphere.h"
+#include "GameSkyBox.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -8,36 +8,28 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-Sphere::Sphere()
+GameSkyBox::GameSkyBox()
 {
-	initialize();
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 引数付きコンストラクタ
-Sphere::Sphere(Transform aTransform)
-{
-	mTransform = aTransform;
 	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 初期化処理
-void Sphere::initialize()
+void GameSkyBox::initialize()
 {
-	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Sphere));
-	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
+	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::SkyBox));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void Sphere::update()
+void GameSkyBox::update()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void Sphere::draw()
+void GameSkyBox::draw()
 {
 	mRenderer.render(mTransform.XMFLOAT3X3());
 }

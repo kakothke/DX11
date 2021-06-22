@@ -1,50 +1,47 @@
-#include "TestObj.h"
-
-//-------------------------------------------------------------------------------------------------
-#include "ResourceFileName.h"
-#include "InputManager.h"
+#include "GameCamera.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-TestObj::TestObj()
+GameCamera::GameCamera()
 {
-	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 引数付きコンストラクタ
-TestObj::TestObj(Transform aTransform)
+/// コンストラクタ
+/// @param aTransform トランスフォーム
+GameCamera::GameCamera(Transform aTransform) : Camera(aTransform)
 {
-	mTransform = aTransform;
-	initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 初期化処理
-void TestObj::initialize()
+/// コンストラクタ
+/// @param aCameraParam カメラパラメータ x(Fov) / y(Near) / z(Far)
+GameCamera::GameCamera(Vector3 aCameraParam) : Camera(aCameraParam)
 {
-	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Test));
-	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
-	mTransform.pos.y = -2;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// コンストラクタ
+/// @param aTransform トランスフォーム
+/// @param aCameraParam カメラパラメータ x(Fov) / y(Near) / z(Far)
+GameCamera::GameCamera(Transform aTransform, Vector3 aCameraParam) : Camera(aTransform, aCameraParam)
+{
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void TestObj::update()
+void GameCamera::update()
 {
-	mTransform.pos.x += InputManager::getInst()->getAxes().x * 0.5f;
-	mTransform.pos.y += InputManager::getInst()->getAxes().y * 0.5f;
-	mTransform.rot.y += 0.01f;
+	updateConstantBuffer();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void TestObj::draw()
+void GameCamera::draw()
 {
-	mRenderer.render(mTransform.XMFLOAT3X3());
 }
 
 } // namespace
