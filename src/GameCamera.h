@@ -14,9 +14,6 @@ public:
 	/// @name コンストラクタ
 	//@{
 	GameCamera();
-	GameCamera(Transform aTransform);
-	GameCamera(Vector3 aCameraParam);
-	GameCamera(Transform aTransform, Vector3 aCameraParam);
 	//@}
 
 	/// @name 更新/描画
@@ -25,7 +22,22 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name アクセサ
+	//@{
+	/// プレイヤーのトランスフォームを取得する
+	void setPlayerTransform(const Transform& aTransform);
+	//@}
+
 private:
+	/// @name プライベートメンバ変数
+	//@{
+	/// ローカルトランスフォーム
+	Transform mLocalTransform;
+	/// プレイヤートランスフォーム
+	Transform mPlayerTransform;
+	/// プレイヤーとの距離
+	float mDirectionFromPlayer;
+	//@}
 
 };
 

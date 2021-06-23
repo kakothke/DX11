@@ -23,10 +23,30 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name アクセサ
+	//@{
+	/// ボスの位置を設定する
+	void setBossPos(const Vector3& aPos);
+	//@}
+
 private:
+	/// @name 内部実装
+	//@{
+	void move();
+	void shot();
+	//@}
+
 	/// @name プライベートメンバ変数
 	//@{
 	OBJRenderer mRenderer;
+	Vector2 mVelocity;
+	float mDistanceFromBoss;
+	DirectX::XMMATRIX mPoseMat;
+	//@}
+
+	/// @name 他のオブジェクトとの繋がり
+	//@{
+	Vector3 mBossPos;
 	//@}
 
 };

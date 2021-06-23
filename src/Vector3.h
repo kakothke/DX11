@@ -23,6 +23,7 @@ public:
     float Magnitude() const;
     /// 長さを1に変換したベクトルを返す
     Vector3 Normalized() const;
+    /// 2点間の
     /// XMFLOAT3型に変換して返す
     DirectX::XMFLOAT3 XMFLOAT3() const;
     /// XMVECTOR型に変換して返す

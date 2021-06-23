@@ -21,6 +21,8 @@ public:
 	//@{
 	/// XMFLOAT3X3Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
 	DirectX::XMFLOAT3X3 XMFLOAT3X3() const;
+	/// WorldMatrix‚É•ÏŠ·‚µ‚Ä•Ô‚·
+	DirectX::XMMATRIX worldMatrix() const;
 	//@}
 
 	/// @name ƒƒ“ƒo•Ï”

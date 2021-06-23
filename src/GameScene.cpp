@@ -22,10 +22,15 @@ GameScene::~GameScene()
 /// 更新
 void GameScene::update()
 {
-	mCamera.update();
-	mDirectionalLight.update();
+	// キャラクター
+	mPlayer.setBossPos(mBoss.transform().pos);
 	mPlayer.update();
 	mBoss.update();
+
+	// ワールド関連
+	mCamera.setPlayerTransform(mPlayer.transform());
+	mCamera.update();
+	mDirectionalLight.update();
 }
 
 //-------------------------------------------------------------------------------------------------

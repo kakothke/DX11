@@ -35,5 +35,21 @@ DirectX::XMFLOAT3X3 Transform::XMFLOAT3X3() const
 	};
 }
 
+//-------------------------------------------------------------------------------------------------
+/// WorldMatrix‚É•ÏŠ·‚µ‚Ä•Ô‚·
+DirectX::XMMATRIX Transform::worldMatrix() const
+{
+	DirectX::XMMATRIX position = DirectX::XMMatrixTranslation(
+		pos.x, pos.y, pos.z
+	);
+	DirectX::XMMATRIX rotation = DirectX::XMMatrixRotationRollPitchYaw(
+		rot.x, rot.y, rot.z
+	);
+	DirectX::XMMATRIX scaling = DirectX::XMMatrixScaling(
+		scale.x, scale.y, scale.z
+	);
+	return scaling * rotation * position;
+}
+
 } // namespace
 // EOF
