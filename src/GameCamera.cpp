@@ -28,7 +28,8 @@ void GameCamera::update()
 	mTransform.pos.x = transform.r[3].m128_f32[0];
 	mTransform.pos.y = transform.r[3].m128_f32[1];
 	mTransform.pos.z = transform.r[3].m128_f32[2];
-	
+	mTransform.rot = -mPlayerTransform.rot;
+
 	updateConstantBuffer();
 }
 

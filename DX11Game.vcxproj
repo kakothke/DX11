@@ -170,6 +170,7 @@
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Quaternion.h" />
     <ClInclude Include="src\ResourceFileName.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\SceneList.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Quaternion.cpp" />
     <ClCompile Include="src\ResourceFileName.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />

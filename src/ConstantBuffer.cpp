@@ -91,17 +91,7 @@ bool ConstantBuffer::initialize(ID3D11Device* aDevice, ID3D11DeviceContext* aCon
 /// WorldçsóÒê›íË
 void ConstantBuffer::setMatrixW(const Transform& aTransform)
 {
-	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
-		aTransform.pos.x, aTransform.pos.y, aTransform.pos.z
-	);
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
-		aTransform.rot
-	);
-	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform.scale.x, aTransform.scale.y, aTransform.scale.z
-	);
-	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
-	XMStoreFloat4x4(&mMATRIX.W, XMMatrixTranspose(worldMatrix));
+	XMStoreFloat4x4(&mMATRIX.W, XMMatrixTranspose(aTransform.worldMatrix()));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -116,7 +106,7 @@ void ConstantBuffer::setMatrixV(const Transform& aTransform)
 		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z + 1
 	};
 	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
-		aTransform.rot
+		aTransform.rot.XMVECTOR()
 	);
 	DirectX::XMVECTOR upVec = { 0, 1, 0 };
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
@@ -163,7 +153,7 @@ void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2
 		aTransform.pos.x, -aTransform.pos.y, aTransform.pos.z
 	);
 	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
-		aTransform.rot
+		aTransform.rot.XMVECTOR()
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
 		aTransform.scale.x / split.x, aTransform.scale.y / split.y, 0

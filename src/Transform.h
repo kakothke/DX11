@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include "Vector3.h"
 #include "Vector2.h"
+#include "Quaternion.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -29,7 +30,7 @@ public:
 	/// 位置
 	Vector3 pos;
 	/// 回転
-	DirectX::XMVECTOR rot;
+	Quaternion rot;
 	/// スケール
 	Vector3 scale;
 	//@}

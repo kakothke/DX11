@@ -7,7 +7,7 @@ namespace KDXK {
 /// コンストラクタ
 Transform::Transform()
 	: pos()
-	, rot(DirectX::XMQuaternionIdentity())
+	, rot()
 	, scale(1, 1, 1)
 {
 }
@@ -19,7 +19,7 @@ Transform::Transform()
 /// @param aScale 大きさ
 Transform::Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale)
 	: pos(aPos)
-	, rot(DirectX::XMQuaternionRotationRollPitchYaw(aRot.x, aRot.y, aRot.z))
+	, rot(aRot)
 	, scale(aScale)
 {
 }
@@ -29,7 +29,7 @@ Transform::Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale)
 DirectX::XMMATRIX Transform::worldMatrix() const
 {
 	DirectX::XMMATRIX position = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	DirectX::XMMATRIX rotation = DirectX::XMMatrixRotationQuaternion(rot);
+	DirectX::XMMATRIX rotation = DirectX::XMMatrixRotationQuaternion(rot.XMVECTOR());
 	DirectX::XMMATRIX scaling = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
 	return scaling * rotation * position;
 }

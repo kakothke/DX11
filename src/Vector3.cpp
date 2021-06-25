@@ -165,26 +165,14 @@ Vector3 Vector3::operator /(const Vector3& aVector) const
 //-------------------------------------------------------------------------------------------------
 bool Vector3::operator ==(const Vector3& aVector) const
 {
-	if (x != aVector.x) {
-		return false;
-	}
-	if (y != aVector.y) {
-		return false;
-	}
-	if (z != aVector.z) {
+	if (x != aVector.x || y != aVector.y || z != aVector.z) {
 		return false;
 	}
 	return true;
 }
 bool Vector3::operator !=(const Vector3& aVector) const
 {
-	if (x == aVector.x) {
-		return false;
-	}
-	if (y == aVector.y) {
-		return false;
-	}
-	if (z == aVector.z) {
+	if (x == aVector.x && y == aVector.y && z == aVector.z) {
 		return false;
 	}
 	return true;
