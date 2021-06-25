@@ -31,7 +31,7 @@ void GameSkyBox::update()
 /// •`‰æ
 void GameSkyBox::draw()
 {
-	mRenderer.render(mTransform.XMFLOAT3X3());
+	mRenderer.render(mTransform);
 }
 
 } // namespace

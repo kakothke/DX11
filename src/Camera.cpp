@@ -72,10 +72,10 @@ void Camera::draw()
 /// コンスタントバッファを更新する
 void Camera::updateConstantBuffer()
 {
-	DirectX::XMFLOAT3 camera(mFov, mNearZ, mFarZ);
-	const static auto cBuf = Direct3D11::getInst()->getConstantBuffer();
-	cBuf->setMatrixVP(mTransform.XMFLOAT3X3(), camera);
-	cBuf->updateCamera(mTransform.pos.XMVECTOR(), mTransform.rot.XMVECTOR());
+	const static auto constantBuffer = Direct3D11::getInst()->getConstantBuffer();
+	constantBuffer->setMatrixV(mTransform);
+	constantBuffer->setMatrixP(mFov, mNearZ, mFarZ);
+	constantBuffer->updateCamera(mTransform.pos);
 }
 
 } // namespace

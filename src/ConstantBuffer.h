@@ -4,6 +4,8 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <unordered_map>
+#include "Transform.h"
+#include "Color.h"
 #include "OBJLoader.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -27,18 +29,17 @@ private:
 	{
 		DirectX::XMFLOAT4X4 MATRIX_P;
 		DirectX::XMFLOAT4X4 MATRIX_W;
-		DirectX::XMINT4 SPLIT;
+		DirectX::XMINT4 SPLIT = { 1, 1, 1, 1 };
 	};
 	/// カメラ
 	struct CB_CAMERA
 	{
 		DirectX::XMFLOAT4 POS;
-		DirectX::XMFLOAT4 ROT;
 	};
 	/// ライト
 	struct CB_DLIGHT
 	{
-		DirectX::XMFLOAT4 ROT;
+		DirectX::XMFLOAT4 ANGLE;
 		DirectX::XMFLOAT4 COL;
 	};
 	/// カラー
@@ -71,22 +72,21 @@ public:
 	/// @name コンスタントバッファ制御
 	//@{
 	/// 変換行列
-	void setMatrixW(const DirectX::XMFLOAT3X3& aTransform);
-	void setMatrixVP(const DirectX::XMFLOAT3X3& aTransform, const DirectX::XMFLOAT3& aCamera);
+	void setMatrixW(const Transform& aTransform);
+	void setMatrixV(const Transform& aTransform);
+	void setMatrixP(const float& aFov, const float& aNearZ, const float& aFarZ);
 	void updateMatrix();
 	/// スプライト
-	void updateSprite(
-		const DirectX::XMFLOAT3X3& aTransform,
-		const DirectX::XMFLOAT2& aAnchor,
-		const DirectX::XMFLOAT2& aPivot,
-		const DirectX::XMINT2 aSplit
-	);
+	void setSpriteMatrixW(const Transform& aTransform, const Vector2& aPivot);
+	void setSpriteMatrixP(const Vector2& aAnchor);
+	void setSpriteSplit(const Vector2& aSplit);
+	void updateSprite();
 	/// カメラ
-	void updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot);
+	void updateCamera(const Vector3& aPos);
 	/// ディレクショナルライト
-	void updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol);
+	void updateDLight(const Vector3& aAngle, const Color& aCol);
 	/// カラー
-	void updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::XMFLOAT4& aCol1);
+	void updateColor(const Color& aCol0, const Color& aCol1);
 	/// OBJマテリアル
 	void updateMaterial(const OBJLoader::OBJMaterial& aMaterial);
 	//@}

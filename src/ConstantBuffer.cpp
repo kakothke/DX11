@@ -89,16 +89,16 @@ bool ConstantBuffer::initialize(ID3D11Device* aDevice, ID3D11DeviceContext* aCon
 
 //-------------------------------------------------------------------------------------------------
 /// World行列設定
-void ConstantBuffer::setMatrixW(const DirectX::XMFLOAT3X3& aTransform)
+void ConstantBuffer::setMatrixW(const Transform& aTransform)
 {
 	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
-		aTransform._11, aTransform._12, aTransform._13
+		aTransform.pos.x, aTransform.pos.y, aTransform.pos.z
 	);
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(
-		aTransform._21, aTransform._22, aTransform._23
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
+		aTransform.rot
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform._31, aTransform._32, aTransform._33
+		aTransform.scale.x, aTransform.scale.y, aTransform.scale.z
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos;
 	XMStoreFloat4x4(&mMATRIX.W, XMMatrixTranspose(worldMatrix));
@@ -106,36 +106,45 @@ void ConstantBuffer::setMatrixW(const DirectX::XMFLOAT3X3& aTransform)
 
 //-------------------------------------------------------------------------------------------------
 /// ViewProjection行列設定
-void ConstantBuffer::setMatrixVP(const DirectX::XMFLOAT3X3& aTransform, const DirectX::XMFLOAT3& aCamera)
+void ConstantBuffer::setMatrixV(const Transform& aTransform)
 {
 	// View
 	DirectX::XMVECTOR pos = {
-		aTransform._11,	aTransform._12,	aTransform._13
+		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z
 	};
 	DirectX::XMVECTOR forcus = {
-		aTransform._11,	aTransform._12,	aTransform._13 + 1
+		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z + 1
 	};
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(
-		aTransform._21, aTransform._22, -aTransform._23
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
+		aTransform.rot
 	);
 	DirectX::XMVECTOR upVec = { 0, 1, 0 };
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
-	XMStoreFloat4x4(&mMATRIX.V, XMMatrixTranspose(viewMatrix));
 
-	// Projection
+	XMStoreFloat4x4(&mMATRIX.V, XMMatrixTranspose(viewMatrix));
+}
+
+//-------------------------------------------------------------------------------------------------
+/// プロジェクション行列を設定する
+/// @param aFov 
+/// @param aNearZ 
+/// @param aFarZ 
+void ConstantBuffer::setMatrixP(const float& aFov, const float& aNearZ, const float& aFarZ)
+{
 	D3D11_VIEWPORT vp;
 	UINT numVierports = 1;
 	mContext->RSGetViewports(&numVierports, &vp);
 
-	auto fov = DirectX::XMConvertToRadians(aCamera.x);
-	auto nearZ = aCamera.y;
-	auto farZ = aCamera.z;
-
-	DirectX::XMMATRIX projMatrix;
-	projMatrix = DirectX::XMMatrixPerspectiveFovLH(fov, vp.Width / vp.Height, nearZ, farZ);
+	DirectX::XMMATRIX projMatrix = DirectX::XMMatrixPerspectiveFovLH(
+		DirectX::XMConvertToRadians(aFov),
+		vp.Width / vp.Height,
+		aNearZ,
+		aFarZ
+	);
 
 	XMStoreFloat4x4(&mMATRIX.P, XMMatrixTranspose(projMatrix));
 }
+
 //-------------------------------------------------------------------------------------------------
 /// 変換行列情報を更新する
 void ConstantBuffer::updateMatrix()
@@ -146,52 +155,54 @@ void ConstantBuffer::updateMatrix()
 }
 
 //-------------------------------------------------------------------------------------------------
-///	スプライト情報を更新する
-void ConstantBuffer::updateSprite(
-	const DirectX::XMFLOAT3X3& aTransform,
-	const DirectX::XMFLOAT2& aAnchor,
-	const DirectX::XMFLOAT2& aPivot,
-	const DirectX::XMINT2 aSplit
-)
-{
-	// World
+void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2& aPivot)
+{	
+	Vector2 split = Vector2(mSPRITE.SPLIT.x, mSPRITE.SPLIT.y);
+
 	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
-		aTransform._11, -aTransform._12, aTransform._13
+		aTransform.pos.x, -aTransform.pos.y, aTransform.pos.z
 	);
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationRollPitchYaw(
-		aTransform._21, aTransform._22, aTransform._23
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
+		aTransform.rot
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform._31 / aSplit.x, aTransform._32 / aSplit.y, 0
+		aTransform.scale.x / split.x, aTransform.scale.y / split.y, 0
 	);
 	DirectX::XMMATRIX pivot = DirectX::XMMatrixTranslation(
-		aPivot.x * (aTransform._31 / aSplit.x), aPivot.y * (aTransform._32 / aSplit.y), 1
+		aPivot.x * (aTransform.scale.x / split.x), aPivot.y * (aTransform.scale.y / split.y), 1
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos * pivot;
-	XMStoreFloat4x4(&mSPRITE.MATRIX_W, XMMatrixTranspose(worldMatrix));
 
-	// Projection
-	DirectX::XMMATRIX anchor = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		aAnchor.x, -aAnchor.y, 0, 1
-	};
+	XMStoreFloat4x4(&mSPRITE.MATRIX_W, XMMatrixTranspose(worldMatrix));
+}
+
+//-------------------------------------------------------------------------------------------------
+void ConstantBuffer::setSpriteMatrixP(const Vector2& aAnchor)
+{
+	DirectX::XMMATRIX anchor = DirectX::XMMatrixIdentity();
+	anchor.r[3].m128_f32[0] = aAnchor.x;
+	anchor.r[3].m128_f32[1] = -aAnchor.y;
+
 	const static auto width = Window::getInst()->windowWidth();
 	const static auto height = Window::getInst()->windowHeight();
-	DirectX::XMMATRIX proj2D = {
-		2.0f / width , 0, 0, 0,
-		0, 2.0f / height, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1
-	};
+	DirectX::XMMATRIX proj2D = DirectX::XMMatrixIdentity();
+	proj2D.r[0].m128_f32[0] = 2.0f / width;
+	proj2D.r[1].m128_f32[1] = 2.0f / height;
 	DirectX::XMMATRIX projMatrix = proj2D * anchor;
+
 	XMStoreFloat4x4(&mSPRITE.MATRIX_P, XMMatrixTranspose(projMatrix));
+}
 
-	// Split
+//-------------------------------------------------------------------------------------------------
+void ConstantBuffer::setSpriteSplit(const Vector2& aSplit)
+{
 	mSPRITE.SPLIT = DirectX::XMINT4(aSplit.x, aSplit.y, 0, 0);
+}
 
-	// 更新
+//-------------------------------------------------------------------------------------------------
+///	スプライト情報を更新する
+void ConstantBuffer::updateSprite()
+{
 	mContext->UpdateSubresource(mBuffers[SPRITE], 0, NULL, &mSPRITE, 0, 0);
 	mContext->VSSetConstantBuffers(SPRITE, 1, &mBuffers[SPRITE]);
 	mContext->PSSetConstantBuffers(SPRITE, 1, &mBuffers[SPRITE]);
@@ -199,10 +210,9 @@ void ConstantBuffer::updateSprite(
 
 //-------------------------------------------------------------------------------------------------
 /// カメラ情報を更新する
-void ConstantBuffer::updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::XMVECTOR& aRot)
+void ConstantBuffer::updateCamera(const Vector3& aPos)
 {
-	XMStoreFloat4(&mCAMERA.POS, aPos);
-	XMStoreFloat4(&mCAMERA.ROT, aRot);
+	mCAMERA.POS = aPos.XMFLOAT4();
 
 	// 更新
 	mContext->UpdateSubresource(mBuffers[CAMERA], 0, NULL, &mCAMERA, 0, 0);
@@ -212,10 +222,11 @@ void ConstantBuffer::updateCamera(const DirectX::XMVECTOR& aPos, const DirectX::
 
 //-------------------------------------------------------------------------------------------------
 /// ディレクショナルライト情報を更新する
-void ConstantBuffer::updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::XMFLOAT4& aCol)
+void ConstantBuffer::updateDLight(const Vector3& aAngle, const Color& aCol)
 {
-	XMStoreFloat4(&mDLIGHT.ROT, aRot);
-	mDLIGHT.COL = aCol;
+	Vector3 angle(-aAngle.y, aAngle.x, 0);
+	mDLIGHT.ANGLE = angle.Normalized().XMFLOAT4();
+	mDLIGHT.COL = aCol.RGBA01();
 
 	// 更新
 	mContext->UpdateSubresource(mBuffers[DLIGHT], 0, NULL, &mDLIGHT, 0, 0);
@@ -225,10 +236,10 @@ void ConstantBuffer::updateDLight(const DirectX::XMVECTOR& aRot, const DirectX::
 
 //-------------------------------------------------------------------------------------------------
 /// カラー情報を更新する
-void ConstantBuffer::updateColor(const DirectX::XMFLOAT4& aCol0, const DirectX::XMFLOAT4& aCol1)
+void ConstantBuffer::updateColor(const Color& aCol0, const Color& aCol1)
 {
-	mCOLOR.COL0 = aCol0;
-	mCOLOR.COL1 = aCol1;
+	mCOLOR.COL0 = aCol0.RGBA01();
+	mCOLOR.COL1 = aCol1.RGBA01();
 
 	// 更新
 	mContext->UpdateSubresource(mBuffers[COLOR], 0, NULL, &mCOLOR, 0, 0);

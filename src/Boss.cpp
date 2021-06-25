@@ -28,7 +28,7 @@ void Boss::update()
 /// •`‰æ
 void Boss::draw()
 {
-	mRenderer.render(mTransform.XMFLOAT3X3());
+	mRenderer.render(mTransform);
 }
 
 } // namespace

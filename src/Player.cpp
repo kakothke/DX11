@@ -46,7 +46,7 @@ void Player::update()
 /// •`‰æ
 void Player::draw()
 {
-	mRenderer.render(mTransform.XMFLOAT3X3());
+	mRenderer.render(mTransform);
 }
 
 //-------------------------------------------------------------------------------------------------

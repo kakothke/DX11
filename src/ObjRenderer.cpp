@@ -23,7 +23,7 @@ OBJRenderer::~OBJRenderer()
 //-------------------------------------------------------------------------------------------------
 /// 描画
 /// @param aTransform トランスフォーム
-void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
+void OBJRenderer::render(const Transform& aTransform)
 {
 	// 読み込みチェック
 	if (!mOBJData || !mShaderData) {
@@ -33,7 +33,7 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	// Direct3D11取得
 	const static auto d3D11 = Direct3D11::getInst();
 	const static auto context = d3D11->getContext();
-	const static auto cBuf = d3D11->getConstantBuffer();
+	const static auto constantBuffer = d3D11->getConstantBuffer();
 
 	// プリミティブの形状を指定
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -51,9 +51,9 @@ void OBJRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 		context->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);
 
 		// コンスタントバッファを更新
-		cBuf->setMatrixW(aTransform);
-		cBuf->updateMatrix();
-		cBuf->updateMaterial(mOBJData->materials[index.first]);
+		constantBuffer->setMatrixW(aTransform);
+		constantBuffer->updateMatrix();
+		constantBuffer->updateMaterial(mOBJData->materials[index.first]);
 
 		if (!mOBJData->materials[index.first].textureFileName.empty()) {
 			// テクスチャーセット

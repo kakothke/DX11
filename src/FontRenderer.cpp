@@ -14,9 +14,9 @@ FontRenderer::FontRenderer()
 	, mFontName(NULL)
 	, mTextures()
 	, mShaderData()
-	, mColor(1, 1, 1, 1)
+	, mColor(255, 255, 255, 255)
 	, mPivot(0.5f, 0.5f)
-	, mAnchor(0, 0)
+	, mAnchor(0)
 {
 	mTextures.clear();
 }
@@ -44,7 +44,7 @@ FontRenderer::~FontRenderer()
 /// 描画
 /// @param aString 表示文字
 /// @param aTransform 表示位置
-void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
+void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 {
 	// チェック
 	if (!mShaderData && mString) {
@@ -63,7 +63,7 @@ void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
 	// Direct3D11取得
 	const static auto d3D11 = Direct3D11::getInst();
 	const static auto context = d3D11->getContext();
-	const static auto cBuf = d3D11->getConstantBuffer();
+	const static auto constantBuffer = d3D11->getConstantBuffer();
 
 	// プリミティブの形状を指定
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -74,15 +74,15 @@ void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
 	UINT strides = sizeof(FontVertex);
 	UINT offsets = 0;
 
-	float initPosX = aTransform._11;
+	float initPosX = aTransform.pos.x;
 
 	// 描画初期位置を変更
 	for (auto line : mTextures) {
-		aTransform._11 = initPosX;
+		aTransform.pos.x = initPosX;
 		// 初期位置計算
 		for (int i = 0; i < line.size(); i++) {
 			if (i > 0) {
-				aTransform._11 -= line[i].nextPos / 2;
+				aTransform.pos.x -= line[i].nextPos / 2;
 			}
 		}
 		// 描画
@@ -93,8 +93,10 @@ void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
 				context->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
 
 				// コンスタントバッファを更新
-				cBuf->updateColor(mColor, mColor);
-				cBuf->updateSprite(aTransform, mAnchor, mPivot, { 1,1 });
+				constantBuffer->updateColor(mColor, mColor);
+				constantBuffer->setSpriteMatrixW(aTransform, mPivot);
+				constantBuffer->setSpriteMatrixP(mAnchor);
+				constantBuffer->updateSprite();
 
 				// テクスチャーセット
 				d3D11->setTexture(tex.texture);
@@ -105,11 +107,11 @@ void FontRenderer::draw(const LPCTSTR aString, DirectX::XMFLOAT3X3 aTransform)
 
 			// 描画位置をずらす
 			nextPos += tex.nextPos;
-			aTransform._11 += tex.nextPos;
+			aTransform.pos.x += tex.nextPos;
 			if (tex.newLine != 0) {
-				aTransform._11 -= nextPos;
+				aTransform.pos.x -= nextPos;
 				nextPos = 0;
-				aTransform._12 += tex.newLine;
+				aTransform.pos.y += tex.newLine;
 			}
 		}
 	}
@@ -140,14 +142,9 @@ void FontRenderer::setFont(const LPCTSTR aFontName)
 
 //-------------------------------------------------------------------------------------------------
 /// カラーを設定する
-/// @param aColor カラー(0~1)
-void FontRenderer::setColor(DirectX::XMFLOAT4& aColor)
+/// @param aColor カラー
+void FontRenderer::setColor(const Color& aColor)
 {
-	aColor.x = Math::Clamp(aColor.x, -1.0f, 1.0f);
-	aColor.y = Math::Clamp(aColor.y, -1.0f, 1.0f);
-	aColor.z = Math::Clamp(aColor.z, -1.0f, 1.0f);
-	aColor.w = Math::Clamp(aColor.w, -1.0f, 1.0f);
-
 	mColor = aColor;
 }
 

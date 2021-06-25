@@ -48,13 +48,24 @@ Color::Color(int r, int g, int b, int a)
 }
 
 //-------------------------------------------------------------------------------------------------
+DirectX::XMFLOAT4 Color::RGBA01() const
+{
+	return {
+		(float)r* CONV,
+		(float)g* CONV,
+		(float)b* CONV,
+		(float)a * CONV
+	};
+}
+
+//-------------------------------------------------------------------------------------------------
 DirectX::XMFLOAT4 Color::XMFLOAT4() const
 {
 	return {
-		r * CONV,
-		g * CONV,
-		b * CONV,
-		a * CONV
+		(float)r,
+		(float)g,
+		(float)b,
+		(float)a
 	};
 }
 

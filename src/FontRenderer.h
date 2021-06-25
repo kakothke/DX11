@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------------------------------------
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include "Transform.h"
+#include "Color.h"
 #include "FontLoader.h"
 #include "ShaderLoader.h"
 
@@ -21,9 +23,7 @@ public:
 
 	/// @name 描画
 	//@{
-	void draw(
-		const LPCTSTR aString,
-		DirectX::XMFLOAT3X3 aTransform = { 0,0,0,0,0,0,1,1,1 });
+	void draw(const LPCTSTR aString, Transform aTransform);
 	//@}
 
 	/// @name 描画設定
@@ -33,7 +33,7 @@ public:
 	/// フォントを変更する
 	void setFont(const LPCTSTR aFontName);
 	/// カラーを設定する 
-	void setColor(DirectX::XMFLOAT4& aColor);
+	void setColor(const Color& aColor);
 	/// 描画原点を設定する
 	void setPivot(float aX, float aY);
 	/// 描画開始位置を設定する
@@ -88,11 +88,11 @@ private:
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
-	DirectX::XMFLOAT4 mColor;
+	Color mColor;
 	/// 描画原点
-	DirectX::XMFLOAT2 mPivot;
+	Vector2 mPivot;
 	/// 描画開始位置
-	DirectX::XMFLOAT2 mAnchor;
+	Vector2 mAnchor;
 	/// 文字と文字の間
 
 	//@}

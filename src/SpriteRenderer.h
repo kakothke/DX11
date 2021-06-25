@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
 #include "Direct3D11.h"
+#include "Transform.h"
+#include "Color.h"
 #include "SpriteLoader.h"
 #include "ShaderLoader.h"
 
@@ -21,7 +23,7 @@ public:
 
 	/// @name 描画
 	//@{
-	void render(const DirectX::XMFLOAT3X3& aTransform);
+	void render(const Transform& aTransform);
 	//@}
 
 	/// @name 描画設定
@@ -31,7 +33,7 @@ public:
 	/// シェーダーを設定する
 	void setShader(const LPCSTR aFileName);
 	/// カラーを設定する 
-	void setColor(DirectX::XMFLOAT4& aColor);
+	void setColor(const Color& aColor);
 	/// 描画原点を設定する
 	void setPivot(float aX, float aY);
 	/// 描画開始位置を設定する
@@ -48,13 +50,13 @@ private:
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー
-	DirectX::XMFLOAT4 mColor;
+	Color mColor;
 	/// 描画原点
-	DirectX::XMFLOAT2 mPivot;
+	Vector2 mPivot;
 	/// 描画開始位置
-	DirectX::XMFLOAT2 mAnchor;
+	Vector2 mAnchor;
 	/// UV分割数
-	DirectX::XMINT2 mSplit;
+	Vector2 mSplit;
 	//@}
 
 };

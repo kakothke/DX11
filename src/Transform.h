@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
 #include "Vector3.h"
+#include "Vector2.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -19,8 +20,6 @@ public:
 
 	//@ name 変換関数
 	//@{
-	/// XMFLOAT3X3型に変換して返す
-	DirectX::XMFLOAT3X3 XMFLOAT3X3() const;
 	/// WorldMatrixに変換して返す
 	DirectX::XMMATRIX worldMatrix() const;
 	//@}
@@ -30,7 +29,7 @@ public:
 	/// 位置
 	Vector3 pos;
 	/// 回転
-	Vector3 rot;
+	DirectX::XMVECTOR rot;
 	/// スケール
 	Vector3 scale;
 	//@}

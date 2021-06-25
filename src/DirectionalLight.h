@@ -16,9 +16,9 @@ public:
 	/// @name コンストラクタ
 	//@{
 	DirectionalLight();
-	DirectionalLight(Vector3 aRot);
+	DirectionalLight(Vector3 aAngle);
 	DirectionalLight(Color aColor);
-	DirectionalLight(Vector3 aRot, Color aColor);
+	DirectionalLight(Vector3 aAngle, Color aColor);
 	//@}
 
 	/// @name 更新/描画
@@ -37,6 +37,8 @@ protected:
 
 	/// @name プロテクテッドメンバ変数
 	//@{
+	/// オイラー角の回転方向
+	Vector3 mEulerAngle;
 	/// カラー
 	Color mColor;
 	//@}

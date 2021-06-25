@@ -19,6 +19,8 @@ public:
 
     /// @name •ÏŠ·ŠÖ”
     //@{
+    /// 0~1‚Ì”ÍˆÍ‚É•ÏŠ·‚·‚é
+    DirectX::XMFLOAT4 RGBA01() const;
     /// XMFLOAT4Œ^‚É•ÏŠ·‚µ‚Ä’l‚ğ•Ô‚·
     DirectX::XMFLOAT4 XMFLOAT4() const;
     //@}

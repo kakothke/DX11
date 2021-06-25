@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
 #include "Direct3D11.h"
+#include "Transform.h"
 #include "OBJLoader.h"
 #include "ShaderLoader.h"
 
@@ -21,7 +22,7 @@ public:
 
 	/// @name ï`âÊ
 	//@{
-	void render(const DirectX::XMFLOAT3X3& aTransform);
+	void render(const Transform& aTransform);
 	//@}
 
 	/// @name ï`âÊê›íË

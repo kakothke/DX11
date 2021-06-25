@@ -12,7 +12,7 @@ namespace KDXK {
 SpriteRenderer::SpriteRenderer()
 	: mSpriteData()
 	, mShaderData()
-	, mColor(1, 1, 1, 1)
+	, mColor(255, 255, 255, 255)
 	, mPivot(0.5f, 0.5f)
 	, mAnchor(0, 0)
 	, mSplit(1, 1)
@@ -28,7 +28,7 @@ SpriteRenderer::~SpriteRenderer()
 //-------------------------------------------------------------------------------------------------
 /// 描画
 /// @param aTransform トランスフォーム
-void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
+void SpriteRenderer::render(const Transform& aTransform)
 {
 	// 読み込みチェック
 	if (!mSpriteData || !mShaderData) {
@@ -38,7 +38,7 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	// Direct3D11取得
 	const static auto d3D11 = Direct3D11::getInst();
 	const static auto context = d3D11->getContext();
-	const static auto cBuf = d3D11->getConstantBuffer();
+	const static auto constantBuffer = d3D11->getConstantBuffer();
 
 	// プリミティブの形状を指定
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -53,8 +53,10 @@ void SpriteRenderer::render(const DirectX::XMFLOAT3X3& aTransform)
 	context->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
-	cBuf->updateColor(mColor, mColor);
-	cBuf->updateSprite(aTransform, mAnchor, mPivot, mSplit);
+	constantBuffer->updateColor(mColor, mColor);
+	constantBuffer->setSpriteSplit(mSplit);
+	constantBuffer->setSpriteMatrixW(aTransform, mPivot);
+	constantBuffer->updateSprite();
 
 	// テクスチャーセット
 	const static auto tex = TextureLoader::getInst();
@@ -84,14 +86,9 @@ void SpriteRenderer::setShader(const LPCSTR aFileName)
 
 //-------------------------------------------------------------------------------------------------
 /// カラーを設定する
-/// @param aColor カラー(0~1)
-void SpriteRenderer::setColor(DirectX::XMFLOAT4& aColor)
+/// @param aColor カラー
+void SpriteRenderer::setColor(const Color& aColor)
 {
-	aColor.x = Math::Clamp(aColor.x, -1.0f, 1.0f);
-	aColor.y = Math::Clamp(aColor.y, -1.0f, 1.0f);
-	aColor.z = Math::Clamp(aColor.z, -1.0f, 1.0f);
-	aColor.w = Math::Clamp(aColor.w, -1.0f, 1.0f);
-
 	mColor = aColor;
 }
 

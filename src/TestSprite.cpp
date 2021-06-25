@@ -35,14 +35,14 @@ void TestSprite::initialize()
 /// çXêV
 void TestSprite::update()
 {
-	mTransform.rot += 0.01f;
+	//mTransform.rot += 0.01f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// ï`âÊ
 void TestSprite::draw()
 {
-	mRenderer.render(mTransform.XMFLOAT3X3());
+	mRenderer.render(mTransform);
 }
 
 } // namespace

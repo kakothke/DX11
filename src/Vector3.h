@@ -26,6 +26,8 @@ public:
     /// 2“_ŠÔ‚Ì
     /// XMFLOAT3Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
     DirectX::XMFLOAT3 XMFLOAT3() const;
+    /// XMFLOAT4Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
+    DirectX::XMFLOAT4 XMFLOAT4() const;
     /// XMVECTORŒ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
     DirectX::XMVECTOR XMVECTOR() const;
     //@}
