@@ -41,9 +41,6 @@
     <Filter Include="System\Comon">
       <UniqueIdentifier>{ff7c137c-734d-4d4e-bbe6-d00b0e7f7fc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Comon\Math">
-      <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Input">
       <UniqueIdentifier>{12313ad4-9481-45bb-994e-e5354247f4c9}</UniqueIdentifier>
     </Filter>
@@ -85,6 +82,9 @@
     </Filter>
     <Filter Include="Game\GameObject\Enemy">
       <UniqueIdentifier>{3c555d54-045f-4d59-8127-8855af061df5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Comon\Math">
+      <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

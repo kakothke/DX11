@@ -23,7 +23,7 @@ Sound::Sound()
 /// デストラクタ
 Sound::~Sound()
 {
-	for (auto sub : mSubSrc) {
+	for (const auto sub : mSubSrc) {
 		for (auto src : sub.second) {
 			src->DestroyVoice();
 			src = nullptr;
@@ -169,7 +169,7 @@ void Sound::playOneShot(const int& aHandle, const bool& aPlayPausingFlag)
 	}
 
 	// 複製されたデータの状況を調べる
-	for (auto sub : mSubSrc) {
+	for (const auto sub : mSubSrc) {
 		XAUDIO2_VOICE_STATE state;
 		auto itr = mSubSrc[sub.first].begin();
 		while (itr != mSubSrc[sub.first].end()) {
@@ -218,7 +218,7 @@ void Sound::stop(const int& aHandle)
 	// 停止
 	mMainSrc[aHandle].srcVoice->Stop(0, 0);
 	mMainSrc[aHandle].srcVoice->FlushSourceBuffers();
-	for (auto src : mSubSrc[aHandle]) {
+	for (const auto src : mSubSrc[aHandle]) {
 		src->Stop(0, 0);
 		src->FlushSourceBuffers();
 	}
@@ -236,7 +236,7 @@ void Sound::pause(const int& aHandle)
 	}
 	// 一時停止
 	mMainSrc[aHandle].srcVoice->Stop(0, 0);
-	for (auto src : mSubSrc[aHandle]) {
+	for (const auto src : mSubSrc[aHandle]) {
 		src->Stop(0, 0);
 	}
 }
@@ -258,7 +258,7 @@ void Sound::setVolume(const int& aHandle, float aVolume)
 
 	if (nowVolume != aVolume) {
 		mMainSrc[aHandle].srcVoice->SetVolume(aVolume);
-		for (auto src : mSubSrc[aHandle]) {
+		for (const auto src : mSubSrc[aHandle]) {
 			src->SetVolume(aVolume);
 		}
 	}
@@ -288,7 +288,7 @@ void Sound::setLoop(const int& aHandle, const bool& aLoopFlag, const int& aLoopC
 		// ループ解除
 		mMainSrc[aHandle].buffer.LoopCount = 0;
 		mMainSrc[aHandle].srcVoice->ExitLoop();
-		for (auto src : mSubSrc[aHandle]) {
+		for (const auto src : mSubSrc[aHandle]) {
 			src->ExitLoop();
 		}
 	}
@@ -344,7 +344,7 @@ bool Sound::checkIsPlaying(const int& aHandle)
 	if (state.BuffersQueued > 0) {
 		return true;
 	}
-	for (auto src : mSubSrc[aHandle]) {
+	for (const auto src : mSubSrc[aHandle]) {
 		src->GetState(&state);
 		if (state.BuffersQueued > 0) {
 			return true;

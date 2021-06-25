@@ -22,7 +22,7 @@ public:
 	//@ name •ÏŠ·ŠÖ”
 	//@{
 	/// WorldMatrix‚É•ÏŠ·‚µ‚Ä•Ô‚·
-	DirectX::XMMATRIX worldMatrix() const;
+	DirectX::XMMATRIX WorldMatrix() const;
 	//@}
 
 	/// @name ƒƒ“ƒo•Ï”

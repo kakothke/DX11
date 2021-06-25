@@ -13,6 +13,20 @@ const static int MAX = 255;
 const static float CONV = 1.0f / 255.0f;
 
 //-------------------------------------------------------------------------------------------------
+/// static const メンバ変数
+const Color Color::clear = Color(0, 0, 0, 0);
+const Color Color::black = Color(0, 0, 0, 255);
+const Color Color::white = Color(255, 255, 255, 255);
+const Color Color::red = Color(255, 0, 0, 255);
+const Color Color::green = Color(0, 255, 0, 255);
+const Color Color::blue = Color(0, 0, 255, 255);
+const Color Color::cyan = Color(0, 255, 255, 255);
+const Color Color::magenta = Color(255, 0, 255, 255);
+const Color Color::yellow = Color(255, 235, 5, 255);
+const Color Color::gray = Color(128, 128, 128, 255);
+const Color Color::grey = Color::gray;
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Color::Color()
 	: r(MAX)
@@ -48,24 +62,15 @@ Color::Color(int r, int g, int b, int a)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 0~1の範囲に変換する
+/// @return 各要素を0~1の間に変換したXMFLOAT4
 DirectX::XMFLOAT4 Color::RGBA01() const
 {
 	return {
-		(float)r* CONV,
-		(float)g* CONV,
-		(float)b* CONV,
+		(float)r * CONV,
+		(float)g * CONV,
+		(float)b * CONV,
 		(float)a * CONV
-	};
-}
-
-//-------------------------------------------------------------------------------------------------
-DirectX::XMFLOAT4 Color::XMFLOAT4() const
-{
-	return {
-		(float)r,
-		(float)g,
-		(float)b,
-		(float)a
 	};
 }
 
@@ -146,32 +151,14 @@ Color Color::operator /(const Color& aColor) const
 //-------------------------------------------------------------------------------------------------
 bool Color::operator ==(const Color& aColor) const
 {
-	if (r != aColor.r) {
-		return false;
-	}
-	if (g != aColor.g) {
-		return false;
-	}
-	if (b != aColor.b) {
-		return false;
-	}
-	if (a != aColor.a) {
+	if (r != aColor.r || g != aColor.g || b != aColor.b || a != aColor.a) {
 		return false;
 	}
 	return true;
 }
 bool Color::operator !=(const Color& aColor) const
 {
-	if (r == aColor.r) {
-		return false;
-	}
-	if (g == aColor.g) {
-		return false;
-	}
-	if (b == aColor.b) {
-		return false;
-	}
-	if (a == aColor.a) {
+	if (r == aColor.r && g == aColor.g && b == aColor.b && a == aColor.a) {
 		return false;
 	}
 	return true;

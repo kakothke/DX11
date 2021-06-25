@@ -127,8 +127,8 @@ void SpriteRenderer::setAnchor(float aX, float aY)
 /// @param aY •ªŠ„”y
 void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 {
-	mSplit.x = aX;
-	mSplit.y = aY;
+	mSplit.x = (float)aX;
+	mSplit.y = (float)aY;
 }
 
 } // namespace

@@ -45,7 +45,7 @@ void OBJRenderer::render(const Transform& aTransform)
 	UINT strides = sizeof(OBJLoader::OBJVertex);
 	UINT offsets = 0;
 
-	for (auto index : mOBJData->indexes) {
+	for (const auto index : mOBJData->indexes) {
 		// IAに設定する頂点バッファの指定
 		context->IASetVertexBuffers(0, 1, &mOBJData->vertexBuffer, &strides, &offsets);
 		context->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);

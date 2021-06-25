@@ -22,9 +22,9 @@ public:
 	/// @name クォータニオン作成関数
 	//@{
 	/// Axisの周りをAngle度回転する回転を作成する
-	void axisAngle(Vector3 aAxis, float aAngle);
+	static Quaternion AxisAngle(Vector3 aAxis, float aAngle);
 	/// オイラー角で回転を作成する
-	void euler(Vector3 aEulerAngle);
+	static Quaternion Euler(Vector3 aEulerAngle);
 	//@}
 
 	/// @name 変換関数
@@ -37,6 +37,9 @@ public:
 	//@{
 	Quaternion operator -() const;
 	DirectX::XMVECTOR operator *(const Quaternion& aQuaternion) const;
+
+	bool operator ==(const Quaternion& aQuaternion) const;
+	bool operator !=(const Quaternion& aQuaternion) const;
 
 	void operator =(const DirectX::XMVECTOR& aQuaternion);
 	void operator =(const Vector3& aEulerAngle);

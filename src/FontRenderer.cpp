@@ -25,7 +25,7 @@ FontRenderer::FontRenderer()
 /// デストラクタ
 FontRenderer::~FontRenderer()
 {
-	for (auto line : mTextures) {
+	for (const auto line : mTextures) {
 		for (auto tex : line) {
 			if (tex.vertexBuffer) {
 				tex.vertexBuffer->Release();
@@ -77,7 +77,7 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 	float initPosX = aTransform.pos.x;
 
 	// 描画初期位置を変更
-	for (auto line : mTextures) {
+	for (const auto line : mTextures) {
 		aTransform.pos.x = initPosX;
 		// 初期位置計算
 		for (int i = 0; i < line.size(); i++) {
@@ -87,7 +87,7 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 		}
 		// 描画
 		float nextPos = 0;
-		for (auto tex : line) {
+		for (const auto tex : line) {
 			if (!tex.hideFlag) {
 				// IAに設定する頂点バッファの指定
 				context->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
@@ -135,7 +135,7 @@ void FontRenderer::setFont(const LPCTSTR aFontName)
 		mFontName = aFontName;
 		// テクスチャー作成
 		if (mString) {
-			!cretaeFontMesh();
+			cretaeFontMesh();
 		}
 	}
 }
@@ -158,8 +158,8 @@ void FontRenderer::setPivot(float aX, float aY)
 	aY = Math::Clamp(aY, -1.0f, 1.0f);
 
 	DirectX::XMFLOAT2 size(0, 0);
-	for (auto line : mTextures) {
-		for (auto tex : line) {
+	for (const auto line : mTextures) {
+		for (const auto tex : line) {
 			size.x += tex.nextPos;
 		}
 	}
@@ -187,7 +187,7 @@ void FontRenderer::setAnchor(float aX, float aY)
 bool FontRenderer::cretaeFontMesh()
 {
 	// フォントメッシュ初期化
-	for (auto line : mTextures) {
+	for (const auto line : mTextures) {
 		for (auto tex : line) {
 			if (tex.vertexBuffer) {
 				tex.vertexBuffer->Release();
@@ -323,20 +323,20 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 	// vectorに追加
 	TextureData texData;
 	texData.texture = texture;
-	texData.nextPos = iBmpW / 2;
+	texData.nextPos = (float)iBmpW / 2;
 	texData.newLine = 0;
 	texData.hideFlag = false;
 	if (aCode == 32 || aCode == 12288) {
 		// スペース
-		texData.nextPos = gm.gmCellIncX / 2;
+		texData.nextPos = (float)gm.gmCellIncX / 2;
 		texData.hideFlag = true;
 	} else if (aCode == 9) {
 		// インデント
-		texData.nextPos = gm.gmCellIncX * 2;
+		texData.nextPos = (float)gm.gmCellIncX * 2;
 		texData.hideFlag = true;
 	} else if (aCode == 10) {
 		// 改行
-		texData.newLine = gm.gmptGlyphOrigin.y;
+		texData.newLine = (float)gm.gmptGlyphOrigin.y;
 		texData.hideFlag = true;
 	}
 	mTextures[aLineCount].emplace_back(texData);

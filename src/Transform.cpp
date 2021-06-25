@@ -26,7 +26,7 @@ Transform::Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale)
 
 //-------------------------------------------------------------------------------------------------
 /// WorldMatrix‚É•ÏŠ·‚µ‚Ä•Ô‚·
-DirectX::XMMATRIX Transform::worldMatrix() const
+DirectX::XMMATRIX Transform::WorldMatrix() const
 {
 	DirectX::XMMATRIX position = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
 	DirectX::XMMATRIX rotation = DirectX::XMMatrixRotationQuaternion(rot.XMVECTOR());

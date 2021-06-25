@@ -2,11 +2,15 @@
 
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
+#include "Vector2.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// 3次元ベクトル
+/// 前方宣言
+class Vector2;
+
+/// 3Dベクトル
 class Vector3
 {
 public:
@@ -21,11 +25,10 @@ public:
     //@{
     /// ベクトルの長さを返す
     float Magnitude() const;
+    /// ベクトルの2乗の長さを返す
+    float SqrMagnitude() const;
     /// 長さを1に変換したベクトルを返す
     Vector3 Normalized() const;
-    /// 2点間の
-    /// XMFLOAT3型に変換して返す
-    DirectX::XMFLOAT3 XMFLOAT3() const;
     /// XMFLOAT4型に変換して返す
     DirectX::XMFLOAT4 XMFLOAT4() const;
     /// XMVECTOR型に変換して返す
@@ -41,8 +44,6 @@ public:
     Vector3 operator /(float aValue) const;
     Vector3 operator +(const Vector3& aVector) const;
     Vector3 operator -(const Vector3& aVector) const;
-    Vector3 operator *(const Vector3& aVector) const;
-    Vector3 operator /(const Vector3& aVector) const;
 
     bool operator ==(const Vector3& aVector) const;
     bool operator !=(const Vector3& aVector) const;
@@ -54,8 +55,7 @@ public:
     void operator /=(float aValue);
     void operator +=(const Vector3& aVector);
     void operator -=(const Vector3& aVector);
-    void operator *=(const Vector3& aVector);
-    void operator /=(const Vector3& aVector);
+    void operator =(const Vector2& aVector);
     //@}
 
     /// @name メンバ変数
@@ -63,6 +63,26 @@ public:
     float x;
     float y;
     float z;
+    //@}
+
+    /// @name static const メンバ変数
+    //@{
+    /// Vector3(0, 0, 0)と同じ意味
+    const static Vector3 zero;
+    /// Vector3(1, 1, 1)と同じ意味
+    const static Vector3 one;
+    /// Vector3(0, 1, 0)と同じ意味
+    const static Vector3 up;
+    /// Vector3(0, -1, 0)と同じ意味
+    const static Vector3 down;
+    /// Vector3(-1, 0, 0)と同じ意味
+    const static Vector3 left;
+    /// Vector3(1, 0, 0)と同じ意味
+    const static Vector3 right;
+    /// Vector3(0, 0, 1)と同じ意味
+    const static Vector3 forward;
+    /// Vector3(0, 0, -1)と同じ意味
+    const static Vector3 back;
     //@}
 
 };

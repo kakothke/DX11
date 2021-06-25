@@ -24,7 +24,7 @@ void GameCamera::update()
 	mLocalTransform.pos.z = -mDirectionFromPlayer;
 
 	// プレイヤーを親オブジェクトとして連動させる
-	DirectX::XMMATRIX transform = mLocalTransform.worldMatrix() * mPlayerTransform.worldMatrix();
+	DirectX::XMMATRIX transform = mLocalTransform.WorldMatrix() * mPlayerTransform.WorldMatrix();
 	mTransform.pos.x = transform.r[3].m128_f32[0];
 	mTransform.pos.y = transform.r[3].m128_f32[1];
 	mTransform.pos.z = transform.r[3].m128_f32[2];

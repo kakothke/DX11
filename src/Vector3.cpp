@@ -4,6 +4,17 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// static const メンバ変数
+const Vector3 Vector3::zero = Vector3(0, 0, 0);
+const Vector3 Vector3::one = Vector3(1, 1, 1);
+const Vector3 Vector3::up = Vector3(0, 1, 0);
+const Vector3 Vector3::down = Vector3(0, -1, 0);
+const Vector3 Vector3::left = Vector3(-1, 0, 0);
+const Vector3 Vector3::right = Vector3(1, 0, 0);
+const Vector3 Vector3::forward = Vector3(0, 0, 1);
+const Vector3 Vector3::back = Vector3(0, 0, -1);
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Vector3::Vector3()
 	: x(0)
@@ -36,13 +47,23 @@ Vector3::Vector3(float x, float y, float z)
 
 //-------------------------------------------------------------------------------------------------
 /// ベクトルの長さを返す
+/// @return ベクトルの長さ
 float Vector3::Magnitude() const
 {
-	return (float)sqrt(pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0));
+	return (float)sqrt((x * x) + (y * y) + (z * z));
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ベクトルの2乗の長さを返す
+/// @return ベクトルの2乗の長さ
+float Vector3::SqrMagnitude() const
+{
+	return (x * x) + (y * y) + (z * z);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 長さを1に変換したベクトルを返す
+/// @return 長さを1に変換したベクトル
 Vector3 Vector3::Normalized() const
 {
 	float magnitude = Magnitude();
@@ -54,37 +75,28 @@ Vector3 Vector3::Normalized() const
 }
 
 //-------------------------------------------------------------------------------------------------
-/// XMFLOAT3型に変換して返す
-DirectX::XMFLOAT3 Vector3::XMFLOAT3() const
-{
-	return {
-		x,
-		y,
-		z
-	};
-}
-
-//-------------------------------------------------------------------------------------------------
 /// XMFLOAT4型に変換して返す
+/// @return XMFLOAT4
 DirectX::XMFLOAT4 Vector3::XMFLOAT4() const
 {
 	return {
 		x,
 		y,
 		z,
-		1
+		1.0f
 	};
 }
 
 //-------------------------------------------------------------------------------------------------
 /// XMVECTOR型に変換して返す
+/// @return XMVECTOR
 DirectX::XMVECTOR Vector3::XMVECTOR() const
 {
 	return {
 		x,
 		y,
 		z,
-		0
+		1.0f
 	};
 }
 
@@ -145,37 +157,21 @@ Vector3 Vector3::operator -(const Vector3& aVector) const
 		z - aVector.z
 	};
 }
-Vector3 Vector3::operator *(const Vector3& aVector) const
-{
-	return {
-		x * aVector.x,
-		y * aVector.y,
-		z * aVector.z
-	};
-}
-Vector3 Vector3::operator /(const Vector3& aVector) const
-{
-	return {
-		x / aVector.x,
-		y / aVector.y,
-		z / aVector.z
-	};
-}
 
 //-------------------------------------------------------------------------------------------------
 bool Vector3::operator ==(const Vector3& aVector) const
 {
-	if (x != aVector.x || y != aVector.y || z != aVector.z) {
-		return false;
+	if (x == aVector.x && y == aVector.y && z == aVector.z) {
+		return true;
 	}
-	return true;
+	return false;
 }
 bool Vector3::operator !=(const Vector3& aVector) const
 {
-	if (x == aVector.x && y == aVector.y && z == aVector.z) {
-		return false;
+	if (x != aVector.x || y != aVector.y || z != aVector.z) {
+		return true;
 	}
-	return true;
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -221,17 +217,10 @@ void Vector3::operator -=(const Vector3& aVector)
 	y -= aVector.y;
 	z -= aVector.z;
 }
-void Vector3::operator *=(const Vector3& aVector)
+void Vector3::operator =(const Vector2& aVector)
 {
-	x *= aVector.x;
-	y *= aVector.y;
-	z *= aVector.z;
-}
-void Vector3::operator /=(const Vector3& aVector)
-{
-	x /= aVector.x;
-	y /= aVector.y;
-	z /= aVector.z;
+	x = aVector.x;
+	y = aVector.y;
 }
 
 } // namespace

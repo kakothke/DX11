@@ -45,19 +45,23 @@ Quaternion::Quaternion(Vector3 aAxis, float aAngle)
 /// AxisÇÃé¸ÇËÇAngleìxâÒì]Ç∑ÇÈâÒì]ÇçÏê¨Ç∑ÇÈ
 /// @param aAxis âÒì]ï˚å¸
 /// @param aAngle âÒì]ìx
-void Quaternion::axisAngle(Vector3 aAxis, float aAngle)
+Quaternion Quaternion::AxisAngle(Vector3 aAxis, float aAngle)
 {
+	Quaternion out;
 	if (aAxis != Vector3()) {
-		mQuaternion = DirectX::XMQuaternionRotationAxis(aAxis.XMVECTOR(), aAngle);
+		out.mQuaternion = DirectX::XMQuaternionRotationAxis(aAxis.XMVECTOR(), aAngle);
 	}
+	return out;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// ÉIÉCÉâÅ[äpÇ≈âÒì]ÇçÏê¨Ç∑ÇÈ
 /// @param aEulerAngle ÉIÉCÉâÅ[äp
-void Quaternion::euler(Vector3 aEulerAngle)
+Quaternion Quaternion::Euler(Vector3 aEulerAngle)
 {
-	mQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z);
+	Quaternion out;
+	out.mQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z);
+	return out;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -75,10 +79,31 @@ Quaternion Quaternion::operator -() const
 	out.mQuaternion = DirectX::XMQuaternionInverse(mQuaternion);
 	return out;
 }
-
 DirectX::XMVECTOR Quaternion::operator *(const Quaternion& aQuaternion) const
 {
 	return DirectX::XMQuaternionMultiply(mQuaternion, aQuaternion.mQuaternion);
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Quaternion::operator ==(const Quaternion& aQuaternion) const
+{
+	if (mQuaternion.m128_f32[0] == aQuaternion.mQuaternion.m128_f32[0] &&
+		mQuaternion.m128_f32[1] == aQuaternion.mQuaternion.m128_f32[1] &&
+		mQuaternion.m128_f32[2] == aQuaternion.mQuaternion.m128_f32[2] &&
+		mQuaternion.m128_f32[3] == aQuaternion.mQuaternion.m128_f32[3]) {
+		return true;
+	}
+	return false;
+}
+bool Quaternion::operator !=(const Quaternion& aQuaternion) const
+{
+	if (mQuaternion.m128_f32[0] != aQuaternion.mQuaternion.m128_f32[0] ||
+		mQuaternion.m128_f32[1] != aQuaternion.mQuaternion.m128_f32[1] ||
+		mQuaternion.m128_f32[2] != aQuaternion.mQuaternion.m128_f32[2] ||
+		mQuaternion.m128_f32[3] != aQuaternion.mQuaternion.m128_f32[3]) {
+		return true;
+	}
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -86,12 +111,10 @@ void Quaternion::operator =(const DirectX::XMVECTOR& aQuaternion)
 {
 	mQuaternion = aQuaternion;
 }
-
 void Quaternion::operator =(const Vector3& aEulerAngle)
 {
 	mQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z);
 }
-
 void Quaternion::operator *=(const Quaternion& aQuaternion)
 {
 	mQuaternion = operator*(aQuaternion);
