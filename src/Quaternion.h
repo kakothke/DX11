@@ -17,6 +17,7 @@ public:
 	Quaternion(float x, float y, float z, float w);
 	Quaternion(Vector3 aEulerAngle);
 	Quaternion(Vector3 aAxis, float aAngle);
+	Quaternion(DirectX::XMVECTOR aQuaternion);
 	//@}
 
 	/// @name クォータニオン作成関数
@@ -41,7 +42,6 @@ public:
 	bool operator ==(const Quaternion& aQuaternion) const;
 	bool operator !=(const Quaternion& aQuaternion) const;
 
-	void operator =(const DirectX::XMVECTOR& aQuaternion);
 	void operator =(const Vector3& aEulerAngle);
 	void operator *=(const Quaternion& aQuaternion);
 	//@}

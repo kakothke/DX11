@@ -30,7 +30,7 @@ void Player::initialize()
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 
 	// ‰Šúİ’è
-	mDistanceFromBoss = 120;
+	mDistanceFromBoss = 100;
 	mPoseMat = DirectX::XMMatrixIdentity();
 }
 
@@ -78,6 +78,7 @@ void Player::move()
 		DirectX::XMVECTOR transQ = DirectX::XMQuaternionRotationAxis(rotAxis, MOVE_SPEED);
 		DirectX::XMMATRIX transRotMat = DirectX::XMMatrixRotationQuaternion(transQ);
 		localPos = DirectX::XMVector3TransformCoord(localPos, transRotMat);
+		mTransform.rot *= Quaternion(transQ);
 
 		// ˆÚ“®Œãp¨XV
 		DirectX::XMVECTOR x = {}, y = {}, z = {};

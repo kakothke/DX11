@@ -11,9 +11,8 @@ namespace KDXK {
 GameCamera::GameCamera()
 	: mLocalTransform()
 	, mPlayerTransform()
-	, mDirectionFromPlayer(30.0f)
+	, mDirectionFromPlayer(20.0f)
 {
-	mTransform.pos.z = 50;
 }
 
 //-------------------------------------------------------------------------------------------------

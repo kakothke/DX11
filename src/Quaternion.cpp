@@ -42,6 +42,14 @@ Quaternion::Quaternion(Vector3 aAxis, float aAngle)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// コンストラクタ
+/// @param aQuaternion DirectXMathで作成されたクォータニオン
+Quaternion::Quaternion(DirectX::XMVECTOR aQuaternion)
+{
+	mQuaternion = aQuaternion;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// Axisの周りをAngle度回転する回転を作成する
 /// @param aAxis 回転方向
 /// @param aAngle 回転度
@@ -107,10 +115,6 @@ bool Quaternion::operator !=(const Quaternion& aQuaternion) const
 }
 
 //-------------------------------------------------------------------------------------------------
-void Quaternion::operator =(const DirectX::XMVECTOR& aQuaternion)
-{
-	mQuaternion = aQuaternion;
-}
 void Quaternion::operator =(const Vector3& aEulerAngle)
 {
 	mQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z);
