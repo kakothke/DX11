@@ -1,7 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include <math.h>
+#include <DirectXMath.h>
 #include "Vector3.h"
 #include "Quaternion.h"
 
@@ -31,6 +31,10 @@ public:
     float SqrMagnitude() const;
     /// 長さを1に変換したベクトルを返す
     Vector2 Normalized() const;
+    /// XMFLOAT4型に変換して返す
+    DirectX::XMFLOAT4 XMFLOAT4() const;
+    /// XMVECTOR型に変換して返す
+    DirectX::XMVECTOR XMVECTOR() const;
     //@}
 
     /// @ name 演算子オーバーロード

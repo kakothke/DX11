@@ -5,12 +5,12 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// static const メンバ変数
-const Vector2 Vector2::zero = Vector2(0, 0);
-const Vector2 Vector2::one = Vector2(1, 1);
-const Vector2 Vector2::up = Vector2(0, 1);
-const Vector2 Vector2::down = Vector2(0, -1);
-const Vector2 Vector2::left = Vector2(-1, 0);
-const Vector2 Vector2::right = Vector2(1, 0);
+const Vector2 Vector2::zero = Vector2(0.0f, 0.0f);
+const Vector2 Vector2::one = Vector2(1.0f, 1.0f);
+const Vector2 Vector2::up = Vector2(0.0f, 1.0f);
+const Vector2 Vector2::down = Vector2(0.0f, -1.0f);
+const Vector2 Vector2::left = Vector2(-1.0f, 0.0f);
+const Vector2 Vector2::right = Vector2(1.0f, 0.0f);
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -65,6 +65,32 @@ Vector2 Vector2::Normalized() const
 	return {
 		x / magnitude,
 		y / magnitude
+	};
+}
+
+//-------------------------------------------------------------------------------------------------
+/// XMFLOAT4型に変換して返す
+/// @return XMFLOAT4
+DirectX::XMFLOAT4 Vector2::XMFLOAT4() const
+{
+	return {
+		x,
+		y,
+		0.0f,
+		1.0f
+	};
+}
+
+//-------------------------------------------------------------------------------------------------
+/// XMVECTOR型に変換して返す
+/// @return XMVECTOR
+DirectX::XMVECTOR Vector2::XMVECTOR() const
+{
+	return {
+		x,
+		y,
+		0.0f,
+		1.0f
 	};
 }
 

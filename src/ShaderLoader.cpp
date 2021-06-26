@@ -162,7 +162,7 @@ bool ShaderLoader::createInputLayout(const LPCSTR aFileName)
 	const auto device = Direct3D11::getInst()->getDevice();
 	hr = device->CreateInputLayout(
 		&inputLayoutDesc[0],
-		inputLayoutDesc.size(),
+		(UINT)inputLayoutDesc.size(),
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
 		&mShaderData[aFileName].inputLayout

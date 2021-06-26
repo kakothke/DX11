@@ -58,6 +58,15 @@ void Player::setBossPos(const Vector3& aPos)
 /// ˆÚ“®
 void Player::move()
 {
+	static auto input = InputManager::getInst();
+	Vector3 axis;
+	axis.x = input->getAxes().y;
+	axis.y = -input->getAxes().x;
+	Quaternion rotQ = Quaternion::AxisAngle(axis, 0.01f);
+	mTransform.pos -= mBossPos;
+	mTransform.pos *= rotQ;
+	mTransform.rot *= rotQ;
+	mTransform.pos += mBossPos;
 }
 
 //-------------------------------------------------------------------------------------------------
