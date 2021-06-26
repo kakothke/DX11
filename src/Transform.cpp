@@ -19,7 +19,7 @@ Transform::Transform()
 /// @param aScale ‘å‚«‚³
 Transform::Transform(Vector3 aPos, Vector3 aRot, Vector3 aScale)
 	: pos(aPos)
-	, rot(aRot)
+	, rot(Quaternion::Euler(aRot))
 	, scale(aScale)
 {
 }

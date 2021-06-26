@@ -26,7 +26,6 @@ public:
 	void draw() override;
 	//@}
 
-
 protected:
 	/// @name プロテクテッドメンバ関数
 	//@{

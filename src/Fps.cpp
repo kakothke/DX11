@@ -9,7 +9,7 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Fps::Fps()
-	: mFps(0)
+	: mFps(0.0f)
 	, mStartTime(0)
 	, mCounter(0)
 {
@@ -60,8 +60,6 @@ void Fps::wait()
 /// 現在のfpsを描画する
 void Fps::draw() const
 {
-	/*TCHAR debugText[20];
-	_stprintf_s(debugText, 20, _T("%4.1ffps"), mFps);*/
 }
 
 } // namespace

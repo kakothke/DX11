@@ -23,26 +23,6 @@ Quaternion::Quaternion(float x, float y, float z, float w)
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-/// @param aEulerAngle オイラー角
-Quaternion::Quaternion(Vector3 aEulerAngle)
-	: mQuaternion(DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z))
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-/// コンストラクタ
-/// @param aAxis 回転方向
-/// @param aAngle 回転度
-Quaternion::Quaternion(Vector3 aAxis, float aAngle)
-	: mQuaternion(DirectX::XMQuaternionIdentity())
-{
-	if (aAxis != Vector3()) {
-		mQuaternion = DirectX::XMQuaternionRotationAxis(aAxis.XMVECTOR(), aAngle);
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-/// コンストラクタ
 /// @param aQuaternion DirectXMathで作成されたクォータニオン
 Quaternion::Quaternion(DirectX::XMVECTOR aQuaternion)
 {
@@ -81,18 +61,59 @@ const DirectX::XMVECTOR& Quaternion::XMVECTOR() const
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 逆クォータニオンを作成する
 Quaternion Quaternion::operator -() const
 {
 	Quaternion out;
 	out.mQuaternion = DirectX::XMQuaternionInverse(mQuaternion);
 	return out;
 }
-DirectX::XMVECTOR Quaternion::operator *(const Quaternion& aQuaternion) const
+
+//-------------------------------------------------------------------------------------------------
+/// Vector3を回転させる
+Vector3 Quaternion::operator *(const Vector3& aVector) const
 {
-	return DirectX::XMQuaternionMultiply(mQuaternion, aQuaternion.mQuaternion);
+	DirectX::XMVECTOR out = aVector.XMVECTOR();
+	DirectX::XMMATRIX rotMatrix = DirectX::XMMatrixRotationQuaternion(mQuaternion);
+	out = DirectX::XMVector3TransformCoord(out, rotMatrix);
+	return {
+		out.m128_f32[0],
+		out.m128_f32[1],
+		out.m128_f32[2]
+	};
 }
 
 //-------------------------------------------------------------------------------------------------
+/// Vector2を回転させる
+Vector2 Quaternion::operator *(const Vector2& aVector) const
+{
+	DirectX::XMVECTOR out = aVector.XMVECTOR();
+	DirectX::XMMATRIX rotMatrix = DirectX::XMMatrixRotationQuaternion(mQuaternion);
+	out = DirectX::XMVector3TransformCoord(out, rotMatrix);
+	return {
+		out.m128_f32[0],
+		out.m128_f32[1]
+	};
+}
+
+//-------------------------------------------------------------------------------------------------
+/// クォータニオン同士を乗算する*
+Quaternion Quaternion::operator *(const Quaternion& aQuaternion) const
+{
+	Quaternion out;
+	out.mQuaternion = DirectX::XMQuaternionMultiply(mQuaternion, aQuaternion.mQuaternion);
+	return out;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// クォータニオン同士を乗算する*=
+void Quaternion::operator *=(const Quaternion& aQuaternion)
+{
+	mQuaternion = DirectX::XMQuaternionMultiply(mQuaternion, aQuaternion.mQuaternion);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// 等値演算子==
 bool Quaternion::operator ==(const Quaternion& aQuaternion) const
 {
 	if (mQuaternion.m128_f32[0] == aQuaternion.mQuaternion.m128_f32[0] &&
@@ -103,6 +124,9 @@ bool Quaternion::operator ==(const Quaternion& aQuaternion) const
 	}
 	return false;
 }
+
+//-------------------------------------------------------------------------------------------------
+/// 等値演算子!=
 bool Quaternion::operator !=(const Quaternion& aQuaternion) const
 {
 	if (mQuaternion.m128_f32[0] != aQuaternion.mQuaternion.m128_f32[0] ||
@@ -112,16 +136,6 @@ bool Quaternion::operator !=(const Quaternion& aQuaternion) const
 		return true;
 	}
 	return false;
-}
-
-//-------------------------------------------------------------------------------------------------
-void Quaternion::operator =(const Vector3& aEulerAngle)
-{
-	mQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(aEulerAngle.x, aEulerAngle.y, aEulerAngle.z);
-}
-void Quaternion::operator *=(const Quaternion& aQuaternion)
-{
-	mQuaternion = operator*(aQuaternion);
 }
 
 } // namespace

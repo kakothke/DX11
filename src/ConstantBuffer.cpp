@@ -103,7 +103,7 @@ void ConstantBuffer::setMatrixV(const Transform& aTransform)
 		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z
 	};
 	DirectX::XMVECTOR forcus = {
-		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z + 1
+		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z + 1.0f
 	};
 	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
 		aTransform.rot.XMVECTOR()
@@ -145,8 +145,11 @@ void ConstantBuffer::updateMatrix()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// スプライトのワールド行列を設定する
+/// @param aTransform トランスフォーム
+/// @param aPivot 描画原点(-1~1, -1~1)
 void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2& aPivot)
-{	
+{
 	Vector2 split = Vector2((float)mSPRITE.SPLIT.x, (float)mSPRITE.SPLIT.y);
 
 	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
@@ -156,10 +159,10 @@ void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2
 		aTransform.rot.XMVECTOR()
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform.scale.x / split.x, aTransform.scale.y / split.y, 0
+		aTransform.scale.x / split.x, aTransform.scale.y / split.y, 0.0f
 	);
 	DirectX::XMMATRIX pivot = DirectX::XMMatrixTranslation(
-		aPivot.x * (aTransform.scale.x / split.x), aPivot.y * (aTransform.scale.y / split.y), 1
+		aPivot.x * (aTransform.scale.x / split.x), aPivot.y * (aTransform.scale.y / split.y), 1.0f
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos * pivot;
 
@@ -167,6 +170,8 @@ void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2
 }
 
 //-------------------------------------------------------------------------------------------------
+/// スプライトのプロジェクション行列を作成する
+/// @param aAnchor 描画開始位置(-1~1, -1~1)
 void ConstantBuffer::setSpriteMatrixP(const Vector2& aAnchor)
 {
 	DirectX::XMMATRIX anchor = DirectX::XMMatrixIdentity();
@@ -214,9 +219,9 @@ void ConstantBuffer::updateCamera(const Vector3& aPos)
 /// ディレクショナルライト情報を更新する
 void ConstantBuffer::updateDLight(const Vector3& aAngle, const Color& aCol)
 {
-	Vector3 angle(-aAngle.y, aAngle.x, 0);
+	Vector3 angle(-aAngle.y, aAngle.x, 0.0f);
 	mDLIGHT.ANGLE = angle.Normalized().XMFLOAT4();
-	mDLIGHT.COL = aCol.RGBA01();
+	mDLIGHT.COL = aCol.XMFLOAT4();
 
 	// 更新
 	mContext->UpdateSubresource(mBuffers[DLIGHT], 0, NULL, &mDLIGHT, 0, 0);
@@ -228,8 +233,8 @@ void ConstantBuffer::updateDLight(const Vector3& aAngle, const Color& aCol)
 /// カラー情報を更新する
 void ConstantBuffer::updateColor(const Color& aCol0, const Color& aCol1)
 {
-	mCOLOR.COL0 = aCol0.RGBA01();
-	mCOLOR.COL1 = aCol1.RGBA01();
+	mCOLOR.COL0 = aCol0.XMFLOAT4();
+	mCOLOR.COL1 = aCol1.XMFLOAT4();
 
 	// 更新
 	mContext->UpdateSubresource(mBuffers[COLOR], 0, NULL, &mCOLOR, 0, 0);
@@ -243,15 +248,15 @@ void ConstantBuffer::updateMaterial(const OBJLoader::OBJMaterial& aMaterial)
 {
 	// アンビエント
 	mMATERIAL.A = DirectX::XMFLOAT4(
-		aMaterial.ambient[0], aMaterial.ambient[1], aMaterial.ambient[2], 1
+		aMaterial.ambient[0], aMaterial.ambient[1], aMaterial.ambient[2], 1.0f
 	);
 	// ディフューズ
 	mMATERIAL.D = DirectX::XMFLOAT4(
-		aMaterial.diffuse[0], aMaterial.diffuse[1], aMaterial.diffuse[2], 1
+		aMaterial.diffuse[0], aMaterial.diffuse[1], aMaterial.diffuse[2], 1.0f
 	);
 	// スペキュラー
 	mMATERIAL.S = DirectX::XMFLOAT4(
-		aMaterial.specular[0], aMaterial.specular[1], aMaterial.specular[2], 1
+		aMaterial.specular[0], aMaterial.specular[1], aMaterial.specular[2], 1.0f
 	);
 
 	// 更新

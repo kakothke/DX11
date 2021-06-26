@@ -8,19 +8,24 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// 定数
+static const Vector3 DEFAULT_ANGLE = Vector3(50.0f, -30.0f, 0.0f);
+static const Color DEFAULT_COLOR = Color(1.0f, 0.9568627f, 0.8392157, 1.0f);
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 DirectionalLight::DirectionalLight()
-	: mEulerAngle(50, -30, 0)
-	, mColor(255, 244, 214, 255)
+	: mAngle(DEFAULT_ANGLE)
+	, mColor(DEFAULT_COLOR)
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-/// @param aRot 向き
+/// @param aAngle ライトの向き
 DirectionalLight::DirectionalLight(Vector3 aAngle)
-	: mEulerAngle(aAngle)
-	, mColor(255, 244, 214, 255)
+	: mAngle(aAngle)
+	, mColor(DEFAULT_COLOR)
 {
 }
 
@@ -28,17 +33,17 @@ DirectionalLight::DirectionalLight(Vector3 aAngle)
 /// コンストラクタ
 /// @param aColor カラー
 DirectionalLight::DirectionalLight(Color aColor)
-	: mEulerAngle(50, -30, 0)
+	: mAngle(DEFAULT_ANGLE)
 	, mColor(aColor)
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-/// @param aRot 向き
+/// @param aAngle ライトの向き
 /// @param aColor カラー
 DirectionalLight::DirectionalLight(Vector3 aAngle, Color aColor)
-	: mEulerAngle(aAngle)
+	: mAngle(aAngle)
 	, mColor(aColor)
 {
 }
@@ -61,7 +66,7 @@ void DirectionalLight::draw()
 void DirectionalLight::updateConstantBuffer()
 {
 	const static auto cBuf = Direct3D11::getInst()->getConstantBuffer();
-	cBuf->updateDLight(mEulerAngle, mColor);
+	cBuf->updateDLight(mAngle, mColor);
 }
 
 } // namespace

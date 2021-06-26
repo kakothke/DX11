@@ -14,9 +14,9 @@ FontRenderer::FontRenderer()
 	, mFontName(NULL)
 	, mTextures()
 	, mShaderData()
-	, mColor(255, 255, 255, 255)
-	, mPivot(0.5f, 0.5f)
-	, mAnchor(0)
+	, mColor()
+	, mPivot(0.0f, 0.0f)
+	, mAnchor(0.0f, 0.0f)
 {
 	mTextures.clear();
 }
@@ -86,7 +86,7 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 			}
 		}
 		// 描画
-		float nextPos = 0;
+		float nextPos = 0.0f;
 		for (const auto tex : line) {
 			if (!tex.hideFlag) {
 				// IAに設定する頂点バッファの指定
@@ -157,15 +157,15 @@ void FontRenderer::setPivot(float aX, float aY)
 	aX = Math::Clamp(aX, -1.0f, 1.0f);
 	aY = Math::Clamp(aY, -1.0f, 1.0f);
 
-	DirectX::XMFLOAT2 size(0, 0);
+	Vector2 size(0.0f, 0.0f);
 	for (const auto line : mTextures) {
 		for (const auto tex : line) {
 			size.x += tex.nextPos;
 		}
 	}
 
-	mPivot.x = (size.x / 2) * -aX;
-	mPivot.y = (size.y / 2) * aY;
+	mPivot.x = (size.x / 2.0f) * -aX;
+	mPivot.y = (size.y / 2.0f) * aY;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -323,16 +323,16 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 	// vectorに追加
 	TextureData texData;
 	texData.texture = texture;
-	texData.nextPos = (float)iBmpW / 2;
+	texData.nextPos = (float)iBmpW / 2.0f;
 	texData.newLine = 0;
 	texData.hideFlag = false;
 	if (aCode == 32 || aCode == 12288) {
 		// スペース
-		texData.nextPos = (float)gm.gmCellIncX / 2;
+		texData.nextPos = (float)gm.gmCellIncX / 2.0f;
 		texData.hideFlag = true;
 	} else if (aCode == 9) {
 		// インデント
-		texData.nextPos = (float)gm.gmCellIncX * 2;
+		texData.nextPos = (float)gm.gmCellIncX * 2.0f;
 		texData.hideFlag = true;
 	} else if (aCode == 10) {
 		// 改行
@@ -409,51 +409,51 @@ void FontRenderer::createMesh(FontVertex* aVertexes, const int& aIndexNum, const
 	tex2D->Release();
 	tex2D = nullptr;
 
-	float width = (float)desc.Width / 4;
-	float height = (float)desc.Height / 4;
+	float width = (float)desc.Width / 4.0f;
+	float height = (float)desc.Height / 4.0f;
 
 	// 表面
 	{
 		// 頂点0
 		aVertexes[0].pos[0] = -width;
 		aVertexes[0].pos[1] = -height;
-		aVertexes[0].uv[0] = 0;
-		aVertexes[0].uv[1] = 1;
+		aVertexes[0].uv[0] = 0.0f;
+		aVertexes[0].uv[1] = 1.0f;
 		// 頂点1
 		aVertexes[1].pos[0] = width;
 		aVertexes[1].pos[1] = -height;
-		aVertexes[1].uv[0] = 1;
-		aVertexes[1].uv[1] = 1;
+		aVertexes[1].uv[0] = 1.0f;
+		aVertexes[1].uv[1] = 1.0f;
 		// 頂点2
 		aVertexes[2].pos[0] = -width;
 		aVertexes[2].pos[1] = height;
-		aVertexes[2].uv[0] = 0;
-		aVertexes[2].uv[1] = 0;
+		aVertexes[2].uv[0] = 0.0f;
+		aVertexes[2].uv[1] = 0.0f;
 		//// 頂点3
 		aVertexes[3].pos[0] = width;
 		aVertexes[3].pos[1] = height;
-		aVertexes[3].uv[0] = 1;
-		aVertexes[3].uv[1] = 0;
+		aVertexes[3].uv[0] = 1.0f;
+		aVertexes[3].uv[1] = 0.0f;
 		// 頂点4
 		aVertexes[4].pos[0] = -width;
 		aVertexes[4].pos[1] = -height;
-		aVertexes[4].uv[0] = 0;
-		aVertexes[4].uv[1] = 1;
+		aVertexes[4].uv[0] = 0.0f;
+		aVertexes[4].uv[1] = 1.0f;
 		// 頂点5
 		aVertexes[5].pos[0] = width;
 		aVertexes[5].pos[1] = -height;
-		aVertexes[5].uv[0] = 1;
-		aVertexes[5].uv[1] = 1;
+		aVertexes[5].uv[0] = 1.0f;
+		aVertexes[5].uv[1] = 1.0f;
 		// 頂点6
 		aVertexes[6].pos[0] = -width;
 		aVertexes[6].pos[1] = height;
-		aVertexes[6].uv[0] = 0;
-		aVertexes[6].uv[1] = 0;
+		aVertexes[6].uv[0] = 0.0f;
+		aVertexes[6].uv[1] = 0.0f;
 		//// 頂点7
 		aVertexes[7].pos[0] = width;
 		aVertexes[7].pos[1] = height;
-		aVertexes[7].uv[0] = 1;
-		aVertexes[7].uv[1] = 0;
+		aVertexes[7].uv[0] = 1.0f;
+		aVertexes[7].uv[1] = 0.0f;
 	}
 }
 

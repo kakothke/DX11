@@ -8,13 +8,20 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// 定数
+const static float DEFAULT_FOV = 60.0f;
+const static float DEFAULT_NEAR = 0.3f;
+const static float DEFAULT_FAR = 1000.0f;
+const static Vector3 DEFAULT_POS = Vector3(0.0f, 1.0f, -10.0f);
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Camera::Camera()
-	: mFov(60)
-	, mNearZ(0.3f)
-	, mFarZ(1000)
+	: mFov(DEFAULT_FOV)
+	, mNearZ(DEFAULT_NEAR)
+	, mFarZ(DEFAULT_FAR)
 {
-	mTransform.pos = Vector3(0, 1, -10);
+	mTransform.pos = DEFAULT_POS;
 	setTag(GameObjectTag::Camera);
 }
 
@@ -22,9 +29,9 @@ Camera::Camera()
 /// コンストラクタ
 /// @param aTransform トランスフォーム
 Camera::Camera(Transform aTransform)
-	: mFov(60)
-	, mNearZ(0.3f)
-	, mFarZ(1000)
+	: mFov(DEFAULT_FOV)
+	, mNearZ(DEFAULT_NEAR)
+	, mFarZ(DEFAULT_FAR)
 {
 	mTransform = aTransform;
 	setTag(GameObjectTag::Camera);
@@ -38,7 +45,7 @@ Camera::Camera(Vector3 aCameraParam)
 	, mNearZ(aCameraParam.y)
 	, mFarZ(aCameraParam.z)
 {
-	mTransform.pos = Vector3(0, 1, -10);
+	mTransform.pos = DEFAULT_POS;
 	setTag(GameObjectTag::Camera);
 }
 

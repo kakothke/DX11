@@ -12,10 +12,10 @@ namespace KDXK {
 SpriteRenderer::SpriteRenderer()
 	: mSpriteData()
 	, mShaderData()
-	, mColor(255, 255, 255, 255)
+	, mColor()
 	, mPivot(0.5f, 0.5f)
-	, mAnchor(0, 0)
-	, mSplit(1, 1)
+	, mAnchor(0.0f, 0.0f)
+	, mSplit(1.0f, 1.0f)
 {
 }
 

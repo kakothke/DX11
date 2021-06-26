@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include "Direct3D11.h"
 #include "Transform.h"
+#include "Vector2.h"
 #include "Color.h"
 #include "SpriteLoader.h"
 #include "ShaderLoader.h"

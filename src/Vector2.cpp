@@ -176,6 +176,10 @@ void Vector2::operator =(const Vector3& aVector)
 	x = aVector.x;
 	y = aVector.y;
 }
+void Vector2::operator *=(const Quaternion& aQuaternion)
+{
+	*this = aQuaternion.operator*(*this);
+}
 
 } // namespace
 // EOF

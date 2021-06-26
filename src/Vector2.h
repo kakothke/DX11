@@ -3,12 +3,14 @@
 //-------------------------------------------------------------------------------------------------
 #include <math.h>
 #include "Vector3.h"
+#include "Quaternion.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// 前方宣言
 class Vector3;
+class Quaternion;
 
 /// 2Dベクトル
 class Vector2
@@ -52,6 +54,7 @@ public:
     void operator +=(const Vector2& aVector);
     void operator -=(const Vector2& aVector);
     void operator =(const Vector3& aVector);
+    void operator *=(const Quaternion& aQuaternion);
     //@}
 
     /// @name メンバ変数

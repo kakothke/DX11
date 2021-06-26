@@ -38,7 +38,7 @@ protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
 	/// オイラー角の回転方向
-	Vector3 mEulerAngle;
+	Vector3 mAngle;
 	/// カラー
 	Color mColor;
 	//@}

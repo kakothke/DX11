@@ -3,9 +3,14 @@
 //-------------------------------------------------------------------------------------------------
 #include <DirectXMath.h>
 #include "Vector3.h"
+#include "Vector2.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
+
+/// 前方宣言
+class Vector3;
+class Vector2;
 
 /// クォータニオン
 class Quaternion
@@ -15,8 +20,6 @@ public:
 	//@{
 	Quaternion();
 	Quaternion(float x, float y, float z, float w);
-	Quaternion(Vector3 aEulerAngle);
-	Quaternion(Vector3 aAxis, float aAngle);
 	Quaternion(DirectX::XMVECTOR aQuaternion);
 	//@}
 
@@ -36,19 +39,26 @@ public:
 
 	/// @name 演算子オーバーロード
 	//@{
+	/// 逆クォータニオンを作成する
 	Quaternion operator -() const;
-	DirectX::XMVECTOR operator *(const Quaternion& aQuaternion) const;
-
-	bool operator ==(const Quaternion& aQuaternion) const;
-	bool operator !=(const Quaternion& aQuaternion) const;
-
-	void operator =(const Vector3& aEulerAngle);
+	/// Vector3を回転させる
+	Vector3 operator *(const Vector3& aVector) const;
+	/// Vector2を回転させる
+	Vector2 operator *(const Vector2& aVector) const;
+	/// クォータニオン同士の乗算*
+	Quaternion operator *(const Quaternion& aQuaternion) const;
+	/// クォータニオン同士の乗算*=
 	void operator *=(const Quaternion& aQuaternion);
+	/// 等値演算子==
+	bool operator ==(const Quaternion& aQuaternion) const;
+	/// 等値演算子!=
+	bool operator !=(const Quaternion& aQuaternion) const;
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
+	/// DirectXMathクォータニオン
 	DirectX::XMVECTOR mQuaternion;
 	//@}
 
