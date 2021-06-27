@@ -9,6 +9,10 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SceneManager::SceneManager()
 	: mSceneStack()
@@ -39,12 +43,11 @@ void SceneManager::update()
 void SceneManager::draw()
 {
 	if (!mSceneStack.empty()) {
-		const static auto d3d11 = Direct3D11::getInst();
-		d3d11->zBufferOff();
+		D3D11->zBufferOff();
 		mSceneStack.top()->drawBackground();
-		d3d11->zBufferOn();
+		D3D11->zBufferOn();
 		mSceneStack.top()->draw();
-		d3d11->zBufferOff();
+		D3D11->zBufferOff();
 		mSceneStack.top()->draw2D();
 	}
 }

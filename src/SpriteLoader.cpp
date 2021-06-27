@@ -4,7 +4,13 @@
 #include "Direct3D11.h"
 #include "TextureLoader.h"
 
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
+
+//-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+const static auto TEXTURE_LOADER = TextureLoader::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -46,9 +52,8 @@ bool SpriteLoader::load(const LPCSTR aFileName)
 	if (!std::ifstream(aFileName)) {
 		MessageBox(nullptr, TEXT("読み込もうとしているスプライトが存在しません。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
 		return false;
-	}
-	const auto texture = TextureLoader::getInst();
-	if (!texture->load(aFileName)) {
+	}	
+	if (!TEXTURE_LOADER->load(aFileName)) {
 		return false;
 	}
 	if (!createVertexBuffer(aFileName)) {
@@ -123,8 +128,7 @@ bool SpriteLoader::createVertexBuffer(const LPCSTR aFileName)
 
 	// バッファ作成
 	HRESULT hr;
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateBuffer(&bufferDesc, &subResource, &mSpriteData[aFileName].vertexBuffer);
+	hr = D3D11->getDevice()->CreateBuffer(&bufferDesc, &subResource, &mSpriteData[aFileName].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -139,8 +143,7 @@ bool SpriteLoader::createVertexBuffer(const LPCSTR aFileName)
 void SpriteLoader::createMesh(const LPCSTR aFileName, SpriteVertex* aVertexes)
 {
 	// テクスチャーのサイズを参照
-	const auto texture = TextureLoader::getInst();
-	DirectX::XMFLOAT2 size = texture->getTextureSize(aFileName);
+	DirectX::XMFLOAT2 size = TEXTURE_LOADER->getTextureSize(aFileName);
 
 	float width = (float)size.x / 2;
 	float height = (float)size.y / 2;

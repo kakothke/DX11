@@ -8,6 +8,13 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+const static auto TEXTURE_LOADER = TextureLoader::getInst();
+const static auto SPRITE_LOADER = SpriteLoader::getInst();
+const static auto SHADER_LOADER = ShaderLoader::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SpriteRenderer::SpriteRenderer()
 	: mSpriteData()
@@ -35,35 +42,29 @@ void SpriteRenderer::render(const Transform& aTransform)
 		return;
 	}
 
-	// Direct3D11取得
-	const static auto d3D11 = Direct3D11::getInst();
-	const static auto context = d3D11->getContext();
-	const static auto constantBuffer = d3D11->getConstantBuffer();
-
 	// プリミティブの形状を指定
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	D3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// シェーダーの指定
-	d3D11->setShader(mShaderData);
+	D3D11->setShader(mShaderData);
 
 	UINT strides = sizeof(SpriteLoader::SpriteVertex);
 	UINT offsets = 0;
 
 	// IAに設定する頂点バッファの指定
-	context->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
+	D3D11->getContext()->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
-	constantBuffer->updateColor(mColor, mColor);
-	constantBuffer->setSpriteSplit(mSplit);
-	constantBuffer->setSpriteMatrixW(aTransform, mPivot);
-	constantBuffer->updateSprite();
+	D3D11->getConstantBuffer()->updateColor(mColor, mColor);
+	D3D11->getConstantBuffer()->setSpriteSplit(mSplit);
+	D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
+	D3D11->getConstantBuffer()->updateSprite();
 
-	// テクスチャーセット
-	const static auto tex = TextureLoader::getInst();
-	d3D11->setTexture(tex->getTexture(mSpriteData->fileName));
+	// テクスチャーセット	
+	D3D11->setTexture(TEXTURE_LOADER->getTexture(mSpriteData->fileName));
 
 	// 描画
-	context->Draw(4, 0);
+	D3D11->getContext()->Draw(4, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -71,8 +72,7 @@ void SpriteRenderer::render(const Transform& aTransform)
 /// @param aFileName ファイルパス
 void SpriteRenderer::setSprite(const LPCSTR aFileName)
 {
-	const auto sprite = SpriteLoader::getInst()->getSpriteData(aFileName);
-	mSpriteData = sprite;
+	mSpriteData = SPRITE_LOADER->getSpriteData(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -80,8 +80,7 @@ void SpriteRenderer::setSprite(const LPCSTR aFileName)
 /// @param aFileName ファイルパス
 void SpriteRenderer::setShader(const LPCSTR aFileName)
 {
-	const auto shader = ShaderLoader::getInst()->getShaderData(aFileName);
-	mShaderData = shader;
+	mShaderData = SHADER_LOADER->getShaderData(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -101,8 +100,7 @@ void SpriteRenderer::setPivot(float aX, float aY)
 	aX = Math::Clamp(aX, -1.0f, 1.0f);
 	aY = Math::Clamp(aY, -1.0f, 1.0f);
 
-	const auto tex = TextureLoader::getInst();
-	DirectX::XMFLOAT2 size = tex->getTextureSize(mSpriteData->fileName);
+	DirectX::XMFLOAT2 size = TEXTURE_LOADER->getTextureSize(mSpriteData->fileName);
 
 	mPivot.x = (size.x / 2) * -aX;
 	mPivot.y = (size.y / 2) * aY;

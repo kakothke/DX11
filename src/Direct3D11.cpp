@@ -7,6 +7,10 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto WINDOW = Window::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Direct3D11::Direct3D11()
 	: mDevice(nullptr)
@@ -203,19 +207,17 @@ ConstantBuffer* Direct3D11::getConstantBuffer()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDeviceAndSwapChain()
 {
-	const auto window = Window::getInst();
-	const auto hWnd = window->hWnd();
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
 	sd.BufferCount = 1;
-	sd.BufferDesc.Width = window->windowWidth();
-	sd.BufferDesc.Height = window->windowHeight();
+	sd.BufferDesc.Width = WINDOW->windowWidth();
+	sd.BufferDesc.Height = WINDOW->windowHeight();
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd.OutputWindow = hWnd;
+	sd.OutputWindow = WINDOW->hWnd();
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = true;
@@ -271,11 +273,9 @@ bool Direct3D11::createRenderTargetView()
 /// @return 作成結果 成功(true)
 bool Direct3D11::createDepthAndStencil()
 {
-	const auto window = Window::getInst();
-
 	D3D11_TEXTURE2D_DESC descDepth;
-	descDepth.Width = window->windowWidth();
-	descDepth.Height = window->windowHeight();
+	descDepth.Width = WINDOW->windowWidth();
+	descDepth.Height = WINDOW->windowHeight();
 	descDepth.MipLevels = 1;
 	descDepth.ArraySize = 1;
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -389,11 +389,9 @@ bool Direct3D11::createBlendState()
 /// ビューポートを設定する
 void Direct3D11::setUpViewPort()
 {
-	const auto window = Window::getInst();
-
 	D3D11_VIEWPORT vp;
-	vp.Width = window->windowWidth();
-	vp.Height = window->windowHeight();
+	vp.Width = WINDOW->windowWidth();
+	vp.Height = WINDOW->windowHeight();
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;

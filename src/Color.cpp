@@ -8,9 +8,9 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// 定数
-const static float COLOR_MIN = 0.0f;
-const static float COLOR_MAX = 1.0f;
-const static float COLOR32 = 1.0f / 255.0f;
+const static float DEFINE_COLOR_MIN = 0.0f;
+const static float DEFINE_COLOR_MAX = 1.0f;
+const static float DEFINE_COLOR32 = 1.0f / 255.0f;
 
 //-------------------------------------------------------------------------------------------------
 /// static const メンバ変数
@@ -29,10 +29,10 @@ const Color Color::grey = Color::gray;
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Color::Color()
-	: r(COLOR_MAX)
-	, g(COLOR_MAX)
-	, b(COLOR_MAX)
-	, a(COLOR_MAX)
+	: r(DEFINE_COLOR_MAX)
+	, g(DEFINE_COLOR_MAX)
+	, b(DEFINE_COLOR_MAX)
+	, a(DEFINE_COLOR_MAX)
 {
 }
 
@@ -40,10 +40,10 @@ Color::Color()
 /// コンストラクタ
 /// @param RGBA(0~1)
 Color::Color(float rgba)
-	: r(Math::Clamp(rgba, COLOR_MIN, COLOR_MAX))
-	, g(Math::Clamp(rgba, COLOR_MIN, COLOR_MAX))
-	, b(Math::Clamp(rgba, COLOR_MIN, COLOR_MAX))
-	, a(Math::Clamp(rgba, COLOR_MIN, COLOR_MAX))
+	: r(Math::Clamp(rgba, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, g(Math::Clamp(rgba, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, b(Math::Clamp(rgba, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, a(Math::Clamp(rgba, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
 {
 }
 
@@ -54,10 +54,10 @@ Color::Color(float rgba)
 /// @param B(0~1)
 /// @param A(0~1)
 Color::Color(float r, float g, float b, float a)
-	: r(Math::Clamp(r, COLOR_MIN, COLOR_MAX))
-	, g(Math::Clamp(g, COLOR_MIN, COLOR_MAX))
-	, b(Math::Clamp(b, COLOR_MIN, COLOR_MAX))
-	, a(Math::Clamp(a, COLOR_MIN, COLOR_MAX))
+	: r(Math::Clamp(r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, g(Math::Clamp(g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, b(Math::Clamp(b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
+	, a(Math::Clamp(a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX))
 {
 }
 
@@ -71,10 +71,10 @@ Color::Color(float r, float g, float b, float a)
 Color Color::Color32(int R, int G, int B, int A)
 {
 	Color out;
-	out.r = (float)Math::Clamp(R, 0, 255) * COLOR32;
-	out.g = (float)Math::Clamp(G, 0, 255) * COLOR32;
-	out.b = (float)Math::Clamp(B, 0, 255) * COLOR32;
-	out.a = (float)Math::Clamp(A, 0, 255) * COLOR32;
+	out.r = (float)Math::Clamp(R, 0, 255) * DEFINE_COLOR32;
+	out.g = (float)Math::Clamp(G, 0, 255) * DEFINE_COLOR32;
+	out.b = (float)Math::Clamp(B, 0, 255) * DEFINE_COLOR32;
+	out.a = (float)Math::Clamp(A, 0, 255) * DEFINE_COLOR32;
 	return out;
 }
 
@@ -95,73 +95,73 @@ DirectX::XMFLOAT4 Color::XMFLOAT4() const
 Color Color::operator +(float aValue) const
 {
 	return {
-		Math::Clamp(r + aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g + aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b + aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a + aValue, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator -(float aValue) const
 {
 	return {
-		Math::Clamp(r - aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g - aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b - aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a - aValue, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator *(float aValue) const
 {
 	return {
-		Math::Clamp(r * aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g * aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b * aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a * aValue, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator /(float aValue) const
 {
 	return {
-		Math::Clamp(r / aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g / aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b / aValue, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a / aValue, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator +(const Color& aColor) const
 {
 	return {
-		Math::Clamp(r + aColor.r, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g + aColor.g, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b + aColor.b, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a + aColor.a, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r + aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g + aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b + aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a + aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator -(const Color& aColor) const
 {
 	return {
-		Math::Clamp(r - aColor.r, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g - aColor.g, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b - aColor.b, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a - aColor.a, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r - aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g - aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b - aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a - aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator *(const Color& aColor) const
 {
 	return {
-		Math::Clamp(r * aColor.r, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g * aColor.g, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b * aColor.b, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a * aColor.a, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r * aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g * aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b * aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a * aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 Color Color::operator /(const Color& aColor) const
 {
 	return {
-		Math::Clamp(r / aColor.r, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(g / aColor.g, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(b / aColor.b, COLOR_MIN, COLOR_MAX),
-		Math::Clamp(a / aColor.a, COLOR_MIN, COLOR_MAX)
+		Math::Clamp(r / aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(g / aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(b / aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX),
+		Math::Clamp(a / aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX)
 	};
 }
 
@@ -184,7 +184,7 @@ bool Color::operator !=(const Color& aColor) const
 //-------------------------------------------------------------------------------------------------
 void Color::operator =(float aValue)
 {
-	aValue = Math::Clamp(aValue, COLOR_MIN, COLOR_MAX);
+	aValue = Math::Clamp(aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 	r = aValue;
 	g = aValue;
 	b = aValue;
@@ -192,59 +192,59 @@ void Color::operator =(float aValue)
 }
 void Color::operator +=(float aValue)
 {
-	r = Math::Clamp(r + aValue, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g + aValue, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b + aValue, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a + aValue, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a + aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator -=(float aValue)
 {
-	r = Math::Clamp(r - aValue, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g - aValue, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b - aValue, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a - aValue, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a - aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator *=(float aValue)
 {
-	r = Math::Clamp(r * aValue, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g * aValue, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b * aValue, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a * aValue, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a * aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator /=(float aValue)
 {
-	r = Math::Clamp(r / aValue, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g / aValue, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b / aValue, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a / aValue, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a / aValue, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator +=(const Color& aColor)
 {
-	r = Math::Clamp(r + aColor.r, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g + aColor.g, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b + aColor.b, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a + aColor.a, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r + aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g + aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b + aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a + aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator -=(const Color& aColor)
 {
-	r = Math::Clamp(r - aColor.r, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g - aColor.g, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b - aColor.b, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a - aColor.a, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r - aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g - aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b - aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a - aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator *=(const Color& aColor)
 {
-	r = Math::Clamp(r * aColor.r, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g * aColor.g, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b * aColor.b, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a * aColor.a, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r * aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g * aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b * aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a * aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 void Color::operator /=(const Color& aColor)
 {
-	r = Math::Clamp(r / aColor.r, COLOR_MIN, COLOR_MAX);
-	g = Math::Clamp(g / aColor.g, COLOR_MIN, COLOR_MAX);
-	b = Math::Clamp(b / aColor.b, COLOR_MIN, COLOR_MAX);
-	a = Math::Clamp(a / aColor.a, COLOR_MIN, COLOR_MAX);
+	r = Math::Clamp(r / aColor.r, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	g = Math::Clamp(g / aColor.g, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	b = Math::Clamp(b / aColor.b, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
+	a = Math::Clamp(a / aColor.a, DEFINE_COLOR_MIN, DEFINE_COLOR_MAX);
 }
 
 } // namespace

@@ -12,6 +12,13 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto WINDOW = Window::getInst();
+const static auto D3D11 = Direct3D11::getInst();
+const static auto INPUT = Input::getInst();
+const static auto SOUND = Sound::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SystemMain::SystemMain()
 {
@@ -22,24 +29,20 @@ SystemMain::SystemMain()
 /// @return 初期化結果 成功(true)
 bool SystemMain::initialize()
 {
-	// ウィンドウ初期化
-	const auto window = Window::getInst();
-	if (!window->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
+	// ウィンドウ初期化	
+	if (!WINDOW->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
 		return false;
 	}
-	// Direct3D11初期化
-	const auto d3d11 = Direct3D11::getInst();
-	if (!d3d11->initialize()) {
+	// Direct3D11初期化	
+	if (!D3D11->initialize()) {
 		return false;
 	}
 	// Input初期化
-	const auto input = Input::getInst();
-	if (!input->initialize()) {
+	if (!INPUT->initialize()) {
 		return false;
 	}
 	// Sound初期化
-	const auto sound = Sound::getInst();
-	if (!sound->initialize()) {
+	if (!SOUND->initialize()) {
 		return false;
 	}
 
@@ -56,12 +59,9 @@ void SystemMain::msgLoop()
 		return;
 	}
 
-	// ウィンドウを表示
-	{
-		const auto hWnd = Window::getInst()->hWnd();
-		ShowWindow(hWnd, SW_SHOW);
-		UpdateWindow(hWnd);
-	}
+	// ウィンドウを表示	
+	ShowWindow(WINDOW->hWnd(), SW_SHOW);
+	UpdateWindow(WINDOW->hWnd());
 
 	// メッセージループ
 	MSG msg;

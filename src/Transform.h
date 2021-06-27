@@ -20,6 +20,12 @@ public:
 
 	//@ name 変換関数
 	//@{
+	/// オブジェクトの右方向のベクトルを返す
+	Vector3 Right();
+	/// オブジェクトの上方向のベクトルを返す
+	Vector3 Up();
+	/// オブジェクトの前方向のベクトルを返す
+	Vector3 Forward();
 	/// WorldMatrixに変換して返す
 	DirectX::XMMATRIX WorldMatrix() const;
 	//@}

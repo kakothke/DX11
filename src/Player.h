@@ -16,9 +16,8 @@ public:
 	Player();
 	//@}
 
-	/// @name 初期化/更新/描画
+	/// @name 更新/描画
 	//@{
-	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}
@@ -39,14 +38,9 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	OBJRenderer mRenderer;
-	Vector2 mVelocity;
-	float mDistanceFromBoss;
-	DirectX::XMMATRIX mPoseMat;
-	//@}
-
-	/// @name 他のオブジェクトとの繋がり
-	//@{
-	Vector3 mBossPos;
+	Vector3 mTargetPos;
+	float mTargetDistance;
+	float mMoveVelocity;
 	//@}
 
 };

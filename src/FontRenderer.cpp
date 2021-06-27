@@ -8,6 +8,12 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+const static auto SHADER_LOADER = ShaderLoader::getInst();
+const static auto FONT_LOADER = FontLoader::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 FontRenderer::FontRenderer()
 	: mString(NULL)
@@ -60,16 +66,11 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 		}
 	}
 
-	// Direct3D11取得
-	const static auto d3D11 = Direct3D11::getInst();
-	const static auto context = d3D11->getContext();
-	const static auto constantBuffer = d3D11->getConstantBuffer();
-
 	// プリミティブの形状を指定
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	D3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// シェーダーの指定
-	d3D11->setShader(mShaderData);
+	D3D11->setShader(mShaderData);
 
 	UINT strides = sizeof(FontVertex);
 	UINT offsets = 0;
@@ -90,19 +91,19 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 		for (const auto tex : line) {
 			if (!tex.hideFlag) {
 				// IAに設定する頂点バッファの指定
-				context->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
+				D3D11->getContext()->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
 
 				// コンスタントバッファを更新
-				constantBuffer->updateColor(mColor, mColor);
-				constantBuffer->setSpriteMatrixW(aTransform, mPivot);
-				constantBuffer->setSpriteMatrixP(mAnchor);
-				constantBuffer->updateSprite();
+				D3D11->getConstantBuffer()->updateColor(mColor, mColor);
+				D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
+				D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);
+				D3D11->getConstantBuffer()->updateSprite();
 
 				// テクスチャーセット
-				d3D11->setTexture(tex.texture);
+				D3D11->setTexture(tex.texture);
 
 				// 描画
-				context->Draw(8, 0);
+				D3D11->getContext()->Draw(8, 0);
 			}
 
 			// 描画位置をずらす
@@ -122,8 +123,7 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 /// @param aFileName シェーダーのファイルパス
 void FontRenderer::setShader(const LPCSTR aFileName)
 {
-	const auto shader = ShaderLoader::getInst()->getShaderData(aFileName);
-	mShaderData = shader;
+	mShaderData = SHADER_LOADER->getShaderData(aFileName);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ bool FontRenderer::cretaeFontMesh()
 bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 {
 	// フォントビットマップ取得
-	const auto hdc = FontLoader::getInst()->hdc(mFontName);
+	const auto hdc = FONT_LOADER->hdc(mFontName);
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc, &tm);
 	GLYPHMETRICS gm;
@@ -271,16 +271,14 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 	HRESULT hr;
-	ID3D11Texture2D* tex2D;
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateTexture2D(&desc, 0, &tex2D);
+	ID3D11Texture2D* tex2D;	
+	hr = D3D11->getDevice()->CreateTexture2D(&desc, 0, &tex2D);
 	if (FAILED(hr)) {
 		return false;
 	}
 
 	D3D11_MAPPED_SUBRESOURCE hMappedResource;
-	const auto context = Direct3D11::getInst()->getContext();
-	hr = context->Map(tex2D, 0, D3D11_MAP_WRITE_DISCARD, 0, &hMappedResource);
+	hr = D3D11->getContext()->Map(tex2D, 0, D3D11_MAP_WRITE_DISCARD, 0, &hMappedResource);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -302,7 +300,7 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 			memcpy((BYTE*)pBits + hMappedResource.RowPitch * y + 4 * x, &col, sizeof(DWORD));
 		}
 	}
-	context->Unmap(tex2D, 0);
+	D3D11->getContext()->Unmap(tex2D, 0);
 	delete[] pMono;
 
 	// ShaderResourceViewの情報を作成する
@@ -315,7 +313,7 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 
 	// ShaderResourceViewを作成する
 	ID3D11ShaderResourceView* texture;
-	hr = device->CreateShaderResourceView(tex2D, &srvDesc, &texture);
+	hr = D3D11->getDevice()->CreateShaderResourceView(tex2D, &srvDesc, &texture);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -382,8 +380,7 @@ bool FontRenderer::createVertexBuffer(const int& aIndexNum, const int& aLineCoun
 
 	// バッファ作成
 	HRESULT hr;
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateBuffer(&bufferDesc, &subResource, &mTextures[aLineCount][aIndexNum].vertexBuffer);
+	hr = D3D11->getDevice()->CreateBuffer(&bufferDesc, &subResource, &mTextures[aLineCount][aIndexNum].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
 	}

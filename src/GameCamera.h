@@ -36,7 +36,7 @@ private:
 	/// プレイヤートランスフォーム
 	Transform mPlayerTransform;
 	/// プレイヤーとの距離
-	float mDirectionFromPlayer;
+	float mDistanceFromPlayer;
 	//@}
 
 };

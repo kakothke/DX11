@@ -10,6 +10,12 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+const static auto INPUT_MANAGER = InputManager::getInst();
+const static auto RESOURCE = ResourceManager::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Game::Game()
 	: mSceneManager()
@@ -21,9 +27,8 @@ Game::Game()
 /// 初期化処理
 bool Game::initialize()
 {
-	// リソース初期化
-	const auto resource = ResourceManager::getInst();
-	resource->initialize();
+	// リソース初期化	
+	RESOURCE->initialize();
 
 	// 最初に読み込むシーンをセット
 	mSceneManager.changeScene(SceneList::Game);
@@ -37,15 +42,13 @@ bool Game::initialize()
 bool Game::mainLoop()
 {
 	// 入力状況
-	const static auto inputManager = InputManager::getInst();
-	inputManager->update();
+	INPUT_MANAGER->update();
 
 	// ゲーム内部
-	const static auto d3d11 = Direct3D11::getInst();
-	d3d11->drawStart(Define::ClearColor);
+	D3D11->drawStart(Define::ClearColor);
 	mSceneManager.update();
 	mSceneManager.draw();
-	d3d11->drawEnd();
+	D3D11->drawEnd();
 
 	// fps制御
 	mFps.update();

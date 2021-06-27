@@ -12,6 +12,11 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+const static auto TEXTURE_LOADER = TextureLoader::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 OBJLoader::OBJLoader()
 	: mOBJData()
@@ -275,9 +280,8 @@ bool OBJLoader::loadMtlFile(const LPCSTR aFileName, const std::vector<std::strin
 			// テクスチャ
 			else if (line.substr(0, 6) == "map_Kd") {
 				std::string texName = filePath + line.substr(7);
-				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;
-				const auto texture = TextureLoader::getInst();
-				texture->load(texName.c_str());
+				mOBJData[aFileName].materials[newmtlName].textureFileName = texName;				
+				TEXTURE_LOADER->load(texName.c_str());
 			}
 		}
 	}
@@ -322,8 +326,7 @@ bool OBJLoader::createVertexBuffer(const LPCSTR aFileName, const std::vector<OBJ
 
 	// バッファ作成
 	HRESULT hr;
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].vertexBuffer);
+	hr = D3D11->getDevice()->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].vertexBuffer);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -370,8 +373,7 @@ bool OBJLoader::createIndexBuffer(const LPCSTR aFileName)
 
 		// バッファ作成
 		HRESULT hr;
-		const auto device = Direct3D11::getInst()->getDevice();
-		hr = device->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].indexBuffers[cnt]);
+		hr = D3D11->getDevice()->CreateBuffer(&bufferDesc, &subResource, &mOBJData[aFileName].indexBuffers[cnt]);
 		if (FAILED(hr)) {
 			return false;
 		}

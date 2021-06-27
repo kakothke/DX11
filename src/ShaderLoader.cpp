@@ -9,6 +9,10 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 ShaderLoader::ShaderLoader()
 	: mShaderData()
@@ -101,8 +105,7 @@ bool ShaderLoader::createVertexShader(const LPCSTR aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].vs);
+	hr = D3D11->getDevice()->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].vs);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -159,8 +162,7 @@ bool ShaderLoader::createInputLayout(const LPCSTR aFileName)
 	reflection = nullptr;
 
 	// 頂点レイアウト作成
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreateInputLayout(
+	hr = D3D11->getDevice()->CreateInputLayout(
 		&inputLayoutDesc[0],
 		(UINT)inputLayoutDesc.size(),
 		blob->GetBufferPointer(),
@@ -245,8 +247,7 @@ bool ShaderLoader::createPixelShader(const LPCSTR aFileName)
 	if (FAILED(hr)) {
 		return false;
 	}
-	const auto device = Direct3D11::getInst()->getDevice();
-	hr = device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].ps);
+	hr = D3D11->getDevice()->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &mShaderData[aFileName].ps);
 	if (FAILED(hr)) {
 		return false;
 	}

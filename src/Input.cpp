@@ -7,6 +7,10 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto WINDOW = Window::getInst();
+
+//-------------------------------------------------------------------------------------------------
 Input::Input()
 	: mInterface(nullptr)
 	, mKeyDevice(nullptr)
@@ -95,8 +99,7 @@ bool Input::initializeKey()
 	}
 
 	// 協調モードの設定をする
-	const auto hWnd = Window::getInst()->hWnd();
-	hr = mKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	hr = mKeyDevice->SetCooperativeLevel(WINDOW->hWnd(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -125,8 +128,7 @@ bool Input::initializeMouse()
 	}
 
 	// 協調モードの設定をする
-	const auto hWnd = Window::getInst()->hWnd();
-	hr = mMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	hr = mMouseDevice->SetCooperativeLevel(WINDOW->hWnd(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(hr)) {
 		return false;
 	}
@@ -173,8 +175,7 @@ void Input::updateMouse()
 	GetCursorPos(&mousePos);
 
 	// スクリーン座標をクライアント座標に変換する
-	const static auto hWnd = Window::getInst()->hWnd();
-	ScreenToClient(hWnd, &mousePos);
+	ScreenToClient(WINDOW->hWnd(), &mousePos);
 
 	// 変換した座標を保存
 	mMousePos.x = (float)mousePos.x;

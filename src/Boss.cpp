@@ -7,11 +7,15 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// 定数
+const static Vector3 DEFINE_POS = Vector3(0.0f, 0.0f, 200.0f);
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Boss::Boss()
 {
 	// 初期位置
-	mTransform.pos.z = 200;
+	mTransform.pos = DEFINE_POS;
 
 	// 描画設定
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Boss));

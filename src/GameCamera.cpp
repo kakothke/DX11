@@ -7,11 +7,15 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// 定数
+const static float DEFINE_DISTANCE = 20.0f;
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameCamera::GameCamera()
 	: mLocalTransform()
 	, mPlayerTransform()
-	, mDirectionFromPlayer(20.0f)
+	, mDistanceFromPlayer(DEFINE_DISTANCE)
 {
 }
 
@@ -20,7 +24,7 @@ GameCamera::GameCamera()
 void GameCamera::update()
 {
 	// ローカル位置を設定
-	mLocalTransform.pos.z = -mDirectionFromPlayer;
+	mLocalTransform.pos.z = -mDistanceFromPlayer;
 
 	// プレイヤーを親オブジェクトとして連動させる
 	DirectX::XMMATRIX transform = mLocalTransform.WorldMatrix() * mPlayerTransform.WorldMatrix();

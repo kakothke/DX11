@@ -4,6 +4,13 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+const static auto OBJ_LOADER = OBJLoader::getInst();
+const static auto SPRITE_LOADER = SpriteLoader::getInst();
+const static auto SHADER_LOADER = ShaderLoader::getInst();
+const static auto SOUND = Sound::getInst();
+const static auto FONT_LOADER = FontLoader::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 ResourceManager::ResourceManager()
 {
@@ -20,34 +27,29 @@ ResourceManager::~ResourceManager()
 void ResourceManager::initialize()
 {
 	// OBJs
-	const auto obj = OBJLoader::getInst();
-	obj->load(ResourceFileName::OBJ.at(OBJList::Boss));
-	obj->load(ResourceFileName::OBJ.at(OBJList::Player));
-	obj->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Boss));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Player));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
 
 	// Sprites
-	const auto sprite = SpriteLoader::getInst();
-	sprite->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	SPRITE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
-	const auto shader = ShaderLoader::getInst();
-	shader->load(ResourceFileName::Shader.at(ShaderList::Unlit));
-	shader->load(ResourceFileName::Shader.at(ShaderList::Standard));
-	shader->load(ResourceFileName::Shader.at(ShaderList::Sprite));
-	shader->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
+	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));
+	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Standard));
+	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Sprite));
+	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
 
 	// BGM
-	const auto sound = Sound::getInst();
-	mBGMHandle[BGMList::Test] = sound->load(ResourceFileName::BGM.at(BGMList::Test));
-	sound->setLoop(mBGMHandle[BGMList::Test], true, 2);
-	sound->setLoopPos(mBGMHandle[BGMList::Test], 855273, 2565818);
+	mBGMHandle[BGMList::Test] = SOUND->load(ResourceFileName::BGM.at(BGMList::Test));
+	SOUND->setLoop(mBGMHandle[BGMList::Test], true, 2);
+	SOUND->setLoopPos(mBGMHandle[BGMList::Test], 855273, 2565818);
 
 	// SE
-	const auto font = FontLoader::getInst();
-	mSEHandle[SEList::Test] = sound->load(ResourceFileName::SE.at(SEList::Test));
+	mSEHandle[SEList::Test] = SOUND->load(ResourceFileName::SE.at(SEList::Test));
 
 	// Font
-	font->load(TEXT("あんずもじ湛"), TEXT("res/font/APJapanesefontF.ttf"));
+	FONT_LOADER->load(TEXT("あんずもじ湛"), TEXT("res/font/APJapanesefontF.ttf"));
 
 }
 
