@@ -1,17 +1,17 @@
 #include "Fps.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Define.h"
-
-//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
+/// @param aFpsCount 平均を取るサンプル数
 Fps::Fps()
 	: mFps(0.0f)
+	, mFpsCount()
 	, mStartTime(0)
 	, mCounter(0)
+	, mWaitTime(0)
 {
 	timeBeginPeriod(1);
 }
@@ -31,35 +31,46 @@ void Fps::update()
 	if (mCounter == 0) {
 		mStartTime = timeGetTime();
 	}
-	// 60フレーム目なら平均を計算する
-	if (mCounter == Define::Fps) {
+
+	// 平均を計算する
+	if (mCounter == mFpsCount) {
 		int nowTime = timeGetTime();
-		mFps = 1000.f / ((nowTime - mStartTime) / (float)Define::Fps);
+		mFps = 1000.f / ((nowTime - mStartTime) / (float)mFpsCount);
 		mCounter = 0;
 		mStartTime = nowTime;
 	}
 	mCounter++;
-}
 
-//-------------------------------------------------------------------------------------------------
-/// 待つ
-void Fps::wait()
-{
-	// 処理にかかった時間
+	// 待機
 	int tookTime = timeGetTime() - mStartTime;
-	// 待つ時間
-	int waitTime = mCounter * 1000 / Define::Fps - tookTime;
-
-	//待機
-	if (waitTime > 0) {
-		Sleep(waitTime);
+	mWaitTime = mCounter * 1000 / mFpsCount - tookTime;
+	if (mWaitTime > 0) {
+		Sleep(mWaitTime);
 	}
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 現在のfpsを描画する
-void Fps::draw() const
+/// 前フレームからかかった時間を返す
+/// @return 前フレームからかかった時間
+float Fps::deltaTime()
 {
+	return mWaitTime / 1000.0f;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// 現在のfps値を返す
+/// @return 現在のfps値
+const float& Fps::fps()
+{
+	return mFps;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// fpsの平均を取るサンプル数を設定する
+/// @param aFpsCount サンプル数
+void Fps::setFpsCount(int aFpsCount)
+{
+	mFpsCount = aFpsCount;
 }
 
 } // namespace

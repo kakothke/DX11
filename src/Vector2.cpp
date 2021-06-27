@@ -45,7 +45,7 @@ Vector2::Vector2(float x, float y)
 /// @return ƒxƒNƒgƒ‹‚Ì’·‚³
 float Vector2::Magnitude() const
 {
-	return (float)sqrt((x * x) + (y * y));
+	return sqrtf((x * x) + (y * y));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -62,6 +62,9 @@ float Vector2::SqrMagnitude() const
 Vector2 Vector2::Normalized() const
 {
 	float magnitude = Magnitude();
+	if (magnitude == 0) {
+		magnitude = 1;
+	}
 	return {
 		x / magnitude,
 		y / magnitude

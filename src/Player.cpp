@@ -11,11 +11,12 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// 定数
 const static float DEFINE_TARGET_DISTANCE = 100.0f;
-const static float DEFINE_MOVE_VELOCITY = 0.05f;
+const static float DEFINE_MOVE_VELOCITY = 1.0f;
 
 //-------------------------------------------------------------------------------------------------
 /// シングルトンクラス
 const static auto INPUT_MANAGER = InputManager::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -59,9 +60,17 @@ void Player::move()
 {
 	// 入力
 	Vector2 axis = INPUT_MANAGER->getAxes();
+
+	// 速度
+	Vector2 angle = mMoveVelocity * FPS->deltaTime();
+	if (axis.SqrMagnitude() == 2) {
+		// 斜め移動は√2で割る
+		angle /= sqrt(2);
+	}
+
 	// 移動
-	mTransform.rot *= Quaternion::AxisAngle(mTransform.Up() * -axis.x, mMoveVelocity);
-	mTransform.rot *= Quaternion::AxisAngle(mTransform.Right() * axis.y, mMoveVelocity);
+	mTransform.rot *= Quaternion::AxisAngle(mTransform.Up() * -axis.x, angle.x);
+	mTransform.rot *= Quaternion::AxisAngle(mTransform.Right() * axis.y, angle.y);
 	mTransform.pos = mTargetPos + mTransform.rot * Vector3::back * mTargetDistance;
 }
 

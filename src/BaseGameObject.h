@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Vector2.h"
 #include "GameObjectTag.h"
+#include "Fps.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -35,10 +36,10 @@ public:
 	void setIsActive(bool aValue);
 	//@}
 
-	Transform mTransform;
 protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
+	Transform mTransform;
 	//@}
 
 private:

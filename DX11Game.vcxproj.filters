@@ -190,9 +190,6 @@
     <ClInclude Include="src\MyOutputDebugString.h">
       <Filter>System\Comon</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fps.h">
-      <Filter>Game\Comon</Filter>
-    </ClInclude>
     <ClInclude Include="src\Define.h">
       <Filter>Game\Comon</Filter>
     </ClInclude>
@@ -222,6 +219,9 @@
     </ClInclude>
     <ClInclude Include="src\Quaternion.h">
       <Filter>System\Comon\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fps.h">
+      <Filter>System\Comon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +312,6 @@
     <ClCompile Include="src\SpriteRenderer.cpp">
       <Filter>System\Resource\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fps.cpp">
-      <Filter>Game\Comon</Filter>
-    </ClCompile>
     <ClCompile Include="src\Define.cpp">
       <Filter>Game\Comon</Filter>
     </ClCompile>
@@ -344,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="src\Quaternion.cpp">
       <Filter>System\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fps.cpp">
+      <Filter>System\Comon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

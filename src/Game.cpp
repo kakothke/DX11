@@ -4,7 +4,10 @@
 #include "Direct3D11.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
+#include "Fps.h"
 #include "Define.h"
+
+#include "MyOutputDebugString.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -14,12 +17,12 @@ namespace KDXK {
 const static auto D3D11 = Direct3D11::getInst();
 const static auto INPUT_MANAGER = InputManager::getInst();
 const static auto RESOURCE = ResourceManager::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Game::Game()
 	: mSceneManager()
-	, mFps()
 {
 }
 
@@ -32,6 +35,9 @@ bool Game::initialize()
 
 	// 最初に読み込むシーンをセット
 	mSceneManager.changeScene(SceneList::Game);
+
+	// fps設定
+	FPS->setFpsCount(Define::Fps);
 
 	return true;
 }
@@ -51,9 +57,8 @@ bool Game::mainLoop()
 	D3D11->drawEnd();
 
 	// fps制御
-	mFps.update();
-	mFps.wait();
-	mFps.draw();
+	FPS->update();
+	MyOutputDebugString(TEXT("%f\n"), FPS->deltaTime());
 
 	return true;
 }

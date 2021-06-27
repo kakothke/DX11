@@ -50,7 +50,7 @@ Vector3::Vector3(float x, float y, float z)
 /// @return ƒxƒNƒgƒ‹‚Ì’·‚³
 float Vector3::Magnitude() const
 {
-	return (float)sqrt((x * x) + (y * y) + (z * z));
+	return sqrtf((x * x) + (y * y) + (z * z));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -67,6 +67,9 @@ float Vector3::SqrMagnitude() const
 Vector3 Vector3::Normalized() const
 {
 	float magnitude = Magnitude();
+	if (magnitude == 0) {
+		magnitude = 1;
+	}
 	return {
 		x / magnitude,
 		y / magnitude,
