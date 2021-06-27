@@ -223,6 +223,9 @@
     <ClInclude Include="src\Fps.h">
       <Filter>System\Comon</Filter>
     </ClInclude>
+    <ClInclude Include="src\PlayerBullet.h">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -344,6 +347,9 @@
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>System\Comon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerBullet.cpp">
+      <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

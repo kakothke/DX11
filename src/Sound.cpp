@@ -13,7 +13,6 @@ Sound::Sound()
 	, mMasteringVoice(nullptr)
 	, mMainSrc()
 	, mSubSrc()
-	, mHandle()
 {
 	mMainSrc.clear();
 	mSubSrc.clear();
@@ -94,23 +93,22 @@ bool Sound::initialize()
 //-------------------------------------------------------------------------------------------------
 /// 読み込み
 /// @brief 現在はwavファイルのみ対応。後々oggも読み込めるようにしたい
+/// @param aHandle 登録番号
 /// @param aFileName 読み込みたいファイルのパス
-/// @return 読み込み失敗（-1）/ 成功（管理番号）
-int Sound::load(const LPCSTR aFileName)
+/// @return 成功（true）
+bool Sound::load(const int& aHandle, const LPCSTR aFileName)
 {
 	// エラーチェック
-	if (!mXAudio2) {
-		return -1;
+	if (mMainSrc.count(aHandle) || !mXAudio2) {
+		return false;
 	}
 
-	const auto handle = mHandle.update();
-	if (!loadWaveFile(aFileName, handle)) {
+	if (!loadWaveFile(aFileName, aHandle)) {
 		MessageBox(nullptr, TEXT(".wavファイルの読み込みに失敗しました。"), TEXT("ERROR"), MB_OK | MB_ICONHAND);
-		mHandle.release(handle);
-		return -1;
+		return false;
 	}
 
-	return handle;
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -1,15 +1,21 @@
 #include "GameScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "ResourceManager.h"
+#include "ResourceFileName.h"
+#include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+/// シングルトンクラス
+const static auto SOUND = Sound::getInst();
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
+	SOUND->play((int)SoundList::BGM_00);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -23,12 +29,13 @@ GameScene::~GameScene()
 void GameScene::update()
 {
 	// キャラクター
-	mPlayer.setBossPos(mBoss.transform().pos);
-	mPlayer.update();
+	mPlayer.setTargetPos(mBoss.transform().pos);
+	mPlayer.update();	
 	mBoss.update();
 
 	// ワールド関連
 	mCamera.setPlayerTransform(mPlayer.transform());
+	mCamera.setPlayerVelocity(mPlayer.moveVelocity());
 	mCamera.update();
 	mDirectionalLight.update();
 }

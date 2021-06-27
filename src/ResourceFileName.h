@@ -32,15 +32,10 @@ enum class ShaderList
 };
 
 /// BGM
-enum class BGMList
+enum class SoundList
 {
-	Test,
-};
-
-/// SE
-enum class SEList
-{
-	Test,
+	BGM_00,
+	SE_Shot,
 };
 
 /// リソースファイル名取得用クラス
@@ -50,8 +45,7 @@ public:
 	const static std::unordered_map<OBJList, const char*> OBJ;
 	const static std::unordered_map<SpriteList, const char*> Sprite;
 	const static std::unordered_map<ShaderList, const char*> Shader;
-	const static std::unordered_map<BGMList, const char*> BGM;
-	const static std::unordered_map<SEList, const char*> SE;
+	const static std::unordered_map<SoundList, const char*> Sound;
 
 };
 

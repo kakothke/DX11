@@ -41,28 +41,17 @@ void ResourceManager::initialize()
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::SkyBox));
 
 	// BGM
-	mBGMHandle[BGMList::Test] = SOUND->load(ResourceFileName::BGM.at(BGMList::Test));
-	SOUND->setLoop(mBGMHandle[BGMList::Test], true, 2);
-	SOUND->setLoopPos(mBGMHandle[BGMList::Test], 855273, 2565818);
+	SOUND->load((int)SoundList::BGM_00, ResourceFileName::Sound.at(SoundList::BGM_00));
+	SOUND->setBeginPos((int)SoundList::BGM_00, 65333);
+	SOUND->setLoop((int)SoundList::BGM_00, true);
+	SOUND->setLoopPos((int)SoundList::BGM_00, 588000, 4377333);
 
 	// SE
-	mSEHandle[SEList::Test] = SOUND->load(ResourceFileName::SE.at(SEList::Test));
+	SOUND->load((int)SoundList::SE_Shot, ResourceFileName::Sound.at(SoundList::SE_Shot));
 
 	// Font
 	FONT_LOADER->load(TEXT("‚ ‚ñ‚¸‚à‚¶’X"), TEXT("res/font/APJapanesefontF.ttf"));
 
-}
-
-//-------------------------------------------------------------------------------------------------
-const int& ResourceManager::BGMHandle(const BGMList& aList) const
-{
-	return mBGMHandle.at(aList);
-}
-
-//-------------------------------------------------------------------------------------------------
-const int& ResourceManager::SEHandle(const SEList& aList) const
-{
-	return mSEHandle.at(aList);
 }
 
 } // namespace

@@ -147,6 +147,7 @@
     <ClInclude Include="src\AbstractScene.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Boss.h" />
+    <ClInclude Include="src\PlayerBullet.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Color.h" />
     <ClInclude Include="src\ConstantBuffer.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerBullet.cpp" />
     <ClCompile Include="src\Quaternion.cpp" />
     <ClCompile Include="src\ResourceFileName.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />

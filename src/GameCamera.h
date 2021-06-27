@@ -24,8 +24,10 @@ public:
 
 	/// @name アクセサ
 	//@{
-	/// プレイヤーのトランスフォームを取得する
+	/// プレイヤーのトランスフォームを設定する
 	void setPlayerTransform(const Transform& aTransform);
+	/// プレイヤーの移動速度を設定する
+	void setPlayerVelocity(const Vector2& aVelocity);
 	//@}
 
 private:
@@ -35,6 +37,8 @@ private:
 	Transform mLocalTransform;
 	/// プレイヤートランスフォーム
 	Transform mPlayerTransform;
+	/// プレイヤーの移動速度
+	Vector2 mPlayerVelocity;
 	/// プレイヤーとの距離
 	float mDistanceFromPlayer;
 	//@}

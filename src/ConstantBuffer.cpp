@@ -108,7 +108,7 @@ void ConstantBuffer::setMatrixV(const Transform& aTransform)
 	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
 		aTransform.rot.XMVECTOR()
 	);
-	DirectX::XMVECTOR upVec = { 0, 1, 0 };
+	DirectX::XMVECTOR upVec = { 0.0f, 1.0f, 0.0f };
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
 
 	XMStoreFloat4x4(&mMATRIX.V, XMMatrixTranspose(viewMatrix));

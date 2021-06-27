@@ -7,8 +7,6 @@
 #include "Fps.h"
 #include "Define.h"
 
-#include "MyOutputDebugString.h"
-
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
@@ -58,7 +56,6 @@ bool Game::mainLoop()
 
 	// fps§Œä
 	FPS->update();
-	MyOutputDebugString(TEXT("%f\n"), FPS->deltaTime());
 
 	return true;
 }

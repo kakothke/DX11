@@ -24,13 +24,6 @@ public:
 
 	void initialize();
 
-	const int& BGMHandle(const BGMList& aList) const;
-	const int& SEHandle(const SEList& aList) const;
-
-private:
-	std::unordered_map<BGMList, int> mBGMHandle;
-	std::unordered_map<SEList, int> mSEHandle;
-
 };
 
 } // namespace

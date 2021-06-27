@@ -24,8 +24,10 @@ public:
 
 	/// @name アクセサ
 	//@{
-	/// ボスの位置を設定する
-	void setBossPos(const Vector3& aPos);
+	/// 移動速度を取得する
+	const Vector2& moveVelocity();
+	/// ターゲットの位置を設定する
+	void setTargetPos(const Vector3& aPos);
 	//@}
 
 private:
@@ -39,8 +41,8 @@ private:
 	//@{
 	OBJRenderer mRenderer;
 	Vector3 mTargetPos;
+	Vector2 mMoveVelocity;
 	float mTargetDistance;
-	float mMoveVelocity;
 	//@}
 
 };

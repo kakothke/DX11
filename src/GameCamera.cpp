@@ -15,6 +15,7 @@ const static float DEFINE_DISTANCE = 20.0f;
 GameCamera::GameCamera()
 	: mLocalTransform()
 	, mPlayerTransform()
+	, mPlayerVelocity()
 	, mDistanceFromPlayer(DEFINE_DISTANCE)
 {
 }
@@ -24,6 +25,7 @@ GameCamera::GameCamera()
 void GameCamera::update()
 {
 	// ローカル位置を設定
+	mLocalTransform.pos = -mPlayerVelocity;
 	mLocalTransform.pos.z = -mDistanceFromPlayer;
 
 	// プレイヤーを親オブジェクトとして連動させる
@@ -43,11 +45,19 @@ void GameCamera::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// プレイヤーのトランスフォームを取得する
+/// プレイヤーのトランスフォームを設定する
 /// @param aTransform トランスフォーム
 void GameCamera::setPlayerTransform(const Transform& aTransform)
 {
 	mPlayerTransform = aTransform;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// プレイヤーの移動速度を設定する
+/// @param aVelocity 
+void GameCamera::setPlayerVelocity(const Vector2& aVelocity)
+{
+	mPlayerVelocity = aVelocity;
 }
 
 } // namespace

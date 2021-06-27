@@ -26,7 +26,7 @@ public:
 
 	/// @name “Ç‚İ‚İ/”jŠü
 	//@{
-	int load(const LPCSTR aFileName);
+	bool load(const int& aHandle, const LPCSTR aFileName);
 	void release(const int& aHandle);
 	//@}
 

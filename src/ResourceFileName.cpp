@@ -28,15 +28,10 @@ const std::unordered_map<ShaderList, const char*> ResourceFileName::Shader =
 };
 
 /// BGM
-const std::unordered_map<BGMList, const char*> ResourceFileName::BGM =
+const std::unordered_map<SoundList, const char*> ResourceFileName::Sound =
 {
-	{ BGMList::Test, "res/bgm/music_0.wav" },
-};
-
-/// SE
-const std::unordered_map<SEList, const char*> ResourceFileName::SE =
-{
-	{ SEList::Test, "res/se/test.wav" },
+	{ SoundList::BGM_00, "res/bgm/music_0.wav" },
+	{ SoundList::SE_Shot, "res/se/shot.wav" },
 };
 
 } // namespace
