@@ -4,7 +4,6 @@
 #include <xaudio2.h>
 #include <unordered_map>
 #include "Singleton.h"
-#include "Handle.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -87,8 +86,6 @@ private:
 	std::unordered_map<int, SrcData> mMainSrc;
 	/// 多重再生用ソース
 	std::unordered_map<int, std::vector<IXAudio2SourceVoice*>> mSubSrc;
-	/// 管理番号用ハンドル
-	Handle mHandle;
 	//@}
 
 };

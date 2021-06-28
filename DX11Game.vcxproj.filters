@@ -151,9 +151,6 @@
     <ClInclude Include="lib\include\WICTextureLoader11.h">
       <Filter>System\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handle.h">
-      <Filter>System\Comon</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input.h">
       <Filter>System\Input</Filter>
     </ClInclude>
@@ -272,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="lib\include\WICTextureLoader11.cpp">
       <Filter>System\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Handle.cpp">
-      <Filter>System\Comon</Filter>
     </ClCompile>
     <ClCompile Include="src\Input.cpp">
       <Filter>System\Input</Filter>

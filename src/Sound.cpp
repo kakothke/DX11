@@ -121,9 +121,6 @@ void Sound::release(const int& aHandle)
 		return;
 	}
 
-	// ハンドル破棄
-	mHandle.release(aHandle);
-
 	// ソース破棄
 	mMainSrc.erase(aHandle);
 	for (auto src : mSubSrc[aHandle]) {
