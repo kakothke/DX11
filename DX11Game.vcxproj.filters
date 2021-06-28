@@ -20,9 +20,6 @@
     <Filter Include="Game\GameObject\Light">
       <UniqueIdentifier>{98cea1e5-71d8-4d54-9a72-27e2f67c208f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\GameObject\2D Object">
-      <UniqueIdentifier>{001e8c8a-a446-4d42-8951-1f39e016f1f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\GameObject\SkyBox">
       <UniqueIdentifier>{1ad4e6e2-8e1d-4fb9-b013-881222cdb750}</UniqueIdentifier>
     </Filter>
@@ -121,9 +118,6 @@
     <ClInclude Include="src\DirectionalLight.h">
       <Filter>Game\GameObject\Light</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestSprite.h">
-      <Filter>Game\GameObject\2D Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\ResourceFileName.h">
       <Filter>Game\Resource</Filter>
     </ClInclude>
@@ -169,20 +163,11 @@
     <ClInclude Include="src\TextureLoader.h">
       <Filter>System\Resource\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="src\OBJLoader.h">
-      <Filter>System\Resource\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="src\ShaderLoader.h">
       <Filter>System\Resource\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="src\SpriteLoader.h">
-      <Filter>System\Resource\Sprite</Filter>
-    </ClInclude>
     <ClInclude Include="src\ResourceManager.h">
       <Filter>Game\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OBJRenderer.h">
-      <Filter>System\Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>System\Resource\Sprite</Filter>
@@ -226,6 +211,12 @@
     <ClInclude Include="src\PlayerBullet.h">
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
+    <ClInclude Include="src\OBJLoader.h">
+      <Filter>System\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OBJRenderer.h">
+      <Filter>System\Resource\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -251,9 +242,6 @@
     </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TestSprite.cpp">
-      <Filter>Game\GameObject\2D Object</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceFileName.cpp">
       <Filter>Game\Resource</Filter>
@@ -297,20 +285,11 @@
     <ClCompile Include="src\TextureLoader.cpp">
       <Filter>System\Resource\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="src\OBJLoader.cpp">
-      <Filter>System\Resource\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>System\Resource\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="src\SpriteLoader.cpp">
-      <Filter>System\Resource\Sprite</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceManager.cpp">
       <Filter>Game\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OBJRenderer.cpp">
-      <Filter>System\Resource\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteRenderer.cpp">
       <Filter>System\Resource\Sprite</Filter>
@@ -350,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="src\PlayerBullet.cpp">
       <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OBJLoader.cpp">
+      <Filter>System\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OBJRenderer.cpp">
+      <Filter>System\Resource\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

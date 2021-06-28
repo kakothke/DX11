@@ -10,13 +10,6 @@ namespace KDXK {
 /// コンストラクタ
 GameSkyBox::GameSkyBox()
 {
-	initialize();
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 初期化処理
-void GameSkyBox::initialize()
-{
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::SkyBox));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::SkyBox));
 }

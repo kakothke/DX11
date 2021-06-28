@@ -7,6 +7,8 @@
 #include "DirectionalLight.h"
 #include "Player.h"
 #include "Boss.h"
+#include "FontRenderer.h"
+#include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -37,6 +39,8 @@ private:
 	DirectionalLight mDirectionalLight;
 	Player mPlayer;
 	Boss mBoss;
+	FontRenderer mFontTest;
+	SpriteRenderer mSpriteTest;
 	//@}
 
 };

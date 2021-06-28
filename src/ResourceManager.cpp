@@ -5,8 +5,8 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto OBJ_LOADER = OBJLoader::getInst();
-const static auto SPRITE_LOADER = SpriteLoader::getInst();
 const static auto SHADER_LOADER = ShaderLoader::getInst();
+const static auto TEXTURE_LOADER = TextureLoader::getInst();
 const static auto SOUND = Sound::getInst();
 const static auto FONT_LOADER = FontLoader::getInst();
 
@@ -30,9 +30,10 @@ void ResourceManager::initialize()
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Boss));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Player));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Kabocha));
 
 	// Sprites
-	SPRITE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));
 
 	// Shaders
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));

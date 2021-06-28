@@ -18,7 +18,6 @@ public:
 
 	/// @name ‰Šú‰»/XV/•`‰æ
 	//@{
-	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}

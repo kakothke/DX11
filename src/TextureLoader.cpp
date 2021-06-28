@@ -81,7 +81,7 @@ ID3D11ShaderResourceView* TextureLoader::getTexture(const LPCSTR aFileName) cons
 
 //-------------------------------------------------------------------------------------------------
 /// テクスチャーのサイズを取得する
-const DirectX::XMFLOAT2 TextureLoader::getTextureSize(const LPCSTR aFileName) const
+const Vector2 TextureLoader::getTextureSize(const LPCSTR aFileName) const
 {
 	if (!mTexture.count(aFileName)) {
 		return {

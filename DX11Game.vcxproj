@@ -180,10 +180,8 @@
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\Sound.h" />
     <ClInclude Include="src\StringSupport.h" />
-    <ClInclude Include="src\SpriteLoader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\SystemMain.h" />
-    <ClInclude Include="src\TestSprite.h" />
     <ClInclude Include="src\TextureLoader.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Vector2.h" />
@@ -223,10 +221,8 @@
     <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\StringSupport.cpp" />
-    <ClCompile Include="src\SpriteLoader.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\SystemMain.cpp" />
-    <ClCompile Include="src\TestSprite.cpp" />
     <ClCompile Include="src\TextureLoader.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector2.cpp" />

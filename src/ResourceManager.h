@@ -7,7 +7,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
 #include "OBJLoader.h"
-#include "SpriteLoader.h"
+#include "TextureLoader.h"
 #include "ShaderLoader.h"
 #include "Sound.h"
 #include "FontLoader.h"

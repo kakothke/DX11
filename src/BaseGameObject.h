@@ -20,9 +20,8 @@ public:
 	virtual ~BaseGameObject();
 	//@}
 
-	/// @name 外部呼出し用の初期化/更新/描画
+	/// @name 更新/描画
 	//@{
-	virtual void initialize();
 	virtual void update();
 	virtual void draw();
 	//@}

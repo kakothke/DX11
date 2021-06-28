@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <DirectXMath.h>
 #include "Singleton.h"
+#include "Vector2.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -30,7 +31,7 @@ public:
 	/// テクスチャーを取得する
 	ID3D11ShaderResourceView* getTexture(const LPCSTR aFileName) const;
 	/// テクスチャーのサイズを取得する
-	const DirectX::XMFLOAT2 getTextureSize(const LPCSTR aFileName) const;
+	const Vector2 getTextureSize(const LPCSTR aFileName) const;
 	//@}
 
 private:

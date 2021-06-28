@@ -6,7 +6,6 @@
 #include "Transform.h"
 #include "Vector2.h"
 #include "Color.h"
-#include "SpriteLoader.h"
 #include "ShaderLoader.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -24,13 +23,13 @@ public:
 
 	/// @name 描画
 	//@{
-	void render(const Transform& aTransform);
+	void render(Transform aTransform);
 	//@}
 
 	/// @name 描画設定
 	//@{
-	/// スプライトを設定する
-	void setSprite(const LPCSTR aFileName);
+	/// テクスチャーをセットする
+	void setTexture(const LPCSTR aFileName);
 	/// シェーダーを設定する
 	void setShader(const LPCSTR aFileName);
 	/// カラーを設定する 
@@ -44,10 +43,30 @@ public:
 	//@}
 
 private:
+	/// @name 内部実装
+	//@{
+	/// 頂点バッファを作成する
+	bool createVertexBuffer();
+	//@}
+
+	/// @name 内部構造体
+	//@{
+	/// 頂点データ
+	struct VertexData
+	{
+		float pos[3];
+		float uv[2];
+	};
+	//@}
+
 	/// プライベートメンバ変数
 	//@{
-	/// スプライトデータ
-	SpriteLoader::SpriteData* mSpriteData;
+	/// 頂点バッファー
+	ID3D11Buffer* mVertexBuffer;
+	/// テクスチャー名
+	LPCSTR mTextureName;
+	/// テクスチャーサイズ
+	Vector2 mTextureSize;
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
 	/// カラー

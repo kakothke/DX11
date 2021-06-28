@@ -21,8 +21,8 @@ FontRenderer::FontRenderer()
 	, mTextures()
 	, mShaderData()
 	, mColor()
-	, mPivot(0.0f, 0.0f)
-	, mAnchor(0.0f, 0.0f)
+	, mPivot()
+	, mAnchor()
 {
 	mTextures.clear();
 }
@@ -53,7 +53,7 @@ FontRenderer::~FontRenderer()
 void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 {
 	// チェック
-	if (!mShaderData && mString) {
+	if (!mShaderData || !aString) {
 		return;
 	}
 
@@ -94,6 +94,7 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 				D3D11->getContext()->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
 
 				// コンスタントバッファを更新
+				D3D11->getConstantBuffer()->setSpriteSplit(1);
 				D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 				D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
 				D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);

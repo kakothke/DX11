@@ -1,8 +1,8 @@
 #include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Math.h"
 #include "TextureLoader.h"
+#include "Math.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -11,17 +11,18 @@ namespace KDXK {
 /// シングルトンクラス
 const static auto D3D11 = Direct3D11::getInst();
 const static auto TEXTURE_LOADER = TextureLoader::getInst();
-const static auto SPRITE_LOADER = SpriteLoader::getInst();
 const static auto SHADER_LOADER = ShaderLoader::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 SpriteRenderer::SpriteRenderer()
-	: mSpriteData()
+	: mVertexBuffer(nullptr)
+	, mTextureName(nullptr)
+	, mTextureSize(1)
 	, mShaderData()
 	, mColor()
-	, mPivot(0.5f, 0.5f)
-	, mAnchor(0.0f, 0.0f)
+	, mPivot()
+	, mAnchor()
 	, mSplit(1.0f, 1.0f)
 {
 }
@@ -30,17 +31,25 @@ SpriteRenderer::SpriteRenderer()
 /// デストラクタ
 SpriteRenderer::~SpriteRenderer()
 {
+	if (mVertexBuffer) {
+		mVertexBuffer->Release();
+		mVertexBuffer = nullptr;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
 /// @param aTransform トランスフォーム
-void SpriteRenderer::render(const Transform& aTransform)
+void SpriteRenderer::render(Transform aTransform)
 {
 	// 読み込みチェック
-	if (!mSpriteData || !mShaderData) {
+	if (!mTextureName || !mShaderData || !mVertexBuffer) {
 		return;
 	}
+
+	// サイズをテクスチャーのサイズに合わせる
+	aTransform.scale.x *= mTextureSize.x;
+	aTransform.scale.y *= mTextureSize.y;
 
 	// プリミティブの形状を指定
 	D3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -48,31 +57,47 @@ void SpriteRenderer::render(const Transform& aTransform)
 	// シェーダーの指定
 	D3D11->setShader(mShaderData);
 
-	UINT strides = sizeof(SpriteLoader::SpriteVertex);
+	UINT strides = sizeof(VertexData);
 	UINT offsets = 0;
 
 	// IAに設定する頂点バッファの指定
-	D3D11->getContext()->IASetVertexBuffers(0, 1, &mSpriteData->vertexBuffer, &strides, &offsets);
+	D3D11->getContext()->IASetVertexBuffers(0, 1, &mVertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
+	D3D11->getConstantBuffer()->setMatrixW(aTransform);
+	D3D11->getConstantBuffer()->updateMatrix();
 	D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 	D3D11->getConstantBuffer()->setSpriteSplit(mSplit);
 	D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
+	D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);
 	D3D11->getConstantBuffer()->updateSprite();
 
 	// テクスチャーセット	
-	D3D11->setTexture(TEXTURE_LOADER->getTexture(mSpriteData->fileName));
+	D3D11->setTexture(TEXTURE_LOADER->getTexture(mTextureName));
 
 	// 描画
 	D3D11->getContext()->Draw(4, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
-/// スプライトを設定する
+/// テクスチャーを設定する
 /// @param aFileName ファイルパス
-void SpriteRenderer::setSprite(const LPCSTR aFileName)
+void SpriteRenderer::setTexture(const LPCSTR aFileName)
 {
-	mSpriteData = SPRITE_LOADER->getSpriteData(aFileName);
+	mTextureName = aFileName;
+	mTextureSize = TEXTURE_LOADER->getTextureSize(aFileName) / 2;
+
+	// テクスチャー取得エラー
+	if (mTextureSize == Vector2(0)) {
+		mTextureName = nullptr;
+		mTextureSize = Vector2(1);
+		return;
+	}
+
+	// 頂点バッファがまだ作成されていない場合作成する
+	if (!mVertexBuffer) {
+		createVertexBuffer();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,10 +125,8 @@ void SpriteRenderer::setPivot(float aX, float aY)
 	aX = Math::Clamp(aX, -1.0f, 1.0f);
 	aY = Math::Clamp(aY, -1.0f, 1.0f);
 
-	DirectX::XMFLOAT2 size = TEXTURE_LOADER->getTextureSize(mSpriteData->fileName);
-
-	mPivot.x = (size.x / 2) * -aX;
-	mPivot.y = (size.y / 2) * aY;
+	mPivot.x = (mTextureSize.x / 2) * -aX;
+	mPivot.y = (mTextureSize.y / 2) * aY;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -127,6 +150,72 @@ void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 {
 	mSplit.x = (float)aX;
 	mSplit.y = (float)aY;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// 頂点バッファを作成する
+/// @return 結果 成功(true)
+bool SpriteRenderer::createVertexBuffer()
+{
+	// 頂点作成
+	VertexData vertexes[4];
+	Vector2 size = 0.5f;
+	// 頂点0
+	vertexes[0].pos[0] = -size.x;
+	vertexes[0].pos[1] = -size.y;
+	vertexes[0].uv[0] = 0;
+	vertexes[0].uv[1] = 1;
+	// 頂点1
+	vertexes[1].pos[0] = size.x;
+	vertexes[1].pos[1] = -size.y;
+	vertexes[1].uv[0] = 1;
+	vertexes[1].uv[1] = 1;
+	// 頂点2
+	vertexes[2].pos[0] = -size.x;
+	vertexes[2].pos[1] = size.y;
+	vertexes[2].uv[0] = 0;
+	vertexes[2].uv[1] = 0;
+	//// 頂点3
+	vertexes[3].pos[0] = size.x;
+	vertexes[3].pos[1] = size.y;
+	vertexes[3].uv[0] = 1;
+	vertexes[3].uv[1] = 0;
+
+	D3D11_BUFFER_DESC bufferDesc;
+	{
+		// バッファのサイズ
+		bufferDesc.ByteWidth = sizeof(VertexData) * 4;
+		// 使用方法
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		// BIND設定
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		// リソースへのCPUのアクセス権限についての設定
+		bufferDesc.CPUAccessFlags = 0;
+		// リソースオプションのフラグ
+		bufferDesc.MiscFlags = 0;
+		// 構造体のサイズ
+		bufferDesc.StructureByteStride = 0;
+	}
+
+	// リソース情報
+	D3D11_SUBRESOURCE_DATA subResource;
+	{
+		// バッファの中身の設定
+		subResource.pSysMem = &vertexes[0];
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemPitch = 0;
+		// textureデータを使用する際に使用するメンバ
+		subResource.SysMemSlicePitch = 0;
+	}
+
+	// バッファ作成
+	HRESULT hr;
+	hr = D3D11->getDevice()->CreateBuffer(&bufferDesc, &subResource, &mVertexBuffer);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	return true;
 }
 
 } // namespace
