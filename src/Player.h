@@ -1,8 +1,10 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
+#include <memory.h>
 #include "BaseGameObject.h"
 #include "OBJRenderer.h"
+#include "PlayerBullet.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -11,9 +13,10 @@ namespace KDXK {
 class Player : public BaseGameObject
 {
 public:
-	/// name コンストラクタ
+	/// name コンストラクタ/デストラクタ
 	//@{
 	Player();
+	~Player();
 	//@}
 
 	/// @name 更新/描画
@@ -43,6 +46,7 @@ private:
 	Vector3 mTargetPos;
 	Vector2 mMoveVelocity;
 	float mTargetDistance;
+	std::list<std::shared_ptr<PlayerBullet>> mPlayerBullet;
 	//@}
 
 };

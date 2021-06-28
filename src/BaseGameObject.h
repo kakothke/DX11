@@ -30,9 +30,9 @@ public:
 	//@{
 	const Transform& transform() const;
 	const GameObjectTag& tag() const;
-	const bool& isActive() const;
+	const bool& activeSelf() const;
 	void setTag(GameObjectTag aTag);
-	void setIsActive(bool aValue);
+	void setActive(bool aValue);
 	//@}
 
 protected:
@@ -45,7 +45,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	GameObjectTag mTag;
-	bool mIsActive;
+	bool mActiveSelf;
 	//@}
 
 };

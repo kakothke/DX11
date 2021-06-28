@@ -8,7 +8,7 @@ namespace KDXK {
 BaseGameObject::BaseGameObject()
 	: mTransform()
 	, mTag(GameObjectTag::Untagged)
-	, mIsActive(true)
+	, mActiveSelf(true)
 {
 }
 
@@ -17,7 +17,7 @@ BaseGameObject::BaseGameObject()
 BaseGameObject::BaseGameObject(Transform aTransform)
 	: mTransform(aTransform)
 	, mTag(GameObjectTag::Untagged)
-	, mIsActive(true)
+	, mActiveSelf(true)
 {
 }
 
@@ -53,9 +53,9 @@ const GameObjectTag& BaseGameObject::tag() const
 }
 
 //-------------------------------------------------------------------------------------------------
-const bool& BaseGameObject::isActive() const
+const bool& BaseGameObject::activeSelf() const
 {
-	return mIsActive;
+	return mActiveSelf;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -65,9 +65,9 @@ void BaseGameObject::setTag(GameObjectTag aTag)
 }
 
 //-------------------------------------------------------------------------------------------------
-void BaseGameObject::setIsActive(bool aValue)
+void BaseGameObject::setActive(bool aValue)
 {
-	mIsActive = aValue;
+	mActiveSelf = aValue;
 }
 
 } // namespace

@@ -43,11 +43,26 @@ Player::Player()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
+Player::~Player()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 更新
 void Player::update()
 {
 	move();
 	shot();
+
+	for (auto itr = mPlayerBullet.begin(); itr != mPlayerBullet.end();) {
+		if ((*itr)->activeSelf()) {
+			(*itr)->update();
+			itr++;
+		} else {
+			itr = mPlayerBullet.erase(itr);
+		}
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -55,6 +70,10 @@ void Player::update()
 void Player::draw()
 {
 	mRenderer.render(mTransform);
+
+	for (const auto bullet : mPlayerBullet) {
+		bullet->draw();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -127,6 +146,15 @@ void Player::shot()
 			// 体を縮ませる
 			mTransform.scale.x = DEFINE_SHOT_SIZE.x;
 			mTransform.scale.y = DEFINE_SHOT_SIZE.y;
+			// 弾生成
+			Transform bulletTransform;
+			bulletTransform = mTransform;
+			float offset = 2.0f;
+			bulletTransform.pos += bulletTransform.Right() * offset;
+			mPlayerBullet.emplace_back(std::make_shared<PlayerBullet>(bulletTransform, mTargetPos));
+			bulletTransform = mTransform;
+			bulletTransform.pos += -bulletTransform.Right() * offset;
+			mPlayerBullet.emplace_back(std::make_shared<PlayerBullet>(bulletTransform, mTargetPos));
 		}
 		// タイマー更新
 		if (timer < DEFINE_SHOT_TIME) {

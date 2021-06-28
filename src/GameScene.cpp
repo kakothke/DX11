@@ -23,7 +23,7 @@ GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 	mSpriteTest.setShader(ResourceFileName::Shader.at(ShaderList::Sprite));
 
 	mFontTest.setShader(ResourceFileName::Shader.at(ShaderList::Sprite));
-	mFontTest.setAnchor(-0.75f, -0.75f);
+	mFontTest.setAnchor(-0.5f, -0.9f);
 	mFontTest.setPivot(-1.0f, -1.0f);
 	mFontTest.setFont(TEXT("あんずもじ湛"));
 }
@@ -63,7 +63,7 @@ void GameScene::draw()
 void GameScene::draw2D()
 {
 	mSpriteTest.render(Transform());
-	mFontTest.draw(TEXT("テスト"), Transform());
+	mFontTest.draw(TEXT("フォント 描画テスト"), Transform(Vector3(), Vector3(), Vector3(0.5f)));
 }
 
 //-------------------------------------------------------------------------------------------------

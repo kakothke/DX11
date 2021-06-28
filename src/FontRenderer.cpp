@@ -108,12 +108,12 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 			}
 
 			// •`‰æˆÊ’u‚ð‚¸‚ç‚·
-			nextPos += tex.nextPos;
-			aTransform.pos.x += tex.nextPos;
+			nextPos += tex.nextPos * aTransform.scale.x;
+			aTransform.pos.x += tex.nextPos * aTransform.scale.x;
 			if (tex.newLine != 0) {
 				aTransform.pos.x -= nextPos;
 				nextPos = 0;
-				aTransform.pos.y += tex.newLine;
+				aTransform.pos.y += tex.newLine * aTransform.scale.y;
 			}
 		}
 	}

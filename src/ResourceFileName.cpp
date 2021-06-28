@@ -15,7 +15,7 @@ const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =
 /// Sprite
 const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 {
-	{ SpriteList::Test, "res/img/kao.png" },
+	{ SpriteList::Test, "res/img/test.png" },
 };
 
 /// Shader

@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
 #include "SpriteRenderer.h"
+#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -13,7 +14,7 @@ class PlayerBullet : public BaseGameObject
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	PlayerBullet();
+	PlayerBullet(Transform aTransform, Vector3 aTargetPos);
 	~PlayerBullet();
 	//@}
 
@@ -26,7 +27,9 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	SpriteRenderer mRenderer;
+	OBJRenderer mRenderer;
+	Vector3 mVelocity;
+	float mTimer;
 	//@}
 
 };
