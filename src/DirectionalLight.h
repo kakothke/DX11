@@ -19,6 +19,7 @@ public:
 	DirectionalLight(Vector3 aAngle);
 	DirectionalLight(Color aColor);
 	DirectionalLight(Vector3 aAngle, Color aColor);
+	virtual ~DirectionalLight();
 	//@}
 
 	/// @name çXêV/ï`âÊ

@@ -53,6 +53,12 @@ DirectionalLight::DirectionalLight(Vector3 aAngle, Color aColor)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
+DirectionalLight::~DirectionalLight()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 更新
 void DirectionalLight::update()
 {

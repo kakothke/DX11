@@ -12,12 +12,13 @@ namespace KDXK {
 class Camera : public BaseGameObject
 {
 public:
-	/// @name コンストラクタ
+	/// @name コンストラクタ/デストラクタ
 	//@{
 	Camera();
 	Camera(Transform aTransform);
 	Camera(Vector3 aCameraParam);
 	Camera(Transform aTransform, Vector3 aCameraParam);
+	virtual ~Camera();
 	//@}
 
 	/// @name 更新/描画
