@@ -35,26 +35,37 @@ public:
 
 	/// @name 入力状況取得
 	//@{
-	const Vector2& getAxes() const;
-	bool getInput(const InputCode& aCode) const;
-	bool getInputDown(const InputCode& aCode) const;
-	bool getInputUp(const InputCode& aCode) const;
-
-	Vector2 getAxesRaw(float Speed);
+	/// 方向入力状況を返す(-1.0f~1.0f)
+	const Vector2& axes() const;
+	/// 方向入力状況を返す(-1~1)
+	const Vector2& axesRaw() const;
+	/// ボタンを押しているか
+	bool getButton(const InputCode& aCode) const;
+	/// ボタンを押したか
+	bool getButtonDown(const InputCode& aCode) const;
+	/// ボタンを離したか
+	bool getButtonUp(const InputCode& aCode) const;
 	//@}
 
 private:
+	/// @name 内部実装
+	//@{
+	/// 方向入力状況更新
+	void updateAxes();
+	/// ボタン入力状況更新
+	void updateButtons();
+	//@}
+
 	/// @name プライベートメンバ変数
 	//@{
-	/// 方向
+	/// 方向(-1.0f~1.0f)
 	Vector2 mAxes;
+	/// 方向(-1~1)
 	Vector2 mAxesRaw;
 	/// 現在の入力状況
 	bool mState[(int)InputCode::TERM];
 	/// 前フレームの入力状況
 	bool mPrevState[(int)InputCode::TERM];
-
-	int Code;
 	//@}
 
 };

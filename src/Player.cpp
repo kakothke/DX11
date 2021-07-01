@@ -96,19 +96,11 @@ void Player::setTargetPos(const Vector3& aPos)
 /// 移動
 void Player::move()
 {
-	// 入力
-	Vector2 inputAxis = INPUT_MANAGER->getAxes();
-
-	// 斜め入力
-	float maxVelocity = DEFINE_MAX_VELOCITY;
-	if (inputAxis.SqrMagnitude() == 2) {
-		maxVelocity /= sqrtf(2);
-	}
-
 	// 移動
-
-	mMoveVelocity = INPUT_MANAGER->getAxesRaw(DEFINE_MOVE_SPEED);
-
+	mMoveVelocity = INPUT_MANAGER->axes();
+	if (mMoveVelocity.Magnitude() > 1.0f) {
+		mMoveVelocity = mMoveVelocity.Normalized();
+	}
 
 	// トランスフォーム更新
 	Vector2 angle = mMoveVelocity * FPS->deltaTime();
@@ -122,7 +114,7 @@ void Player::move()
 void Player::shot()
 {
 	static float timer = 0;
-	if (INPUT_MANAGER->getInput(InputCode::OK)) {
+	if (INPUT_MANAGER->getButton(InputCode::OK)) {
 		// ショット
 		if (timer == 0) {
 			// SE再生

@@ -7,6 +7,18 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
+int Math::Sign(int aValue)
+{
+	return (aValue > 0) - (aValue < 0);
+}
+
+//-------------------------------------------------------------------------------------------------
+float Math::Sign(float aValue)
+{
+	return (aValue > 0) - (aValue < 0);
+}
+
+//-------------------------------------------------------------------------------------------------
 float Math::Lerp(float aStart, float aTarget, float aTime)
 {
 	return (1 - aTime) * aStart + aTime * aTarget;
