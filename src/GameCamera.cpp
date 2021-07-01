@@ -24,17 +24,12 @@ GameCamera::GameCamera()
 /// 更新
 void GameCamera::update()
 {
-	// ローカル位置を設定
-	mLocalTransform.pos = -mPlayerVelocity;
-	mLocalTransform.pos.z = -mDistanceFromPlayer;
-
 	// プレイヤーを親オブジェクトとして連動させる
-	DirectX::XMMATRIX transform = mLocalTransform.WorldMatrix() * mPlayerTransform.WorldMatrix();
-	mTransform.pos.x = transform.r[3].m128_f32[0];
-	mTransform.pos.y = transform.r[3].m128_f32[1];
-	mTransform.pos.z = transform.r[3].m128_f32[2];
-	mTransform.rot = -mPlayerTransform.rot;
+	mTransform = mPlayerTransform;
+	mTransform.localPos = -mPlayerVelocity;
+	mTransform.localPos.z = -mDistanceFromPlayer;
 
+	// コンスタントバッファ更新
 	updateConstantBuffer();
 }
 

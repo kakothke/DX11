@@ -99,15 +99,12 @@ void ConstantBuffer::setMatrixW(const Transform& aTransform)
 void ConstantBuffer::setMatrixV(const Transform& aTransform)
 {
 	// View
-	DirectX::XMVECTOR pos = {
-		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z
-	};
-	DirectX::XMVECTOR forcus = {
-		aTransform.pos.x,	aTransform.pos.y,	aTransform.pos.z + 1.0f
-	};
-	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(
-		aTransform.rot.XMVECTOR()
-	);
+	Vector3 tmpPos = aTransform.pos + aTransform.rot * aTransform.localPos;
+	Vector3 tmpForcus = tmpPos + Vector3::forward;
+	Quaternion tmpRot = -aTransform.rot * -aTransform.localRot;
+	DirectX::XMVECTOR pos = tmpPos.XMVECTOR();
+	DirectX::XMVECTOR forcus = tmpForcus.XMVECTOR();
+	DirectX::XMMATRIX rot = DirectX::XMMatrixRotationQuaternion(tmpRot.XMVECTOR());
 	DirectX::XMVECTOR upVec = { 0.0f, 1.0f, 0.0f };
 	DirectX::XMMATRIX viewMatrix = DirectX::XMMatrixLookAtLH(pos, forcus, upVec) * rot;
 
