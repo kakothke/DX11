@@ -39,6 +39,8 @@ public:
 	bool getInput(const InputCode& aCode) const;
 	bool getInputDown(const InputCode& aCode) const;
 	bool getInputUp(const InputCode& aCode) const;
+
+	Vector2 getAxesRaw(float Speed);
 	//@}
 
 private:
@@ -46,10 +48,13 @@ private:
 	//@{
 	/// •ûŒü
 	Vector2 mAxes;
+	Vector2 mAxesRaw;
 	/// Œ»İ‚Ì“ü—Íó‹µ
 	bool mState[(int)InputCode::TERM];
 	/// ‘OƒtƒŒ[ƒ€‚Ì“ü—Íó‹µ
 	bool mPrevState[(int)InputCode::TERM];
+
+	int Code;
 	//@}
 
 };

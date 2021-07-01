@@ -2,6 +2,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "Math.h"
+#include "Fps.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -9,6 +10,7 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// シングルトンクラス
 const static auto INPUT = Input::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 InputManager::InputManager()
@@ -55,6 +57,8 @@ void InputManager::update()
 	mState[(int)InputCode::Cancel] =
 		INPUT->getKey(DIK_X) || INPUT->getXInputButton(XINPUT_GAMEPAD_A);
 
+	
+
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -88,6 +92,86 @@ bool InputManager::getInputUp(const InputCode& aCode) const
 		return true;
 	}
 	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+Vector2 InputManager:: getAxesRaw(float Speed)
+{
+
+	if (INPUT->getKey(DIK_LEFT)) {
+		mAxesRaw.x -= (FPS->deltaTime() * Speed);
+		Code = 0;
+	}else 
+		
+	if (INPUT->getKey(DIK_RIGHT)) {
+		mAxesRaw.x += (FPS->deltaTime() * Speed);
+		Code = 1;
+	}else 
+
+	if (INPUT->getKey(DIK_UP)) {
+		mAxesRaw.y += (FPS->deltaTime() * Speed);
+		Code = 2;
+	}else
+
+	if (INPUT->getKey(DIK_DOWN)) {
+		mAxesRaw.y -= (FPS->deltaTime() * Speed);
+		Code = 3;
+	}
+	else {
+
+		switch (Code)
+		{
+		case 0:
+			if (mAxesRaw.x < 0) {
+				mAxesRaw.x += (FPS->deltaTime() * Speed);
+			}
+			else {
+				mAxesRaw.x = 0;
+			}
+			break;
+
+		case 1:
+			if (mAxesRaw.x > 0) {
+				mAxesRaw.x -= (FPS->deltaTime() * Speed);
+			}
+			else {
+				mAxesRaw.x = 0;
+			}
+			break;
+
+		case 2:
+			if (mAxesRaw.y > 0) {
+				mAxesRaw.y -= (FPS->deltaTime() * Speed);
+			}
+			else {
+				mAxesRaw.y = 0;
+			}
+			break;
+
+		case 3:
+			if (mAxesRaw.y < 0) {
+				mAxesRaw.y += (FPS->deltaTime() * Speed);
+			}
+			else {
+				mAxesRaw.y = 0;
+			}
+			break;
+
+		default:
+			break;
+		}	
+		//mAxesRaw = Vector2(0, 0);
+	}
+
+	if (mAxesRaw.x > 1.0f)mAxesRaw.x = 1.0f;
+	if (mAxesRaw.x < -1.0f)mAxesRaw.x = -1.0f;
+	if (mAxesRaw.y > 1.0f)mAxesRaw.y = 1.0f;
+	if (mAxesRaw.y < -1.0f)mAxesRaw.y = -1.0f;
+
+	
+
+	return mAxesRaw;
 }
 
 } // namespace

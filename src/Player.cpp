@@ -106,25 +106,9 @@ void Player::move()
 	}
 
 	// 移動
-	if (inputAxis.x > 0) {
-		mMoveVelocity.x = Math::Lerp(mMoveVelocity.x, maxVelocity, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
-	if (inputAxis.x < 0) {
-		mMoveVelocity.x = Math::Lerp(mMoveVelocity.x, -maxVelocity, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
-	if (inputAxis.y > 0) {
-		mMoveVelocity.y = Math::Lerp(mMoveVelocity.y, maxVelocity, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
-	if (inputAxis.y < 0) {
-		mMoveVelocity.y = Math::Lerp(mMoveVelocity.y, -maxVelocity, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
-	// 静止
-	if (inputAxis.x == 0) {
-		mMoveVelocity.x = Math::Lerp(mMoveVelocity.x, 0, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
-	if (inputAxis.y == 0) {
-		mMoveVelocity.y = Math::Lerp(mMoveVelocity.y, 0, FPS->deltaTime() * DEFINE_MOVE_SPEED);
-	}
+
+	mMoveVelocity = INPUT_MANAGER->getAxesRaw(DEFINE_MOVE_SPEED);
+
 
 	// トランスフォーム更新
 	Vector2 angle = mMoveVelocity * FPS->deltaTime();
