@@ -37,7 +37,7 @@ Quaternion Quaternion::AxisAngle(Vector3 aAxis, float aAngle)
 {
 	Quaternion out;
 	if (aAxis != Vector3()) {
-		aAngle *= DirectX::XM_PI / 180;
+		aAngle = DirectX::XMConvertToRadians(aAngle);
 		out.mQuaternion = DirectX::XMQuaternionRotationAxis(aAxis.XMVECTOR(), aAngle);
 	}
 	return out;
@@ -49,7 +49,7 @@ Quaternion Quaternion::AxisAngle(Vector3 aAxis, float aAngle)
 Quaternion Quaternion::Euler(Vector3 aEulerAngle)
 {
 	Quaternion out;
-	aEulerAngle *= DirectX::XM_PI / 180;
+	aEulerAngle *= DirectX::XM_PI / 180.0f;
 	out.mQuaternion = DirectX::XMQuaternionRotationRollPitchYawFromVector(aEulerAngle.XMVECTOR());
 	return out;
 }
