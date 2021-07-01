@@ -16,8 +16,8 @@ namespace KDXK {
 const static float DEFINE_TARGET_DISTANCE = 100.0f;
 /// 最大移動速度
 const static float DEFINE_MAX_VELOCITY = 1.0f;
-/// 加速度
-const static float DEFINE_MOVE_SPEED = 10.0f;
+/// 移動速度
+const static float DEFINE_MOVE_SPEED = 50.0f;
 /// 連続でショットを撃てる時間
 const static float DEFINE_SHOT_TIME = 0.05f;
 /// ショット時のアニメーション用
@@ -103,8 +103,8 @@ void Player::move()
 	}
 
 	// トランスフォーム更新
-	Vector2 angle = mMoveVelocity * FPS->deltaTime();
-	mTransform.rot *= Quaternion::AxisAngle(mTransform.Up(), -angle.x);
+	Vector2 angle = mMoveVelocity * FPS->deltaTime() * DEFINE_MOVE_SPEED;
+	mTransform.rot *= Quaternion::AxisAngle(-mTransform.Up(), angle.x);
 	mTransform.rot *= Quaternion::AxisAngle(mTransform.Right(), angle.y);
 	mTransform.pos = mTargetPos + mTransform.rot * Vector3::back * mTargetDistance;
 }
