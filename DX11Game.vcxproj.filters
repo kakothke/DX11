@@ -184,7 +184,7 @@
     <ClInclude Include="src\ConstantBuffer.h">
       <Filter>System\Direct3D11</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameScene.h">
+    <ClInclude Include="src\BossTestScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\GameSkyBox.h">
@@ -213,6 +213,12 @@
     </ClInclude>
     <ClInclude Include="src\OBJRenderer.h">
       <Filter>System\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>Game\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -300,7 +306,7 @@
     <ClCompile Include="src\ConstantBuffer.cpp">
       <Filter>System\Direct3D11</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameScene.cpp">
+    <ClCompile Include="src\BossTestScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\GameSkyBox.cpp">
@@ -329,6 +335,12 @@
     </ClCompile>
     <ClCompile Include="src\OBJRenderer.cpp">
       <Filter>System\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugScene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Game\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

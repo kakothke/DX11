@@ -3,7 +3,11 @@
 //-------------------------------------------------------------------------------------------------
 #include <Windows.h>
 #include "Direct3D11.h"
+
+//-------------------------------------------------------------------------------------------------
 #include "GameScene.h"
+#include "BossTestScene.h"
+#include "DebugScene.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -43,11 +47,19 @@ void SceneManager::update()
 void SceneManager::draw()
 {
 	if (!mSceneStack.empty()) {
-		D3D11->zBufferOff();
+		// 背景
+		D3D11->setZBufferMode(0);
+		D3D11->setBlendMode(BlendList::Normal);
 		mSceneStack.top()->drawBackground();
-		D3D11->zBufferOn();
+
+		// ワールド
+		D3D11->setZBufferMode(1);
+		D3D11->setBlendMode(BlendList::None);
 		mSceneStack.top()->draw();
-		D3D11->zBufferOff();
+
+		// スクリーン
+		D3D11->setZBufferMode(0);
+		D3D11->setBlendMode(BlendList::Normal);
 		mSceneStack.top()->draw2D();
 	}
 }
@@ -64,6 +76,12 @@ void SceneManager::changeScene(const SceneList aSceneList)
 		break;
 	case SceneList::Game:
 		mSceneStack.push(std::make_shared<GameScene>(this));
+		break;
+	case SceneList::BossTest:
+		mSceneStack.push(std::make_shared<BossTestScene>(this));
+		break;
+	case SceneList::Debug:
+		mSceneStack.push(std::make_shared<DebugScene>(this));
 		break;
 	default:
 		// エラーメッセージ

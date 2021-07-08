@@ -125,11 +125,6 @@ void Player::shot()
 			// 弾生成
 			Transform bulletTransform;
 			bulletTransform = mTransform;
-			float offset = 2.0f;
-			bulletTransform.pos += bulletTransform.Right() * offset;
-			mPlayerBullet.emplace_back(std::make_shared<PlayerBullet>(bulletTransform, mTargetPos));
-			bulletTransform = mTransform;
-			bulletTransform.pos += -bulletTransform.Right() * offset;
 			mPlayerBullet.emplace_back(std::make_shared<PlayerBullet>(bulletTransform, mTargetPos));
 		}
 		// タイマー更新

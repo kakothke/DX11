@@ -4,23 +4,25 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Camera.h"
+#include "GameCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
+#include "Player.h"
+#include "Boss.h"
+#include "FontRenderer.h"
 #include "SpriteRenderer.h"
-#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// ゲームシーン
-class GameScene : public AbstractScene
+/// ボス戦テストシーン
+class BossTestScene : public AbstractScene
 {
 public:
 	/// @name コンストラクタ/仮想デストラクタ
 	//@{
-	GameScene(IChangeScene* aImpl);
-	virtual ~GameScene();
+	BossTestScene(IChangeScene* aImpl);
+	virtual ~BossTestScene();
 	//@}
 
 	/// @name 更新/描画
@@ -34,10 +36,12 @@ public:
 private:
 	/// @name シーン内ゲームオブジェクト
 	//@{
-	Camera mCamera;
+	GameCamera mCamera;
 	GameSkyBox mSkyBox;
 	DirectionalLight mDirectionalLight;
-	OBJRenderer mOBJTest;
+	Player mPlayer;
+	Boss mBoss;
+	FontRenderer mFontTest;
 	SpriteRenderer mSpriteTest;
 	//@}
 

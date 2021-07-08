@@ -10,10 +10,12 @@ namespace KDXK {
 /// OBJ
 enum class OBJList
 {
+	Cube,
 	Player,
 	Boss,
 	SkyBox,
-	Kabocha
+	Kabocha,
+	Test,
 };
 
 /// Sprite

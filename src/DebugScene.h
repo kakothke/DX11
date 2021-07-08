@@ -13,14 +13,14 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// ゲームシーン
-class GameScene : public AbstractScene
+/// デバッグシーン
+class DebugScene : public AbstractScene
 {
 public:
 	/// @name コンストラクタ/仮想デストラクタ
 	//@{
-	GameScene(IChangeScene* aImpl);
-	virtual ~GameScene();
+	DebugScene(IChangeScene* aImpl);
+	virtual ~DebugScene();
 	//@}
 
 	/// @name 更新/描画

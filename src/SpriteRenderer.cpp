@@ -64,19 +64,19 @@ void SpriteRenderer::render(Transform aTransform)
 	D3D11->getContext()->IASetVertexBuffers(0, 1, &mVertexBuffer, &strides, &offsets);
 
 	// コンスタントバッファを更新
-	D3D11->getConstantBuffer()->setMatrixW(aTransform);
-	D3D11->getConstantBuffer()->updateMatrix();
 	D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 	D3D11->getConstantBuffer()->setSpriteSplit(mSplit);
 	D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
 	D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);
 	D3D11->getConstantBuffer()->updateSprite();
+	D3D11->getConstantBuffer()->setMatrixW(aTransform);
+	D3D11->getConstantBuffer()->updateMatrix();
 
 	// テクスチャーセット	
 	D3D11->setTexture(TEXTURE_LOADER->getTexture(mTextureName));
 
 	// 描画
-	D3D11->getContext()->Draw(4, 0);
+	D3D11->getContext()->Draw(8, 0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void SpriteRenderer::render(Transform aTransform)
 void SpriteRenderer::setTexture(const LPCSTR aFileName)
 {
 	mTextureName = aFileName;
-	mTextureSize = TEXTURE_LOADER->getTextureSize(aFileName) / 2;
+	mTextureSize = TEXTURE_LOADER->getTextureSize(aFileName);
 
 	// テクスチャー取得エラー
 	if (mTextureSize == Vector2(0)) {
@@ -158,7 +158,7 @@ void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 bool SpriteRenderer::createVertexBuffer()
 {
 	// 頂点作成
-	VertexData vertexes[4];
+	VertexData vertexes[8];
 	Vector2 size = 0.5f;
 	// 頂点0
 	vertexes[0].pos[0] = -size.x;
@@ -175,16 +175,43 @@ bool SpriteRenderer::createVertexBuffer()
 	vertexes[2].pos[1] = size.y;
 	vertexes[2].uv[0] = 0;
 	vertexes[2].uv[1] = 0;
-	//// 頂点3
+	// 頂点3
 	vertexes[3].pos[0] = size.x;
 	vertexes[3].pos[1] = size.y;
 	vertexes[3].uv[0] = 1;
 	vertexes[3].uv[1] = 0;
+	// 頂点4
+	vertexes[4].pos[0] = -size.x;
+	vertexes[4].pos[1] = -size.y;
+	vertexes[4].uv[0] = 0;
+	vertexes[4].uv[1] = 1;
+	// 頂点5
+	vertexes[5].pos[0] = size.x;
+	vertexes[5].pos[1] = -size.y;
+	vertexes[5].uv[0] = 1;
+	vertexes[5].uv[1] = 1;
+	// 頂点6
+	vertexes[6].pos[0] = -size.x;
+	vertexes[6].pos[1] = size.y;
+	vertexes[6].uv[0] = 0;
+	vertexes[6].uv[1] = 0;
+	// 頂点7
+	vertexes[7].pos[0] = size.x;
+	vertexes[7].pos[1] = size.y;
+	vertexes[7].uv[0] = 1;
+	vertexes[7].uv[1] = 0;
+	// 法線
+	for (auto vertex : vertexes) {
+		vertex.nor[0] = 0;
+		vertex.nor[1] = 0;
+		vertex.nor[2] = -1;
+		vertex.pos[2] = 0;
+	}
 
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(VertexData) * 4;
+		bufferDesc.ByteWidth = sizeof(VertexData) * 8;
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定

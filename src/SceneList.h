@@ -9,6 +9,8 @@ enum class SceneList
 	POP,
 
 	Game,
+	BossTest,
+	Debug,
 };
 
 } // namespace

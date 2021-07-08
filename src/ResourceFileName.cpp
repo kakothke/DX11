@@ -6,10 +6,12 @@ namespace KDXK {
 /// OBJ
 const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =
 {
+	{ OBJList::Cube, "res/mesh/cube.obj "},
 	{ OBJList::Player, "res/mesh/player/Player.obj" },
 	{ OBJList::Boss, "res/mesh/boss/EnemyBox.obj" },
 	{ OBJList::SkyBox, "res/mesh/skybox/SkyBox.obj" },
 	{ OBJList::Kabocha, "res/mesh/kabocha/kabocha.obj" },
+	{ OBJList::Test, "res/mesh/test.obj" },
 };
 
 /// Sprite

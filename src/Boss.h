@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
 #include "OBJRenderer.h"
+#include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -26,6 +27,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	OBJRenderer mRenderer;
+	SpriteRenderer mSRenderer;
 	//@}
 
 };

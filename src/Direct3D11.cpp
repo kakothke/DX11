@@ -19,33 +19,35 @@ Direct3D11::Direct3D11()
 	, mRenderTargetViews()
 	, mDepthStencilView(nullptr)
 	, mDepthStencilTexture(nullptr)
-	, mDepthStencilState(nullptr)
-	, mDepthDisabledStencilState(nullptr)
+	, mDepthStencilState()
 	, mSamplerState(nullptr)
-	, mBlendState(nullptr)
+	, mBlendState()
 	, mConstantBuffer()
 {
+	mDepthStencilState[0] = nullptr;
+	mDepthStencilState[1] = nullptr;
+	mBlendState.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
 Direct3D11::~Direct3D11()
 {
-	if (mBlendState) {
-		mBlendState->Release();
-		mBlendState = nullptr;
+	for (auto blend : mBlendState) {
+		if (blend.second) {
+			blend.second->Release();
+			blend.second = nullptr;
+		}
 	}
 	if (mSamplerState) {
 		mSamplerState->Release();
 		mSamplerState = nullptr;
 	}
-	if (mDepthDisabledStencilState) {
-		mDepthDisabledStencilState->Release();
-		mDepthDisabledStencilState = nullptr;
-	}
-	if (mDepthStencilState) {
-		mDepthStencilState->Release();
-		mDepthStencilState = nullptr;
+	for (auto depth : mDepthStencilState) {
+		if (depth) {
+			depth->Release();
+			depth = nullptr;
+		}
 	}
 	if (mDepthStencilTexture) {
 		mDepthStencilTexture->Release();
@@ -165,17 +167,29 @@ void Direct3D11::setTexture(ID3D11ShaderResourceView* aTexture)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// Zバッファを有効化する
-void Direct3D11::zBufferOn()
+/// Zバッファを設定する
+/// @param aModeNum 0(無効化) / 1(有効化)
+void Direct3D11::setZBufferMode(const int& aModeNum)
 {
-	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+	switch (aModeNum) {
+	case 0:
+		mContext->OMSetDepthStencilState(mDepthStencilState[0], 0);
+		break;
+	case 1:
+		mContext->OMSetDepthStencilState(mDepthStencilState[1], 0);
+		break;
+	default:
+		mContext->OMSetDepthStencilState(mDepthStencilState[1], 0);
+		break;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
-/// Zバッファを無効化する
-void Direct3D11::zBufferOff()
+/// ブレンドモードを設定する
+/// @param aBlendNum ブレンドリスト
+void Direct3D11::setBlendMode(const BlendList& aBlendList)
 {
-	mContext->OMSetDepthStencilState(mDepthDisabledStencilState, 0);
+	mContext->OMSetBlendState(mBlendState[aBlendList], 0, 0xffffffff);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -310,27 +324,27 @@ bool Direct3D11::createDepthStencilState()
 	// 深度ステンシルステートを作成
 	D3D11_DEPTH_STENCIL_DESC dc;
 	ZeroMemory(&dc, sizeof(dc));
-	dc.DepthEnable = true;
+	dc.DepthEnable = false;
 	dc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	dc.DepthFunc = D3D11_COMPARISON_LESS;
 	dc.StencilEnable = false;
 
-	// Zバッファ有り
+	// Zバッファ無し
 	HRESULT hr;
-	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState);
+	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState[0]);
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	// Zバッファ無し
-	dc.DepthEnable = false;
-	hr = mDevice->CreateDepthStencilState(&dc, &mDepthDisabledStencilState);
+	// Zバッファ有り
+	dc.DepthEnable = true;
+	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState[1]);
 	if (FAILED(hr)) {
 		return false;
 	}
 
 	// 深度ステンシルステートを適用
-	mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+	mContext->OMSetDepthStencilState(mDepthStencilState[1], 0);
 
 	return true;
 }
@@ -367,20 +381,47 @@ bool Direct3D11::createBlendState()
 	blendDesc.AlphaToCoverageEnable = false;
 	blendDesc.IndependentBlendEnable = false;
 	blendDesc.RenderTarget[0].BlendEnable = true;
-	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
+	// 通常
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
 	HRESULT hr;
-	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState);
+	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState[BlendList::None]);
 	if (FAILED(hr)) {
 		return false;
 	}
-	mContext->OMSetBlendState(mBlendState, 0, 0xffffffff);
+
+	// 透過
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState[BlendList::Normal]);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 加算
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState[BlendList::Addition]);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 加算透過
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	hr = mDevice->CreateBlendState(&blendDesc, &mBlendState[BlendList::AdditionAlpha]);
+	if (FAILED(hr)) {
+		return false;
+	}
+
+	// 適用
+	mContext->OMSetBlendState(mBlendState[BlendList::None], 0, 0xffffffff);
 
 	return true;
 }

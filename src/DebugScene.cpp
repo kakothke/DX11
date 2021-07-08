@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "DebugScene.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -9,7 +9,7 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
+DebugScene::DebugScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	mOBJTest.setOBJ(ResourceFileName::OBJ.at(OBJList::Cube));
 	mOBJTest.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
@@ -22,13 +22,13 @@ GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
-GameScene::~GameScene()
+DebugScene::~DebugScene()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void GameScene::update()
+void DebugScene::update()
 {
 	// ワールド関連
 	mCamera.update();
@@ -37,7 +37,7 @@ void GameScene::update()
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void GameScene::draw()
+void DebugScene::draw()
 {
 	mOBJTest.render(Transform());
 	mSpriteTest.render(Transform());
@@ -45,13 +45,13 @@ void GameScene::draw()
 
 //-------------------------------------------------------------------------------------------------
 /// 描画2D
-void GameScene::draw2D()
+void DebugScene::draw2D()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 背景描画
-void GameScene::drawBackground()
+void DebugScene::drawBackground()
 {
 	mSkyBox.draw();
 }

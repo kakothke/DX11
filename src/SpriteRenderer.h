@@ -56,6 +56,7 @@ private:
 	{
 		float pos[3];
 		float uv[2];
+		float nor[3];
 	};
 	//@}
 

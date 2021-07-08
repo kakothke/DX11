@@ -27,10 +27,12 @@ ResourceManager::~ResourceManager()
 void ResourceManager::initialize()
 {
 	// OBJs
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Cube));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Boss));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Player));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Kabocha));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));

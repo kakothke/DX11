@@ -13,6 +13,19 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
+/// ブレンドの種類
+enum class BlendList
+{
+	/// 通常
+	None,
+	/// 透過透過
+	Normal,
+	/// 加算
+	Addition,
+	/// 乗算
+	AdditionAlpha,
+};
+
 /// Direct3D11の管理
 class Direct3D11 : public Singleton<Direct3D11>
 {
@@ -40,10 +53,10 @@ public:
 	void setShader(const ShaderLoader::ShaderData* aShaderData);
 	/// テクスチャーをセットする
 	void setTexture(ID3D11ShaderResourceView* aTexture);
-	/// Zバッファを有効化する
-	void zBufferOn();
-	/// Zバッファを無効化する
-	void zBufferOff();
+	/// Zバッファを設定する
+	void setZBufferMode(const int& aModeNum);
+	/// ブレンドモードを設定する
+	void setBlendMode(const BlendList& aBlendList);
 	//@}
 
 	/// @name アクセサ
@@ -92,12 +105,11 @@ private:
 	/// 深度ステンシルビューを生成する為のテクスチャ
 	ID3D11Texture2D* mDepthStencilTexture;
 	/// 深度ステンシルステート
-	ID3D11DepthStencilState* mDepthStencilState;
-	ID3D11DepthStencilState* mDepthDisabledStencilState;
+	ID3D11DepthStencilState* mDepthStencilState[2];
 	/// テクスチャサンプラー
 	ID3D11SamplerState* mSamplerState;
 	/// ブレンドステート
-	ID3D11BlendState* mBlendState;
+	std::unordered_map<BlendList, ID3D11BlendState*> mBlendState;
 	/// コンスタントバッファー
 	ConstantBuffer mConstantBuffer;
 	//@}
