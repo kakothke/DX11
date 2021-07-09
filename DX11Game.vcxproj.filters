@@ -83,6 +83,9 @@
     <Filter Include="System\Comon\Math">
       <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\Obstract">
+      <UniqueIdentifier>{e638da34-25dd-403a-8741-da2e463e1f2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -190,10 +193,10 @@
     <ClInclude Include="src\GameSkyBox.h">
       <Filter>Game\GameObject\SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameCamera.h">
+    <ClInclude Include="src\BossCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player.h">
+    <ClInclude Include="src\TestPlayer.h">
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="src\Boss.h">
@@ -219,6 +222,18 @@
     </ClInclude>
     <ClInclude Include="src\GameScene.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObstractManager.h">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Obstract.h">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ground.h">
+      <Filter>Game\GameObject\Obstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,10 +327,10 @@
     <ClCompile Include="src\GameSkyBox.cpp">
       <Filter>Game\GameObject\SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameCamera.cpp">
+    <ClCompile Include="src\BossCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player.cpp">
+    <ClCompile Include="src\TestPlayer.cpp">
       <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="src\Boss.cpp">
@@ -341,6 +356,18 @@
     </ClCompile>
     <ClCompile Include="src\GameScene.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObstractManager.cpp">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Obstract.cpp">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ground.cpp">
+      <Filter>Game\GameObject\Obstract</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

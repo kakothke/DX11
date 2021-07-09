@@ -7,6 +7,10 @@
 #include "Camera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
+#include "Player.h"
+#include "ObstractManager.h"
+
+//-------------------------------------------------------------------------------------------------
 #include "SpriteRenderer.h"
 #include "OBJRenderer.h"
 
@@ -37,6 +41,9 @@ private:
 	Camera mCamera;
 	GameSkyBox mSkyBox;
 	DirectionalLight mDirectionalLight;
+	Player mPlayer;
+	ObstractManager mObstractManager;
+
 	OBJRenderer mOBJTest;
 	SpriteRenderer mSpriteTest;
 	//@}

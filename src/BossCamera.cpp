@@ -1,4 +1,4 @@
-#include "GameCamera.h"
+#include "BossCamera.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Direct3D11.h"
@@ -12,7 +12,7 @@ const static float DEFINE_DISTANCE = 20.0f;
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-GameCamera::GameCamera()
+BossCamera::BossCamera()
 	: mLocalTransform()
 	, mPlayerTransform()
 	, mPlayerVelocity()
@@ -22,7 +22,7 @@ GameCamera::GameCamera()
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void GameCamera::update()
+void BossCamera::update()
 {
 	// プレイヤーを親オブジェクトとして連動させる
 	mTransform = mPlayerTransform;
@@ -35,14 +35,14 @@ void GameCamera::update()
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void GameCamera::draw()
+void BossCamera::draw()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// プレイヤーのトランスフォームを設定する
 /// @param aTransform トランスフォーム
-void GameCamera::setPlayerTransform(const Transform& aTransform)
+void BossCamera::setPlayerTransform(const Transform& aTransform)
 {
 	mPlayerTransform = aTransform;
 }
@@ -50,7 +50,7 @@ void GameCamera::setPlayerTransform(const Transform& aTransform)
 //-------------------------------------------------------------------------------------------------
 /// プレイヤーの移動速度を設定する
 /// @param aVelocity 
-void GameCamera::setPlayerVelocity(const Vector2& aVelocity)
+void BossCamera::setPlayerVelocity(const Vector2& aVelocity)
 {
 	mPlayerVelocity = aVelocity;
 }

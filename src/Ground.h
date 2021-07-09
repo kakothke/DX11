@@ -9,13 +9,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class Player : public BaseGameObject
+class Ground : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	Player();
-	~Player();
+	Ground(const Transform& aTransform, const float& aSpeed);
+	~Ground();
 	//@}
 
 	/// @name 更新/描画
@@ -24,13 +24,13 @@ public:
 	void draw() override;
 	//@}
 
-private:
-	/// @name 内部実装
+	/// @name アクセサ
 	//@{
-	void move();
-	void shot();
+	void setMoveSpeed(const float aSpeed);
 	//@}
 
+
+private:
 	/// @name コンポーネント
 	//@{
 	OBJRenderer mRenderer;
@@ -38,6 +38,7 @@ private:
 
 	/// @name プライベートメンバ変数
 	//@{
+	float mMoveSpeed;
 	//@}
 
 };

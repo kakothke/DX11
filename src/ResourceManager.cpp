@@ -28,6 +28,7 @@ void ResourceManager::initialize()
 {
 	// OBJs
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Cube));
+	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Obstract));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Boss));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Player));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::SkyBox));

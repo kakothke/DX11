@@ -11,6 +11,7 @@ namespace KDXK {
 enum class OBJList
 {
 	Cube,
+	Obstract,
 	Player,
 	Boss,
 	SkyBox,

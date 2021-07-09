@@ -21,6 +21,7 @@ public:
     Vector2();
     Vector2(float xy);
     Vector2(float x, float y);
+    Vector2(const Vector3& aVector);
     //@}
 
     //@ name •ÏŠ·ŠÖ”

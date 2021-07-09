@@ -187,8 +187,11 @@ void Direct3D11::setZBufferMode(const int& aModeNum)
 //-------------------------------------------------------------------------------------------------
 /// ブレンドモードを設定する
 /// @param aBlendNum ブレンドリスト
-void Direct3D11::setBlendMode(const BlendList& aBlendList)
+void Direct3D11::setBlendMode(const int& aBlendList)
 {
+	if (!mBlendState.count(aBlendList)) {
+		return;
+	}
 	mContext->OMSetBlendState(mBlendState[aBlendList], 0, 0xffffffff);
 }
 

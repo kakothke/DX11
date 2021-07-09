@@ -49,17 +49,17 @@ void SceneManager::draw()
 	if (!mSceneStack.empty()) {
 		// 背景
 		D3D11->setZBufferMode(0);
-		D3D11->setBlendMode(BlendList::Normal);
+		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
 		mSceneStack.top()->drawBackground();
 
 		// ワールド
 		D3D11->setZBufferMode(1);
-		D3D11->setBlendMode(BlendList::None);
+		D3D11->setBlendMode(Direct3D11::BlendList::None);
 		mSceneStack.top()->draw();
 
 		// スクリーン
 		D3D11->setZBufferMode(0);
-		D3D11->setBlendMode(BlendList::Normal);
+		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
 		mSceneStack.top()->draw2D();
 	}
 }

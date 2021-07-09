@@ -6,14 +6,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// カメラ基底クラス
-/// @brief 静的なカメラとしても使用可能
-class GameCamera : public Camera
+/// ボス戦カメラ
+class BossCamera : public Camera
 {
 public:
 	/// @name コンストラクタ
 	//@{
-	GameCamera();
+	BossCamera();
 	//@}
 
 	/// @name 更新/描画

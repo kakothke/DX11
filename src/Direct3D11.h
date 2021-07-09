@@ -13,19 +13,6 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-/// ブレンドの種類
-enum class BlendList
-{
-	/// 通常
-	None,
-	/// 透過透過
-	Normal,
-	/// 加算
-	Addition,
-	/// 乗算
-	AdditionAlpha,
-};
-
 /// Direct3D11の管理
 class Direct3D11 : public Singleton<Direct3D11>
 {
@@ -34,6 +21,22 @@ public:
 	//@{
 	Direct3D11();
 	~Direct3D11();
+	//@}
+
+	/// @name 列挙型
+	//@{
+	/// ブレンドの種類
+	enum BlendList
+	{
+		/// 通常
+		None,
+		/// 透過透過
+		Normal,
+		/// 加算
+		Addition,
+		/// 加算（透過有り）
+		AdditionAlpha,
+	};
 	//@}
 
 	/// @name 初期化処理
@@ -56,7 +59,7 @@ public:
 	/// Zバッファを設定する
 	void setZBufferMode(const int& aModeNum);
 	/// ブレンドモードを設定する
-	void setBlendMode(const BlendList& aBlendList);
+	void setBlendMode(const int& aBlendList);
 	//@}
 
 	/// @name アクセサ
@@ -109,7 +112,7 @@ private:
 	/// テクスチャサンプラー
 	ID3D11SamplerState* mSamplerState;
 	/// ブレンドステート
-	std::unordered_map<BlendList, ID3D11BlendState*> mBlendState;
+	std::unordered_map<int, ID3D11BlendState*> mBlendState;
 	/// コンスタントバッファー
 	ConstantBuffer mConstantBuffer;
 	//@}

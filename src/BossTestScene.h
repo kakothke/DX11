@@ -4,10 +4,10 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "GameCamera.h"
+#include "BossCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
-#include "Player.h"
+#include "TestPlayer.h"
 #include "Boss.h"
 #include "FontRenderer.h"
 #include "SpriteRenderer.h"
@@ -36,10 +36,10 @@ public:
 private:
 	/// @name シーン内ゲームオブジェクト
 	//@{
-	GameCamera mCamera;
+	BossCamera mCamera;
 	GameSkyBox mSkyBox;
 	DirectionalLight mDirectionalLight;
-	Player mPlayer;
+	TestPlayer mPlayer;
 	Boss mBoss;
 	FontRenderer mFontTest;
 	SpriteRenderer mSpriteTest;
