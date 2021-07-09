@@ -148,6 +148,7 @@
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Boss.h" />
     <ClInclude Include="src\DebugScene.h" />
+    <ClInclude Include="src\GameCamera.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\Ground.h" />
     <ClInclude Include="src\Obstract.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\BossCamera.cpp" />
     <ClCompile Include="src\BossTestScene.cpp" />
+    <ClCompile Include="src\GameCamera.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GameSkyBox.cpp" />
     <ClCompile Include="src\Ground.cpp" />

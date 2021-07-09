@@ -1,21 +1,18 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "BaseGameObject.h"
-
-//-------------------------------------------------------------------------------------------------
-#include "OBJRenderer.h"
+#include "Camera.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class Player : public BaseGameObject
+/// ゲームカメラ
+class GameCamera : public Camera
 {
 public:
-	/// @name コンストラクタ/デストラクタ
+	/// @name コンストラクタ
 	//@{
-	Player();
-	~Player();
+	GameCamera();
 	//@}
 
 	/// @name 更新/描画
@@ -24,22 +21,15 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name アクセサ
+	//@{
+	void setPlayerPos(const Vector3& aPos);
+	//@}
+
 private:
-	/// @name 内部実装
-	//@{
-	void move();
-	void shot();
-	//@}
-
-	/// @name コンポーネント
-	//@{
-	OBJRenderer mRenderer;
-	//@}
-
 	/// @name プライベートメンバ変数
 	//@{
-	float mMoveSpeed;
-	float mMoveRot;
+	Vector3 mPlayerPos;
 	//@}
 
 };

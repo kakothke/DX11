@@ -4,7 +4,7 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "Camera.h"
+#include "GameCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
 #include "Player.h"
@@ -38,7 +38,7 @@ public:
 private:
 	/// @name シーン内ゲームオブジェクト
 	//@{
-	Camera mCamera;
+	GameCamera mCamera;
 	GameSkyBox mSkyBox;
 	DirectionalLight mDirectionalLight;
 	Player mPlayer;

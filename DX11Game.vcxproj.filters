@@ -235,6 +235,9 @@
     <ClInclude Include="src\Ground.h">
       <Filter>Game\GameObject\Obstract</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameCamera.h">
+      <Filter>Game\GameObject\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -368,6 +371,9 @@
     </ClCompile>
     <ClCompile Include="src\Ground.cpp">
       <Filter>Game\GameObject\Obstract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameCamera.cpp">
+      <Filter>Game\GameObject\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
