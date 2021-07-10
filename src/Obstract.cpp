@@ -41,8 +41,8 @@ void Obstract::update()
 {
 	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime();
 	if (mTransform.pos.z < -10.0f) {
-		setActive(false);
-	}
+		destroyThisGameObject();
+	}	
 }
 
 //-------------------------------------------------------------------------------------------------

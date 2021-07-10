@@ -14,6 +14,7 @@ public:
 	/// name コンストラクタ
 	//@{
 	GameSkyBox();
+	~GameSkyBox();
 	//@}
 
 	/// @name 初期化/更新/描画

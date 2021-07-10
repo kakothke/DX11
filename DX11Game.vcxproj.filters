@@ -235,10 +235,10 @@
     <ClInclude Include="src\GameCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\RendererList.h">
-      <Filter>System\Resource\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObjectManager.h">
+      <Filter>Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ISetGameObjectList.h">
       <Filter>Game\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
@@ -374,9 +374,6 @@
     </ClCompile>
     <ClCompile Include="src\GameCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RendererList.cpp">
-      <Filter>System\Resource\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObjectManager.cpp">
       <Filter>Game\GameObject</Filter>

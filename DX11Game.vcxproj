@@ -176,7 +176,6 @@
     <ClInclude Include="src\MyOutputDebugString.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
-    <ClInclude Include="src\RendererList.h" />
     <ClInclude Include="src\TestPlayer.h" />
     <ClInclude Include="src\Quaternion.h" />
     <ClInclude Include="src\ResourceFileName.h" />
@@ -194,6 +193,7 @@
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\ISetGameObjectList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\include\WICTextureLoader11.cpp" />
@@ -225,7 +225,6 @@
     <ClCompile Include="src\Obstract.cpp" />
     <ClCompile Include="src\ObstractManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\RendererList.cpp" />
     <ClCompile Include="src\TestPlayer.cpp" />
     <ClCompile Include="src\PlayerBullet.cpp" />
     <ClCompile Include="src\Quaternion.cpp" />

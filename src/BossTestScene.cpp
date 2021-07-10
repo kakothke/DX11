@@ -18,14 +18,14 @@ BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	SOUND->play((int)SoundList::BGM_00);
 
-	mCamera = std::make_shared<BossCamera>();
+	/*mCamera = std::make_shared<BossCamera>();
 	mGameObjMgr.setCameraObject(mCamera);
 	mPlayer = std::make_shared<TestPlayer>();
 	mGameObjMgr.setGameObjectListToWorld(mPlayer);
 	mBoss = std::make_shared<Boss>();
 	mGameObjMgr.setGameObjectListToWorld(mBoss);
 	mGameObjMgr.setGameObjectListToWorld(std::make_shared<DirectionalLight>());
-	mGameObjMgr.setGameObjectListToBackground(std::make_shared<GameSkyBox>());
+	mGameObjMgr.setGameObjectListToBackground(std::make_shared<GameSkyBox>());*/
 
 	mSpriteTest.setAnchor(1.0f, 1.0f);
 	mSpriteTest.setPivot(1.0f, 1.0f);

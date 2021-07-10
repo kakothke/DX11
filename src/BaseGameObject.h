@@ -1,6 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
+#include "ISetGameObjectList.h"
 #include "Transform.h"
 #include "Vector2.h"
 #include "GameObjectTag.h"
@@ -9,13 +10,16 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
+/// 前方宣言
+class ISetGameObject;
+
 /// 全てのゲームオブジェクトの基底クラス
 class BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	BaseGameObject();
+	BaseGameObject(Transform aTransform = Transform());
 	virtual ~BaseGameObject();
 	//@}
 
@@ -31,9 +35,12 @@ public:
 	const Transform& cameraTransform() const;
 	const GameObjectTag& tag() const;
 	const bool& activeSelf() const;
+	const bool& destroyFlag() const;
 	void setCameraTransform(const Transform& aTransform);
 	void setTag(GameObjectTag aTag);
 	void setActive(bool aValue);
+	void setGameObjectList(ISetGameObject* aImpl);
+	void destroyThisGameObject();
 	//@}
 
 protected:
@@ -41,6 +48,7 @@ protected:
 	//@{
 	Transform mTransform;
 	Transform mCameraTransform;
+	ISetGameObject* mGameObjectList;
 	//@}
 
 private:
@@ -48,6 +56,7 @@ private:
 	//@{
 	GameObjectTag mTag;
 	bool mActiveSelf;
+	bool mDestroyFlag;
 	//@}
 
 };

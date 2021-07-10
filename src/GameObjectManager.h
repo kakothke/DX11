@@ -1,9 +1,12 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
+#include "ISetGameObjectList.h"
+
+//-------------------------------------------------------------------------------------------------
 #include <memory>
 #include <list>
-#include <unordered_map>
+#include <map>
 #include "BaseGameObject.h"
 #include "Camera.h"
 
@@ -11,7 +14,7 @@
 namespace KDXK {
 
 /// ゲームオブジェクトマネージャー
-class GameObjectManager
+class GameObjectManager : public ISetGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ 
@@ -26,27 +29,27 @@ public:
 	void draw();
 	//@}
 
-	/// @name ゲームオブジェクトをリストに追加する
+	/// @name ゲームオブジェクトをリスト操作
 	//@{
-	void setGameObjectListToWorld(const std::shared_ptr<BaseGameObject>& aObject, const int& aLayer = 0, const bool& aAlphaBlend = false);
-	void setGameObjectListToBackground(const std::shared_ptr<BaseGameObject>&, const int& aLayer = 0);
-	void setGameObjectListToCanvas(const std::shared_ptr<BaseGameObject>&, const int& aLayer = 0);
-	void setCameraObject(const std::shared_ptr<Camera>& aObject);
+	void setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer = 0, const bool& aAlphaBlend = false) override;
+	void setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void setCameraObject(Camera* aObject);
 	//@}
 
 private:
 	/// @name プライベートメンバ変数
 	//@{
 	/// ワールド空間リスト
-	std::unordered_map<int, std::list<std::shared_ptr<BaseGameObject>>> mWorldGameObjectList;
+	std::map<int, std::list<BaseGameObject*>> mWorldGameObjectList;
 	/// 透過有りワールド空間リスト
-	std::unordered_map<int, std::list<std::shared_ptr<BaseGameObject>>> mWorldGameObjectListAlpha;
+	std::map<int, std::list<BaseGameObject*>> mWorldGameObjectListAlpha;
 	/// 背景リスト
-	std::unordered_map<int, std::list<std::shared_ptr<BaseGameObject>>> mBackgroundGameObjectList;
+	std::map<int, std::list<BaseGameObject*>> mBackgroundGameObjectList;
 	/// キャンバスリスト
-	std::unordered_map<int, std::list<std::shared_ptr<BaseGameObject>>> mCanvasGameObjectList;
-	/// カメラリスト
-	std::shared_ptr<Camera> mCamera;
+	std::map<int, std::list<BaseGameObject*>> mCanvasGameObjectList;
+	/// カメラ
+	Camera* mCamera;
 	//@}
 
 };

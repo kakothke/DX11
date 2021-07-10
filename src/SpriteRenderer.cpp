@@ -82,13 +82,8 @@ void SpriteRenderer::render(Transform aTransform, const bool& a3DModeFlag)
 	D3D11->setTexture(TEXTURE_LOADER->getTexture(mTextureName));
 
 	// •`‰æ
-	if (a3DModeFlag) {
-		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
-	}
 	D3D11->getContext()->Draw(8, 0);
-	if (a3DModeFlag) {
-		D3D11->setBlendMode(Direct3D11::BlendList::None);
-	}
+
 }
 
 //-------------------------------------------------------------------------------------------------

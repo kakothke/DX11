@@ -13,15 +13,15 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
-	, mState(GameState::Game)
+, mState(GameState::Game)
 {
-	mPlayer = std::make_shared<Player>();
+	mPlayer = new Player();
 	mGameOBJManager.setGameObjectListToWorld(mPlayer);
-	mCamera = std::make_shared<GameCamera>();
+	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
+	mGameOBJManager.setGameObjectListToWorld(new ObstractManager());
+	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
+	mCamera = new GameCamera();
 	mGameOBJManager.setCameraObject(mCamera);
-	mGameOBJManager.setGameObjectListToWorld(std::make_shared<DirectionalLight>());
-	mGameOBJManager.setGameObjectListToWorld(std::make_shared<ObstractManager>());
-	mGameOBJManager.setGameObjectListToBackground(std::make_shared<GameSkyBox>());
 }
 
 //-------------------------------------------------------------------------------------------------

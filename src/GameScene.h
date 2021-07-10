@@ -44,8 +44,8 @@ private:
 
 	/// @name シーン内ゲームオブジェクト
 	//@{
-	std::shared_ptr<GameCamera> mCamera;
-	std::shared_ptr<Player> mPlayer;
+	GameCamera* mCamera;
+	Player* mPlayer;
 	//@}
 
 	/// @name プライベートメンバ変数

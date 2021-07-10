@@ -1,6 +1,10 @@
 #include "ObstractManager.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "Ground.h"
+#include "Obstract.h"
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
@@ -44,48 +48,19 @@ void ObstractManager::update()
 
 	// 生成
 	instanceObj();
-
-	// 地形更新
-	for (auto itr = mGround.begin(); itr != mGround.end();) {
-		if ((*itr)->activeSelf()) {
-			// 更新
-			(*itr)->update();
-			itr++;
-		} else {
-			// 消去
-			itr = mGround.erase(itr);
-		}
-	}
-	// 障害物更新
-	for (auto itr = mObstract.begin(); itr != mObstract.end();) {
-		if ((*itr)->activeSelf()) {
-			// 更新
-			(*itr)->update();
-			itr++;
-		} else {
-			// 消去
-			itr = mObstract.erase(itr);
-		}
-	}
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
 void ObstractManager::draw()
 {
-	for (const auto ground : mGround) {
-		ground->draw();
-	}
-	for (const auto obstract : mObstract) {
-		obstract->draw();
-	}
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 当たり判定
 bool ObstractManager::collisionPlayer(const Vector3& aPos)
 {
-	const static float playerSize = 0.5f;
+	/*const static float playerSize = 0.5f;
 	for (const auto obstract : mObstract) {
 		const auto obs = obstract->getCollision();
 		if (obs.pos.x - obs.scale.x / 2.0f < aPos.x + playerSize &&
@@ -96,7 +71,7 @@ bool ObstractManager::collisionPlayer(const Vector3& aPos)
 			obs.pos.z + obs.scale.z / 2.0f > aPos.z - playerSize) {
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -137,7 +112,7 @@ void ObstractManager::instanceGround()
 		static float instPosY = 8.0f;
 		transform.pos.x = (rand() % randPosX) - (randPosX / 2.0f);
 		transform.pos.y = (rand() % randPosY) - instPosY;
-		mGround.emplace_back(std::make_shared<Ground>(transform, mSpeed));
+		mGameObjectList->setGameObjectListToWorld(new Ground(transform, mSpeed));
 	}
 }
 
@@ -155,7 +130,7 @@ void ObstractManager::instanceObstract()
 		static int randScale = 3;
 		transform.pos.x = ((rand() % randPosX) * 0.1f) - ((randPosX * 0.1f) / 2.0f);
 		transform.scale.x = (rand() % randScale + 1.0f);
-		mObstract.emplace_back(std::make_shared<Obstract>(transform, mSpeed));
+		mGameObjectList->setGameObjectListToWorld(new Obstract(transform, mSpeed));
 	}
 }
 
@@ -163,12 +138,12 @@ void ObstractManager::instanceObstract()
 /// スピード変更
 void ObstractManager::changeSpeed()
 {
-	for (const auto ground : mGround) {
+	/*for (const auto ground : mGround) {
 		ground->setMoveSpeed(mSpeed);
 	}
 	for (const auto obstract : mObstract) {
 		obstract->setMoveSpeed(mSpeed);
-	}
+	}*/
 }
 
 } // namespace
