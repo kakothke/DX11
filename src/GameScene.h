@@ -4,11 +4,6 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "GameCamera.h"
-#include "GameSkyBox.h"
-#include "DirectionalLight.h"
-#include "Player.h"
-#include "ObstractManager.h"
 #include "GameObjectManager.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -40,12 +35,6 @@ private:
 		Game,
 		Miss,
 	};
-	//@}
-
-	/// @name シーン内ゲームオブジェクト
-	//@{
-	GameCamera* mCamera;
-	Player* mPlayer;
 	//@}
 
 	/// @name プライベートメンバ変数

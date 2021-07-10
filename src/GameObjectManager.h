@@ -4,10 +4,11 @@
 #include "ISetGameObjectList.h"
 
 //-------------------------------------------------------------------------------------------------
-#include <memory>
+#include <vector>
 #include <list>
 #include <map>
 #include "BaseGameObject.h"
+#include "GameObjectTag.h"
 #include "Camera.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -29,12 +30,14 @@ public:
 	void draw();
 	//@}
 
-	/// @name ゲームオブジェクトをリスト操作
+	/// @name ゲームオブジェクトリスト操作
 	//@{
 	void setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer = 0, const bool& aAlphaBlend = false) override;
 	void setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void setCameraObject(Camera* aObject);
+	BaseGameObject* findGameObject(const GameObjectTag& aTag) override;
+	std::vector<BaseGameObject*> findGameObjects(const GameObjectTag& aTag) override;
 	//@}
 
 private:

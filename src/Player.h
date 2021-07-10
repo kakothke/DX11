@@ -39,7 +39,6 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	float mMoveSpeed;
-	float mMoveRot;
 	//@}
 
 };

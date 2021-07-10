@@ -29,6 +29,8 @@ public:
 private:
 	/// @name 内部実装
 	//@{
+	/// レベル更新
+	void updateLevel();
 	/// オブジェクトを生成する
 	void instanceObj();
 	/// 地上を生成する
@@ -41,8 +43,14 @@ private:
 
 	/// @name プライベートメンバ変数
 	//@{
+	/// レベルアップタイマー
+	float mLevelUpTimer;
+	/// 障害物生成タイマー
+	float mInstanceObstractTimer;
+	/// 地上生成タイマー
+	float mInstanceGroundTimer;
 	/// スピード
-	float mSpeed;
+	float mMoveSpeed;
 	/// レベル
 	int mLevel;
 	//@}

@@ -16,6 +16,9 @@ Ground::Ground(const Transform& aTransform, const float& aSpeed)
 	// トランスフォーム設定
 	mTransform = aTransform;
 
+	// タグ設定
+	setTag(GameObjectTag::Ground);
+
 	/// 描画設定
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Cube));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
@@ -35,8 +38,14 @@ void Ground::setMoveSpeed(const float aSpeed)
 //-------------------------------------------------------------------------------------------------
 void Ground::update()
 {
+	// 定数
+	const static float DELETE_POS = -20.0f;
+
+	// 移動
 	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime();
-	if (mTransform.pos.z < -10.0f) {
+
+	// 消去
+	if (mTransform.pos.z < DELETE_POS) {
 		destroyThisGameObject();
 	}
 }

@@ -8,20 +8,15 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// 定数
-const static float DEFINE_INSTANCE_TIME = 0.2f;
-const static float DEFINE_LEVEL_UP_TIME = 5.0f;
-const static float DEFINE_MOVE_SPEED = 100.0f;
-const static float DEFINE_MOVE_UP = 5.0f;
-
-//-------------------------------------------------------------------------------------------------
-/// シングルトン
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 ObstractManager::ObstractManager()
-	: mSpeed(DEFINE_MOVE_SPEED)
+	: mLevelUpTimer(0.0f)
+	, mInstanceObstractTimer(0.0f)
+	, mInstanceGroundTimer(0.0f)
+	, mMoveSpeed(100.0f)
 	, mLevel(1)
 {
 }
@@ -36,17 +31,7 @@ ObstractManager::~ObstractManager()
 /// 更新
 void ObstractManager::update()
 {
-	// レベルアップ
-	static float time = 0.0f;
-	if (time > DEFINE_LEVEL_UP_TIME * mLevel) {
-		time = 0.0f;
-		mLevel++;
-		mSpeed += DEFINE_MOVE_UP;
-	} else {
-		time += FPS->deltaTime();
-	}
-
-	// 生成
+	updateLevel();
 	instanceObj();
 }
 
@@ -76,24 +61,45 @@ bool ObstractManager::collisionPlayer(const Vector3& aPos)
 }
 
 //-------------------------------------------------------------------------------------------------
+/// レベル更新
+void ObstractManager::updateLevel()
+{
+	// 定数
+	const static float LEVEL_UP_TIME = 5.0f;
+	const static float SPEED_UP = 5.0f;
+
+	// レベルアップ
+	if (mLevelUpTimer > LEVEL_UP_TIME * mLevel) {
+		mLevelUpTimer = 0.0f;
+		mLevel++;
+		mMoveSpeed += SPEED_UP;
+		changeSpeed();
+	} else {
+		mLevelUpTimer += FPS->deltaTime();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 /// オブジェクトを生成する
 void ObstractManager::instanceObj()
 {
-	static float groundTimer = 0.0f;
-	static float obstractTimer = 0.0f;
-	// 地上生成
-	if (groundTimer > DEFINE_INSTANCE_TIME / 2.0f) {
-		groundTimer = 0.0f;
-		instanceGround();
-	} else {
-		groundTimer += FPS->deltaTime();
-	}
+	const static float INSTANCE_OBSTRACT_TIME = 0.2f;
+	const static float INSTANCE_GROUND_TIME = 0.1f;
+
 	// 障害物生成
-	if (obstractTimer > DEFINE_INSTANCE_TIME) {
-		obstractTimer = 0.0f;
+	if (mInstanceObstractTimer > INSTANCE_OBSTRACT_TIME) {
+		mInstanceObstractTimer = 0.0f;
 		instanceObstract();
 	} else {
-		obstractTimer += FPS->deltaTime();
+		mInstanceObstractTimer += FPS->deltaTime();
+	}
+
+	// 地上生成
+	if (mInstanceGroundTimer > INSTANCE_GROUND_TIME) {
+		mInstanceGroundTimer = 0.0f;
+		instanceGround();
+	} else {
+		mInstanceGroundTimer += FPS->deltaTime();
 	}
 }
 
@@ -101,18 +107,18 @@ void ObstractManager::instanceObj()
 /// 地上を生成する
 void ObstractManager::instanceGround()
 {
-	static Transform transform = Transform(
-		Vector3(0.0f, 0.0f, 300.0f),
+	Transform transform = Transform(
+		Vector3(0.0f, -8.0f, 300.0f),
 		Vector3(0.0f),
 		Vector3(16.0f, 5.0f, 16.0f)
 	);
+
 	for (int i = 0; i < 2; i++) {
-		static int randPosX = 100;
-		static int randPosY = 3;
-		static float instPosY = 8.0f;
-		transform.pos.x = (rand() % randPosX) - (randPosX / 2.0f);
-		transform.pos.y = (rand() % randPosY) - instPosY;
-		mGameObjectList->setGameObjectListToWorld(new Ground(transform, mSpeed));
+		const static int RANDOM_POS_X = 100;
+		const static int RANDOM_POS_Y = 3;
+		transform.pos.x = (rand() % RANDOM_POS_X) - (RANDOM_POS_X / 2.0f);
+		transform.pos.y += rand() % RANDOM_POS_Y;
+		mGameObjectList->setGameObjectListToWorld(new Ground(transform, mMoveSpeed));
 	}
 }
 
@@ -120,17 +126,20 @@ void ObstractManager::instanceGround()
 /// 障害物を生成する
 void ObstractManager::instanceObstract()
 {
-	static Transform transform = Transform(
+	Transform transform = Transform(
 		Vector3(0.0f, -3.0f, 300.0f),
 		Vector3(0.0f),
 		Vector3(1.0f, 2.5f, 1.0f)
 	);
+
 	for (int i = 0; i < mLevel; i++) {
-		static int randPosX = 1000;
-		static int randScale = 3;
-		transform.pos.x = ((rand() % randPosX) * 0.1f) - ((randPosX * 0.1f) / 2.0f);
-		transform.scale.x = (rand() % randScale + 1.0f);
-		mGameObjectList->setGameObjectListToWorld(new Obstract(transform, mSpeed));
+		const static int RANDOM_POS_X = 1000;
+		const static float POS_X_SUB = 0.1f;
+		const static int RANDOM_SCALE = 3;
+		const static float OFFSET_SCALE = 1.0f;
+		transform.pos.x = ((rand() % RANDOM_POS_X) * POS_X_SUB) - ((RANDOM_POS_X * POS_X_SUB) / 2.0f);
+		transform.scale.x += (rand() % RANDOM_SCALE) + OFFSET_SCALE;
+		mGameObjectList->setGameObjectListToWorld(new Obstract(transform, mMoveSpeed));
 	}
 }
 
@@ -138,12 +147,14 @@ void ObstractManager::instanceObstract()
 /// スピード変更
 void ObstractManager::changeSpeed()
 {
-	/*for (const auto ground : mGround) {
-		ground->setMoveSpeed(mSpeed);
+	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Ground)) {
+		Ground* obj = (Ground*)objs;
+		obj->setMoveSpeed(mMoveSpeed);
 	}
-	for (const auto obstract : mObstract) {
-		obstract->setMoveSpeed(mSpeed);
-	}*/
+	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Obstract)) {
+		Obstract* obj = (Obstract*)objs;
+		obj->setMoveSpeed(mMoveSpeed);
+	}
 }
 
 } // namespace

@@ -29,8 +29,6 @@ public:
 	//@{
 	/// 移動速度を取得する
 	const Vector2& moveVelocity();
-	/// ターゲットの位置を設定する
-	void setTargetPos(const Vector3& aPos);
 	//@}
 
 private:
@@ -46,7 +44,7 @@ private:
 	Vector3 mTargetPos;
 	Vector2 mMoveVelocity;
 	float mTargetDistance;
-	std::list<std::shared_ptr<PlayerBullet>> mPlayerBullet;
+	float mRapidShotTimer;
 	//@}
 
 };

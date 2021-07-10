@@ -12,7 +12,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// シングルトンクラス
 const static auto WINDOW = Window::getInst();
 const static auto D3D11 = Direct3D11::getInst();
 const static auto INPUT = Input::getInst();

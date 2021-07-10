@@ -11,7 +11,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// シングルトンクラス
 const static auto D3D11 = Direct3D11::getInst();
 const static auto INPUT_MANAGER = InputManager::getInst();
 const static auto RESOURCE = ResourceManager::getInst();

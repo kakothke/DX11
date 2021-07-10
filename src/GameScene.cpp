@@ -5,7 +5,11 @@
 #include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
-
+#include "GameCamera.h"
+#include "GameSkyBox.h"
+#include "DirectionalLight.h"
+#include "Player.h"
+#include "ObstractManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -15,13 +19,11 @@ namespace KDXK {
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mState(GameState::Game)
 {
-	mPlayer = new Player();
-	mGameOBJManager.setGameObjectListToWorld(mPlayer);
+	mGameOBJManager.setGameObjectListToWorld(new Player());
 	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
 	mGameOBJManager.setGameObjectListToWorld(new ObstractManager());
 	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
-	mCamera = new GameCamera();
-	mGameOBJManager.setCameraObject(mCamera);
+	mGameOBJManager.setCameraObject(new GameCamera());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -34,7 +36,6 @@ GameScene::~GameScene()
 /// XV
 void GameScene::update()
 {
-	mCamera->setPlayerPos(mPlayer->transform().pos);
 	mGameOBJManager.update();
 }
 

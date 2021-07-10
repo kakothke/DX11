@@ -150,6 +150,7 @@ void GameObjectManager::update()
 
 	// カメラ
 	mCamera->update();
+	mCamera->updateConstantBuffer();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -253,6 +254,81 @@ void GameObjectManager::setCameraObject(Camera* aObject)
 {
 	mCamera = aObject;
 	aObject->setGameObjectList(this);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ゲームオブジェクトを検索する（単体）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return ゲームオブジェクト
+BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
+{
+	for (const auto& layer : mWorldGameObjectList) {
+		for (const auto& obj : layer.second) {
+			if (obj->tag() == aTag) {
+				return obj;
+			}
+		}
+	}
+	for (const auto& layer : mWorldGameObjectListAlpha) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				return obj;
+			}
+		}
+	}
+	for (const auto& layer : mBackgroundGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				return obj;
+			}
+		}
+	}
+	for (const auto& layer : mCanvasGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				return obj;
+			}
+		}
+	}
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ゲームオブジェクトを検索する（複数）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return ゲームオブジェクト
+std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObjectTag& aTag)
+{
+	std::vector<BaseGameObject*> out = {};
+	for (const auto& layer : mWorldGameObjectList) {
+		for (const auto& obj : layer.second) {
+			if (obj->tag() == aTag) {
+				out.emplace_back(obj);
+			}
+		}
+	}
+	for (const auto& layer : mWorldGameObjectListAlpha) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				out.emplace_back(obj);
+			}
+		}
+	}
+	for (const auto& layer : mBackgroundGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				out.emplace_back(obj);
+			}
+		}
+	}
+	for (const auto& layer : mCanvasGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				out.emplace_back(obj);
+			}
+		}
+	}
+	return out;
 }
 
 //-------------------------------------------------------------------------------------------------

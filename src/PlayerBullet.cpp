@@ -7,12 +7,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// 定数
-const static float DEFINE_ACTIVE_TIME = 1.0f;
-const static float DEFINE_BULLET_SPEED = 2.0f;
-
-//-------------------------------------------------------------------------------------------------
-/// シングルトンクラス
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -22,7 +16,7 @@ PlayerBullet::PlayerBullet(Transform aTransform, Vector3 aTargetPos)
 	, mVelocity(aTargetPos - aTransform.pos)
 	, mTimer(0)
 {
-	// 生成位置
+	// トランスフォーム設定
 	mTransform = aTransform;
 	mTransform.scale = 0.25f;
 	mTransform.scale.z = 1.0f;
@@ -43,11 +37,16 @@ PlayerBullet::~PlayerBullet()
 /// 更新
 void PlayerBullet::update()
 {
-	mTransform.pos += mVelocity.Normalized() * DEFINE_BULLET_SPEED;
+	// 定数
+	const static float DESTROY_TIME = 1.0f;
+	const static float BULLET_SPEED = 2.0f;
+
+	// 位置更新
+	mTransform.pos += mVelocity.Normalized() * BULLET_SPEED;
 
 	// 一定時間たったら消す
-	if (mTimer > DEFINE_ACTIVE_TIME) {
-		setActive(false);
+	if (mTimer > DESTROY_TIME) {
+		destroyThisGameObject();
 	}
 	mTimer += FPS->deltaTime();
 }

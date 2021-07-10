@@ -17,6 +17,9 @@ Obstract::Obstract(const Transform& aTransform, const float& aSpeed)
 	// トランスフォーム設定
 	mTransform = aTransform;
 
+	// タグ設定
+	setTag(GameObjectTag::Obstract);
+
 	/// 描画設定
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Obstract));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
@@ -39,10 +42,16 @@ void Obstract::setMoveSpeed(const float aSpeed)
 /// 更新
 void Obstract::update()
 {
+	// 定数
+	const static float DELETE_POS = -20.0f;
+
+	// 移動
 	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime();
-	if (mTransform.pos.z < -10.0f) {
+
+	// 消去
+	if (mTransform.pos.z < DELETE_POS) {
 		destroyThisGameObject();
-	}	
+	}
 }
 
 //-------------------------------------------------------------------------------------------------

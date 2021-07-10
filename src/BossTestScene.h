@@ -39,9 +39,9 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	GameObjectManager mGameObjMgr;
-	std::shared_ptr<BossCamera> mCamera;
-	std::shared_ptr<TestPlayer> mPlayer;
-	std::shared_ptr<Boss> mBoss;
+	BossCamera* mCamera;
+	TestPlayer* mPlayer;
+	Boss* mBoss;
 	FontRenderer mFontTest;
 	SpriteRenderer mSpriteTest;
 	//@}

@@ -7,12 +7,12 @@ namespace KDXK {
 enum class GameObjectTag
 {
 	Untagged,
+
 	Camera,
-	Light,
-
-	Test,
-
-	TERM
+	Player,
+	Boss,
+	Ground,
+	Obstract,
 };
 
 } // namespace

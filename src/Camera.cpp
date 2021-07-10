@@ -8,24 +8,16 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// 定数
-const static float DEFINE_FOV = 60.0f;
-const static float DEFINE_NEAR = 0.3f;
-const static float DEFINE_FAR = 1000.0f;
-const static Vector3 DEFINE_POS = Vector3(0.0f, 1.0f, -10.0f);
-
-//-------------------------------------------------------------------------------------------------
-/// シングルトンクラス
 const static auto D3D11 = Direct3D11::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Camera::Camera()
-	: mFov(DEFINE_FOV)
-	, mNearZ(DEFINE_NEAR)
-	, mFarZ(DEFINE_FAR)
+	: mFov(60.0f)
+	, mNearZ(0.3f)
+	, mFarZ(1000.0f)
 {
-	mTransform.pos = DEFINE_POS;
+	mTransform.pos = Vector3(0.0f, 1.0f, -10.0f);
 	setTag(GameObjectTag::Camera);
 }
 
@@ -33,9 +25,9 @@ Camera::Camera()
 /// コンストラクタ
 /// @param aTransform トランスフォーム
 Camera::Camera(Transform aTransform)
-	: mFov(DEFINE_FOV)
-	, mNearZ(DEFINE_NEAR)
-	, mFarZ(DEFINE_FAR)
+	: mFov(60.0f)
+	, mNearZ(0.3f)
+	, mFarZ(1000.0f)
 {
 	mTransform = aTransform;
 	setTag(GameObjectTag::Camera);
@@ -49,7 +41,7 @@ Camera::Camera(Vector3 aCameraParam)
 	, mNearZ(aCameraParam.y)
 	, mFarZ(aCameraParam.z)
 {
-	mTransform.pos = DEFINE_POS;
+	mTransform.pos = Vector3(0.0f, 1.0f, -10.0f);
 	setTag(GameObjectTag::Camera);
 }
 
@@ -76,7 +68,6 @@ Camera::~Camera()
 /// 更新
 void Camera::update()
 {
-	updateConstantBuffer();
 }
 
 //-------------------------------------------------------------------------------------------------

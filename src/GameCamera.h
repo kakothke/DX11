@@ -22,15 +22,10 @@ public:
 	void draw() override;
 	//@}
 
-	/// @name アクセサ
-	//@{
-	void setPlayerPos(const Vector3& aPos);
-	//@}
-
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Vector3 mPlayerPos;
+	float mKatamuki;
 	//@}
 
 };

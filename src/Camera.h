@@ -27,13 +27,12 @@ public:
 	void draw() override;
 	//@}
 
-protected:
-	/// @name プロテクテッドメンバ関数
+	/// @name コンスタントバッファを更新する
 	//@{
-	/// コンスタントバッファを更新する
 	void updateConstantBuffer();
 	//@}
 
+protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
 	float mFov;

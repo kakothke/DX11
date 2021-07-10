@@ -9,24 +9,16 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static float DEFINE_MOVE_SPEED = 20.0f;
-const static float DEFINE_MOVE_ROT = 45.0f;
-const static float DEFINE_SPEED_DOWN = 2.0f;
-const static float DEFINE_SPEED_DOWN_SPEED = 10.0f;
-const static Vector3 DEFINE_POS = Vector3(0.0f, 0.0f, 10.0f);
-
-//-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Player::Player()
-	: mMoveSpeed(DEFINE_MOVE_SPEED)
-	, mMoveRot(DEFINE_MOVE_ROT)
+	: mMoveSpeed(20.0f)
 {
-	// トランスフォーム設定
-	mTransform.pos = DEFINE_POS;
+	// タグ設定
+	setTag(GameObjectTag::Player);
 
 	// 描画設定
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Player));
@@ -58,29 +50,34 @@ void Player::draw()
 /// 移動
 void Player::move()
 {
-	// 減速移動
-	float speed = DEFINE_SPEED_DOWN_SPEED * FPS->deltaTime();
-	if (INPUT_MANAGER->axesRaw().y == -1) {
-		if (mMoveSpeed != DEFINE_MOVE_SPEED / DEFINE_SPEED_DOWN) {
-			mMoveSpeed = Math::Lerp(mMoveSpeed, DEFINE_MOVE_SPEED / DEFINE_SPEED_DOWN, speed);
+	// 定数
+	const static float NORMAL_SPEED_LEVEL = 20.0f;
+	const static float UP_SPEED_LEVEL = NORMAL_SPEED_LEVEL * 2.0f;
+	const static float DOWN_SPEED_LEVEL = NORMAL_SPEED_LEVEL / 2.0f;
+
+	float speed = 10.0f * FPS->deltaTime();
+	if (INPUT_MANAGER->axesRaw().y == 1) {
+		// 高速移動
+		if (mMoveSpeed != UP_SPEED_LEVEL) {
+			mMoveSpeed = Math::Lerp(mMoveSpeed, UP_SPEED_LEVEL, speed);
 		}
-		if (mMoveRot != DEFINE_MOVE_ROT / (DEFINE_SPEED_DOWN * 2.0f)) {
-			mMoveRot = Math::Lerp(mMoveRot, DEFINE_MOVE_ROT / (DEFINE_SPEED_DOWN * 2.0f), speed);
+	} else if (INPUT_MANAGER->axesRaw().y == -1) {
+		// 減速移動
+		if (mMoveSpeed != DOWN_SPEED_LEVEL) {
+			mMoveSpeed = Math::Lerp(mMoveSpeed, DOWN_SPEED_LEVEL, speed);
 		}
 	} else {
-		if (mMoveSpeed < DEFINE_MOVE_SPEED) {
-			mMoveSpeed = Math::Lerp(mMoveSpeed, DEFINE_MOVE_SPEED, speed);
-		}
-		if (mMoveSpeed < DEFINE_MOVE_ROT) {
-			mMoveRot = Math::Lerp(mMoveRot, DEFINE_MOVE_ROT, speed);
+		// 通常移動
+		if (mMoveSpeed != NORMAL_SPEED_LEVEL) {
+			mMoveSpeed = Math::Lerp(mMoveSpeed, NORMAL_SPEED_LEVEL, speed);
 		}
 	}
-	
+
 	// 移動
 	float move = INPUT_MANAGER->axesRaw().x * mMoveSpeed;
-	float rot = INPUT_MANAGER->axes().x * mMoveRot;
-	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 0.0f, -rot));
+	float rot = INPUT_MANAGER->axes().x * -mMoveSpeed * 2.0f;
 	mTransform.pos.x += move * FPS->deltaTime();
+	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 0.0f, rot));
 }
 
 //-------------------------------------------------------------------------------------------------

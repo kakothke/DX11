@@ -8,7 +8,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-/// シングルトンクラス
 const static auto D3D11 = Direct3D11::getInst();
 const static auto SOUND = Sound::getInst();
 
@@ -18,14 +17,11 @@ BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	SOUND->play((int)SoundList::BGM_00);
 
-	/*mCamera = std::make_shared<BossCamera>();
-	mGameObjMgr.setCameraObject(mCamera);
-	mPlayer = std::make_shared<TestPlayer>();
-	mGameObjMgr.setGameObjectListToWorld(mPlayer);
-	mBoss = std::make_shared<Boss>();
-	mGameObjMgr.setGameObjectListToWorld(mBoss);
-	mGameObjMgr.setGameObjectListToWorld(std::make_shared<DirectionalLight>());
-	mGameObjMgr.setGameObjectListToBackground(std::make_shared<GameSkyBox>());*/
+	mGameObjMgr.setCameraObject(new BossCamera());
+	mGameObjMgr.setGameObjectListToWorld(new TestPlayer());
+	mGameObjMgr.setGameObjectListToWorld(new Boss());
+	mGameObjMgr.setGameObjectListToWorld(new DirectionalLight());
+	mGameObjMgr.setGameObjectListToBackground(new GameSkyBox());
 
 	mSpriteTest.setAnchor(1.0f, 1.0f);
 	mSpriteTest.setPivot(1.0f, 1.0f);
@@ -49,9 +45,6 @@ BossTestScene::~BossTestScene()
 void BossTestScene::update()
 {
 	mGameObjMgr.update();
-	mPlayer->setTargetPos(mBoss->transform().pos);
-	mCamera->setPlayerTransform(mPlayer->transform());
-	mCamera->setPlayerVelocity(mPlayer->moveVelocity());
 }
 
 //-------------------------------------------------------------------------------------------------

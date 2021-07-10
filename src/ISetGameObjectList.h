@@ -1,10 +1,9 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include <Windows.h>
-#include <memory>
-#include <list>
+#include <vector>
 #include "BaseGameObject.h"
+#include "GameObjectTag.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -22,6 +21,8 @@ public:
 	virtual void setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer = 0, const bool& aAlphaBlend = false) = 0;
 	virtual void setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer = 0) = 0;
 	virtual void setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer = 0) = 0;
+	virtual BaseGameObject* findGameObject(const GameObjectTag& aTag) = 0;
+	virtual std::vector<BaseGameObject*> findGameObjects(const GameObjectTag& aTag) = 0;
 
 };
 
