@@ -11,7 +11,7 @@ const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-Obstract::Obstract(const Transform& aTransform, const float& aSpeed)
+Obstract::Obstract(Transform aTransform, const float& aSpeed)
 	: mMoveSpeed(aSpeed)
 {
 	// トランスフォーム設定

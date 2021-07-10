@@ -14,7 +14,7 @@ class Obstract : public BaseGameObject
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	Obstract(const Transform& aTransform, const float& aSpeed);
+	Obstract(Transform aTransform, const float& aSpeed);
 	~Obstract();
 	//@}
 

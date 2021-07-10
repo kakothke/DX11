@@ -33,10 +33,10 @@ private:
 	void updateLevel();
 	/// オブジェクトを生成する
 	void instanceObj();
-	/// 地上を生成する
-	void instanceGround();
 	/// 障害物を生成する
 	void instanceObstract();
+	/// 地上を生成する
+	void instanceGround();
 	/// スピード変更
 	void changeSpeed();
 	//@}
@@ -53,6 +53,8 @@ private:
 	float mMoveSpeed;
 	/// レベル
 	int mLevel;
+	/// 障害物生成数
+	int mInstanceObstractCount;
 	//@}
 
 };

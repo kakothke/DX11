@@ -8,7 +8,6 @@ namespace KDXK {
 /// @param aTransform 初期トランスフォーム
 BaseGameObject::BaseGameObject(Transform aTransform)
 	: mTransform(aTransform)
-	, mCameraTransform()
 	, mGameObjectList(nullptr)
 	, mTag(GameObjectTag::Untagged)
 	, mActiveSelf(true)
@@ -42,12 +41,6 @@ const Transform& BaseGameObject::transform() const
 }
 
 //-------------------------------------------------------------------------------------------------
-const Transform& BaseGameObject::cameraTransform() const
-{
-	return mCameraTransform;
-}
-
-//-------------------------------------------------------------------------------------------------
 const GameObjectTag& BaseGameObject::tag() const
 {
 	return mTag;
@@ -63,12 +56,6 @@ const bool& BaseGameObject::activeSelf() const
 const bool& BaseGameObject::destroyFlag() const
 {
 	return mDestroyFlag;
-}
-
-//-------------------------------------------------------------------------------------------------
-void BaseGameObject::setCameraTransform(const Transform& aTransform)
-{
-	mCameraTransform = aTransform;
 }
 
 //-------------------------------------------------------------------------------------------------

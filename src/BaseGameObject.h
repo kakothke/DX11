@@ -32,11 +32,9 @@ public:
 	/// @name アクセサ
 	//@{
 	const Transform& transform() const;
-	const Transform& cameraTransform() const;
 	const GameObjectTag& tag() const;
 	const bool& activeSelf() const;
 	const bool& destroyFlag() const;
-	void setCameraTransform(const Transform& aTransform);
 	void setTag(GameObjectTag aTag);
 	void setActive(bool aValue);
 	void setGameObjectList(ISetGameObject* aImpl);
@@ -47,7 +45,6 @@ protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
 	Transform mTransform;
-	Transform mCameraTransform;
 	ISetGameObject* mGameObjectList;
 	//@}
 

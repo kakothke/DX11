@@ -14,7 +14,7 @@ class Ground : public BaseGameObject
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	Ground(const Transform& aTransform, const float& aSpeed);
+	Ground(Transform aTransform, const float& aSpeed);
 	~Ground();
 	//@}
 

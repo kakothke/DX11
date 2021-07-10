@@ -10,7 +10,7 @@ namespace KDXK {
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
-Ground::Ground(const Transform& aTransform, const float& aSpeed)
+Ground::Ground(Transform aTransform, const float& aSpeed)
 	: mMoveSpeed(aSpeed)
 {
 	// トランスフォーム設定

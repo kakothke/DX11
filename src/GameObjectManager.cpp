@@ -77,7 +77,6 @@ void GameObjectManager::update()
 		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
 			// 更新
 			if ((*itr)->activeSelf()) {
-				(*itr)->setCameraTransform(mCamera->transform());
 				(*itr)->update();
 			}
 			// 消去
@@ -97,7 +96,6 @@ void GameObjectManager::update()
 		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
 			// 更新
 			if ((*itr)->activeSelf()) {
-				(*itr)->setCameraTransform(mCamera->transform());
 				(*itr)->update();
 			}
 			// 消去
@@ -115,7 +113,6 @@ void GameObjectManager::update()
 		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
 			// 更新
 			if ((*itr)->activeSelf()) {
-				(*itr)->setCameraTransform(mCamera->transform());
 				(*itr)->update();
 			}
 			// 消去
@@ -134,7 +131,6 @@ void GameObjectManager::update()
 		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
 			// 更新
 			if ((*itr)->activeSelf()) {
-				(*itr)->setCameraTransform(mCamera->transform());
 				(*itr)->update();
 			}
 			// 消去
@@ -336,9 +332,9 @@ std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObject
 bool compAlphaBlendObject(BaseGameObject* aObject1, BaseGameObject* aObject2)
 {
 	// カメラからの距離を計算
-	Vector3 cameraPos = aObject1->cameraTransform().pos - aObject1->cameraTransform().localPos;
+	Vector3 cameraPos;
 	Vector3 objPos1 = aObject1->transform().pos - aObject1->transform().localPos;
-	Vector3 objPos2 = aObject1->transform().pos - aObject1->transform().localPos;
+	Vector3 objPos2 = aObject2->transform().pos - aObject2->transform().localPos;
 	float length1 = (cameraPos - objPos1).SqrMagnitude();
 	float length2 = (cameraPos - objPos2).SqrMagnitude();
 
