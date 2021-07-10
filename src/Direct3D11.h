@@ -57,7 +57,7 @@ public:
 	/// テクスチャーをセットする
 	void setTexture(ID3D11ShaderResourceView* aTexture);
 	/// Zバッファを設定する
-	void setZBufferMode(const int& aModeNum);
+	void setZBuffer(const bool& aFlag);
 	/// ブレンドモードを設定する
 	void setBlendMode(const int& aBlendList);
 	//@}

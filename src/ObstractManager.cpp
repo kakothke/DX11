@@ -82,6 +82,25 @@ void ObstractManager::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 当たり判定
+bool ObstractManager::collisionPlayer(const Vector3& aPos)
+{
+	const static float playerSize = 0.5f;
+	for (const auto obstract : mObstract) {
+		const auto obs = obstract->getCollision();
+		if (obs.pos.x - obs.scale.x / 2.0f < aPos.x + playerSize &&
+			obs.pos.x + obs.scale.x / 2.0f > aPos.x - playerSize &&
+			obs.pos.y - obs.scale.y / 2.0f < aPos.y + playerSize &&
+			obs.pos.y + obs.scale.y / 2.0f > aPos.y - playerSize &&
+			obs.pos.z - obs.scale.z / 2.0f < aPos.z + playerSize &&
+			obs.pos.z + obs.scale.z / 2.0f > aPos.z - playerSize) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// オブジェクトを生成する
 void ObstractManager::instanceObj()
 {

@@ -23,7 +23,7 @@ public:
 
 	/// @name •`‰æ
 	//@{
-	void render(Transform aTransform);
+	void render(Transform aTransform, const bool& a3DModeFlag = false);
 	//@}
 
 	/// @name •`‰æİ’è

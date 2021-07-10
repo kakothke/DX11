@@ -9,6 +9,7 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// シングルトンクラス
+const static auto D3D11 = Direct3D11::getInst();
 const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -16,6 +17,15 @@ const static auto SOUND = Sound::getInst();
 BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	SOUND->play((int)SoundList::BGM_00);
+
+	mCamera = std::make_shared<BossCamera>();
+	mGameObjMgr.setCameraObject(mCamera);
+	mPlayer = std::make_shared<TestPlayer>();
+	mGameObjMgr.setGameObjectListToWorld(mPlayer);
+	mBoss = std::make_shared<Boss>();
+	mGameObjMgr.setGameObjectListToWorld(mBoss);
+	mGameObjMgr.setGameObjectListToWorld(std::make_shared<DirectionalLight>());
+	mGameObjMgr.setGameObjectListToBackground(std::make_shared<GameSkyBox>());
 
 	mSpriteTest.setAnchor(1.0f, 1.0f);
 	mSpriteTest.setPivot(1.0f, 1.0f);
@@ -38,41 +48,24 @@ BossTestScene::~BossTestScene()
 /// 更新
 void BossTestScene::update()
 {
-	// キャラクター
-	mPlayer.setTargetPos(mBoss.transform().pos);
-	mPlayer.update();
-	mBoss.update();
-
-	// ワールド関連
-	mCamera.setPlayerTransform(mPlayer.transform());
-	mCamera.setPlayerVelocity(mPlayer.moveVelocity());
-	mCamera.update();
-	mDirectionalLight.update();
+	mGameObjMgr.update();
+	mPlayer->setTargetPos(mBoss->transform().pos);
+	mCamera->setPlayerTransform(mPlayer->transform());
+	mCamera->setPlayerVelocity(mPlayer->moveVelocity());
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
 void BossTestScene::draw()
 {
-	mPlayer.draw();
-	mBoss.draw();
-}
+	mGameObjMgr.draw();
 
-//-------------------------------------------------------------------------------------------------
-/// 描画2D
-void BossTestScene::draw2D()
-{
+	D3D11->setZBuffer(false);
+	D3D11->setBlendMode(Direct3D11::BlendList::Normal);
 	static Transform sptmp;
 	sptmp.rot *= Quaternion::Euler(Vector3::up);
 	mSpriteTest.render(sptmp);
 	mFontTest.draw(TEXT("フォント 描画テスト"), Transform(Vector3(), Vector3(), Vector3(0.5f)));
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 背景描画
-void BossTestScene::drawBackground()
-{
-	mSkyBox.draw();
 }
 
 } // namespace

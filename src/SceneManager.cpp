@@ -7,7 +7,6 @@
 //-------------------------------------------------------------------------------------------------
 #include "GameScene.h"
 #include "BossTestScene.h"
-#include "DebugScene.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -47,20 +46,7 @@ void SceneManager::update()
 void SceneManager::draw()
 {
 	if (!mSceneStack.empty()) {
-		// 背景
-		D3D11->setZBufferMode(0);
-		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
-		mSceneStack.top()->drawBackground();
-
-		// ワールド
-		D3D11->setZBufferMode(1);
-		D3D11->setBlendMode(Direct3D11::BlendList::None);
 		mSceneStack.top()->draw();
-
-		// スクリーン
-		D3D11->setZBufferMode(0);
-		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
-		mSceneStack.top()->draw2D();
 	}
 }
 
@@ -79,9 +65,6 @@ void SceneManager::changeScene(const SceneList aSceneList)
 		break;
 	case SceneList::BossTest:
 		mSceneStack.push(std::make_shared<BossTestScene>(this));
-		break;
-	case SceneList::Debug:
-		mSceneStack.push(std::make_shared<DebugScene>(this));
 		break;
 	default:
 		// エラーメッセージ

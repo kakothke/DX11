@@ -168,19 +168,13 @@ void Direct3D11::setTexture(ID3D11ShaderResourceView* aTexture)
 
 //-------------------------------------------------------------------------------------------------
 /// Zバッファを設定する
-/// @param aModeNum 0(無効化) / 1(有効化)
-void Direct3D11::setZBufferMode(const int& aModeNum)
+/// @param aFlag ture(侑効化) / false(無効化)
+void Direct3D11::setZBuffer(const bool& aFlag)
 {
-	switch (aModeNum) {
-	case 0:
+	if (aFlag) {
 		mContext->OMSetDepthStencilState(mDepthStencilState[0], 0);
-		break;
-	case 1:
+	} else {
 		mContext->OMSetDepthStencilState(mDepthStencilState[1], 0);
-		break;
-	default:
-		mContext->OMSetDepthStencilState(mDepthStencilState[1], 0);
-		break;
 	}
 }
 
@@ -327,20 +321,20 @@ bool Direct3D11::createDepthStencilState()
 	// 深度ステンシルステートを作成
 	D3D11_DEPTH_STENCIL_DESC dc;
 	ZeroMemory(&dc, sizeof(dc));
-	dc.DepthEnable = false;
+	dc.DepthEnable = true;
 	dc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	dc.DepthFunc = D3D11_COMPARISON_LESS;
 	dc.StencilEnable = false;
 
-	// Zバッファ無し
+	// Zバッファ有り
 	HRESULT hr;
 	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState[0]);
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	// Zバッファ有り
-	dc.DepthEnable = true;
+	// Zバッファ無し
+	dc.DepthEnable = false;
 	hr = mDevice->CreateDepthStencilState(&dc, &mDepthStencilState[1]);
 	if (FAILED(hr)) {
 		return false;

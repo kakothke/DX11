@@ -9,10 +9,7 @@
 #include "DirectionalLight.h"
 #include "Player.h"
 #include "ObstractManager.h"
-
-//-------------------------------------------------------------------------------------------------
-#include "SpriteRenderer.h"
-#include "OBJRenderer.h"
+#include "GameObjectManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -31,21 +28,30 @@ public:
 	//@{
 	void update() override;
 	void draw() override;
-	void draw2D() override;
-	void drawBackground() override;
 	//@}
 
 private:
+	/// @name 列挙型
+	//@{
+	/// ゲーム状況
+	enum class GameState
+	{
+		Intro,
+		Game,
+		Miss,
+	};
+	//@}
+
 	/// @name シーン内ゲームオブジェクト
 	//@{
-	GameCamera mCamera;
-	GameSkyBox mSkyBox;
-	DirectionalLight mDirectionalLight;
-	Player mPlayer;
-	ObstractManager mObstractManager;
+	std::shared_ptr<GameCamera> mCamera;
+	std::shared_ptr<Player> mPlayer;
+	//@}
 
-	OBJRenderer mOBJTest;
-	SpriteRenderer mSpriteTest;
+	/// @name プライベートメンバ変数
+	//@{
+	GameObjectManager mGameOBJManager;
+	GameState mState;
 	//@}
 
 };

@@ -4,6 +4,10 @@
 #include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
+#include <memory>
+#include "GameObjectManager.h"
+
+//-------------------------------------------------------------------------------------------------
 #include "BossCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
@@ -29,18 +33,15 @@ public:
 	//@{
 	void update() override;
 	void draw() override;
-	void draw2D() override;
-	void drawBackground() override;
 	//@}
 
 private:
-	/// @name シーン内ゲームオブジェクト
+	/// @name プライベートメンバ変数
 	//@{
-	BossCamera mCamera;
-	GameSkyBox mSkyBox;
-	DirectionalLight mDirectionalLight;
-	TestPlayer mPlayer;
-	Boss mBoss;
+	GameObjectManager mGameObjMgr;
+	std::shared_ptr<BossCamera> mCamera;
+	std::shared_ptr<TestPlayer> mPlayer;
+	std::shared_ptr<Boss> mBoss;
 	FontRenderer mFontTest;
 	SpriteRenderer mSpriteTest;
 	//@}

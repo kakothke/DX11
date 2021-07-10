@@ -147,8 +147,8 @@
     <ClInclude Include="src\AbstractScene.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Boss.h" />
-    <ClInclude Include="src\DebugScene.h" />
     <ClInclude Include="src\GameCamera.h" />
+    <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\Ground.h" />
     <ClInclude Include="src\Obstract.h" />
@@ -176,6 +176,7 @@
     <ClInclude Include="src\MyOutputDebugString.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
+    <ClInclude Include="src\RendererList.h" />
     <ClInclude Include="src\TestPlayer.h" />
     <ClInclude Include="src\Quaternion.h" />
     <ClInclude Include="src\ResourceFileName.h" />
@@ -201,7 +202,6 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\ConstantBuffer.cpp" />
-    <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\Define.cpp" />
     <ClCompile Include="src\Direct3D11.cpp" />
     <ClCompile Include="src\FontRenderer.cpp" />
@@ -212,6 +212,7 @@
     <ClCompile Include="src\BossCamera.cpp" />
     <ClCompile Include="src\BossTestScene.cpp" />
     <ClCompile Include="src\GameCamera.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GameSkyBox.cpp" />
     <ClCompile Include="src\Ground.cpp" />
@@ -224,6 +225,7 @@
     <ClCompile Include="src\Obstract.cpp" />
     <ClCompile Include="src\ObstractManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RendererList.cpp" />
     <ClCompile Include="src\TestPlayer.cpp" />
     <ClCompile Include="src\PlayerBullet.cpp" />
     <ClCompile Include="src\Quaternion.cpp" />

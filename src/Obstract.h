@@ -24,6 +24,11 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name 当たり判定
+	//@{
+	Transform getCollision();
+	//@}
+
 	/// @name アクセサ
 	//@{
 	void setMoveSpeed(const float aSpeed);

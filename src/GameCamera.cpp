@@ -20,12 +20,18 @@ GameCamera::GameCamera()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// デストラクタ
+GameCamera::~GameCamera()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 更新
 void GameCamera::update()
 {
 	static float decelerate = 1.0f;
 	float speed = 10.0f * FPS->deltaTime();
-	if (INPUT_MANAGER->getButton(InputCode::Cancel)) {
+	if (INPUT_MANAGER->axesRaw().y == -1) {
 		if (decelerate != 1.0f / 4.0f) {
 			decelerate = Math::Lerp(decelerate, 1.0f / 4.0f, speed);
 		}
@@ -40,7 +46,7 @@ void GameCamera::update()
 	// プレイヤーを親オブジェクトとして連動させる
 	mTransform.pos = mPlayerPos;
 	mTransform.localPos.x = x * -2.0f;
-	mTransform.localPos.y = 0.5f;
+	mTransform.localPos.y = 2.0f;
 	mTransform.localPos.z = -20.0f;
 	mTransform.localRot = Quaternion::Euler(Vector3(0.0f, x, x * 6.0f));
 

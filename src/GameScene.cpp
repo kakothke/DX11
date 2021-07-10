@@ -5,18 +5,23 @@
 #include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
+	, mState(GameState::Game)
 {
-	mOBJTest.setOBJ(ResourceFileName::OBJ.at(OBJList::Test));
-	mOBJTest.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
-	mSpriteTest.setAnchor(1.0f, 1.0f);
-	mSpriteTest.setPivot(1.0f, 1.0f);
-	mSpriteTest.setTexture(ResourceFileName::Sprite.at(SpriteList::Test));
-	mSpriteTest.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
+	mPlayer = std::make_shared<Player>();
+	mGameOBJManager.setGameObjectListToWorld(mPlayer);
+	mCamera = std::make_shared<GameCamera>();
+	mGameOBJManager.setCameraObject(mCamera);
+	mGameOBJManager.setGameObjectListToWorld(std::make_shared<DirectionalLight>());
+	mGameOBJManager.setGameObjectListToWorld(std::make_shared<ObstractManager>());
+	mGameOBJManager.setGameObjectListToBackground(std::make_shared<GameSkyBox>());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -29,38 +34,15 @@ GameScene::~GameScene()
 /// 更新
 void GameScene::update()
 {
-	// ワールド関連
-	mCamera.update();
-	mCamera.setPlayerPos(mPlayer.transform().pos);
-	mDirectionalLight.update();
-
-	// オブジェクト
-	mPlayer.update();
-	mObstractManager.update();
+	mCamera->setPlayerPos(mPlayer->transform().pos);
+	mGameOBJManager.update();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
 void GameScene::draw()
 {
-	mPlayer.draw();
-	mObstractManager.draw();
-
-	//mOBJTest.render(Transform());
-	mSpriteTest.render(Transform());
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 描画2D
-void GameScene::draw2D()
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 背景描画
-void GameScene::drawBackground()
-{
-	mSkyBox.draw();
+	mGameOBJManager.draw();
 }
 
 } // namespace

@@ -16,7 +16,6 @@ public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
 	BaseGameObject();
-	BaseGameObject(Transform aTransform);
 	virtual ~BaseGameObject();
 	//@}
 
@@ -29,8 +28,10 @@ public:
 	/// @name アクセサ
 	//@{
 	const Transform& transform() const;
+	const Transform& cameraTransform() const;
 	const GameObjectTag& tag() const;
 	const bool& activeSelf() const;
+	void setCameraTransform(const Transform& aTransform);
 	void setTag(GameObjectTag aTag);
 	void setActive(bool aValue);
 	//@}
@@ -39,6 +40,7 @@ protected:
 	/// @name プロテクテッドメンバ変数
 	//@{
 	Transform mTransform;
+	Transform mCameraTransform;
 	//@}
 
 private:

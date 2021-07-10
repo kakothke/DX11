@@ -61,7 +61,7 @@ void Player::move()
 {
 	// Œ¸‘¬ˆÚ“®
 	float speed = DEFINE_SPEED_DOWN_SPEED * FPS->deltaTime();
-	if (INPUT_MANAGER->getButton(InputCode::Cancel)) {
+	if (INPUT_MANAGER->axesRaw().y == -1) {
 		if (mMoveSpeed != DEFINE_MOVE_SPEED / DEFINE_SPEED_DOWN) {
 			mMoveSpeed = Math::Lerp(mMoveSpeed, DEFINE_MOVE_SPEED / DEFINE_SPEED_DOWN, speed);
 		}

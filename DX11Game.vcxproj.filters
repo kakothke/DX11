@@ -217,9 +217,6 @@
     <ClInclude Include="src\OBJRenderer.h">
       <Filter>System\Resource\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="src\DebugScene.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
@@ -237,6 +234,12 @@
     </ClInclude>
     <ClInclude Include="src\GameCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererList.h">
+      <Filter>System\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObjectManager.h">
+      <Filter>Game\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -354,9 +357,6 @@
     <ClCompile Include="src\OBJRenderer.cpp">
       <Filter>System\Resource\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="src\DebugScene.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
@@ -374,6 +374,12 @@
     </ClCompile>
     <ClCompile Include="src\GameCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererList.cpp">
+      <Filter>System\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectManager.cpp">
+      <Filter>Game\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

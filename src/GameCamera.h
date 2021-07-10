@@ -10,9 +10,10 @@ namespace KDXK {
 class GameCamera : public Camera
 {
 public:
-	/// @name コンストラクタ
+	/// @name コンストラクタ/デストラクタ
 	//@{
 	GameCamera();
+	~GameCamera();
 	//@}
 
 	/// @name 更新/描画

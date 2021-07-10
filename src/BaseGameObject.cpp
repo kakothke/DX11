@@ -7,15 +7,7 @@ namespace KDXK {
 /// コンストラクタ
 BaseGameObject::BaseGameObject()
 	: mTransform()
-	, mTag(GameObjectTag::Untagged)
-	, mActiveSelf(true)
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-/// @param aTransform トランスフォーム
-BaseGameObject::BaseGameObject(Transform aTransform)
-	: mTransform(aTransform)
+	, mCameraTransform()
 	, mTag(GameObjectTag::Untagged)
 	, mActiveSelf(true)
 {
@@ -47,6 +39,12 @@ const Transform& BaseGameObject::transform() const
 }
 
 //-------------------------------------------------------------------------------------------------
+const Transform& BaseGameObject::cameraTransform() const
+{
+	return mCameraTransform;
+}
+
+//-------------------------------------------------------------------------------------------------
 const GameObjectTag& BaseGameObject::tag() const
 {
 	return mTag;
@@ -56,6 +54,12 @@ const GameObjectTag& BaseGameObject::tag() const
 const bool& BaseGameObject::activeSelf() const
 {
 	return mActiveSelf;
+}
+
+//-------------------------------------------------------------------------------------------------
+void BaseGameObject::setCameraTransform(const Transform& aTransform)
+{
+	mCameraTransform = aTransform;
 }
 
 //-------------------------------------------------------------------------------------------------

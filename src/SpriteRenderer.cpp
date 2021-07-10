@@ -40,7 +40,7 @@ SpriteRenderer::~SpriteRenderer()
 //-------------------------------------------------------------------------------------------------
 /// 描画
 /// @param aTransform トランスフォーム
-void SpriteRenderer::render(Transform aTransform)
+void SpriteRenderer::render(Transform aTransform, const bool& a3DModeFlag)
 {
 	// 読み込みチェック
 	if (!mTextureName || !mShaderData || !mVertexBuffer) {
@@ -50,6 +50,9 @@ void SpriteRenderer::render(Transform aTransform)
 	// サイズをテクスチャーのサイズに合わせる
 	aTransform.scale.x *= mTextureSize.x;
 	aTransform.scale.y *= mTextureSize.y;
+	if (a3DModeFlag) {
+		aTransform.scale /= 100.0f;
+	}
 
 	// プリミティブの形状を指定
 	D3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -66,17 +69,26 @@ void SpriteRenderer::render(Transform aTransform)
 	// コンスタントバッファを更新
 	D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 	D3D11->getConstantBuffer()->setSpriteSplit(mSplit);
-	D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
-	D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);
-	D3D11->getConstantBuffer()->updateSprite();
-	D3D11->getConstantBuffer()->setMatrixW(aTransform);
-	D3D11->getConstantBuffer()->updateMatrix();
+	if (a3DModeFlag) {
+		D3D11->getConstantBuffer()->setMatrixW(aTransform);
+		D3D11->getConstantBuffer()->updateMatrix();
+	} else {
+		D3D11->getConstantBuffer()->setSpriteMatrixW(aTransform, mPivot);
+		D3D11->getConstantBuffer()->setSpriteMatrixP(mAnchor);
+		D3D11->getConstantBuffer()->updateSprite();
+	}
 
 	// テクスチャーセット	
 	D3D11->setTexture(TEXTURE_LOADER->getTexture(mTextureName));
 
 	// 描画
+	if (a3DModeFlag) {
+		D3D11->setBlendMode(Direct3D11::BlendList::Normal);
+	}
 	D3D11->getContext()->Draw(8, 0);
+	if (a3DModeFlag) {
+		D3D11->setBlendMode(Direct3D11::BlendList::None);
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,55 +170,56 @@ void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 bool SpriteRenderer::createVertexBuffer()
 {
 	// 頂点作成
-	VertexData vertexes[8];
+	VertexData vertexes[8] = {};
 	Vector2 size = 0.5f;
 	// 頂点0
 	vertexes[0].pos[0] = -size.x;
 	vertexes[0].pos[1] = -size.y;
-	vertexes[0].uv[0] = 0;
-	vertexes[0].uv[1] = 1;
+	vertexes[0].uv[0] = 0.0f;
+	vertexes[0].uv[1] = 1.0f;
+	vertexes[0].nor[2] = -1.0f;
 	// 頂点1
 	vertexes[1].pos[0] = size.x;
 	vertexes[1].pos[1] = -size.y;
-	vertexes[1].uv[0] = 1;
-	vertexes[1].uv[1] = 1;
+	vertexes[1].uv[0] = 1.0f;
+	vertexes[1].uv[1] = 1.0f;
+	vertexes[1].nor[2] = -1.0f;
 	// 頂点2
 	vertexes[2].pos[0] = -size.x;
 	vertexes[2].pos[1] = size.y;
-	vertexes[2].uv[0] = 0;
-	vertexes[2].uv[1] = 0;
+	vertexes[2].uv[0] = 0.0f;
+	vertexes[2].uv[1] = 0.0f;
+	vertexes[2].nor[2] = -1.0f;
 	// 頂点3
 	vertexes[3].pos[0] = size.x;
 	vertexes[3].pos[1] = size.y;
-	vertexes[3].uv[0] = 1;
-	vertexes[3].uv[1] = 0;
+	vertexes[3].uv[0] = 1.0f;
+	vertexes[3].uv[1] = 0.0f;
+	vertexes[3].nor[2] = -1.0f;
 	// 頂点4
 	vertexes[4].pos[0] = -size.x;
 	vertexes[4].pos[1] = -size.y;
-	vertexes[4].uv[0] = 0;
-	vertexes[4].uv[1] = 1;
+	vertexes[4].uv[0] = 0.0f;
+	vertexes[4].uv[1] = 1.0f;
+	vertexes[4].nor[2] = 1.0f;
 	// 頂点5
 	vertexes[5].pos[0] = size.x;
 	vertexes[5].pos[1] = -size.y;
-	vertexes[5].uv[0] = 1;
-	vertexes[5].uv[1] = 1;
+	vertexes[5].uv[0] = 1.0f;
+	vertexes[5].uv[1] = 1.0f;
+	vertexes[5].nor[2] = 1.0f;
 	// 頂点6
 	vertexes[6].pos[0] = -size.x;
 	vertexes[6].pos[1] = size.y;
-	vertexes[6].uv[0] = 0;
-	vertexes[6].uv[1] = 0;
+	vertexes[6].uv[0] = 0.0f;
+	vertexes[6].uv[1] = 0.0f;
+	vertexes[6].nor[2] = 1.0f;
 	// 頂点7
 	vertexes[7].pos[0] = size.x;
 	vertexes[7].pos[1] = size.y;
-	vertexes[7].uv[0] = 1;
-	vertexes[7].uv[1] = 0;
-	// 法線
-	for (auto vertex : vertexes) {
-		vertex.nor[0] = 0;
-		vertex.nor[1] = 0;
-		vertex.nor[2] = -1;
-		vertex.pos[2] = 0;
-	}
+	vertexes[7].uv[0] = 1.0f;
+	vertexes[7].uv[1] = 0.0f;
+	vertexes[7].nor[2] = 1.0f;
 
 	D3D11_BUFFER_DESC bufferDesc;
 	{

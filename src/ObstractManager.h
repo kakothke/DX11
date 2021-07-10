@@ -29,6 +29,11 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name “–‚½‚è”»’è
+	//@{
+	bool collisionPlayer(const Vector3& aPos);
+	//@}
+
 private:
 	/// @name “à•”ŽÀ‘•
 	//@{

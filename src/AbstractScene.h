@@ -20,8 +20,6 @@ public:
 	//@{
 	virtual void update() = 0;
 	virtual void draw() = 0;
-	virtual void draw2D() = 0;
-	virtual void drawBackground() = 0;
 	//@}
 
 protected:

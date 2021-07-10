@@ -10,7 +10,6 @@ enum class SceneList
 
 	Game,
 	BossTest,
-	Debug,
 };
 
 } // namespace
