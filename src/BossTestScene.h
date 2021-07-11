@@ -13,8 +13,6 @@
 #include "DirectionalLight.h"
 #include "TestPlayer.h"
 #include "Boss.h"
-#include "FontRenderer.h"
-#include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -42,8 +40,6 @@ private:
 	BossCamera* mCamera;
 	TestPlayer* mPlayer;
 	Boss* mBoss;
-	FontRenderer mFontTest;
-	SpriteRenderer mSpriteTest;
 	//@}
 
 };

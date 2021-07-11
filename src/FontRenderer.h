@@ -24,11 +24,13 @@ public:
 
 	/// @name 描画
 	//@{
-	void draw(const LPCTSTR aString, Transform aTransform);
+	void draw(Transform aTransform);
 	//@}
 
 	/// @name 描画設定
 	//@{
+	/// 文字列を設定する
+	void setString(const LPCTSTR aString);
 	/// シェーダーを設定する
 	void setShader(const LPCSTR aFileName);
 	/// フォントを変更する
@@ -45,11 +47,13 @@ private:
 	/// @name 内部構造体
 	//@{
 	/// 頂点データ構造体
-	struct FontVertex
+	struct VertexData
 	{
-		float pos[3] = {};
-		float uv[2] = {};
+		float pos[3];
+		float uv[2];
+		float nor[3];
 	};
+
 	/// テクスチャーデータ
 	struct TextureData
 	{
@@ -57,6 +61,8 @@ private:
 		ID3D11ShaderResourceView* texture;
 		/// 頂点バッファ(Shader送信用)
 		ID3D11Buffer* vertexBuffer;
+		/// テクスチャーサイズ
+		Vector2 texSize;
 		/// 次の描画位置
 		float nextPos;
 		/// 改行位置
@@ -73,9 +79,7 @@ private:
 	/// フォントテクスチャーを作成する
 	bool createFontTexture(const UINT& aCode, const int& aLineCount);
 	/// 頂点バッファを作成する
-	bool createVertexBuffer(const int& aIndexNum, const int& aLineCount);
-	/// メッシュを作成する
-	void createMesh(FontVertex* aVertexes, const int& aIndexNum, const int& aLineCount);
+	bool createVertexBuffer(const int& aLineCount, const int& aIndexNum);
 	//@}
 
 	/// @name プライベートメンバ変数

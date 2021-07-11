@@ -29,7 +29,8 @@ private:
 	{
 		DirectX::XMFLOAT4X4 MATRIX_P;
 		DirectX::XMFLOAT4X4 MATRIX_W;
-		DirectX::XMINT4 SPLIT = { 1, 1, 1, 1 };
+		DirectX::XMINT4 SPLIT;
+		DirectX::XMINT4 UV_POS;
 	};
 	/// ÉJÉÅÉâ
 	struct CB_CAMERA
@@ -80,6 +81,7 @@ public:
 	void setSpriteMatrixW(const Transform& aTransform, const Vector2& aPivot);
 	void setSpriteMatrixP(const Vector2& aAnchor);
 	void setSpriteSplit(const Vector2& aSplit);
+	void setSpriteUVpos(const Vector2& aUVPos);
 	void updateSprite();
 	/// ÉJÉÅÉâ
 	void updateCamera(const Vector3& aPos);

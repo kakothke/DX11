@@ -150,6 +150,7 @@
     <ClInclude Include="src\GameCamera.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\GameUI.h" />
     <ClInclude Include="src\Ground.h" />
     <ClInclude Include="src\Obstract.h" />
     <ClInclude Include="src\ObstractManager.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GameSkyBox.cpp" />
+    <ClCompile Include="src\GameUI.cpp" />
     <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\InputManager.cpp" />

@@ -20,7 +20,7 @@ Boss::Boss()
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Boss));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Standard));
 
-	mSRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Test));
+	mSRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::UI_Arrow));
 	mSRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
 }
 

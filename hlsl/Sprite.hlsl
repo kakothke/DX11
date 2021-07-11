@@ -14,7 +14,8 @@ cbuffer CB_SPRITE : register(b1)
 {
     float4x4 MATRIX_P;
     float4x4 MATRIX_W;
-    int2 SPLIT;
+    int4 SPLIT;
+    int4 UV_POS;
 }
 
 cbuffer CB_COLOR : register(b4)
@@ -34,6 +35,8 @@ v2p VS(appdata v)
     // UV_Split
     o.uv.x = v.uv.x / SPLIT.x;
     o.uv.y = v.uv.y / SPLIT.y;
+    o.uv.x += (1.0f / SPLIT.x) * UV_POS.x;
+    o.uv.y += (1.0f / SPLIT.y) * UV_POS.y;
 	
     return o;
 }

@@ -17,8 +17,8 @@ Obstract::Obstract()
 	, mMoveSpeed(0.0f)
 {
 	// トランスフォーム設定
-	mTransform.pos = Vector3(0.0f, -1.0f, 300.0f);
-	mTransform.scale = Vector3(1.0f, 3.0f, 1.0f);
+	mTransform.pos = Vector3(0.0f, -3.0f, 300.0f);
+	mTransform.scale = Vector3(1.0f, 5.0f, 1.0f);
 	mTransform.pos.x += Random::RandomFloat(500, 0.1f) * Random::RandomSign();
 	mTransform.scale.x += Random::RandomInt(5);
 

@@ -33,10 +33,9 @@ void ResourceManager::initialize()
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Player));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::SkyBox));
 	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Kabocha));
-	OBJ_LOADER->load(ResourceFileName::OBJ.at(OBJList::Test));
 
 	// Sprites
-	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Arrow));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Efect_Booster));
 
 	// Shaders
@@ -56,6 +55,7 @@ void ResourceManager::initialize()
 
 	// Font
 	FONT_LOADER->load(TEXT("あんずもじ湛"), TEXT("res/font/APJapanesefontF.ttf"));
+	FONT_LOADER->load(TEXT("851ゴチカクット"), TEXT("res/font/851Gkktt_004.ttf"));
 
 }
 

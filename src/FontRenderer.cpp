@@ -50,21 +50,13 @@ FontRenderer::~FontRenderer()
 /// 描画
 /// @param aString 表示文字
 /// @param aTransform 表示位置
-void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
+void FontRenderer::draw(Transform aTransform)
 {
 	// チェック
-	if (!mShaderData || !aString) {
+	if (!mShaderData || !mString) {
 		return;
 	}
 
-	// テクスチャー作成
-	if (mString != aString) {
-		mString = aString;
-		if (!cretaeFontMesh()) {
-			mString = NULL;
-			return;
-		}
-	}
 
 	// プリミティブの形状を指定
 	D3D11->getContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -72,14 +64,14 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 	// シェーダーの指定
 	D3D11->setShader(mShaderData);
 
-	UINT strides = sizeof(FontVertex);
+	UINT strides = sizeof(VertexData);
 	UINT offsets = 0;
 
-	float initPosX = aTransform.pos.x;
+	Transform initTransform = aTransform;
 
 	// 描画初期位置を変更
 	for (const auto line : mTextures) {
-		aTransform.pos.x = initPosX;
+		aTransform.pos.x = initTransform.pos.x;
 		// 初期位置計算
 		for (int i = 0; i < line.size(); i++) {
 			if (i > 0) {
@@ -90,6 +82,11 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 		float nextPos = 0.0f;
 		for (const auto tex : line) {
 			if (!tex.hideFlag) {
+				// リサイズ
+				aTransform.scale = initTransform.scale;/*
+				aTransform.scale.x *= tex.texSize.x;
+				aTransform.scale.y *= tex.texSize.y;*/
+
 				// IAに設定する頂点バッファの指定
 				D3D11->getContext()->IASetVertexBuffers(0, 1, &tex.vertexBuffer, &strides, &offsets);
 
@@ -115,6 +112,18 @@ void FontRenderer::draw(const LPCTSTR aString, Transform aTransform)
 				nextPos = 0;
 				aTransform.pos.y += tex.newLine * aTransform.scale.y;
 			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void FontRenderer::setString(const LPCTSTR aString)
+{
+	if (mString != aString) {
+		mString = aString;
+		if (!cretaeFontMesh()) {
+			mString = NULL;
+			return;
 		}
 	}
 }
@@ -227,7 +236,7 @@ bool FontRenderer::cretaeFontMesh()
 		if (!createFontTexture(code, lineCount)) {
 			return false;
 		}
-		if (!createVertexBuffer(indexNum, lineCount)) {
+		if (!createVertexBuffer(lineCount, indexNum)) {
 			return false;
 		}
 		indexNum++;
@@ -338,6 +347,10 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 		texData.newLine = (float)gm.gmptGlyphOrigin.y;
 		texData.hideFlag = true;
 	}
+	// サイズを記録
+	texData.texSize.x = (float)desc.Width / 4.0f;
+	texData.texSize.y = (float)desc.Height / 4.0f;
+
 	mTextures[aLineCount].emplace_back(texData);
 
 	return true;
@@ -347,15 +360,65 @@ bool FontRenderer::createFontTexture(const UINT& aCode, const int& aLineCount)
 /// 頂点バッファを作成する
 /// @param aIndexNum 配列番号
 /// @return 作成結果 成功(true)
-bool FontRenderer::createVertexBuffer(const int& aIndexNum, const int& aLineCount)
+bool FontRenderer::createVertexBuffer(const int& aLineCount, const int& aIndexNum)
 {
-	FontVertex vertexes[8];
-	createMesh(vertexes, aIndexNum, aLineCount);
+	VertexData vertexes[8];
+	Vector2 size = mTextures[aLineCount][aIndexNum].texSize;
+
+	// 頂点0
+	vertexes[0].pos[0] = -size.x;
+	vertexes[0].pos[1] = -size.y;
+	vertexes[0].uv[0] = 0.0f;
+	vertexes[0].uv[1] = 1.0f;
+	vertexes[0].nor[2] = -1.0f;
+	// 頂点1
+	vertexes[1].pos[0] = size.x;
+	vertexes[1].pos[1] = -size.y;
+	vertexes[1].uv[0] = 1.0f;
+	vertexes[1].uv[1] = 1.0f;
+	vertexes[1].nor[2] = -1.0f;
+	// 頂点2
+	vertexes[2].pos[0] = -size.x;
+	vertexes[2].pos[1] = size.y;
+	vertexes[2].uv[0] = 0.0f;
+	vertexes[2].uv[1] = 0.0f;
+	vertexes[2].nor[2] = -1.0f;
+	// 頂点3
+	vertexes[3].pos[0] = size.x;
+	vertexes[3].pos[1] = size.y;
+	vertexes[3].uv[0] = 1.0f;
+	vertexes[3].uv[1] = 0.0f;
+	vertexes[3].nor[2] = -1.0f;
+	// 頂点4
+	vertexes[4].pos[0] = -size.x;
+	vertexes[4].pos[1] = -size.y;
+	vertexes[4].uv[0] = 0.0f;
+	vertexes[4].uv[1] = 1.0f;
+	vertexes[4].nor[2] = 1.0f;
+	// 頂点5
+	vertexes[5].pos[0] = size.x;
+	vertexes[5].pos[1] = -size.y;
+	vertexes[5].uv[0] = 1.0f;
+	vertexes[5].uv[1] = 1.0f;
+	vertexes[5].nor[2] = 1.0f;
+	// 頂点6
+	vertexes[6].pos[0] = -size.x;
+	vertexes[6].pos[1] = size.y;
+	vertexes[6].uv[0] = 0.0f;
+	vertexes[6].uv[1] = 0.0f;
+	vertexes[6].nor[2] = 1.0f;
+	// 頂点7
+	vertexes[7].pos[0] = size.x;
+	vertexes[7].pos[1] = size.y;
+	vertexes[7].uv[0] = 1.0f;
+	vertexes[7].uv[1] = 0.0f;
+	vertexes[7].nor[2] = 1.0f;
+
 	// バッファ情報
 	D3D11_BUFFER_DESC bufferDesc;
 	{
 		// バッファのサイズ
-		bufferDesc.ByteWidth = sizeof(FontVertex) * 8;
+		bufferDesc.ByteWidth = sizeof(VertexData) * 8;
 		// 使用方法
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		// BIND設定
@@ -387,72 +450,6 @@ bool FontRenderer::createVertexBuffer(const int& aIndexNum, const int& aLineCoun
 	}
 
 	return true;
-}
-
-//-------------------------------------------------------------------------------------------------
-/// メッシュ作成
-/// @param aVertexes 頂点データ
-/// @param aIndexNum 配列番号
-void FontRenderer::createMesh(FontVertex* aVertexes, const int& aIndexNum, const int& aLineCount)
-{
-	// テクスチャーのサイズを参照
-	ID3D11Resource* res = nullptr;
-	ID3D11Texture2D* tex2D = nullptr;
-	D3D11_TEXTURE2D_DESC desc = {};
-	mTextures[aLineCount][aIndexNum].texture->GetResource(&res);
-	res->QueryInterface(&tex2D);
-	tex2D->GetDesc(&desc);
-	res->Release();
-	res = nullptr;
-	tex2D->Release();
-	tex2D = nullptr;
-
-	float width = (float)desc.Width / 4.0f;
-	float height = (float)desc.Height / 4.0f;
-
-	// 表面
-	{
-		// 頂点0
-		aVertexes[0].pos[0] = -width;
-		aVertexes[0].pos[1] = -height;
-		aVertexes[0].uv[0] = 0.0f;
-		aVertexes[0].uv[1] = 1.0f;
-		// 頂点1
-		aVertexes[1].pos[0] = width;
-		aVertexes[1].pos[1] = -height;
-		aVertexes[1].uv[0] = 1.0f;
-		aVertexes[1].uv[1] = 1.0f;
-		// 頂点2
-		aVertexes[2].pos[0] = -width;
-		aVertexes[2].pos[1] = height;
-		aVertexes[2].uv[0] = 0.0f;
-		aVertexes[2].uv[1] = 0.0f;
-		//// 頂点3
-		aVertexes[3].pos[0] = width;
-		aVertexes[3].pos[1] = height;
-		aVertexes[3].uv[0] = 1.0f;
-		aVertexes[3].uv[1] = 0.0f;
-		// 頂点4
-		aVertexes[4].pos[0] = -width;
-		aVertexes[4].pos[1] = -height;
-		aVertexes[4].uv[0] = 0.0f;
-		aVertexes[4].uv[1] = 1.0f;
-		// 頂点5
-		aVertexes[5].pos[0] = width;
-		aVertexes[5].pos[1] = -height;
-		aVertexes[5].uv[0] = 1.0f;
-		aVertexes[5].uv[1] = 1.0f;
-		// 頂点6
-		aVertexes[6].pos[0] = -width;
-		aVertexes[6].pos[1] = height;
-		aVertexes[6].uv[0] = 0.0f;
-		aVertexes[6].uv[1] = 0.0f;
-		//// 頂点7
-		aVertexes[7].pos[0] = width;
-		aVertexes[7].pos[1] = height;
-		aVertexes[7].uv[0] = 1.0f;
-		aVertexes[7].uv[1] = 0.0f;
-	}
 }
 
 } // namespace

@@ -16,13 +16,12 @@ enum class OBJList
 	Boss,
 	SkyBox,
 	Kabocha,
-	Test,
 };
 
 /// Sprite
 enum class SpriteList
 {
-	Test,
+	UI_Arrow,
 	Efect_Booster,
 };
 

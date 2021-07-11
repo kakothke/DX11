@@ -147,8 +147,6 @@ void ConstantBuffer::updateMatrix()
 /// @param aPivot •`‰æŒ´“_(-1~1, -1~1)
 void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2& aPivot)
 {
-	Vector2 split = Vector2((float)mSPRITE.SPLIT.x, (float)mSPRITE.SPLIT.y);
-
 	DirectX::XMMATRIX pos = DirectX::XMMatrixTranslation(
 		aTransform.pos.x, -aTransform.pos.y, aTransform.pos.z
 	);
@@ -156,10 +154,10 @@ void ConstantBuffer::setSpriteMatrixW(const Transform& aTransform, const Vector2
 		aTransform.rot.XMVECTOR()
 	);
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(
-		aTransform.scale.x / split.x, aTransform.scale.y / split.y, 0.0f
+		aTransform.scale.x, aTransform.scale.y, 0.0f
 	);
 	DirectX::XMMATRIX pivot = DirectX::XMMatrixTranslation(
-		aPivot.x * (aTransform.scale.x / split.x), aPivot.y * (aTransform.scale.y / split.y), 1.0f
+		aPivot.x, aPivot.y, 1.0f
 	);
 	DirectX::XMMATRIX worldMatrix = scale * rot * pos * pivot;
 
@@ -188,7 +186,13 @@ void ConstantBuffer::setSpriteMatrixP(const Vector2& aAnchor)
 //-------------------------------------------------------------------------------------------------
 void ConstantBuffer::setSpriteSplit(const Vector2& aSplit)
 {
-	mSPRITE.SPLIT = DirectX::XMINT4((int32_t)aSplit.x, (int32_t)aSplit.y, 0, 0);
+	mSPRITE.SPLIT = DirectX::XMINT4((int32_t)aSplit.x, (int32_t)aSplit.y, 1, 1);
+}
+
+//-------------------------------------------------------------------------------------------------
+void ConstantBuffer::setSpriteUVpos(const Vector2& aUVPos)
+{
+	mSPRITE.UV_POS = DirectX::XMINT4((int32_t)aUVPos.x, (int32_t)aUVPos.y, 1, 1);
 }
 
 //-------------------------------------------------------------------------------------------------

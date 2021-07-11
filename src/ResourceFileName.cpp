@@ -12,13 +12,12 @@ const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =
 	{ OBJList::Boss, "res/mesh/boss/EnemyBox.obj" },
 	{ OBJList::SkyBox, "res/mesh/skybox/SkyBox.obj" },
 	{ OBJList::Kabocha, "res/mesh/kabocha/kabocha.obj" },
-	{ OBJList::Test, "res/mesh/test.obj" },
 };
 
 /// Sprite
 const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 {
-	{ SpriteList::Test, "res/img/test.png" },
+	{ SpriteList::UI_Arrow, "res/img/arrow.png" },
 	{ SpriteList::Efect_Booster, "res/img/booster.png" },
 };
 

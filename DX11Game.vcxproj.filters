@@ -86,6 +86,9 @@
     <Filter Include="Game\Shader">
       <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\UI">
+      <UniqueIdentifier>{8d1fa5e0-61ae-474f-aeda-c17b9b08d7de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractScene.h">
@@ -247,6 +250,9 @@
     <ClInclude Include="src\Random.h">
       <Filter>System\Comon\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameUI.h">
+      <Filter>Game\GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -389,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="src\Random.cpp">
       <Filter>System\Comon\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameUI.cpp">
+      <Filter>Game\GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

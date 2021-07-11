@@ -10,6 +10,7 @@
 #include "DirectionalLight.h"
 #include "Player.h"
 #include "ObstractManager.h"
+#include "GameUI.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -19,11 +20,12 @@ namespace KDXK {
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 , mState(GameState::Game)
 {
+	mGameOBJManager.setCameraObject(new GameCamera());
 	mGameOBJManager.setGameObjectListToWorld(new Player());
 	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
 	mGameOBJManager.setGameObjectListToWorld(new ObstractManager());
 	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
-	mGameOBJManager.setCameraObject(new GameCamera());
+	mGameOBJManager.setGameObjectListToCanvas(new GameUI());
 }
 
 //-------------------------------------------------------------------------------------------------

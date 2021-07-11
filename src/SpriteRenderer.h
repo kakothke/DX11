@@ -40,6 +40,8 @@ public:
 	void setAnchor(float aX, float aY);
 	/// UV•ªŠ„”‚ğİ’è‚·‚é
 	void setSplit(const UINT& aX, const UINT& aY);
+	/// UVˆÊ’u‚ğİ’è‚·‚é
+	void setUVPos(const UINT& aX, const UINT& aY);
 	//@}
 
 private:
@@ -78,6 +80,8 @@ private:
 	Vector2 mAnchor;
 	/// UV•ªŠ„”
 	Vector2 mSplit;
+	/// UVˆÊ’u
+	Vector2 mUVPos;
 	//@}
 
 };

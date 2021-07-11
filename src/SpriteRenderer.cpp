@@ -24,6 +24,7 @@ SpriteRenderer::SpriteRenderer()
 	, mPivot()
 	, mAnchor()
 	, mSplit(1.0f, 1.0f)
+	, mUVPos()
 {
 }
 
@@ -69,6 +70,7 @@ void SpriteRenderer::render(Transform aTransform, const bool& a3DModeFlag)
 	// コンスタントバッファを更新
 	D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 	D3D11->getConstantBuffer()->setSpriteSplit(mSplit);
+	D3D11->getConstantBuffer()->setSpriteUVpos(mUVPos);
 	if (a3DModeFlag) {
 		D3D11->getConstantBuffer()->setMatrixW(aTransform);
 		D3D11->getConstantBuffer()->updateMatrix();
@@ -157,6 +159,17 @@ void SpriteRenderer::setSplit(const UINT& aX, const UINT& aY)
 {
 	mSplit.x = (float)aX;
 	mSplit.y = (float)aY;
+
+	mTextureSize.x /= aX;
+	mTextureSize.y /= aY;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// UV位置を設定する
+void SpriteRenderer::setUVPos(const UINT& aX, const UINT& aY)
+{
+	mUVPos.x = (float)aX;
+	mUVPos.y = (float)aY;
 }
 
 //-------------------------------------------------------------------------------------------------
