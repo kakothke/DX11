@@ -23,6 +23,7 @@ enum class OBJList
 enum class SpriteList
 {
 	Test,
+	Efect_Booster,
 };
 
 /// Shader

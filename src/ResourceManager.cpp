@@ -37,6 +37,7 @@ void ResourceManager::initialize()
 
 	// Sprites
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Test));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Efect_Booster));
 
 	// Shaders
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));

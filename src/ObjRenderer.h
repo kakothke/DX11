@@ -6,6 +6,7 @@
 #include "Transform.h"
 #include "OBJLoader.h"
 #include "ShaderLoader.h"
+#include "Color.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -31,6 +32,8 @@ public:
 	void setOBJ(const LPCSTR aFileName);
 	/// シェーダーを設定する
 	void setShader(const LPCSTR aFileName);
+	/// カラーを設定する 
+	void setColor(const Color& aColor);
 	//@}
 
 private:
@@ -40,6 +43,8 @@ private:
 	OBJLoader::OBJData* mOBJData;
 	/// シェーダーデータ
 	ShaderLoader::ShaderData* mShaderData;
+	/// カラー
+	Color mColor;
 	//@}
 
 };

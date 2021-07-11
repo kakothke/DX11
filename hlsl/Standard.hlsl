@@ -25,6 +25,11 @@ cbuffer CB_DLIGHT : register(b3)
     float4 LIGHT_COL;
 };
 
+cbuffer CB_COLOR : register(b4)
+{
+    float4 COLOR;
+}
+
 VS_OUT VS(VS_IN input)
 {
     VS_OUT output;
@@ -56,8 +61,11 @@ cbuffer CB_MATERIAL : register(b5)
 
 float4 PS(VS_OUT input) : SV_Target
 {
-    float4 outColor = (LIGHT_COL * MATERIAL_D * input.nor);
-    outColor += Texture.Sample(Sampler, input.uv);
+    float4 col;
+    
+    col = (LIGHT_COL * MATERIAL_D * input.nor);
+    col += Texture.Sample(Sampler, input.uv);
+    col *= COLOR;
 
-    return outColor;
+    return col;
 }

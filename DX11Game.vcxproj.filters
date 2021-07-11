@@ -71,9 +71,6 @@
     <Filter Include="Game\Comon">
       <UniqueIdentifier>{767d1150-e214-43fd-ace2-4be985246383}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Shader">
-      <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\GameObject\Player">
       <UniqueIdentifier>{35a84ac6-5f0b-42f5-adbc-a5d4cf112fbe}</UniqueIdentifier>
     </Filter>
@@ -85,6 +82,9 @@
     </Filter>
     <Filter Include="Game\GameObject\Obstract">
       <UniqueIdentifier>{e638da34-25dd-403a-8741-da2e463e1f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Shader">
+      <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +241,12 @@
     <ClInclude Include="src\ISetGameObjectList.h">
       <Filter>Game\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\PlayerBooster.h">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Random.h">
+      <Filter>System\Comon\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGameObject.cpp">
@@ -378,19 +384,25 @@
     <ClCompile Include="src\GameObjectManager.cpp">
       <Filter>Game\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayerBooster.cpp">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Random.cpp">
+      <Filter>System\Comon\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="hlsl\SkyBox.hlsl">
-      <Filter>System\Shader</Filter>
+      <Filter>Game\Shader</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Sprite.hlsl">
-      <Filter>System\Shader</Filter>
+      <Filter>Game\Shader</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Standard.hlsl">
-      <Filter>System\Shader</Filter>
+      <Filter>Game\Shader</Filter>
     </FxCompile>
     <FxCompile Include="hlsl\Unlit.hlsl">
-      <Filter>System\Shader</Filter>
+      <Filter>Game\Shader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

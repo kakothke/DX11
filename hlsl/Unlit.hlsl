@@ -19,6 +19,11 @@ cbuffer CB_MATRIX : register(b0)
     float4x4 MATRIX_P;
 }
 
+cbuffer CB_COLOR : register(b4)
+{
+    float4 COLOR;
+}
+
 VS_OUT VS(VS_IN input)
 {
     VS_OUT output;
@@ -41,6 +46,7 @@ float4 PS(VS_OUT input) : SV_Target
     float4 col;
     
     col = diffuse.Sample(samplerDiffuse, input.uv);
+    col *= COLOR;
 	
     return col;
 }

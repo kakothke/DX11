@@ -18,6 +18,7 @@ const static auto SHADER_LOADER = ShaderLoader::getInst();
 OBJRenderer::OBJRenderer()
 	: mOBJData()
 	, mShaderData()
+	, mColor()
 {
 }
 
@@ -53,6 +54,7 @@ void OBJRenderer::render(const Transform& aTransform)
 		D3D11->getContext()->IASetIndexBuffer(mOBJData->indexBuffers[cnt], DXGI_FORMAT_R32_UINT, 0);
 
 		// コンスタントバッファを更新
+		D3D11->getConstantBuffer()->updateColor(mColor, mColor);
 		D3D11->getConstantBuffer()->setMatrixW(aTransform);
 		D3D11->getConstantBuffer()->updateMatrix();
 		D3D11->getConstantBuffer()->updateMaterial(mOBJData->materials[index.first]);
@@ -86,6 +88,14 @@ void OBJRenderer::setOBJ(const LPCSTR aFileName)
 void OBJRenderer::setShader(const LPCSTR aFileName)
 {
 	mShaderData = SHADER_LOADER->getShaderData(aFileName);
+}
+
+//-------------------------------------------------------------------------------------------------
+/// カラーを設定する
+/// @param aColor カラー
+void OBJRenderer::setColor(const Color& aColor)
+{
+	mColor = aColor;
 }
 
 } // namespace

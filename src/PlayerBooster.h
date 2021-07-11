@@ -4,43 +4,22 @@
 #include "BaseGameObject.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "OBJRenderer.h"
+#include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class Ground : public BaseGameObject
+class PlayerBooster : public BaseGameObject
 {
 public:
-	/// @name コンストラクタ/デストラクタ
-	//@{
-	Ground();
-	~Ground();
-	//@}
-
-	/// @name 更新/描画
-	//@{
+	PlayerBooster(Transform aTransform);
+	~PlayerBooster();
 	void update() override;
 	void draw() override;
-	//@}
-
-	/// @name アクセサ
-	//@{
-	void setMoveSpeed(const float aSpeed);
-	//@}
-
 
 private:
-	/// @name コンポーネント
-	//@{
-	OBJRenderer mRenderer;
-	//@}
-
-	/// @name プライベートメンバ変数
-	//@{
+	SpriteRenderer mRenderer;
 	Color mColor;
-	float mMoveSpeed;
-	//@}
 
 };
 

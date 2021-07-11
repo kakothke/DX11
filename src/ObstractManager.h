@@ -33,10 +33,6 @@ private:
 	void updateLevel();
 	/// オブジェクトを生成する
 	void instanceObj();
-	/// 障害物を生成する
-	void instanceObstract();
-	/// 地上を生成する
-	void instanceGround();
 	/// スピード変更
 	void changeSpeed();
 	//@}

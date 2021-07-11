@@ -92,11 +92,16 @@ void ObstractManager::instanceObj()
 {
 	const static float INSTANCE_OBSTRACT_TIME = 0.2f;
 	const static float INSTANCE_GROUND_TIME = 0.1f;
+	const static int INSTANCE_GROUND_CNT = 2;
 
 	// è·äQï®ê∂ê¨
 	if (mInstanceObstractTimer > INSTANCE_OBSTRACT_TIME) {
 		mInstanceObstractTimer = 0.0f;
-		instanceObstract();
+		for (int i = 0; i < mInstanceObstractCount; i++) {
+			Obstract* obj = new Obstract();
+			mGameObjectList->setGameObjectListToWorld(obj, 0, true);
+			obj->setMoveSpeed(mMoveSpeed);
+		}
 	} else {
 		mInstanceObstractTimer += FPS->deltaTime();
 	}
@@ -104,53 +109,13 @@ void ObstractManager::instanceObj()
 	// ínè„ê∂ê¨
 	if (mInstanceGroundTimer > INSTANCE_GROUND_TIME) {
 		mInstanceGroundTimer = 0.0f;
-		instanceGround();
+		for (int i = 0; i < INSTANCE_GROUND_CNT; i++) {
+			Ground* obj = new Ground();
+			mGameObjectList->setGameObjectListToWorld(obj, 0, true);
+			obj->setMoveSpeed(mMoveSpeed);
+		}
 	} else {
 		mInstanceGroundTimer += FPS->deltaTime();
-	}
-}
-
-
-//-------------------------------------------------------------------------------------------------
-/// è·äQï®Çê∂ê¨Ç∑ÇÈ
-void ObstractManager::instanceObstract()
-{
-	const static int RANDOM_POS_X = 1000;
-	const static int RANDOM_SCALE = 3;
-	const static float POS_X_SUB = 0.1f;
-	const static float OFFSET_SCALE = 1.0f;
-
-	Transform transform = Transform(
-		Vector3(0.0f, -1.0f, 300.0f),
-		Vector3(0.0f),
-		Vector3(1.0f, 3.0f, 1.0f)
-	);
-
-	for (int i = 0; i < mInstanceObstractCount; i++) {
-		transform.pos.x = ((rand() % RANDOM_POS_X) * POS_X_SUB) - ((RANDOM_POS_X * POS_X_SUB) / 2.0f);
-		transform.scale.x += (rand() % RANDOM_SCALE) + OFFSET_SCALE;
-		mGameObjectList->setGameObjectListToWorld(new Obstract(transform, mMoveSpeed));
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-/// ínè„Çê∂ê¨Ç∑ÇÈ
-void ObstractManager::instanceGround()
-{
-	const static int RANDOM_POS_X = 100;
-	const static int RANDOM_POS_Y = 3;
-	const static int INSTANCE_CNT = 2;
-
-	Transform transform = Transform(
-		Vector3(0.0f, -9.0f, 300.0f),
-		Vector3(0.0f),
-		Vector3(16.0f, 5.0f, 16.0f)
-	);
-
-	for (int i = 0; i < INSTANCE_CNT; i++) {
-		transform.pos.x = (rand() % RANDOM_POS_X) - (RANDOM_POS_X / 2.0f);
-		transform.pos.y += rand() % RANDOM_POS_Y;
-		mGameObjectList->setGameObjectListToWorld(new Ground(transform, mMoveSpeed));
 	}
 }
 

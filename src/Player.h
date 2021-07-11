@@ -29,6 +29,7 @@ private:
 	//@{
 	void move();
 	void shot();
+	void instanceEffect();
 	//@}
 
 	/// @name コンポーネント
@@ -39,6 +40,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	float mMoveSpeed;
+	float mInstanceBoosterTimer;
 	//@}
 
 };

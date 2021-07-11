@@ -332,7 +332,7 @@ std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObject
 bool compAlphaBlendObject(BaseGameObject* aObject1, BaseGameObject* aObject2)
 {
 	// ƒJƒƒ‰‚©‚ç‚Ì‹——£‚ðŒvŽZ
-	Vector3 cameraPos;
+	Vector3 cameraPos = Vector3(0.0f, 0.0f, -30.0f);
 	Vector3 objPos1 = aObject1->transform().pos - aObject1->transform().localPos;
 	Vector3 objPos2 = aObject2->transform().pos - aObject2->transform().localPos;
 	float length1 = (cameraPos - objPos1).SqrMagnitude();

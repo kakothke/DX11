@@ -154,6 +154,7 @@
     <ClInclude Include="src\Obstract.h" />
     <ClInclude Include="src\ObstractManager.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\PlayerBooster.h" />
     <ClInclude Include="src\PlayerBullet.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Color.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\MyOutputDebugString.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\OBJRenderer.h" />
+    <ClInclude Include="src\Random.h" />
     <ClInclude Include="src\TestPlayer.h" />
     <ClInclude Include="src\Quaternion.h" />
     <ClInclude Include="src\ResourceFileName.h" />
@@ -225,6 +227,8 @@
     <ClCompile Include="src\Obstract.cpp" />
     <ClCompile Include="src\ObstractManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerBooster.cpp" />
+    <ClCompile Include="src\Random.cpp" />
     <ClCompile Include="src\TestPlayer.cpp" />
     <ClCompile Include="src\PlayerBullet.cpp" />
     <ClCompile Include="src\Quaternion.cpp" />

@@ -14,7 +14,7 @@ class Obstract : public BaseGameObject
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	Obstract(Transform aTransform, const float& aSpeed);
+	Obstract();
 	~Obstract();
 	//@}
 
@@ -43,6 +43,7 @@ private:
 
 	/// @name プライベートメンバ変数
 	//@{
+	Color mColor;
 	float mMoveSpeed;
 	//@}
 
