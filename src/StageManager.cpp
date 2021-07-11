@@ -1,4 +1,4 @@
-#include "ObstractManager.h"
+#include "StageManager.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "Ground.h"
@@ -13,7 +13,7 @@ const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-ObstractManager::ObstractManager()
+StageManager::StageManager()
 	: mLevelUpTimer(0.0f)
 	, mInstanceObstractTimer(0.0f)
 	, mInstanceGroundTimer(0.0f)
@@ -25,13 +25,13 @@ ObstractManager::ObstractManager()
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
-ObstractManager::~ObstractManager()
+StageManager::~StageManager()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void ObstractManager::update()
+void StageManager::update()
 {
 	updateLevel();
 	instanceObj();
@@ -39,35 +39,16 @@ void ObstractManager::update()
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void ObstractManager::draw()
+void StageManager::draw()
 {
-}
-
-//-------------------------------------------------------------------------------------------------
-/// 当たり判定
-bool ObstractManager::collisionPlayer(const Vector3& aPos)
-{
-	/*const static float playerSize = 0.5f;
-	for (const auto obstract : mObstract) {
-		const auto obs = obstract->getCollision();
-		if (obs.pos.x - obs.scale.x / 2.0f < aPos.x + playerSize &&
-			obs.pos.x + obs.scale.x / 2.0f > aPos.x - playerSize &&
-			obs.pos.y - obs.scale.y / 2.0f < aPos.y + playerSize &&
-			obs.pos.y + obs.scale.y / 2.0f > aPos.y - playerSize &&
-			obs.pos.z - obs.scale.z / 2.0f < aPos.z + playerSize &&
-			obs.pos.z + obs.scale.z / 2.0f > aPos.z - playerSize) {
-			return true;
-		}
-	}*/
-	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// レベル更新
-void ObstractManager::updateLevel()
+void StageManager::updateLevel()
 {
 	// 定数
-	const static float LEVEL_UP_TIME = 15.0f;
+	const static float LEVEL_UP_TIME = 10.0f;
 	const static float SPEED_UP = 5.0f;
 	const static int INSTANCE_OBSTRACT_COUNT_UP = 5;
 
@@ -88,7 +69,7 @@ void ObstractManager::updateLevel()
 
 //-------------------------------------------------------------------------------------------------
 /// オブジェクトを生成する
-void ObstractManager::instanceObj()
+void StageManager::instanceObj()
 {
 	const static float INSTANCE_OBSTRACT_TIME = 0.2f;
 	const static float INSTANCE_GROUND_TIME = 0.1f;
@@ -121,7 +102,7 @@ void ObstractManager::instanceObj()
 
 //-------------------------------------------------------------------------------------------------
 /// スピード変更
-void ObstractManager::changeSpeed()
+void StageManager::changeSpeed()
 {
 	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Ground)) {
 		Ground* obj = (Ground*)objs;

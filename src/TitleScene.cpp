@@ -1,54 +1,68 @@
-#include "GameScene.h"
+#include "TitleScene.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
 #include "Sound.h"
+#include "InputManager.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "GameCamera.h"
+#include "TitleCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
 #include "Player.h"
-#include "StageManager.h"
-#include "GameUI.h"
+#include "TitleUI.h"
+#include "TitlePlayer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto SOUND = Sound::getInst();
+const static auto INPUT_MANAGER = InputManager::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
-, mState(GameState::Game)
+TitleScene::TitleScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
-	mGameOBJManager.setCameraObject(new GameCamera());
-	mGameOBJManager.setGameObjectListToWorld(new Player());
+	mGameOBJManager.setCameraObject(new TitleCamera());
 	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
-	mGameOBJManager.setGameObjectListToWorld(new StageManager());
 	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
-	mGameOBJManager.setGameObjectListToCanvas(new GameUI());
-
-	SOUND->play((int)SoundList::BGM_00);
+	mGameOBJManager.setGameObjectListToWorld(new TitlePlayer());
+	mGameOBJManager.setGameObjectListToCanvas(new TitleUI());
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
-GameScene::~GameScene()
+TitleScene::~TitleScene()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void GameScene::update()
+void TitleScene::update()
 {
 	mGameOBJManager.update();
+
+	static bool startButtonDown;
+	if (!startButtonDown) {
+		if (INPUT_MANAGER->axesRaw().y == 1) {
+			startButtonDown = true;
+			SOUND->playOneShot((int)SoundList::SE_Start);
+		}
+	} else {
+		const static float SCENE_CHANGE_TIME = 1.5f;
+		static float sceneChangeTimer = 0;
+		if (sceneChangeTimer > SCENE_CHANGE_TIME) {
+			mImplSceneChanged->changeScene(SceneList::Game);
+		}
+		sceneChangeTimer += FPS->deltaTime();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void GameScene::draw()
+void TitleScene::draw()
 {
 	mGameOBJManager.draw();
 }

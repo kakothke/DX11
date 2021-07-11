@@ -31,7 +31,7 @@ bool Game::initialize()
 	RESOURCE->initialize();
 
 	// 最初に読み込むシーンをセット
-	mSceneManager.changeScene(SceneList::Game);
+	mSceneManager.changeScene(SceneList::Title);
 
 	// fps設定
 	FPS->setFpsCount(Define::Fps);

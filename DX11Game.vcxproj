@@ -151,9 +151,10 @@
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\GameUI.h" />
+    <ClInclude Include="src\GrazeEffect.h" />
     <ClInclude Include="src\Ground.h" />
     <ClInclude Include="src\Obstract.h" />
-    <ClInclude Include="src\ObstractManager.h" />
+    <ClInclude Include="src\StageManager.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayerBooster.h" />
     <ClInclude Include="src\PlayerBullet.h" />
@@ -192,6 +193,10 @@
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\SystemMain.h" />
     <ClInclude Include="src\TextureLoader.h" />
+    <ClInclude Include="src\TitleCamera.h" />
+    <ClInclude Include="src\TitlePlayer.h" />
+    <ClInclude Include="src\TitleScene.h" />
+    <ClInclude Include="src\TitleUI.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\Vector3.h" />
@@ -219,6 +224,7 @@
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GameSkyBox.cpp" />
     <ClCompile Include="src\GameUI.cpp" />
+    <ClCompile Include="src\GrazeEffect.cpp" />
     <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
@@ -227,7 +233,7 @@
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
     <ClCompile Include="src\Obstract.cpp" />
-    <ClCompile Include="src\ObstractManager.cpp" />
+    <ClCompile Include="src\StageManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerBooster.cpp" />
     <ClCompile Include="src\Random.cpp" />
@@ -243,6 +249,10 @@
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\SystemMain.cpp" />
     <ClCompile Include="src\TextureLoader.cpp" />
+    <ClCompile Include="src\TitleCamera.cpp" />
+    <ClCompile Include="src\TitlePlayer.cpp" />
+    <ClCompile Include="src\TitleScene.cpp" />
+    <ClCompile Include="src\TitleUI.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
     <ClCompile Include="src\Vector3.cpp" />

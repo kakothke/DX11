@@ -226,7 +226,7 @@
     <ClInclude Include="src\Player.h">
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObstractManager.h">
+    <ClInclude Include="src\StageManager.h">
       <Filter>Game\GameObject\Obstract</Filter>
     </ClInclude>
     <ClInclude Include="src\Obstract.h">
@@ -252,6 +252,21 @@
     </ClInclude>
     <ClInclude Include="src\GameUI.h">
       <Filter>Game\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GrazeEffect.h">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleCamera.h">
+      <Filter>Game\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleUI.h">
+      <Filter>Game\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitlePlayer.h">
+      <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -375,7 +390,7 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObstractManager.cpp">
+    <ClCompile Include="src\StageManager.cpp">
       <Filter>Game\GameObject\Obstract</Filter>
     </ClCompile>
     <ClCompile Include="src\Obstract.cpp">
@@ -398,6 +413,21 @@
     </ClCompile>
     <ClCompile Include="src\GameUI.cpp">
       <Filter>Game\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GrazeEffect.cpp">
+      <Filter>Game\GameObject\Obstract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleScene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleCamera.cpp">
+      <Filter>Game\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleUI.cpp">
+      <Filter>Game\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitlePlayer.cpp">
+      <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

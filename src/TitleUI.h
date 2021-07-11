@@ -9,13 +9,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class GameUI : public BaseGameObject
+class TitleUI : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	GameUI();
-	~GameUI();
+	TitleUI();
+	~TitleUI();
 	//@}
 
 	/// @name 更新/描画
@@ -27,10 +27,12 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Transform mArrowTransform[4];
-	SpriteRenderer mArrowRenderer[4];
+	SpriteRenderer mArrowRenderer;
+	SpriteRenderer mLogoRenderer;
+	SpriteRenderer mStartRenderer;
 	SpriteRenderer mBlackRenderer;
 	Color mBlackColor;
+	bool mStartButtonDown;
 	//@}
 
 };

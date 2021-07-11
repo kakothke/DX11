@@ -4,18 +4,18 @@
 #include "BaseGameObject.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "SpriteRenderer.h"
+#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class GameUI : public BaseGameObject
+class TitlePlayer : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	GameUI();
-	~GameUI();
+	TitlePlayer();
+	~TitlePlayer();
 	//@}
 
 	/// @name 更新/描画
@@ -25,12 +25,15 @@ public:
 	//@}
 
 private:
+	/// @name 内部実装
+	//@{
+	void instanceEffect();
+	//@}
+
 	/// @name プライベートメンバ変数
 	//@{
-	Transform mArrowTransform[4];
-	SpriteRenderer mArrowRenderer[4];
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
+	OBJRenderer mRenderer;
+	float mInstanceBoosterTimer;
 	//@}
 
 };

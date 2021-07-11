@@ -3,12 +3,15 @@
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
 #include "Random.h"
+#include "Sound.h"
+#include "GrazeEffect.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto FPS = Fps::getInst();
+const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -18,7 +21,7 @@ Obstract::Obstract()
 {
 	// トランスフォーム設定
 	mTransform.pos = Vector3(0.0f, -3.0f, 300.0f);
-	mTransform.scale = Vector3(1.0f, 5.0f, 1.0f);
+	mTransform.scale = Vector3(2.0f, 5.0f, 1.0f);
 	mTransform.pos.x += Random::RandomFloat(500, 0.1f) * Random::RandomSign();
 	mTransform.scale.x += Random::RandomInt(5);
 
@@ -40,7 +43,7 @@ Obstract::~Obstract()
 
 //-------------------------------------------------------------------------------------------------
 /// 移動速度
-void Obstract::setMoveSpeed(const float aSpeed)
+void Obstract::setMoveSpeed(const float& aSpeed)
 {
 	mMoveSpeed = aSpeed;
 }
@@ -61,6 +64,9 @@ void Obstract::update()
 		mColor.a += COLOR_SPEED * FPS->deltaTime();
 	}
 
+	// 当たり判定
+	collisionPlayer();
+
 	// 消去
 	if (mTransform.pos.z < DELETE_POS) {
 		destroyThisGameObject();
@@ -76,15 +82,40 @@ void Obstract::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 当たり判定
-Transform Obstract::getCollision()
+/// プレイヤーとの当たり判定
+void Obstract::collisionPlayer()
 {
-	Transform transform;
-	transform = mTransform;
-	transform.pos.y = 0.0f;
-	transform.scale.x *= 0.25f;
+	const static auto PLAYER_OBJ = mGameObjectList->findGameObject(GameObjectTag::Player);
+	const static float PLAYER_SIZE = 0.5f;
 
-	return transform;
+	Vector3 playerPos = PLAYER_OBJ->transform().pos;
+	Transform collisionTransform = mTransform;
+	collisionTransform.pos.y = 0;
+	collisionTransform.scale.y = 2.0f;
+
+	// プレイヤーにヒット
+	if (collisionTransform.pos.x - collisionTransform.scale.x / 2.0f < playerPos.x + PLAYER_SIZE &&
+		collisionTransform.pos.x + collisionTransform.scale.x / 2.0f > playerPos.x - PLAYER_SIZE &&
+		collisionTransform.pos.y - collisionTransform.scale.y / 2.0f < playerPos.y + PLAYER_SIZE &&
+		collisionTransform.pos.y + collisionTransform.scale.y / 2.0f > playerPos.y - PLAYER_SIZE &&
+		collisionTransform.pos.z - collisionTransform.scale.z / 2.0f < playerPos.z + PLAYER_SIZE &&
+		collisionTransform.pos.z + collisionTransform.scale.z / 2.0f > playerPos.z - PLAYER_SIZE) {
+		SOUND->playOneShot((int)SoundList::SE_Shot);
+		return;
+	}
+
+	// プレイヤーにかすり
+	collisionTransform.scale.x *= 4.0f;
+	if (collisionTransform.pos.x - collisionTransform.scale.x / 2.0f < playerPos.x + PLAYER_SIZE &&
+		collisionTransform.pos.x + collisionTransform.scale.x / 2.0f > playerPos.x - PLAYER_SIZE &&
+		collisionTransform.pos.y - collisionTransform.scale.y / 2.0f < playerPos.y + PLAYER_SIZE &&
+		collisionTransform.pos.y + collisionTransform.scale.y / 2.0f > playerPos.y - PLAYER_SIZE &&
+		collisionTransform.pos.z - collisionTransform.scale.z / 2.0f < playerPos.z + PLAYER_SIZE &&
+		collisionTransform.pos.z + collisionTransform.scale.z / 2.0f > playerPos.z - PLAYER_SIZE) {
+		SOUND->playOneShot((int)SoundList::SE_Graze);
+
+		mGameObjectList->setGameObjectListToWorld(new GrazeEffect(collisionTransform.pos, playerPos));
+	}
 }
 
 } // namespace

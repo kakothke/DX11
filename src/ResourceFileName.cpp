@@ -18,7 +18,11 @@ const std::unordered_map<OBJList, const char*> ResourceFileName::OBJ =
 const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 {
 	{ SpriteList::UI_Arrow, "res/img/arrow.png" },
+	{ SpriteList::UI_TitleLogo, "res/img/logo.png" },
+	{ SpriteList::UI_Start, "res/img/start.png" },
+	{ SpriteList::UI_Black, "res/img/black.png" },
 	{ SpriteList::Efect_Booster, "res/img/booster.png" },
+	{ SpriteList::Efect_Graze, "res/img/graze.png" },
 };
 
 /// Shader
@@ -30,11 +34,13 @@ const std::unordered_map<ShaderList, const char*> ResourceFileName::Shader =
 	{ ShaderList::SkyBox, "hlsl/SkyBox.hlsl" },
 };
 
-/// BGM
+/// Sound
 const std::unordered_map<SoundList, const char*> ResourceFileName::Sound =
 {
 	{ SoundList::BGM_00, "res/bgm/music_0.wav" },
 	{ SoundList::SE_Shot, "res/se/shot.wav" },
+	{ SoundList::SE_Graze, "res/se/graze.wav" },
+	{ SoundList::SE_Start, "res/se/start.wav" },
 };
 
 } // namespace

@@ -31,13 +31,9 @@ public:
 
 
 private:
-	/// @name コンポーネント
-	//@{
-	OBJRenderer mRenderer;
-	//@}
-
 	/// @name プライベートメンバ変数
 	//@{
+	OBJRenderer mRenderer;
 	Color mColor;
 	float mMoveSpeed;
 	//@}

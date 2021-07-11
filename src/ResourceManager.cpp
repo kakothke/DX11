@@ -36,7 +36,11 @@ void ResourceManager::initialize()
 
 	// Sprites
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Arrow));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_TitleLogo));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Start));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Black));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Efect_Booster));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Efect_Graze));
 
 	// Shaders
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));
@@ -52,6 +56,8 @@ void ResourceManager::initialize()
 
 	// SE
 	SOUND->load((int)SoundList::SE_Shot, ResourceFileName::Sound.at(SoundList::SE_Shot));
+	SOUND->load((int)SoundList::SE_Graze, ResourceFileName::Sound.at(SoundList::SE_Graze));
+	SOUND->load((int)SoundList::SE_Start, ResourceFileName::Sound.at(SoundList::SE_Start));
 
 	// Font
 	FONT_LOADER->load(TEXT("‚ ‚ñ‚¸‚à‚¶’X"), TEXT("res/font/APJapanesefontF.ttf"));

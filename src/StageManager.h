@@ -6,24 +6,19 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class ObstractManager : public BaseGameObject
+class StageManager : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	ObstractManager();
-	~ObstractManager();
+	StageManager();
+	~StageManager();
 	//@}
 	
 	/// @name 更新/描画
 	//@{
 	void update() override;
 	void draw() override;
-	//@}
-
-	/// @name 当たり判定
-	//@{
-	bool collisionPlayer(const Vector3& aPos);
 	//@}
 
 private:

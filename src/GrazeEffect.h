@@ -9,29 +9,17 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class GameUI : public BaseGameObject
+class GrazeEffect : public BaseGameObject
 {
 public:
-	/// @name コンストラクタ/デストラクタ
-	//@{
-	GameUI();
-	~GameUI();
-	//@}
-
-	/// @name 更新/描画
-	//@{
+	GrazeEffect(Vector3 aObstractPos, Vector3 aPlayerPos);
+	~GrazeEffect();
 	void update() override;
 	void draw() override;
-	//@}
 
 private:
-	/// @name プライベートメンバ変数
-	//@{
-	Transform mArrowTransform[4];
-	SpriteRenderer mArrowRenderer[4];
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
-	//@}
+	SpriteRenderer mRenderer;
+	Vector3 mVelocity;
 
 };
 

@@ -22,7 +22,11 @@ enum class OBJList
 enum class SpriteList
 {
 	UI_Arrow,
+	UI_TitleLogo,
+	UI_Start,
+	UI_Black,
 	Efect_Booster,
+	Efect_Graze,
 };
 
 /// Shader
@@ -39,6 +43,8 @@ enum class SoundList
 {
 	BGM_00,
 	SE_Shot,
+	SE_Graze,
+	SE_Start,
 };
 
 /// リソースファイル名取得用クラス

@@ -203,6 +203,8 @@ void GameObjectManager::draw()
 	}
 
 	// ƒJƒƒ‰
+	D3D11->setZBuffer(true);
+	D3D11->setBlendMode(Direct3D11::BlendList::None);
 	mCamera->draw();
 }
 

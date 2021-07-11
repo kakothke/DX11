@@ -24,25 +24,21 @@ public:
 	void draw() override;
 	//@}
 
-	/// @name 当たり判定
-	//@{
-	Transform getCollision();
-	//@}
-
 	/// @name アクセサ
 	//@{
-	void setMoveSpeed(const float aSpeed);
+	void setMoveSpeed(const float& aSpeed);
 	//@}
 
 
 private:
-	/// @name コンポーネント
+	/// @name 内部実装
 	//@{
-	OBJRenderer mRenderer;
+	void collisionPlayer();
 	//@}
 
 	/// @name プライベートメンバ変数
 	//@{
+	OBJRenderer mRenderer;
 	Color mColor;
 	float mMoveSpeed;
 	//@}

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 //-------------------------------------------------------------------------------------------------
+#include "TitleScene.h"
 #include "GameScene.h"
 #include "BossTestScene.h"
 
@@ -51,6 +52,9 @@ void SceneManager::changeScene(const SceneList aSceneList)
 	case SceneList::POP:
 		// 現在のシーンをポップする
 		mSceneStack.pop();
+		break;
+	case SceneList::Title:
+		mSceneStack.push(std::make_shared<TitleScene>(this));
 		break;
 	case SceneList::Game:
 		mSceneStack.push(std::make_shared<GameScene>(this));

@@ -1,46 +1,39 @@
-#include "BossTestScene.h"
+#include "TitleCamera.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
-#include "Sound.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto SOUND = Sound::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
-BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
+TitleCamera::TitleCamera()
 {
-	SOUND->play((int)SoundList::BGM_00);
-
-	mGameObjMgr.setCameraObject(new BossCamera());
-	mGameObjMgr.setGameObjectListToWorld(new TestPlayer());
-	mGameObjMgr.setGameObjectListToWorld(new Boss());
-	mGameObjMgr.setGameObjectListToWorld(new DirectionalLight());
-	mGameObjMgr.setGameObjectListToBackground(new GameSkyBox());
+	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 145.0f, 0.0f));
 }
 
 //-------------------------------------------------------------------------------------------------
 /// デストラクタ
-BossTestScene::~BossTestScene()
+TitleCamera::~TitleCamera()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
-void BossTestScene::update()
+void TitleCamera::update()
 {
-	mGameObjMgr.update();
+	mTransform.rot *= -Quaternion::Euler(Vector3::up * FPS->deltaTime() * 10.0f);
+	mTransform.pos = Vector3(0.0f, 1.0f, 0.0f) + mTransform.rot * Vector3::back * 10.0f;
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
-void BossTestScene::draw()
+void TitleCamera::draw()
 {
-	mGameObjMgr.draw();
 }
 
 } // namespace

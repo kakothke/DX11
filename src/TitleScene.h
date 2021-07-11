@@ -1,21 +1,23 @@
+
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "BaseGameObject.h"
+#include "AbstractScene.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "SpriteRenderer.h"
+#include "GameObjectManager.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class GameUI : public BaseGameObject
+/// ゲームシーン
+class TitleScene : public AbstractScene
 {
 public:
-	/// @name コンストラクタ/デストラクタ
+	/// @name コンストラクタ/仮想デストラクタ
 	//@{
-	GameUI();
-	~GameUI();
+	TitleScene(IChangeScene* aImpl);
+	virtual ~TitleScene();
 	//@}
 
 	/// @name 更新/描画
@@ -27,10 +29,7 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Transform mArrowTransform[4];
-	SpriteRenderer mArrowRenderer[4];
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
+	GameObjectManager mGameOBJManager;
 	//@}
 
 };

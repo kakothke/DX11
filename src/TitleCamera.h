@@ -1,21 +1,22 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "BaseGameObject.h"
+#include "Camera.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "SpriteRenderer.h"
+#include "OBJRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class GameUI : public BaseGameObject
+/// タイトルカメラ
+class TitleCamera : public Camera
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	GameUI();
-	~GameUI();
+	TitleCamera();
+	~TitleCamera();
 	//@}
 
 	/// @name 更新/描画
@@ -25,13 +26,6 @@ public:
 	//@}
 
 private:
-	/// @name プライベートメンバ変数
-	//@{
-	Transform mArrowTransform[4];
-	SpriteRenderer mArrowRenderer[4];
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
-	//@}
 
 };
 

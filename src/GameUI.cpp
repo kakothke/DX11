@@ -10,9 +10,14 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
+const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 GameUI::GameUI()
+	: mArrowTransform()
+	, mArrowRenderer()
+	, mBlackRenderer()
+	, mBlackColor()
 {
 	// 矢印
 	for (auto& arrow : mArrowTransform) {
@@ -30,6 +35,10 @@ GameUI::GameUI()
 		arrow.setPivot(0.0f, 1.0f);
 		arrow.setColor(Color(1.0f, 1.0f, 1.0f, 0.5f));
 	}
+
+	// ブラックアウト
+	mBlackRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::UI_Black));
+	mBlackRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Sprite));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -41,6 +50,9 @@ GameUI::~GameUI()
 //-------------------------------------------------------------------------------------------------
 void GameUI::update()
 {
+	if (mBlackColor.a > 0) {
+		mBlackColor.a -= FPS->deltaTime();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -56,6 +68,11 @@ void GameUI::draw()
 		mArrowRenderer[i].render(mArrowTransform[i]);
 	}
 
+	// ブラック
+	if (mBlackColor.a > 0.0f) {
+		mBlackRenderer.setColor(mBlackColor);
+		mBlackRenderer.render(Transform(Vector3(), Vector3(), Vector3(10.0f)));
+	}
 }
 
 } // namespace
