@@ -93,6 +93,9 @@ void Player::move()
 	float rot = INPUT_MANAGER->axes().x * -mMoveSpeed * 2.0f;
 	mTransform.pos.x += move * FPS->deltaTime();
 	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 0.0f, rot));
+
+	// ˆÚ“®‚Å‚«‚é’[‚ğ§ŒÀ
+	mTransform.pos.x = Math::Clamp(mTransform.pos.x, -50.0f, 50.0f);
 }
 
 //-------------------------------------------------------------------------------------------------
