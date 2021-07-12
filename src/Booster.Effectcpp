@@ -1,4 +1,4 @@
-#include "PlayerBooster.h"
+#include "BoosterEffect.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
@@ -11,7 +11,7 @@ namespace KDXK {
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
-PlayerBooster::PlayerBooster(Transform aTransform)
+BoosterEffect::BoosterEffect(Transform aTransform)
 	: mRenderer()
 	, mColor()
 {
@@ -19,18 +19,18 @@ PlayerBooster::PlayerBooster(Transform aTransform)
 	mTransform.pos.x += Random::RandomFloat(10, 0.01f) * Random::RandomSign();
 	mTransform.pos.y += Random::RandomFloat(10, 0.01f) * Random::RandomSign();
 
-	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Efect_Booster));
+	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Booster));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
 	mRenderer.setColor(mColor);
 }
 
 //-------------------------------------------------------------------------------------------------
-PlayerBooster::~PlayerBooster()
+BoosterEffect::~BoosterEffect()
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-void PlayerBooster::update()
+void BoosterEffect::update()
 {
 	const static float MOVE_SPEED = 50.0f;
 	const static float SCALE_DOWN_SPEED = 3.0f;
@@ -46,7 +46,7 @@ void PlayerBooster::update()
 }
 
 //-------------------------------------------------------------------------------------------------
-void PlayerBooster::draw()
+void BoosterEffect::draw()
 {
 	mRenderer.setColor(mColor);
 	mRenderer.render(mTransform, true);

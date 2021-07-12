@@ -74,20 +74,23 @@
     <Filter Include="Game\GameObject\Player">
       <UniqueIdentifier>{35a84ac6-5f0b-42f5-adbc-a5d4cf112fbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\GameObject\Enemy">
-      <UniqueIdentifier>{3c555d54-045f-4d59-8127-8855af061df5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Comon\Math">
       <UniqueIdentifier>{56c89542-c404-42c0-922a-0eb64613a569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameObject\Obstract">
-      <UniqueIdentifier>{e638da34-25dd-403a-8741-da2e463e1f2f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Shader">
       <UniqueIdentifier>{befa0eef-764a-436d-b4bd-3b45525c997e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\GameObject\UI">
       <UniqueIdentifier>{8d1fa5e0-61ae-474f-aeda-c17b9b08d7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Stage">
+      <UniqueIdentifier>{e638da34-25dd-403a-8741-da2e463e1f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Effect">
+      <UniqueIdentifier>{ea0bed03-5eb4-4e21-850f-2218443aba84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\BossTest">
+      <UniqueIdentifier>{8584673c-a6fb-4cbe-9995-0b4f3badaa9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,20 +202,11 @@
     <ClInclude Include="src\BossCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestPlayer.h">
-      <Filter>Game\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Boss.h">
-      <Filter>Game\GameObject\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="src\Quaternion.h">
       <Filter>System\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
       <Filter>System\Comon</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerBullet.h">
-      <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="src\OBJLoader.h">
       <Filter>System\Resource\Mesh</Filter>
@@ -227,13 +221,13 @@
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="src\StageManager.h">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="src\Obstract.h">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="src\Ground.h">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="src\GameCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
@@ -244,17 +238,11 @@
     <ClInclude Include="src\ISetGameObjectList.h">
       <Filter>Game\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerBooster.h">
-      <Filter>Game\GameObject\Player</Filter>
-    </ClInclude>
     <ClInclude Include="src\Random.h">
       <Filter>System\Comon\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\GameUI.h">
       <Filter>Game\GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GrazeEffect.h">
-      <Filter>Game\GameObject\Obstract</Filter>
     </ClInclude>
     <ClInclude Include="src\TitleScene.h">
       <Filter>Game\Scene</Filter>
@@ -267,6 +255,24 @@
     </ClInclude>
     <ClInclude Include="src\TitlePlayer.h">
       <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MoveLineEffect.h">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoosterEffect.h">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GrazeEffect.h">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerBullet.h">
+      <Filter>Game\GameObject\BossTest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestPlayer.h">
+      <Filter>Game\GameObject\BossTest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Boss.h">
+      <Filter>Game\GameObject\BossTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -363,20 +369,11 @@
     <ClCompile Include="src\BossCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\TestPlayer.cpp">
-      <Filter>Game\GameObject\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Boss.cpp">
-      <Filter>Game\GameObject\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="src\Quaternion.cpp">
       <Filter>System\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>System\Comon</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerBullet.cpp">
-      <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="src\OBJLoader.cpp">
       <Filter>System\Resource\Mesh</Filter>
@@ -391,13 +388,13 @@
       <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="src\StageManager.cpp">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="src\Obstract.cpp">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="src\Ground.cpp">
-      <Filter>Game\GameObject\Obstract</Filter>
+      <Filter>Game\GameObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="src\GameCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
@@ -405,17 +402,11 @@
     <ClCompile Include="src\GameObjectManager.cpp">
       <Filter>Game\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayerBooster.cpp">
-      <Filter>Game\GameObject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="src\Random.cpp">
       <Filter>System\Comon\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\GameUI.cpp">
       <Filter>Game\GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GrazeEffect.cpp">
-      <Filter>Game\GameObject\Obstract</Filter>
     </ClCompile>
     <ClCompile Include="src\TitleScene.cpp">
       <Filter>Game\Scene</Filter>
@@ -428,6 +419,24 @@
     </ClCompile>
     <ClCompile Include="src\TitlePlayer.cpp">
       <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MoveLineEffect.cpp">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Booster.Effectcpp">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GrazeEffect.cpp">
+      <Filter>Game\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerBullet.cpp">
+      <Filter>Game\GameObject\BossTest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestPlayer.cpp">
+      <Filter>Game\GameObject\BossTest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Boss.cpp">
+      <Filter>Game\GameObject\BossTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

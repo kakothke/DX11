@@ -114,7 +114,7 @@ void Obstract::collisionPlayer()
 		collisionTransform.pos.z + collisionTransform.scale.z / 2.0f > playerPos.z - PLAYER_SIZE) {
 		SOUND->playOneShot((int)SoundList::SE_Graze);
 
-		mGameObjectList->setGameObjectListToWorld(new GrazeEffect(collisionTransform.pos, playerPos));
+		mGameObjectList->setGameObjectListToWorld(new GrazeEffect(collisionTransform.pos, playerPos), 0, true);
 	}
 }
 

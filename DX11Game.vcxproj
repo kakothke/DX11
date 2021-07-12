@@ -153,10 +153,11 @@
     <ClInclude Include="src\GameUI.h" />
     <ClInclude Include="src\GrazeEffect.h" />
     <ClInclude Include="src\Ground.h" />
+    <ClInclude Include="src\MoveLineEffect.h" />
     <ClInclude Include="src\Obstract.h" />
     <ClInclude Include="src\StageManager.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\PlayerBooster.h" />
+    <ClInclude Include="src\BoosterEffect.h" />
     <ClInclude Include="src\PlayerBullet.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Color.h" />
@@ -230,12 +231,13 @@
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math.cpp" />
+    <ClCompile Include="src\MoveLineEffect.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\OBJRenderer.cpp" />
     <ClCompile Include="src\Obstract.cpp" />
     <ClCompile Include="src\StageManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\PlayerBooster.cpp" />
+    <ClCompile Include="src\Booster.Effectcpp" />
     <ClCompile Include="src\Random.cpp" />
     <ClCompile Include="src\TestPlayer.cpp" />
     <ClCompile Include="src\PlayerBullet.cpp" />

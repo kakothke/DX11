@@ -25,8 +25,9 @@ enum class SpriteList
 	UI_TitleLogo,
 	UI_Start,
 	UI_Black,
-	Efect_Booster,
-	Efect_Graze,
+	Effect_Booster,
+	Effect_Graze,
+	Effect_Circle,
 };
 
 /// Shader

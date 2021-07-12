@@ -13,6 +13,9 @@ enum class GameObjectTag
 	Boss,
 	Ground,
 	Obstract,
+
+	Effect_MoveLine,
+
 };
 
 } // namespace

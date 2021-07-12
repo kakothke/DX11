@@ -40,6 +40,8 @@ private:
 	float mInstanceObstractTimer;
 	/// 地上生成タイマー
 	float mInstanceGroundTimer;
+	/// 移動線エフェクト生成タイマー
+	float mInstanceMoveLineEffectTimer;
 	/// スピード
 	float mMoveSpeed;
 	/// レベル

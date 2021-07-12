@@ -4,7 +4,7 @@
 #include "ResourceFileName.h"
 #include "InputManager.h"
 #include "Math.h"
-#include "PlayerBooster.h"
+#include "BoosterEffect.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -106,7 +106,7 @@ void Player::instanceEffect()
 		} else if (axisY == -1) {
 			transform.scale -= SCALE_RANGE;
 		}
-		mGameObjectList->setGameObjectListToWorld(new PlayerBooster(transform), 0, true);
+		mGameObjectList->setGameObjectListToWorld(new BoosterEffect(transform), 0, true);
 	} else {
 		mInstanceBoosterTimer += FPS->deltaTime();
 	}

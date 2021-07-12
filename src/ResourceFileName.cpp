@@ -21,8 +21,9 @@ const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 	{ SpriteList::UI_TitleLogo, "res/img/logo.png" },
 	{ SpriteList::UI_Start, "res/img/start.png" },
 	{ SpriteList::UI_Black, "res/img/black.png" },
-	{ SpriteList::Efect_Booster, "res/img/booster.png" },
-	{ SpriteList::Efect_Graze, "res/img/graze.png" },
+	{ SpriteList::Effect_Booster, "res/img/booster.png" },
+	{ SpriteList::Effect_Graze, "res/img/graze.png" },
+	{ SpriteList::Effect_Circle, "res/img/circle_particle.png" },
 };
 
 /// Shader

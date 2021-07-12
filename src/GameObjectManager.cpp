@@ -223,6 +223,7 @@ void GameObjectManager::setGameObjectListToWorld(BaseGameObject* aObject, const 
 		mWorldGameObjectListAlpha[aLayer].emplace_back(aObject);
 	}
 	aObject->setGameObjectList(this);
+	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -233,6 +234,7 @@ void GameObjectManager::setGameObjectListToBackground(BaseGameObject* aObject, c
 {
 	mBackgroundGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
+	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -243,6 +245,7 @@ void GameObjectManager::setGameObjectListToCanvas(BaseGameObject* aObject, const
 {
 	mCanvasGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
+	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -252,6 +255,7 @@ void GameObjectManager::setCameraObject(Camera* aObject)
 {
 	mCamera = aObject;
 	aObject->setGameObjectList(this);
+	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
