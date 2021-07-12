@@ -28,6 +28,8 @@ enum class SpriteList
 	Effect_Booster,
 	Effect_Graze,
 	Effect_Circle,
+	Effect_Explosion,
+	Effect_Blow,
 };
 
 /// Shader
@@ -39,13 +41,17 @@ enum class ShaderList
 	SkyBox,
 };
 
-/// BGM
+/// Sound
 enum class SoundList
 {
 	BGM_00,
 	SE_Shot,
 	SE_Graze,
 	SE_Start,
+	SE_Miss,
+	SE_Booster_Normal,
+	SE_Booster_Low,
+	SE_Booster_High,
 };
 
 /// リソースファイル名取得用クラス

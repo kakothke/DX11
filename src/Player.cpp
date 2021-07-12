@@ -3,8 +3,10 @@
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
 #include "InputManager.h"
+#include "Sound.h"
 #include "Math.h"
 #include "BoosterEffect.h"
+#include "ExplosionEffect.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -12,6 +14,7 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
 const static auto FPS = Fps::getInst();
+const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
@@ -50,25 +53,33 @@ void Player::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
+void Player::missEvent()
+{
+	SOUND->playOneShot((int)SoundList::SE_Miss);
+	mGameObjectList->setGameObjectListToWorld(new ExplosionEffect(mTransform.pos), 0, true);
+	setActive(false);
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 移動
 void Player::move()
 {
 	// 定数
 	const static float NORMAL_SPEED_LEVEL = 20.0f;
-	const static float UP_SPEED_LEVEL = NORMAL_SPEED_LEVEL * 2.0f;
-	const static float DOWN_SPEED_LEVEL = NORMAL_SPEED_LEVEL / 2.0f;
+	const static float HIGH_SPEED_LEVEL = NORMAL_SPEED_LEVEL * 2.0f;
+	const static float LOW_SPEED_LEVEL = NORMAL_SPEED_LEVEL / 2.0f;
 
 	float speed = 10.0f * FPS->deltaTime();
 	float axisY = INPUT_MANAGER->axesRaw().y;
 	if (axisY == 1) {
 		// 高速移動
-		if (mMoveSpeed != UP_SPEED_LEVEL) {
-			mMoveSpeed = Math::Lerp(mMoveSpeed, UP_SPEED_LEVEL, speed);
+		if (mMoveSpeed != HIGH_SPEED_LEVEL) {
+			mMoveSpeed = Math::Lerp(mMoveSpeed, HIGH_SPEED_LEVEL, speed);
 		}
 	} else if (axisY == -1) {
 		// 減速移動
-		if (mMoveSpeed != DOWN_SPEED_LEVEL) {
-			mMoveSpeed = Math::Lerp(mMoveSpeed, DOWN_SPEED_LEVEL, speed);
+		if (mMoveSpeed != LOW_SPEED_LEVEL) {
+			mMoveSpeed = Math::Lerp(mMoveSpeed, LOW_SPEED_LEVEL, speed);
 		}
 	} else {
 		// 通常移動
@@ -103,8 +114,12 @@ void Player::instanceEffect()
 		float axisY = INPUT_MANAGER->axesRaw().y;
 		if (axisY == 1) {
 			transform.scale += SCALE_RANGE;
+			SOUND->playOneShot((int)SoundList::SE_Booster_High);
 		} else if (axisY == -1) {
 			transform.scale -= SCALE_RANGE;
+			SOUND->playOneShot((int)SoundList::SE_Booster_Low);
+		} else {
+			SOUND->playOneShot((int)SoundList::SE_Booster_Normal);
 		}
 		mGameObjectList->setGameObjectListToWorld(new BoosterEffect(transform), 0, true);
 	} else {

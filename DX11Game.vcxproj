@@ -147,6 +147,7 @@
     <ClInclude Include="src\AbstractScene.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\Boss.h" />
+    <ClInclude Include="src\ExplosionEffect.h" />
     <ClInclude Include="src\GameCamera.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\GameScene.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="src\ConstantBuffer.cpp" />
     <ClCompile Include="src\Define.cpp" />
     <ClCompile Include="src\Direct3D11.cpp" />
+    <ClCompile Include="src\ExplosionEffect.cpp" />
     <ClCompile Include="src\FontRenderer.cpp" />
     <ClCompile Include="src\FontLoader.cpp" />
     <ClCompile Include="src\Fps.cpp" />

@@ -5,6 +5,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "GameObjectManager.h"
+#include "Player.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -40,7 +41,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	GameObjectManager mGameOBJManager;
-	GameState mState;
+	Player* mPlayer;
 	//@}
 
 };

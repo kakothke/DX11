@@ -30,6 +30,8 @@ private:
 	void instanceObj();
 	/// スピード変更
 	void changeSpeed();
+	/// ミスイベント
+	void missEvent();
 	//@}
 
 	/// @name プライベートメンバ変数

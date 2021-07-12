@@ -8,7 +8,6 @@
 #include "GameCamera.h"
 #include "GameSkyBox.h"
 #include "DirectionalLight.h"
-#include "Player.h"
 #include "StageManager.h"
 #include "GameUI.h"
 
@@ -21,10 +20,10 @@ const static auto SOUND = Sound::getInst();
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
-, mState(GameState::Game)
 {
+	mPlayer = new Player();
 	mGameOBJManager.setCameraObject(new GameCamera());
-	mGameOBJManager.setGameObjectListToWorld(new Player());
+	mGameOBJManager.setGameObjectListToWorld(mPlayer);
 	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
 	mGameOBJManager.setGameObjectListToWorld(new StageManager());
 	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
@@ -44,6 +43,10 @@ GameScene::~GameScene()
 void GameScene::update()
 {
 	mGameOBJManager.update();
+
+	if (!mPlayer->activeSelf()) {
+		SOUND->stop((int)SoundList::BGM_00);
+	}
 }
 
 //-------------------------------------------------------------------------------------------------

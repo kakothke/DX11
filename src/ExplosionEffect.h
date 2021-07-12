@@ -4,48 +4,32 @@
 #include "BaseGameObject.h"
 
 //-------------------------------------------------------------------------------------------------
-#include "OBJRenderer.h"
+#include "SpriteRenderer.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
-class Player : public BaseGameObject
+/// 爆発エフェクト
+class ExplosionEffect : public BaseGameObject
 {
 public:
-	/// @name コンストラクタ/デストラクタ
+	/// @name コンストラクタ
 	//@{
-	Player();
-	~Player();
+	ExplosionEffect(Vector3 aInstancePos);
+	~ExplosionEffect();
 	//@}
 
-	/// @name 更新/描画
+	/// @name 初期化/更新/描画
 	//@{
 	void update() override;
 	void draw() override;
 	//@}
 
-	/// @name ミスイベント
-	//@{
-	void missEvent();
-	//@}
-
 private:
-	/// @name 内部実装
-	//@{
-	void move();
-	void shot();
-	void instanceEffect();
-	//@}
-
-	/// @name コンポーネント
-	//@{
-	OBJRenderer mRenderer;
-	//@}
-
 	/// @name プライベートメンバ変数
 	//@{
-	float mMoveSpeed;
-	float mInstanceBoosterTimer;
+	SpriteRenderer mRenderer;
+	Color mColor;
 	//@}
 
 };

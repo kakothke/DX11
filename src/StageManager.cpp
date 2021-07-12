@@ -4,6 +4,7 @@
 #include "Ground.h"
 #include "Obstract.h"
 #include "MoveLineEffect.h"
+#include "Math.h"
 #include "MyOutputDebugString.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -35,8 +36,13 @@ StageManager::~StageManager()
 /// 更新
 void StageManager::update()
 {
-	updateLevel();
-	instanceObj();
+	const static auto PLAYER_OBJ = mGameObjectList->findGameObject(GameObjectTag::Player);
+	if (PLAYER_OBJ->activeSelf()) {
+		updateLevel();
+		instanceObj();
+	} else {
+		missEvent();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -132,6 +138,17 @@ void StageManager::changeSpeed()
 	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Effect_MoveLine)) {
 		MoveLineEffect* obj = (MoveLineEffect*)objs;
 		obj->setMoveSpeed(mMoveSpeed);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ミスイベント
+void StageManager::missEvent()
+{
+	const static float MISS_SPEED_DOWN = 2.0f;
+	if (mMoveSpeed != 0) {
+		mMoveSpeed = Math::Lerp(mMoveSpeed, 0.0f, MISS_SPEED_DOWN * FPS->deltaTime());
+		changeSpeed();
 	}
 }
 

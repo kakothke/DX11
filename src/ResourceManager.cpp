@@ -42,6 +42,8 @@ void ResourceManager::initialize()
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Booster));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Graze));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Explosion));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Blow));
 
 	// Shaders
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));
@@ -58,7 +60,15 @@ void ResourceManager::initialize()
 	// SE
 	SOUND->load((int)SoundList::SE_Shot, ResourceFileName::Sound.at(SoundList::SE_Shot));
 	SOUND->load((int)SoundList::SE_Graze, ResourceFileName::Sound.at(SoundList::SE_Graze));
+	SOUND->setVolume((int)SoundList::SE_Graze, 0.5f);
 	SOUND->load((int)SoundList::SE_Start, ResourceFileName::Sound.at(SoundList::SE_Start));
+	SOUND->load((int)SoundList::SE_Miss, ResourceFileName::Sound.at(SoundList::SE_Miss));
+	SOUND->load((int)SoundList::SE_Booster_Normal, ResourceFileName::Sound.at(SoundList::SE_Booster_Normal));
+	SOUND->setVolume((int)SoundList::SE_Booster_Normal, 0.3f);
+	SOUND->load((int)SoundList::SE_Booster_Low, ResourceFileName::Sound.at(SoundList::SE_Booster_Low));
+	SOUND->setVolume((int)SoundList::SE_Booster_Low, 0.2f);
+	SOUND->load((int)SoundList::SE_Booster_High, ResourceFileName::Sound.at(SoundList::SE_Booster_High));
+	SOUND->setVolume((int)SoundList::SE_Booster_High, 0.25f);
 
 	// Font
 	FONT_LOADER->load(TEXT("‚ ‚ñ‚¸‚à‚¶’X"), TEXT("res/font/APJapanesefontF.ttf"));

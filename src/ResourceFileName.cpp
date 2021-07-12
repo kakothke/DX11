@@ -24,6 +24,8 @@ const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 	{ SpriteList::Effect_Booster, "res/img/booster.png" },
 	{ SpriteList::Effect_Graze, "res/img/graze.png" },
 	{ SpriteList::Effect_Circle, "res/img/circle_particle.png" },
+	{ SpriteList::Effect_Explosion, "res/img/explosion.png" },
+	{ SpriteList::Effect_Blow, "res/img/blow_particle.png" },
 };
 
 /// Shader
@@ -42,6 +44,10 @@ const std::unordered_map<SoundList, const char*> ResourceFileName::Sound =
 	{ SoundList::SE_Shot, "res/se/shot.wav" },
 	{ SoundList::SE_Graze, "res/se/graze.wav" },
 	{ SoundList::SE_Start, "res/se/start.wav" },
+	{ SoundList::SE_Miss, "res/se/miss.wav" },
+	{ SoundList::SE_Booster_Normal, "res/se/booster_normal.wav" },
+	{ SoundList::SE_Booster_Low, "res/se/booster_low.wav" },
+	{ SoundList::SE_Booster_High, "res/se/booster_high.wav" },
 };
 
 } // namespace

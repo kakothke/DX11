@@ -16,6 +16,12 @@ const static auto FPS = Fps::getInst();
 MoveLineEffect::MoveLineEffect()
 	: mMoveSpeed(0.0f)
 {
+	// タグ
+	setTag(GameObjectTag::Effect_MoveLine);
+
+	// 描画設定
+	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));
+	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -38,13 +44,6 @@ void MoveLineEffect::initialize()
 	mTransform.pos.z = 600.0f;
 	mTransform.rot = Quaternion::Euler(Vector3(-angleDegree, 90.0f, 0.0f));
 	mTransform.scale = Vector3(10.0f, 0.25f, 1.0f);
-
-	// タグ
-	setTag(GameObjectTag::Effect_MoveLine);
-
-	// 描画設定
-	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));
-	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
 }
 
 //-------------------------------------------------------------------------------------------------
