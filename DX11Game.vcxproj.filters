@@ -426,7 +426,7 @@
     <ClCompile Include="src\MoveLineEffect.cpp">
       <Filter>Game\GameObject\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="src\Booster.Effectcpp">
+    <ClCompile Include="src\Booster.Effect.cpp">
       <Filter>Game\GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="src\GrazeEffect.cpp">

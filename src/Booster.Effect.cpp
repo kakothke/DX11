@@ -16,8 +16,8 @@ BoosterEffect::BoosterEffect(Transform aTransform)
 	, mColor()
 {
 	mTransform = aTransform;
-	mTransform.pos.x += Random::RandomFloat(10, 0.01f) * Random::RandomSign();
-	mTransform.pos.y += Random::RandomFloat(10, 0.01f) * Random::RandomSign();
+	mTransform.pos.x += Random::RandomFloat(10.0f, 0.01f) * Random::RandomSign();
+	mTransform.pos.y += Random::RandomFloat(10.0f, 0.01f) * Random::RandomSign();
 
 	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Booster));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));

@@ -62,7 +62,9 @@ void ResourceManager::initialize()
 	SOUND->load((int)SoundList::SE_Graze, ResourceFileName::Sound.at(SoundList::SE_Graze));
 	SOUND->setVolume((int)SoundList::SE_Graze, 0.5f);
 	SOUND->load((int)SoundList::SE_Start, ResourceFileName::Sound.at(SoundList::SE_Start));
+	SOUND->setVolume((int)SoundList::SE_Start, 1.5f);
 	SOUND->load((int)SoundList::SE_Miss, ResourceFileName::Sound.at(SoundList::SE_Miss));
+	SOUND->setVolume((int)SoundList::SE_Miss, 0.5f);
 	SOUND->load((int)SoundList::SE_Booster_Normal, ResourceFileName::Sound.at(SoundList::SE_Booster_Normal));
 	SOUND->setVolume((int)SoundList::SE_Booster_Normal, 0.3f);
 	SOUND->load((int)SoundList::SE_Booster_Low, ResourceFileName::Sound.at(SoundList::SE_Booster_Low));

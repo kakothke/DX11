@@ -239,7 +239,7 @@
     <ClCompile Include="src\Obstract.cpp" />
     <ClCompile Include="src\StageManager.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Booster.Effectcpp" />
+    <ClCompile Include="src\Booster.Effect.cpp" />
     <ClCompile Include="src\Random.cpp" />
     <ClCompile Include="src\TestPlayer.cpp" />
     <ClCompile Include="src\PlayerBullet.cpp" />
