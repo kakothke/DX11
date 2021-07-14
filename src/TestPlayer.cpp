@@ -102,7 +102,7 @@ void TestPlayer::shot()
 			// 弾生成
 			Transform bulletTransform;
 			bulletTransform = mTransform;
-			mGameObjectList->setGameObjectListToWorld(new PlayerBullet(bulletTransform, mTargetPos));
+			mGameObjectList->instanceToWorldAlpha(new PlayerBullet(bulletTransform, mTargetPos));
 		}
 		// タイマー更新
 		if (mRapidShotTimer < RAPID_SHOT_TIME) {

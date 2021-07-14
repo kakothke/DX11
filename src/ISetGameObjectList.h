@@ -18,9 +18,10 @@ public:
 	ISetGameObject() = default;
 	virtual ~ISetGameObject() = default;
 
-	virtual void setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer = 0, const bool& aAlphaBlend = false) = 0;
-	virtual void setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer = 0) = 0;
-	virtual void setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer = 0) = 0;
+	virtual void instanceToWorld(BaseGameObject* aObject, const int& aLayer = 0) = 0;
+	virtual void instanceToWorldAlpha(BaseGameObject* aObject, const int& aLayer = 0) = 0;
+	virtual void instanceToBackground(BaseGameObject* aObject, const int& aLayer = 0) = 0;
+	virtual void instanceToCanvas(BaseGameObject* aObject, const int& aLayer = 0) = 0;
 	virtual BaseGameObject* findGameObject(const GameObjectTag& aTag) = 0;
 	virtual std::vector<BaseGameObject*> findGameObjects(const GameObjectTag& aTag) = 0;
 

@@ -59,7 +59,7 @@ void TitlePlayer::instanceEffect()
 		} else if (axisY == -1) {
 			transform.scale -= SCALE_RANGE;
 		}
-		mGameObjectList->setGameObjectListToWorld(new BoosterEffect(transform), 0, true);
+		mGameObjectList->instanceToWorldAlpha(new BoosterEffect(transform));
 	} else {
 		mInstanceBoosterTimer += FPS->deltaTime();
 	}

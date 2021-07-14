@@ -209,28 +209,34 @@ void GameObjectManager::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトをリストに追加（ワールド空間）
+/// ゲームオブジェクトを生成（ワールド空間）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
 /// @param aAlphaBlend アルファブレンドを適用するか
-void GameObjectManager::setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer, const bool& aAlphaBlend)
+void GameObjectManager::instanceToWorld(BaseGameObject* aObject, const int& aLayer)
 {
-	if (!aAlphaBlend) {
-		// アルファブレンド無し
-		mWorldGameObjectList[aLayer].emplace_back(aObject);
-	} else {
-		// アルファブレンド有り
-		mWorldGameObjectListAlpha[aLayer].emplace_back(aObject);
-	}
+	mWorldGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
 	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトをリストに追加（背景）
+/// ゲームオブジェクトを生成（ワールド空間/アルファブレンド）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
-void GameObjectManager::setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer)
+/// @param aAlphaBlend アルファブレンドを適用するか
+void GameObjectManager::instanceToWorldAlpha(BaseGameObject* aObject, const int& aLayer)
+{
+	mWorldGameObjectListAlpha[aLayer].emplace_back(aObject);
+	aObject->setGameObjectList(this);
+	aObject->initialize();
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ゲームオブジェクトを生成（背景）
+/// @param aObject 追加するゲームオブジェクト
+/// @param aLayer 処理順を決めるレイヤー
+void GameObjectManager::instanceToBackground(BaseGameObject* aObject, const int& aLayer)
 {
 	mBackgroundGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
@@ -238,10 +244,10 @@ void GameObjectManager::setGameObjectListToBackground(BaseGameObject* aObject, c
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトをリストに追加（キャンバス）
+/// ゲームオブジェクトを生成（キャンバス）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
-void GameObjectManager::setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer)
+void GameObjectManager::instanceToCanvas(BaseGameObject* aObject, const int& aLayer)
 {
 	mCanvasGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);

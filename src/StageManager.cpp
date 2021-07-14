@@ -91,7 +91,7 @@ void StageManager::instanceObj()
 		mInstanceObstractTimer = 0.0f;
 		for (int i = 0; i < mInstanceObstractCount; i++) {
 			Obstract* obj = new Obstract();
-			mGameObjectList->setGameObjectListToWorld(obj, 0, true);
+			mGameObjectList->instanceToWorldAlpha(obj);
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {
@@ -103,7 +103,7 @@ void StageManager::instanceObj()
 		mInstanceGroundTimer = 0.0f;
 		for (int i = 0; i < INSTANCE_GROUND_CNT; i++) {
 			Ground* obj = new Ground();
-			mGameObjectList->setGameObjectListToWorld(obj, 0, true);
+			mGameObjectList->instanceToWorldAlpha(obj);
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {
@@ -115,7 +115,7 @@ void StageManager::instanceObj()
 		mInstanceMoveLineEffectTimer = 0.0f;
 		for (int i = 0; i < mInstanceObstractCount; i++) {
 			MoveLineEffect* obj = new MoveLineEffect();
-			mGameObjectList->setGameObjectListToWorld(obj, 0, true);
+			mGameObjectList->instanceToWorldAlpha(obj);
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {

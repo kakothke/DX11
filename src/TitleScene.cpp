@@ -26,10 +26,10 @@ const static auto FPS = Fps::getInst();
 TitleScene::TitleScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	mGameOBJManager.setCameraObject(new TitleCamera());
-	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
-	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
-	mGameOBJManager.setGameObjectListToWorld(new TitlePlayer());
-	mGameOBJManager.setGameObjectListToCanvas(new TitleUI());
+	mGameOBJManager.instanceToWorld(new DirectionalLight());
+	mGameOBJManager.instanceToBackground(new GameSkyBox());
+	mGameOBJManager.instanceToWorld(new TitlePlayer());
+	mGameOBJManager.instanceToCanvas(new TitleUI());
 }
 
 //-------------------------------------------------------------------------------------------------

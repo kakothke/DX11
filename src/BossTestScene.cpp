@@ -17,10 +17,10 @@ BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 	SOUND->play((int)SoundList::BGM_00);
 
 	mGameObjMgr.setCameraObject(new BossCamera());
-	mGameObjMgr.setGameObjectListToWorld(new TestPlayer());
-	mGameObjMgr.setGameObjectListToWorld(new Boss());
-	mGameObjMgr.setGameObjectListToWorld(new DirectionalLight());
-	mGameObjMgr.setGameObjectListToBackground(new GameSkyBox());
+	mGameObjMgr.instanceToWorld(new TestPlayer());
+	mGameObjMgr.instanceToWorld(new Boss());
+	mGameObjMgr.instanceToWorld(new DirectionalLight());
+	mGameObjMgr.instanceToBackground(new GameSkyBox());
 }
 
 //-------------------------------------------------------------------------------------------------

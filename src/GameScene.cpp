@@ -23,11 +23,11 @@ GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	mPlayer = new Player();
 	mGameOBJManager.setCameraObject(new GameCamera());
-	mGameOBJManager.setGameObjectListToWorld(mPlayer);
-	mGameOBJManager.setGameObjectListToWorld(new DirectionalLight());
-	mGameOBJManager.setGameObjectListToWorld(new StageManager());
-	mGameOBJManager.setGameObjectListToBackground(new GameSkyBox());
-	mGameOBJManager.setGameObjectListToCanvas(new GameUI());
+	mGameOBJManager.instanceToWorld(mPlayer);
+	mGameOBJManager.instanceToWorld(new DirectionalLight());
+	mGameOBJManager.instanceToWorld(new StageManager());
+	mGameOBJManager.instanceToBackground(new GameSkyBox());
+	mGameOBJManager.instanceToCanvas(new GameUI());
 
 	SOUND->play((int)SoundList::BGM_00);
 }

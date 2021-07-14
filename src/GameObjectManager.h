@@ -32,9 +32,10 @@ public:
 
 	/// @name ゲームオブジェクトリスト操作
 	//@{
-	void setGameObjectListToWorld(BaseGameObject* aObject, const int& aLayer = 0, const bool& aAlphaBlend = false) override;
-	void setGameObjectListToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
-	void setGameObjectListToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void instanceToWorld(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void instanceToWorldAlpha(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void instanceToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
+	void instanceToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void setCameraObject(Camera* aObject);
 	BaseGameObject* findGameObject(const GameObjectTag& aTag) override;
 	std::vector<BaseGameObject*> findGameObjects(const GameObjectTag& aTag) override;

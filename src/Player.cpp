@@ -56,7 +56,7 @@ void Player::draw()
 void Player::missEvent()
 {
 	SOUND->playOneShot((int)SoundList::SE_Miss);
-	mGameObjectList->setGameObjectListToWorld(new ExplosionEffect(mTransform.pos), 0, true);
+	mGameObjectList->instanceToWorldAlpha(new ExplosionEffect(mTransform.pos), 0);
 	setActive(false);
 }
 
@@ -124,7 +124,7 @@ void Player::instanceEffect()
 		} else {
 			SOUND->playOneShot((int)SoundList::SE_Booster_Normal);
 		}
-		mGameObjectList->setGameObjectListToWorld(new BoosterEffect(transform), 0, true);
+		mGameObjectList->instanceToWorldAlpha(new BoosterEffect(transform), 1);
 	} else {
 		mInstanceBoosterTimer += FPS->deltaTime();
 	}
