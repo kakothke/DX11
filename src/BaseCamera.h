@@ -2,6 +2,8 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "BaseGameObject.h"
+
+//-------------------------------------------------------------------------------------------------
 #include "GameObjectTag.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -9,16 +11,16 @@ namespace KDXK {
 
 /// カメラ基底クラス
 /// @brief 静的なカメラとしても使用可能
-class Camera : public BaseGameObject
+class BaseCamera : public BaseGameObject
 {
 public:
 	/// @name コンストラクタ/デストラクタ
 	//@{
-	Camera();
-	Camera(Transform aTransform);
-	Camera(Vector3 aCameraParam);
-	Camera(Transform aTransform, Vector3 aCameraParam);
-	virtual ~Camera();
+	BaseCamera();
+	BaseCamera(Transform aTransform);
+	BaseCamera(Vector3 aCameraParam);
+	BaseCamera(Transform aTransform, Vector3 aCameraParam);
+	virtual ~BaseCamera();
 	//@}
 
 	/// @name 更新/描画

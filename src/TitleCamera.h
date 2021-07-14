@@ -1,7 +1,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "Camera.h"
+#include "BaseCamera.h"
 
 //-------------------------------------------------------------------------------------------------
 #include "OBJRenderer.h"
@@ -10,7 +10,7 @@
 namespace KDXK {
 
 /// タイトルカメラ
-class TitleCamera : public Camera
+class TitleCamera : public BaseCamera
 {
 public:
 	/// @name コンストラクタ/デストラクタ

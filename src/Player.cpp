@@ -19,7 +19,8 @@ const static auto SOUND = Sound::getInst();
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Player::Player()
-	: mMoveSpeed(20.0f)
+	: mRenderer()
+	, mMoveSpeed(20.0f)
 	, mInstanceBoosterTimer(0.0f)
 {
 	// タグ設定
@@ -41,7 +42,6 @@ Player::~Player()
 void Player::update()
 {
 	move();
-	shot();
 	instanceEffect();
 }
 
@@ -96,12 +96,6 @@ void Player::move()
 
 	// 移動できる端を制限
 	mTransform.pos.x = Math::Clamp(mTransform.pos.x, -50.0f, 50.0f);
-}
-
-//-------------------------------------------------------------------------------------------------
-/// ショット
-void Player::shot()
-{
 }
 
 //-------------------------------------------------------------------------------------------------

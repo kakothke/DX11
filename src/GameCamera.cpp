@@ -15,8 +15,9 @@ const static auto INPUT_MANAGER = InputManager::getInst();
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 GameCamera::GameCamera()
-	: mKatamuki(1.0f)
-{
+	: mPlayer(nullptr)
+	, mKatamuki(1.0f)
+{	
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -26,19 +27,25 @@ GameCamera::~GameCamera()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 初期化
+void GameCamera::initialize()
+{
+	mPlayer = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
+}
+
+//-------------------------------------------------------------------------------------------------
 /// 更新
 void GameCamera::update()
 {
 	// 定数
-	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 	const static float NORMAL_KATAMUKI_LEVEL = 1.0f;
 	const static float UP_KATAMUKI_LEVEL = NORMAL_KATAMUKI_LEVEL * 2.0f;
 	const static float DOWN_KATAMUKI_LEVEL = NORMAL_KATAMUKI_LEVEL / 2.0f;
 	const static Vector3 LOCAL_POS = Vector3(0.0f, 2.0f, -20.0f);
 
-	if (PLAYER_OBJ->activeSelf()) {
+	if (mPlayer->activeSelf()) {
 		// プレイヤーの位置
-		Vector3 playerPos = PLAYER_OBJ->transform().pos - PLAYER_OBJ->transform().localPos;
+		Vector3 playerPos = mPlayer->transform().pos - mPlayer->transform().localPos;
 
 		// カメラ傾き度更新
 		float speed = 10.0f * FPS->deltaTime();

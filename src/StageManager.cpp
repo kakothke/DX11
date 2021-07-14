@@ -5,7 +5,6 @@
 #include "Obstract.h"
 #include "MoveLineEffect.h"
 #include "Math.h"
-#include "MyOutputDebugString.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -20,9 +19,11 @@ StageManager::StageManager()
 	, mInstanceObstractTimer(0.0f)
 	, mInstanceGroundTimer(0.0f)
 	, mInstanceMoveLineEffectTimer(0.0f)
+	, mScore(0.0f)
 	, mMoveSpeed(100.0f)
 	, mLevel(1)
 	, mInstanceObstractCount(1)
+	, mMissFlag(false)
 {
 }
 
@@ -36,8 +37,7 @@ StageManager::~StageManager()
 /// 更新
 void StageManager::update()
 {
-	const static auto PLAYER_OBJ = mGameObjectList->findWorldGameObject(GameObjectTag::Player);
-	if (PLAYER_OBJ->activeSelf()) {
+	if (!mMissFlag) {
 		updateLevel();
 		instanceObj();
 	} else {
@@ -52,12 +52,27 @@ void StageManager::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// メートルを返す
+int StageManager::getScore()
+{
+	return (int)mScore;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// ミスフラグを立てる
+void StageManager::setMissFlagTrue()
+{
+	mMissFlag = true;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// レベル更新
 void StageManager::updateLevel()
 {
 	// 定数
 	const static float LEVEL_UP_TIME = 5.0f;
 	const static float SPEED_UP = 5.0f;
+	const static float METER_SPEED = 2.0f;
 	const static int INSTANCE_OBSTRACT_COUNT_UP = 5;
 
 	// レベルアップ
@@ -74,7 +89,8 @@ void StageManager::updateLevel()
 		mLevelUpTimer += FPS->deltaTime();
 	}
 
-	MyOutputDebugString(TEXT("level:%d / cnt:%d\n"), mLevel, mInstanceObstractCount);
+	// スコア
+	mScore += (mMoveSpeed / METER_SPEED) * FPS->deltaTime();
 }
 
 //-------------------------------------------------------------------------------------------------

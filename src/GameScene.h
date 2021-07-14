@@ -6,6 +6,8 @@
 //-------------------------------------------------------------------------------------------------
 #include "GameObjectManager.h"
 #include "Player.h"
+#include "StageManager.h"
+#include "GameUI.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -27,21 +29,20 @@ public:
 	//@}
 
 private:
-	/// @name 列挙型
+	/// @name 内部実装
 	//@{
-	/// ゲーム状況
-	enum class GameState
-	{
-		Intro,
-		Game,
-		Miss,
-	};
+	void missEvent();
 	//@}
 
 	/// @name プライベートメンバ変数
 	//@{
 	GameObjectManager mGameOBJManager;
 	Player* mPlayer;
+	StageManager* mStageManager;
+	GameUI* mGameUI;
+	float mRetryWaitTimer;
+	bool mMissFlag;
+	bool mRetryFlag;
 	//@}
 
 };

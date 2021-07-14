@@ -24,13 +24,36 @@ public:
 	void draw() override;
 	//@}
 
+	/// @name アクセサ
+	//@{
+	void setScore(int aMeter);
+	void setMissFlagTrue();
+	//@}
+
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	Transform mArrowTransform[4];
 	SpriteRenderer mArrowRenderer[4];
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
+	SpriteRenderer mScoreRenderer[5];
+	SpriteRenderer mRetryRenderer;
+	SpriteRenderer mRetryArrowRenderer;
+	SpriteRenderer mFadeRendererFront;
+	SpriteRenderer mFadeRendererMiddle;
+	SpriteRenderer mFadeRendererBack;
+
+	Transform mArrowTransform[4];
+	Transform mRetryTransform;
+	Transform mRetryArrowTransform;
+	Transform mFadeTransform;
+
+	Color mFadeColorFront;
+	Color mFadeColorMiddle;
+	Color mFadeColorBack;
+
+	float mScoreBlinkingTimer;
+	int mScore;
+	bool mMissFlag;
+	bool mRetryFlag;
 	//@}
 
 };

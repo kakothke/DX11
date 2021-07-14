@@ -160,7 +160,7 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\BoosterEffect.h" />
     <ClInclude Include="src\PlayerBullet.h" />
-    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\BaseCamera.h" />
     <ClInclude Include="src\Color.h" />
     <ClInclude Include="src\ConstantBuffer.h" />
     <ClInclude Include="src\Define.h" />
@@ -209,7 +209,7 @@
     <ClCompile Include="lib\include\WICTextureLoader11.cpp" />
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\Boss.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\BaseCamera.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\ConstantBuffer.cpp" />
     <ClCompile Include="src\Define.cpp" />

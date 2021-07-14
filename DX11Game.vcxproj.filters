@@ -100,7 +100,7 @@
     <ClInclude Include="src\BaseGameObject.h">
       <Filter>Game\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\Camera.h">
+    <ClInclude Include="src\BaseCamera.h">
       <Filter>Game\GameObject\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
@@ -282,7 +282,7 @@
     <ClCompile Include="src\BaseGameObject.cpp">
       <Filter>Game\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
+    <ClCompile Include="src\BaseCamera.cpp">
       <Filter>Game\GameObject\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">

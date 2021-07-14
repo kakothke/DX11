@@ -14,7 +14,7 @@ const static auto FPS = Fps::getInst();
 PlayerBullet::PlayerBullet(Transform aTransform, Vector3 aTargetPos)
 	: mRenderer()
 	, mVelocity(aTargetPos - aTransform.pos)
-	, mTimer(0)
+	, mTimer(0.0f)
 {
 	// トランスフォーム設定
 	mTransform = aTransform;

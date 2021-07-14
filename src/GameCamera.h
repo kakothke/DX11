@@ -1,13 +1,16 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-#include "Camera.h"
+#include "BaseCamera.h"
+
+//-------------------------------------------------------------------------------------------------
+#include "Player.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// ゲームカメラ
-class GameCamera : public Camera
+class GameCamera : public BaseCamera
 {
 public:
 	/// @name コンストラクタ/デストラクタ
@@ -16,8 +19,9 @@ public:
 	~GameCamera();
 	//@}
 
-	/// @name 更新/描画
+	/// @name 初期化/更新/描画
 	//@{
+	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}
@@ -25,6 +29,7 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
+	Player* mPlayer;
 	float mKatamuki;
 	//@}
 

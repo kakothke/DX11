@@ -27,11 +27,18 @@ public:
 private:
 	/// @name プライベートメンバ変数
 	//@{
-	SpriteRenderer mArrowRenderer;
 	SpriteRenderer mLogoRenderer;
 	SpriteRenderer mStartRenderer;
-	SpriteRenderer mBlackRenderer;
-	Color mBlackColor;
+	SpriteRenderer mStartArrowRenderer;
+	SpriteRenderer mFadeRenderer;
+
+	Transform mLogoTransform;
+	Transform mArrowTransform;
+	Transform mStartTransform;
+	Transform mFadeTransform;
+
+	Color mFadeColor;
+
 	bool mStartButtonDown;
 	//@}
 

@@ -281,7 +281,7 @@ void GameObjectManager::instanceToCanvas(BaseGameObject* aObject, const int& aLa
 /// ゲームオブジェクトを生成する（カメラ）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
-void GameObjectManager::instanceToCamera(Camera* aObject, const int& aLayer)
+void GameObjectManager::instanceToCamera(BaseCamera* aObject, const int& aLayer)
 {
 	mCameraGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
@@ -357,7 +357,7 @@ BaseGameObject* GameObjectManager::findCanvasGameObject(const GameObjectTag& aTa
 /// タグからゲームオブジェクトをひとつ検索する（カメラ）
 /// @param aTag 検索したいゲームオブジェクトのタグ
 /// @return 見つかったゲームオブジェクト
-Camera* GameObjectManager::findCameraGameObject(const GameObjectTag& aTag)
+BaseCamera* GameObjectManager::findCameraGameObject(const GameObjectTag& aTag)
 {
 	for (const auto& layer : mCameraGameObjectList) {
 		for (const auto obj : layer.second) {
@@ -441,9 +441,9 @@ std::vector<BaseGameObject*> GameObjectManager::findCanvasGameObjects(const Game
 /// タグからゲームオブジェクトを複数検索する（カメラ）
 /// @param aTag 検索したいゲームオブジェクトのタグ
 /// @return 見つかったゲームオブジェクト
-std::vector<Camera*> GameObjectManager::findCameraGameObjects(const GameObjectTag& aTag)
+std::vector<BaseCamera*> GameObjectManager::findCameraGameObjects(const GameObjectTag& aTag)
 {
-	std::vector<Camera*> out = {};
+	std::vector<BaseCamera*> out = {};
 	for (const auto& layer : mCameraGameObjectList) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {

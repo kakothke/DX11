@@ -25,15 +25,9 @@ public:
 	//@}
 
 private:
-	/// @name 内部実装
-	//@{
-	void instanceEffect();
-	//@}
-
 	/// @name プライベートメンバ変数
 	//@{
 	OBJRenderer mRenderer;
-	float mInstanceBoosterTimer;
 	//@}
 
 };

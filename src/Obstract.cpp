@@ -15,13 +15,17 @@ const static auto FPS = Fps::getInst();
 const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
+Player* Obstract::mPlayer = nullptr;
+
+//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 Obstract::Obstract()
-	: mColor()
+	: mRenderer()
+	, mColor()
 	, mMoveSpeed(0.0f)
 {
 	// トランスフォーム設定
-	mTransform.pos = Vector3(0.0f, -3.0f, 300.0f);
+	mTransform.pos = Vector3(0.0f, -3.0f, 500.0f);
 	mTransform.scale = Vector3(2.0f, 5.0f, 1.0f);
 	mTransform.pos.x += Random::RandomFloat(500, 0.1f) * Random::RandomSign();
 	mTransform.scale.x += Random::RandomInt(5);
@@ -43,10 +47,10 @@ Obstract::~Obstract()
 }
 
 //-------------------------------------------------------------------------------------------------
-/// 移動速度
-void Obstract::setMoveSpeed(const float& aSpeed)
+/// 初期化処理
+void Obstract::initialize()
 {
-	mMoveSpeed = aSpeed;
+	mPlayer = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -55,14 +59,14 @@ void Obstract::update()
 {
 	// 定数
 	const static float DELETE_POS = -20.0f;
-	const static float COLOR_SPEED = 2.0f;
+	const static float COLOR_SPEED = 0.01f;
 
 	// 移動
 	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime();
 
 	// 色
 	if (mColor.a < 1) {
-		mColor.a += COLOR_SPEED * FPS->deltaTime();
+		mColor.a += COLOR_SPEED * mMoveSpeed * FPS->deltaTime();
 	}
 
 	// 当たり判定
@@ -83,14 +87,20 @@ void Obstract::draw()
 }
 
 //-------------------------------------------------------------------------------------------------
+/// 移動速度を設定する
+void Obstract::setMoveSpeed(const float& aSpeed)
+{
+	mMoveSpeed = aSpeed;
+}
+
+//-------------------------------------------------------------------------------------------------
 /// プレイヤーとの当たり判定
 void Obstract::collisionPlayer()
 {
-	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 	const static float PLAYER_SIZE = 0.5f;
 
-	if (PLAYER_OBJ->activeSelf()) {
-		Vector3 playerPos = PLAYER_OBJ->transform().pos;
+	if (mPlayer->activeSelf()) {
+		Vector3 playerPos = mPlayer->transform().pos;
 		Transform collisionTransform = mTransform;
 		collisionTransform.pos.y = 0;
 		collisionTransform.scale.y = 2.0f;
@@ -102,7 +112,7 @@ void Obstract::collisionPlayer()
 			collisionTransform.pos.y + collisionTransform.scale.y / 2.0f > playerPos.y - PLAYER_SIZE &&
 			collisionTransform.pos.z - collisionTransform.scale.z / 2.0f < playerPos.z + PLAYER_SIZE &&
 			collisionTransform.pos.z + collisionTransform.scale.z / 2.0f > playerPos.z - PLAYER_SIZE) {
-			PLAYER_OBJ->missEvent();
+			mPlayer->missEvent();
 			destroyThisGameObject();
 			return;
 		}

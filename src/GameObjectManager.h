@@ -9,7 +9,7 @@
 #include <map>
 #include "BaseGameObject.h"
 #include "GameObjectTag.h"
-#include "Camera.h"
+#include "BaseCamera.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -36,17 +36,17 @@ public:
 	void instanceToWorldAlpha(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void instanceToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void instanceToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
-	void instanceToCamera(Camera* aObject, const int& aLayer = 0) override;
+	void instanceToCamera(BaseCamera* aObject, const int& aLayer = 0) override;
 	BaseGameObject* findWorldGameObject(const GameObjectTag& aTag) override;
 	BaseGameObject* findWorldGameObjectAlpha(const GameObjectTag& aTag) override;
 	BaseGameObject* findBackgroundGameObject(const GameObjectTag& aTag) override;
 	BaseGameObject* findCanvasGameObject(const GameObjectTag& aTag) override;
-	Camera* findCameraGameObject(const GameObjectTag& aTag) override;
+	BaseCamera* findCameraGameObject(const GameObjectTag& aTag) override;
 	std::vector<BaseGameObject*> findWorldGameObjects(const GameObjectTag& aTag) override;
 	std::vector<BaseGameObject*> findWorldGameObjectsAlpha(const GameObjectTag& aTag) override;
 	std::vector<BaseGameObject*> findBackgroundGameObjects(const GameObjectTag& aTag) override;
 	std::vector<BaseGameObject*> findCanvasGameObjects(const GameObjectTag& aTag) override;
-	std::vector<Camera*> findCameraGameObjects(const GameObjectTag& aTag) override;
+	std::vector<BaseCamera*> findCameraGameObjects(const GameObjectTag& aTag) override;
 	//@}
 
 private:
@@ -61,7 +61,7 @@ private:
 	/// キャンバスリスト
 	std::map<int, std::list<BaseGameObject*>> mCanvasGameObjectList;
 	/// カメラリスト
-	std::map<int, std::list<Camera*>> mCameraGameObjectList;
+	std::map<int, std::list<BaseCamera*>> mCameraGameObjectList;
 	//@}
 
 };

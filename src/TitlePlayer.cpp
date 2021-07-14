@@ -2,20 +2,17 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "ResourceFileName.h"
-#include "InputManager.h"
-#include "Math.h"
-#include "BoosterEffect.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto INPUT_MANAGER = InputManager::getInst();
 const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 TitlePlayer::TitlePlayer()
+	: mRenderer()
 {
 	// 描画設定
 	mRenderer.setOBJ(ResourceFileName::OBJ.at(OBJList::Player));
@@ -41,28 +38,6 @@ void TitlePlayer::update()
 void TitlePlayer::draw()
 {
 	mRenderer.render(mTransform);
-}
-
-//-------------------------------------------------------------------------------------------------
-/// エフェクト生成
-void TitlePlayer::instanceEffect()
-{
-	const static float INSTANCE_BOOSTER_TIME = 0.05f;
-	const static float SCALE_RANGE = 0.25f;
-
-	if (mInstanceBoosterTimer > INSTANCE_BOOSTER_TIME) {
-		mInstanceBoosterTimer = 0.0f;
-		Transform transform = mTransform;
-		float axisY = INPUT_MANAGER->axesRaw().y;
-		if (axisY == 1) {
-			transform.scale += SCALE_RANGE;
-		} else if (axisY == -1) {
-			transform.scale -= SCALE_RANGE;
-		}
-		mGameObjectList->instanceToWorldAlpha(new BoosterEffect(transform));
-	} else {
-		mInstanceBoosterTimer += FPS->deltaTime();
-	}
 }
 
 } // namespace

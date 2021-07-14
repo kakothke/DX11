@@ -15,8 +15,6 @@ ExplosionEffect::ExplosionEffect(Vector3 aInstancePos)
 	: mRenderer()
 {
 	mTransform.pos = aInstancePos;
-	/*mTransform.pos.x += Random::RandomInt(3) * Random::RandomSign();
-	mTransform.pos.y += Random::RandomInt(3) * Random::RandomSign();*/
 
 	mTransform.scale.x = 0.25f;
 	mTransform.scale.y = 0.25f;

@@ -30,6 +30,8 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	GameObjectManager mGameOBJManager;
+	float mSceneChangeWaitTimer;
+	bool mStartFlag;
 	//@}
 
 };

@@ -121,6 +121,10 @@ void InputManager::updateButtons()
 	// キャンセルボタン
 	mState[(int)InputCode::Cancel] =
 		INPUT->getKey(DIK_X) || INPUT->getXInputButton(XINPUT_GAMEPAD_A);
+	// 上キー
+	mState[(int)InputCode::UP] = (mAxesRaw.y == 1);
+	// 下キー
+	mState[(int)InputCode::DOWN] = (mAxesRaw.y == -1);
 }
 
 } // namespace

@@ -10,19 +10,25 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 BossCamera::BossCamera()
-	: mDistanceFromPlayer(20.0f)
+	: mPlayer(nullptr)
+	, mDistanceFromPlayer(20.0f)
 {
+}
+
+//-------------------------------------------------------------------------------------------------
+/// 初期化
+void BossCamera::initialize()
+{
+	mPlayer = (TestPlayer*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
 void BossCamera::update()
 {
-	const static auto PLAYER_OBJ = (TestPlayer*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
-
 	// プレイヤーを親オブジェクトとして連動させる
-	mTransform = PLAYER_OBJ->transform();
-	mTransform.localPos = -PLAYER_OBJ->moveVelocity();
+	mTransform = mPlayer->transform();
+	mTransform.localPos = -mPlayer->moveVelocity();
 	mTransform.localPos.z = -mDistanceFromPlayer;
 }
 

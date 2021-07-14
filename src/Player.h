@@ -33,17 +33,12 @@ private:
 	/// @name 内部実装
 	//@{
 	void move();
-	void shot();
 	void instanceEffect();
-	//@}
-
-	/// @name コンポーネント
-	//@{
-	OBJRenderer mRenderer;
 	//@}
 
 	/// @name プライベートメンバ変数
 	//@{
+	OBJRenderer mRenderer;
 	float mMoveSpeed;
 	float mInstanceBoosterTimer;
 	//@}

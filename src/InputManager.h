@@ -14,6 +14,10 @@ enum class InputCode
 	OK,
 	/// キャンセルボタン
 	Cancel,
+	/// 上
+	UP,
+	/// 下
+	DOWN,
 
 	TERM,
 };

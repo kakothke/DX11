@@ -15,7 +15,7 @@ int Math::Sign(int aValue)
 //-------------------------------------------------------------------------------------------------
 float Math::Sign(float aValue)
 {
-	return (aValue > 0) - (aValue < 0);
+	return (float)((aValue > 0) - (aValue < 0));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -34,6 +34,31 @@ int Math::Clamp(int aValue, int aMin, int aMax)
 float Math::Clamp(float aValue, float aMin, float aMax)
 {
 	return std::max(std::min(aValue, aMax), aMin);
+}
+
+//-------------------------------------------------------------------------------------------------
+int Math::Degit(int aValue)
+{
+	if (aValue == 0) {
+		// 0‚Í1Œ…‚Æ‚µ‚Ä”‚¦‚é
+		return 1;
+	}
+	return (int)log10(aValue) + 1;
+}
+
+//-------------------------------------------------------------------------------------------------
+std::vector<int> Math::Split(int aValue)
+{
+	std::vector<int> out = {};
+	int degit = Degit(aValue);
+	for (int i = 0; i < degit; i++) {
+		if (i == 0) {
+			out.emplace_back(aValue % 10);
+		} else {
+			out.emplace_back((aValue / (int)pow(10, i)) % 10);
+		}
+	}
+	return out;
 }
 
 } // namespace

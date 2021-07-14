@@ -1,5 +1,9 @@
 #pragma once
 
+//-------------------------------------------------------------------------------------------------
+#include <vector>
+
+//-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
 /// ”ŠwŠÖ”ŒQ
@@ -18,6 +22,10 @@ public:
 	static int Clamp(int aValue, int aMin, int aMax);
 	/// aValue ‚Ì’l‚ğw’è‚Ì”ÍˆÍ [aMin, aMax] ‚É§ŒÀ‚·‚é
 	static float Clamp(float aValue, float aMin, float aMax);
+	/// aValue‚ÌŒ…”‚ğ•Ô‚·
+	static int Degit(int aValue);
+	/// aValue‚ğŒ…”‚²‚Æ‚É•ª‰ğ‚·‚é
+	static std::vector<int> Split(int aValue);
 	//@}
 
 private:

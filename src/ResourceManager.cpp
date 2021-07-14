@@ -38,7 +38,9 @@ void ResourceManager::initialize()
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Arrow));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_TitleLogo));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Start));
-	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Black));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_White));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Numbers));
+	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::UI_Retry));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Booster));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Graze));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));

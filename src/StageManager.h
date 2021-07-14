@@ -6,6 +6,7 @@
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
 
+/// ステージマネージャー
 class StageManager : public BaseGameObject
 {
 public:
@@ -17,8 +18,16 @@ public:
 	
 	/// @name 更新/描画
 	//@{
-	void update() override;
-	void draw() override;
+	void update();
+	void draw();
+	//@}
+
+	/// @name アクセサ
+	//@{
+	/// メートルを返す
+	int getScore();
+	/// ミスフラグを立てる
+	void setMissFlagTrue();
 	//@}
 
 private:
@@ -44,12 +53,16 @@ private:
 	float mInstanceGroundTimer;
 	/// 移動線エフェクト生成タイマー
 	float mInstanceMoveLineEffectTimer;
+	/// スコア
+	float mScore;
 	/// スピード
 	float mMoveSpeed;
 	/// レベル
 	int mLevel;
 	/// 障害物生成数
 	int mInstanceObstractCount;
+	/// ミスフラグ
+	bool mMissFlag;
 	//@}
 
 };

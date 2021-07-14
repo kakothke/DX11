@@ -22,6 +22,7 @@ MoveLineEffect::MoveLineEffect()
 	// ï`âÊê›íË
 	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
+	mRenderer.setColor(Color(1.0f, 1.0f, 1.0f, 0.5f));
 }
 
 //-------------------------------------------------------------------------------------------------

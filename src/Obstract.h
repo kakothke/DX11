@@ -5,6 +5,7 @@
 
 //-------------------------------------------------------------------------------------------------
 #include "OBJRenderer.h"
+#include "Player.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -20,6 +21,7 @@ public:
 
 	/// @name 更新/描画
 	//@{
+	void initialize() override;
 	void update() override;
 	void draw() override;
 	//@}
@@ -39,6 +41,7 @@ private:
 	/// @name プライベートメンバ変数
 	//@{
 	OBJRenderer mRenderer;
+	static Player* mPlayer;
 	Color mColor;
 	float mMoveSpeed;
 	//@}
