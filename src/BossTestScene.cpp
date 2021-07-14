@@ -16,7 +16,7 @@ BossTestScene::BossTestScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	SOUND->play((int)SoundList::BGM_00);
 
-	mGameObjMgr.setCameraObject(new BossCamera());
+	mGameObjMgr.instanceToCamera(new BossCamera());
 	mGameObjMgr.instanceToWorld(new TestPlayer());
 	mGameObjMgr.instanceToWorld(new Boss());
 	mGameObjMgr.instanceToWorld(new DirectionalLight());

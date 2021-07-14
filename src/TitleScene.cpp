@@ -25,7 +25,7 @@ const static auto FPS = Fps::getInst();
 /// コンストラクタ
 TitleScene::TitleScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
-	mGameOBJManager.setCameraObject(new TitleCamera());
+	mGameOBJManager.instanceToCamera(new TitleCamera());
 	mGameOBJManager.instanceToWorld(new DirectionalLight());
 	mGameOBJManager.instanceToBackground(new GameSkyBox());
 	mGameOBJManager.instanceToWorld(new TitlePlayer());

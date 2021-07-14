@@ -36,7 +36,7 @@ StageManager::~StageManager()
 /// 更新
 void StageManager::update()
 {
-	const static auto PLAYER_OBJ = mGameObjectList->findGameObject(GameObjectTag::Player);
+	const static auto PLAYER_OBJ = mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 	if (PLAYER_OBJ->activeSelf()) {
 		updateLevel();
 		instanceObj();
@@ -127,15 +127,15 @@ void StageManager::instanceObj()
 /// スピード変更
 void StageManager::changeSpeed()
 {
-	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Ground)) {
+	for (const auto objs : mGameObjectList->findWorldGameObjectsAlpha(GameObjectTag::Ground)) {
 		Ground* obj = (Ground*)objs;
 		obj->setMoveSpeed(mMoveSpeed);
 	}
-	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Obstract)) {
+	for (const auto objs : mGameObjectList->findWorldGameObjectsAlpha(GameObjectTag::Obstract)) {
 		Obstract* obj = (Obstract*)objs;
 		obj->setMoveSpeed(mMoveSpeed);
 	}
-	for (const auto objs : mGameObjectList->findGameObjects(GameObjectTag::Effect_MoveLine)) {
+	for (const auto objs : mGameObjectList->findWorldGameObjectsAlpha(GameObjectTag::Effect_MoveLine)) {
 		MoveLineEffect* obj = (MoveLineEffect*)objs;
 		obj->setMoveSpeed(mMoveSpeed);
 	}

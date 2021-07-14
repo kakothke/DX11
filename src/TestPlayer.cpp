@@ -41,7 +41,7 @@ TestPlayer::~TestPlayer()
 void TestPlayer::update()
 {
 	// ターゲット位置更新
-	const static auto BOSS_OBJ = mGameObjectList->findGameObject(GameObjectTag::Boss);
+	const static auto BOSS_OBJ = mGameObjectList->findWorldGameObject(GameObjectTag::Boss);
 	mTargetPos = BOSS_OBJ->transform().pos;
 
 	// 移動

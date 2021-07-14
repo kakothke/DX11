@@ -18,7 +18,7 @@ BossCamera::BossCamera()
 /// 更新
 void BossCamera::update()
 {
-	const static auto PLAYER_OBJ = (TestPlayer*)mGameObjectList->findGameObject(GameObjectTag::Player);
+	const static auto PLAYER_OBJ = (TestPlayer*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 
 	// プレイヤーを親オブジェクトとして連動させる
 	mTransform = PLAYER_OBJ->transform();

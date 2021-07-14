@@ -19,12 +19,13 @@ GameObjectManager::GameObjectManager()
 	, mWorldGameObjectListAlpha()
 	, mBackgroundGameObjectList()
 	, mCanvasGameObjectList()
-	, mCamera(nullptr)
+	, mCameraGameObjectList()
 {
 	mWorldGameObjectList.clear();
 	mWorldGameObjectListAlpha.clear();
 	mBackgroundGameObjectList.clear();
 	mCanvasGameObjectList.clear();
+	mCameraGameObjectList.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -59,19 +60,19 @@ GameObjectManager::~GameObjectManager()
 		}
 	}
 	mCanvasGameObjectList.clear();
-
-	delete mCamera;
-	mCamera = nullptr;
+	for (const auto& layer : mCameraGameObjectList) {
+		for (auto obj : layer.second) {
+			delete obj;
+			obj = nullptr;
+		}
+	}
+	mCameraGameObjectList.clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 更新
 void GameObjectManager::update()
 {
-	if (!mCamera) {
-		return;
-	}
-
 	// 背景
 	for (auto& layer : mBackgroundGameObjectList) {
 		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
@@ -145,15 +146,31 @@ void GameObjectManager::update()
 	}
 
 	// カメラ
-	mCamera->update();
-	mCamera->updateConstantBuffer();
+	for (auto& layer : mCameraGameObjectList) {
+		for (auto itr = layer.second.begin(); itr != layer.second.end();) {
+			// 更新
+			if ((*itr)->activeSelf()) {
+				(*itr)->update();
+				(*itr)->updateConstantBuffer();
+			}
+			// 消去
+			if ((*itr)->destroyFlag()) {
+				delete (*itr);
+				(*itr) = nullptr;
+				itr = layer.second.erase(itr);
+				continue;
+			}
+			itr++;
+		}
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
 /// 描画
 void GameObjectManager::draw()
 {
-	if (!mCamera) {
+	// カメラがセットされていなければ描画しない
+	if (mCameraGameObjectList.empty()) {
 		return;
 	}
 
@@ -182,7 +199,7 @@ void GameObjectManager::draw()
 	// アルファブレンド有り
 	D3D11->setBlendMode(Direct3D11::BlendList::Normal);
 	for (auto& layer : mWorldGameObjectListAlpha) {
-		// ソート
+		// カメラから遠い順にソート
 		layer.second.sort(compAlphaBlendObject);
 		for (const auto& obj : layer.second) {
 			if (obj->activeSelf()) {
@@ -205,11 +222,17 @@ void GameObjectManager::draw()
 	// カメラ
 	D3D11->setZBuffer(true);
 	D3D11->setBlendMode(Direct3D11::BlendList::None);
-	mCamera->draw();
+	for (const auto& layer : mCameraGameObjectList) {
+		for (const auto& obj : layer.second) {
+			if (obj->activeSelf()) {
+				obj->draw();
+			}
+		}
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを生成（ワールド空間）
+/// ゲームオブジェクトを生成する（ワールド空間）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
 /// @param aAlphaBlend アルファブレンドを適用するか
@@ -221,7 +244,7 @@ void GameObjectManager::instanceToWorld(BaseGameObject* aObject, const int& aLay
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを生成（ワールド空間/アルファブレンド）
+/// ゲームオブジェクトを生成する（ワールド空間/アルファブレンド）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
 /// @param aAlphaBlend アルファブレンドを適用するか
@@ -233,7 +256,7 @@ void GameObjectManager::instanceToWorldAlpha(BaseGameObject* aObject, const int&
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを生成（背景）
+/// ゲームオブジェクトを生成する（背景）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
 void GameObjectManager::instanceToBackground(BaseGameObject* aObject, const int& aLayer)
@@ -244,7 +267,7 @@ void GameObjectManager::instanceToBackground(BaseGameObject* aObject, const int&
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを生成（キャンバス）
+/// ゲームオブジェクトを生成する（キャンバス）
 /// @param aObject 追加するゲームオブジェクト
 /// @param aLayer 処理順を決めるレイヤー
 void GameObjectManager::instanceToCanvas(BaseGameObject* aObject, const int& aLayer)
@@ -255,20 +278,21 @@ void GameObjectManager::instanceToCanvas(BaseGameObject* aObject, const int& aLa
 }
 
 //-------------------------------------------------------------------------------------------------
-/// カメラを設定する
-/// @param aObject カメラオブジェクト
-void GameObjectManager::setCameraObject(Camera* aObject)
+/// ゲームオブジェクトを生成する（カメラ）
+/// @param aObject 追加するゲームオブジェクト
+/// @param aLayer 処理順を決めるレイヤー
+void GameObjectManager::instanceToCamera(Camera* aObject, const int& aLayer)
 {
-	mCamera = aObject;
+	mCameraGameObjectList[aLayer].emplace_back(aObject);
 	aObject->setGameObjectList(this);
 	aObject->initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを検索する（単体）
+/// タグからゲームオブジェクトをひとつ検索する（ワールド空間）
 /// @param aTag 検索したいゲームオブジェクトのタグ
-/// @return ゲームオブジェクト
-BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
+/// @return 見つかったゲームオブジェクト
+BaseGameObject* GameObjectManager::findWorldGameObject(const GameObjectTag& aTag)
 {
 	for (const auto& layer : mWorldGameObjectList) {
 		for (const auto& obj : layer.second) {
@@ -276,7 +300,16 @@ BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
 				return obj;
 			}
 		}
-	}
+	}	
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトをひとつ検索する（ワールド空間/アルファブレンド）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+BaseGameObject* GameObjectManager::findWorldGameObjectAlpha(const GameObjectTag& aTag)
+{
 	for (const auto& layer : mWorldGameObjectListAlpha) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
@@ -284,6 +317,16 @@ BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
 			}
 		}
 	}
+	return nullptr;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトをひとつ検索する（背景）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+BaseGameObject* GameObjectManager::findBackgroundGameObject(const GameObjectTag& aTag)
+{
 	for (const auto& layer : mBackgroundGameObjectList) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
@@ -291,6 +334,15 @@ BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
 			}
 		}
 	}
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトをひとつ検索する（キャンバス）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+BaseGameObject* GameObjectManager::findCanvasGameObject(const GameObjectTag& aTag)
+{
 	for (const auto& layer : mCanvasGameObjectList) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
@@ -302,10 +354,26 @@ BaseGameObject* GameObjectManager::findGameObject(const GameObjectTag& aTag)
 }
 
 //-------------------------------------------------------------------------------------------------
-/// ゲームオブジェクトを検索する（複数）
+/// タグからゲームオブジェクトをひとつ検索する（カメラ）
 /// @param aTag 検索したいゲームオブジェクトのタグ
-/// @return ゲームオブジェクト
-std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObjectTag& aTag)
+/// @return 見つかったゲームオブジェクト
+Camera* GameObjectManager::findCameraGameObject(const GameObjectTag& aTag)
+{
+	for (const auto& layer : mCameraGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				return obj;
+			}
+		}
+	}
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトを複数検索する（ワールド空間）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+std::vector<BaseGameObject*> GameObjectManager::findWorldGameObjects(const GameObjectTag& aTag)
 {
 	std::vector<BaseGameObject*> out = {};
 	for (const auto& layer : mWorldGameObjectList) {
@@ -315,6 +383,16 @@ std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObject
 			}
 		}
 	}
+	return out;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトを複数検索する（ワールド空間/アルファブレンド）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+std::vector<BaseGameObject*> GameObjectManager::findWorldGameObjectsAlpha(const GameObjectTag& aTag)
+{
+	std::vector<BaseGameObject*> out = {};
 	for (const auto& layer : mWorldGameObjectListAlpha) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
@@ -322,6 +400,16 @@ std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObject
 			}
 		}
 	}
+	return out;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトを複数検索する（背景）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+std::vector<BaseGameObject*> GameObjectManager::findBackgroundGameObjects(const GameObjectTag& aTag)
+{
+	std::vector<BaseGameObject*> out = {};
 	for (const auto& layer : mBackgroundGameObjectList) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
@@ -329,7 +417,34 @@ std::vector<BaseGameObject*> GameObjectManager::findGameObjects(const GameObject
 			}
 		}
 	}
+	return out;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトを複数検索する（キャンバス）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+std::vector<BaseGameObject*> GameObjectManager::findCanvasGameObjects(const GameObjectTag& aTag)
+{
+	std::vector<BaseGameObject*> out = {};
 	for (const auto& layer : mCanvasGameObjectList) {
+		for (const auto obj : layer.second) {
+			if (obj->tag() == aTag) {
+				out.emplace_back(obj);
+			}
+		}
+	}
+	return out;
+}
+
+//-------------------------------------------------------------------------------------------------
+/// タグからゲームオブジェクトを複数検索する（カメラ）
+/// @param aTag 検索したいゲームオブジェクトのタグ
+/// @return 見つかったゲームオブジェクト
+std::vector<Camera*> GameObjectManager::findCameraGameObjects(const GameObjectTag& aTag)
+{
+	std::vector<Camera*> out = {};
+	for (const auto& layer : mCameraGameObjectList) {
 		for (const auto obj : layer.second) {
 			if (obj->tag() == aTag) {
 				out.emplace_back(obj);

@@ -86,7 +86,7 @@ void Obstract::draw()
 /// ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 void Obstract::collisionPlayer()
 {
-	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findGameObject(GameObjectTag::Player);
+	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 	const static float PLAYER_SIZE = 0.5f;
 
 	if (PLAYER_OBJ->activeSelf()) {

@@ -56,7 +56,7 @@ void Player::draw()
 void Player::missEvent()
 {
 	SOUND->playOneShot((int)SoundList::SE_Miss);
-	mGameObjectList->instanceToWorldAlpha(new ExplosionEffect(mTransform.pos), 0);
+	mGameObjectList->instanceToWorldAlpha(new ExplosionEffect(mTransform.pos), 1);
 	setActive(false);
 }
 

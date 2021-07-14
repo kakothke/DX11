@@ -36,7 +36,7 @@ void MoveLineEffect::initialize()
 {
 	const static float INSTANCE_RADIUS = 60.0f;
 
-	const auto cameraPosX = mGameObjectList->findGameObject(GameObjectTag::Player)->transform().pos.x;
+	const auto cameraPosX = mGameObjectList->findWorldGameObject(GameObjectTag::Player)->transform().pos.x;
 	const float angleDegree = (float)Random::RandomInt(360);
 	const float angleRadian = angleDegree * 3.141592653589793f / 180.0f;
 	mTransform.pos.x = cameraPosX + INSTANCE_RADIUS * cos(angleRadian);

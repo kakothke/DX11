@@ -22,7 +22,7 @@ const static auto SOUND = Sound::getInst();
 GameScene::GameScene(IChangeScene* aImpl) : AbstractScene(aImpl)
 {
 	mPlayer = new Player();
-	mGameOBJManager.setCameraObject(new GameCamera());
+	mGameOBJManager.instanceToCamera(new GameCamera());
 	mGameOBJManager.instanceToWorld(mPlayer);
 	mGameOBJManager.instanceToWorld(new DirectionalLight());
 	mGameOBJManager.instanceToWorld(new StageManager());

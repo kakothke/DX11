@@ -36,9 +36,17 @@ public:
 	void instanceToWorldAlpha(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void instanceToBackground(BaseGameObject* aObject, const int& aLayer = 0) override;
 	void instanceToCanvas(BaseGameObject* aObject, const int& aLayer = 0) override;
-	void setCameraObject(Camera* aObject);
-	BaseGameObject* findGameObject(const GameObjectTag& aTag) override;
-	std::vector<BaseGameObject*> findGameObjects(const GameObjectTag& aTag) override;
+	void instanceToCamera(Camera* aObject, const int& aLayer = 0) override;
+	BaseGameObject* findWorldGameObject(const GameObjectTag& aTag) override;
+	BaseGameObject* findWorldGameObjectAlpha(const GameObjectTag& aTag) override;
+	BaseGameObject* findBackgroundGameObject(const GameObjectTag& aTag) override;
+	BaseGameObject* findCanvasGameObject(const GameObjectTag& aTag) override;
+	Camera* findCameraGameObject(const GameObjectTag& aTag) override;
+	std::vector<BaseGameObject*> findWorldGameObjects(const GameObjectTag& aTag) override;
+	std::vector<BaseGameObject*> findWorldGameObjectsAlpha(const GameObjectTag& aTag) override;
+	std::vector<BaseGameObject*> findBackgroundGameObjects(const GameObjectTag& aTag) override;
+	std::vector<BaseGameObject*> findCanvasGameObjects(const GameObjectTag& aTag) override;
+	std::vector<Camera*> findCameraGameObjects(const GameObjectTag& aTag) override;
 	//@}
 
 private:
@@ -52,8 +60,8 @@ private:
 	std::map<int, std::list<BaseGameObject*>> mBackgroundGameObjectList;
 	/// キャンバスリスト
 	std::map<int, std::list<BaseGameObject*>> mCanvasGameObjectList;
-	/// カメラ
-	Camera* mCamera;
+	/// カメラリスト
+	std::map<int, std::list<Camera*>> mCameraGameObjectList;
 	//@}
 
 };

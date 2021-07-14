@@ -30,7 +30,7 @@ GameCamera::~GameCamera()
 void GameCamera::update()
 {
 	// ’è”
-	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findGameObject(GameObjectTag::Player);
+	const static auto PLAYER_OBJ = (Player*)mGameObjectList->findWorldGameObject(GameObjectTag::Player);
 	const static float NORMAL_KATAMUKI_LEVEL = 1.0f;
 	const static float UP_KATAMUKI_LEVEL = NORMAL_KATAMUKI_LEVEL * 2.0f;
 	const static float DOWN_KATAMUKI_LEVEL = NORMAL_KATAMUKI_LEVEL / 2.0f;
