@@ -32,6 +32,7 @@ Window::Window()
 	: mHWnd(nullptr)
 	, mMutex(nullptr)
 	, mWindowName(TEXT("NULL"))
+	, mIconName(nullptr)
 	, mWindowWidth(0)
 	, mWindowHeight(0)
 {
@@ -59,10 +60,12 @@ Window::~Window()
 /// @param aWidth ウィンドウ横サイズ
 /// @param aHeight ウィンドウ縦サイズ
 /// @return 初期化結果 成功(true)
-bool Window::initialize(const LPCTSTR aWindowName, const USHORT& aWidth, const USHORT& aHeight)
+bool Window::initialize(const LPCTSTR aWindowName, const USHORT& aWidth, const USHORT& aHeight, const LPCTSTR aIconName)
 {
 	/// ウィンドウ名を保存
 	mWindowName = aWindowName;
+	/// アイコン名を保存
+	mIconName = aIconName;
 
 	// 多重起動をチェックする
 	if (!checkMultiple()) {
@@ -226,11 +229,11 @@ bool Window::registerClass()
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WndProc;
 	wc.hInstance = GetModuleHandle(NULL);
-	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wc.hIcon = LoadIcon(wc.hInstance, mIconName);
+	wc.hCursor = LoadCursor(wc.hInstance, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
 	wc.lpszClassName = mWindowName;
-	wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
+	wc.hIconSm = LoadIcon(wc.hInstance, mIconName);
 
 	// ウィンドウクラスを登録
 	if (RegisterClassEx(&wc) == 0) {

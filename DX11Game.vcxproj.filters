@@ -459,4 +459,9 @@
       <Filter>Game\Shader</Filter>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX11Game.rc">
+      <Filter>Game\Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ public:
     const static USHORT ResolutionHeight = 720;
     /// ウィンドウ名
     const static LPCTSTR WindowName;
+    /// アイコン名
+    const static LPCTSTR IconName;
     //@}
 
     /// @name ゲーム設定

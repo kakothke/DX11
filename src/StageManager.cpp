@@ -5,6 +5,7 @@
 #include "Obstract.h"
 #include "MoveLineEffect.h"
 #include "Math.h"
+#include "Random.h"
 
 //-------------------------------------------------------------------------------------------------
 namespace KDXK {
@@ -25,6 +26,7 @@ StageManager::StageManager()
 	, mInstanceObstractCount(1)
 	, mMissFlag(false)
 {
+	Random::RandomSeed();
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -22,7 +22,7 @@ public:
 
 	/// @name 初期化処理
 	//@{
-	bool initialize(const LPCTSTR aWindowName, const USHORT& aWidth, const USHORT& aHeight);
+	bool initialize(const LPCTSTR aWindowName, const USHORT& aWidth, const USHORT& aHeight, const LPCTSTR aIconName = IDI_APPLICATION);
 	//@}
 
 	/// @name 制御関数
@@ -62,6 +62,8 @@ private:
 	HANDLE mMutex;
 	/// ウィンドウ名
 	LPCTSTR mWindowName;
+	/// アイコン名
+	LPCTSTR mIconName;
 	/// ウィンドウ横サイズ
 	USHORT mWindowWidth;
 	/// ウィンドウ縦サイズ

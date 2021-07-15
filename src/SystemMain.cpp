@@ -29,7 +29,7 @@ SystemMain::SystemMain()
 bool SystemMain::initialize()
 {
 	// ウィンドウ初期化	
-	if (!WINDOW->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight)) {
+	if (!WINDOW->initialize(Define::WindowName, Define::ResolutionWidth, Define::ResolutionHeight, Define::IconName)) {
 		return false;
 	}
 	// Direct3D11初期化	
