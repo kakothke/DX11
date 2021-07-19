@@ -10,6 +10,9 @@ namespace KDXK {
 bool compAlphaBlendObject(BaseGameObject* aObject1, BaseGameObject* aObject2);
 
 //-------------------------------------------------------------------------------------------------
+static Vector3 gCameraPos = Vector3();
+
+//-------------------------------------------------------------------------------------------------
 const static auto D3D11 = Direct3D11::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -200,6 +203,7 @@ void GameObjectManager::draw()
 	D3D11->setBlendMode(Direct3D11::BlendList::Normal);
 	for (auto& layer : mWorldGameObjectListAlpha) {
 		// カメラから遠い順にソート
+		gCameraPos = mCameraGameObjectList[0].front()->transform().pos + mCameraGameObjectList[0].front()->transform().localPos;
 		layer.second.sort(compAlphaBlendObject);
 		for (const auto& obj : layer.second) {
 			if (obj->activeSelf()) {
@@ -459,11 +463,10 @@ std::vector<BaseCamera*> GameObjectManager::findCameraGameObjects(const GameObje
 bool compAlphaBlendObject(BaseGameObject* aObject1, BaseGameObject* aObject2)
 {
 	// カメラからの距離を計算
-	Vector3 cameraPos = Vector3(0.0f, 0.0f, -30.0f);
-	Vector3 objPos1 = aObject1->transform().pos - aObject1->transform().localPos;
-	Vector3 objPos2 = aObject2->transform().pos - aObject2->transform().localPos;
-	float length1 = (cameraPos - objPos1).SqrMagnitude();
-	float length2 = (cameraPos - objPos2).SqrMagnitude();
+	Vector3 objPos1 = aObject1->transform().pos + aObject1->transform().localPos;
+	Vector3 objPos2 = aObject2->transform().pos + aObject2->transform().localPos;
+	float length1 = (gCameraPos - objPos1).SqrMagnitude();
+	float length2 = (gCameraPos - objPos2).SqrMagnitude();
 
 	// カメラからの距離が遠い順にソート
 	if (length1 > length2) {
