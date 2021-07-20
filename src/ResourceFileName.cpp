@@ -27,7 +27,6 @@ const std::unordered_map<SpriteList, const char*> ResourceFileName::Sprite =
 	{ SpriteList::Effect_Graze, "res/img/graze.png" },
 	{ SpriteList::Effect_Circle, "res/img/circle_particle.png" },
 	{ SpriteList::Effect_Explosion, "res/img/explosion.png" },
-	{ SpriteList::Effect_Blow, "res/img/blow_particle.png" },
 };
 
 /// Shader

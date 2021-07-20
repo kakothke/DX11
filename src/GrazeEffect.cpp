@@ -10,16 +10,16 @@ namespace KDXK {
 //-------------------------------------------------------------------------------------------------
 GrazeEffect::GrazeEffect(Vector3 aObstractPos, Vector3 aPlayerPos)
 	: mRenderer()
+	, mVelocity(aPlayerPos - aObstractPos)
+	, mColor()
+	, mVelocityY(Random::RandomFloat(10, 0.5f)* Random::RandomSign())
 {
 	mTransform.pos = aPlayerPos;
-	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 0.0f, 45.0f));
 	mTransform.scale = 0.5f;
-	mVelocityY = Random::RandomFloat(10, 0.5f) * Random::RandomSign();
 
 	mRenderer.setTexture(ResourceFileName::Sprite.at(SpriteList::Effect_Graze));
 	mRenderer.setShader(ResourceFileName::Shader.at(ShaderList::Unlit));
 
-	mVelocity = aPlayerPos - aObstractPos;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -38,6 +38,7 @@ void GrazeEffect::update()
 	mTransform.pos.y += mVelocityY * mFps->deltaTime();
 	mTransform.pos.z -= MOVE_SPEED_Z * mFps->deltaTime();
 	mTransform.scale -= SCALE_DOWN_SPEED * mFps->deltaTime();
+	mColor.a -= mFps->deltaTime();
 
 	if (mTransform.scale.x < 0.0f) {
 		destroyThisGameObject();
@@ -47,6 +48,7 @@ void GrazeEffect::update()
 //-------------------------------------------------------------------------------------------------
 void GrazeEffect::draw()
 {
+	mRenderer.setColor(mColor);
 	mRenderer.render(mTransform, true);
 }
 

@@ -29,6 +29,7 @@ private:
 	//@{
 	SpriteRenderer mRenderer;
 	Vector3 mVelocity;
+	Color mColor;
 	float mVelocityY;
 	//@}
 

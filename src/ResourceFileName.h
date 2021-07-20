@@ -31,7 +31,6 @@ enum class SpriteList
 	Effect_Graze,
 	Effect_Circle,
 	Effect_Explosion,
-	Effect_Blow,
 };
 
 /// Shader

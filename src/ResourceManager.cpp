@@ -45,7 +45,6 @@ void ResourceManager::initialize()
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Graze));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Circle));
 	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Explosion));
-	TEXTURE_LOADER->load(ResourceFileName::Sprite.at(SpriteList::Effect_Blow));
 
 	// Shaders
 	SHADER_LOADER->load(ResourceFileName::Shader.at(ShaderList::Unlit));
