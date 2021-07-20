@@ -47,6 +47,7 @@ protected:
 	//@{
 	Transform mTransform;
 	ISetGameObject* mGameObjectList;
+	static Fps* mFps;
 	//@}
 
 private:

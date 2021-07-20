@@ -13,7 +13,6 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
-const static auto FPS = Fps::getInst();
 const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -69,7 +68,7 @@ void Player::move()
 	const static float HIGH_SPEED_LEVEL = NORMAL_SPEED_LEVEL * 2.0f;
 	const static float LOW_SPEED_LEVEL = NORMAL_SPEED_LEVEL / 2.0f;
 
-	float speed = 10.0f * FPS->deltaTime();
+	float speed = 10.0f * mFps->deltaTime();
 	float axisY = INPUT_MANAGER->axesRaw().y;
 	if (axisY == 1) {
 		// ‚‘¬ˆÚ“®
@@ -91,7 +90,7 @@ void Player::move()
 	// ˆÚ“®
 	float move = INPUT_MANAGER->axesRaw().x * mMoveSpeed;
 	float rot = INPUT_MANAGER->axes().x * -mMoveSpeed * 2.0f;
-	mTransform.pos.x += move * FPS->deltaTime();
+	mTransform.pos.x += move * mFps->deltaTime();
 	mTransform.rot = Quaternion::Euler(Vector3(0.0f, 0.0f, rot));
 
 	// ˆÚ“®‚Å‚«‚é’[‚ð§ŒÀ
@@ -120,7 +119,7 @@ void Player::instanceEffect()
 		}
 		mGameObjectList->instanceToWorldAlpha(new BoosterEffect(transform), 1);
 	} else {
-		mInstanceBoosterTimer += FPS->deltaTime();
+		mInstanceBoosterTimer += mFps->deltaTime();
 	}
 }
 

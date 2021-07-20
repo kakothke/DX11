@@ -11,9 +11,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 StageManager::StageManager()
 	: mLevelUpTimer(0.0f)
@@ -88,11 +85,11 @@ void StageManager::updateLevel()
 			mInstanceObstractCount++;
 		}
 	} else {
-		mLevelUpTimer += FPS->deltaTime();
+		mLevelUpTimer += mFps->deltaTime();
 	}
 
 	// スコア
-	mScore += (mMoveSpeed / METER_SPEED) * FPS->deltaTime();
+	mScore += (mMoveSpeed / METER_SPEED) * mFps->deltaTime();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -113,7 +110,7 @@ void StageManager::instanceObj()
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {
-		mInstanceObstractTimer += FPS->deltaTime();
+		mInstanceObstractTimer += mFps->deltaTime();
 	}
 
 	// 地上生成
@@ -125,7 +122,7 @@ void StageManager::instanceObj()
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {
-		mInstanceGroundTimer += FPS->deltaTime();
+		mInstanceGroundTimer += mFps->deltaTime();
 	}
 
 	// 移動線生成
@@ -137,7 +134,7 @@ void StageManager::instanceObj()
 			obj->setMoveSpeed(mMoveSpeed);
 		}
 	} else {
-		mInstanceMoveLineEffectTimer += FPS->deltaTime();
+		mInstanceMoveLineEffectTimer += mFps->deltaTime();
 	}
 }
 
@@ -165,7 +162,7 @@ void StageManager::missEvent()
 {
 	const static float MISS_SPEED_DOWN = 2.0f;
 	if (mMoveSpeed != 0) {
-		mMoveSpeed = Math::Lerp(mMoveSpeed, 0.0f, MISS_SPEED_DOWN * FPS->deltaTime());
+		mMoveSpeed = Math::Lerp(mMoveSpeed, 0.0f, MISS_SPEED_DOWN * mFps->deltaTime());
 		changeSpeed();
 	}
 }

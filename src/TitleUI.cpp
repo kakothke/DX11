@@ -9,7 +9,6 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
-const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 TitleUI::TitleUI()
@@ -65,7 +64,7 @@ void TitleUI::update()
 			mStartButtonDown = true;
 		}
 	} else {
-		mFadeColor.a += FPS->deltaTime();
+		mFadeColor.a += mFps->deltaTime();
 	}
 }
 

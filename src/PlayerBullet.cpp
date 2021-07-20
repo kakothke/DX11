@@ -7,9 +7,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 PlayerBullet::PlayerBullet(Transform aTransform, Vector3 aTargetPos)
 	: mRenderer()
@@ -48,7 +45,7 @@ void PlayerBullet::update()
 	if (mTimer > DESTROY_TIME) {
 		destroyThisGameObject();
 	}
-	mTimer += FPS->deltaTime();
+	mTimer += mFps->deltaTime();
 }
 
 //-------------------------------------------------------------------------------------------------

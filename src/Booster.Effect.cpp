@@ -8,9 +8,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 BoosterEffect::BoosterEffect(Transform aTransform)
 	: mRenderer()
 	, mColor()
@@ -36,9 +33,9 @@ void BoosterEffect::update()
 	const static float SCALE_DOWN_SPEED = 3.0f;
 	const static float COLOR_ALPHA_DOWN_SPEED = 3.0f;
 
-	mTransform.pos.z -= MOVE_SPEED * FPS->deltaTime();
-	mTransform.scale -= SCALE_DOWN_SPEED * FPS->deltaTime();
-	mColor.a -= COLOR_ALPHA_DOWN_SPEED * FPS->deltaTime();
+	mTransform.pos.z -= MOVE_SPEED * mFps->deltaTime();
+	mTransform.scale -= SCALE_DOWN_SPEED * mFps->deltaTime();
+	mColor.a -= COLOR_ALPHA_DOWN_SPEED * mFps->deltaTime();
 
 	if (mColor.a < 0.0f) {
 		destroyThisGameObject();

@@ -8,9 +8,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 GrazeEffect::GrazeEffect(Vector3 aObstractPos, Vector3 aPlayerPos)
 	: mRenderer()
 {
@@ -37,10 +34,10 @@ void GrazeEffect::update()
 	const static float MOVE_SPEED_Z = MOVE_SPEED * 4.0f;
 	const static float SCALE_DOWN_SPEED = 3.0f;
 
-	mTransform.pos += mVelocity.Normalized() * MOVE_SPEED * FPS->deltaTime();
-	mTransform.pos.y += mVelocityY * FPS->deltaTime();
-	mTransform.pos.z -= MOVE_SPEED_Z * FPS->deltaTime();
-	mTransform.scale -= SCALE_DOWN_SPEED * FPS->deltaTime();
+	mTransform.pos += mVelocity.Normalized() * MOVE_SPEED * mFps->deltaTime();
+	mTransform.pos.y += mVelocityY * mFps->deltaTime();
+	mTransform.pos.z -= MOVE_SPEED_Z * mFps->deltaTime();
+	mTransform.scale -= SCALE_DOWN_SPEED * mFps->deltaTime();
 
 	if (mTransform.scale.x < 0.0f) {
 		destroyThisGameObject();

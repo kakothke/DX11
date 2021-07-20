@@ -9,7 +9,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
 const static auto INPUT_MANAGER = InputManager::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -48,7 +47,7 @@ void GameCamera::update()
 		Vector3 playerPos = mPlayer->transform().pos - mPlayer->transform().localPos;
 
 		// カメラ傾き度更新
-		float speed = 10.0f * FPS->deltaTime();
+		float speed = 10.0f * mFps->deltaTime();
 		if (INPUT_MANAGER->axesRaw().y == 1) {
 			// 上キーを押したら
 			if (mKatamuki != UP_KATAMUKI_LEVEL) {

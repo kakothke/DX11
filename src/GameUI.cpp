@@ -10,7 +10,6 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
-const static auto FPS = Fps::getInst();
 
 //-------------------------------------------------------------------------------------------------
 const static float DEFINE_BLINKING_TIME = 1.0f;
@@ -106,15 +105,15 @@ void GameUI::update()
 		if (mScoreBlinkingTimer > DEFINE_BLINKING_TIME) {
 			mScoreBlinkingTimer = 0.0f;
 		} else {
-			mScoreBlinkingTimer += FPS->deltaTime();
+			mScoreBlinkingTimer += mFps->deltaTime();
 		}
 		// フェード後面
 		if (mFadeColorBack.a < FADE_COLOR_TARGET_BACK) {
-			mFadeColorBack.a += FADE_SPEED_BACK * FPS->deltaTime();
+			mFadeColorBack.a += FADE_SPEED_BACK * mFps->deltaTime();
 		}
 		// フェード中間
 		if (mFadeColorMiddle.a > 0.0f) {
-			mFadeColorMiddle.a -= FADE_SPEED_MIDDLE * FPS->deltaTime();
+			mFadeColorMiddle.a -= FADE_SPEED_MIDDLE * mFps->deltaTime();
 		}
 		// リトライボタン
 		if (!mRetryFlag && INPUT_MANAGER->getButtonDown(InputCode::UP)) {
@@ -125,11 +124,11 @@ void GameUI::update()
 	// フェード前面
 	if (!mRetryFlag) {
 		if (mFadeColorFront.a > 0.0f) {
-			mFadeColorFront.a -= FPS->deltaTime();
+			mFadeColorFront.a -= mFps->deltaTime();
 		}
 	} else {
 		if (mFadeColorFront.a < 1.0f) {
-			mFadeColorFront.a += FPS->deltaTime();
+			mFadeColorFront.a += mFps->deltaTime();
 		}
 	}
 }

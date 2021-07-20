@@ -54,7 +54,11 @@ void Fps::update()
 /// @return ‘OƒtƒŒ[ƒ€‚©‚ç‚©‚©‚Á‚½ŠÔ
 float Fps::deltaTime()
 {
-	return mWaitTime / 1000.0f;
+	float out = mWaitTime / 1000.0f;
+	if (out < 0.0f) {
+		return 0.001f;
+	}
+	return out;
 }
 
 //-------------------------------------------------------------------------------------------------

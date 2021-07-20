@@ -7,9 +7,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 TitlePlayer::TitlePlayer()
 	: mRenderer()
@@ -30,7 +27,7 @@ TitlePlayer::~TitlePlayer()
 void TitlePlayer::update()
 {
 	const static float ROT_SPEED = 10.0f;
-	mTransform.rot *= Quaternion::Euler(Vector3::forward * ROT_SPEED * FPS->deltaTime());
+	mTransform.rot *= Quaternion::Euler(Vector3::forward * ROT_SPEED * mFps->deltaTime());
 }
 
 //-------------------------------------------------------------------------------------------------

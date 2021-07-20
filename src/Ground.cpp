@@ -8,9 +8,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 Ground::Ground()
 	: mColor()
 	, mMoveSpeed(0.0f)
@@ -50,11 +47,11 @@ void Ground::update()
 	const static float COLOR_SPEED = 0.01f;
 
 	// ˆÚ“®
-	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime();
+	mTransform.pos.z -= mMoveSpeed * mFps->deltaTime();
 
 	// F
 	if (mColor.a < 1) {
-		mColor.a += COLOR_SPEED * mMoveSpeed * FPS->deltaTime();
+		mColor.a += COLOR_SPEED * mMoveSpeed * mFps->deltaTime();
 	}
 
 	// Á‹

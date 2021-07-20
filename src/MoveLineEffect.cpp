@@ -9,9 +9,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 MoveLineEffect::MoveLineEffect()
 	: mMoveSpeed(0.0f)
@@ -57,7 +54,7 @@ void MoveLineEffect::update()
 	const static float COLOR_SPEED = 2.0f;
 
 	// 移動
-	mTransform.pos.z -= mMoveSpeed * FPS->deltaTime() * MULTIPLE_SPEED;
+	mTransform.pos.z -= mMoveSpeed * mFps->deltaTime() * MULTIPLE_SPEED;
 
 	// 消去
 	if (mTransform.pos.z < DELETE_POS) {

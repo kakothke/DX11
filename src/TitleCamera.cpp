@@ -7,9 +7,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 /// コンストラクタ
 TitleCamera::TitleCamera()
 {
@@ -26,8 +23,8 @@ TitleCamera::~TitleCamera()
 /// 更新
 void TitleCamera::update()
 {
-	mTransform.rot *= -Quaternion::Euler(Vector3::up * FPS->deltaTime() * 10.0f);
-	mTransform.pos = Vector3(0.0f, 1.0f, 0.0f) + mTransform.rot * Vector3::back * 10.0f;
+	mTransform.rot *= -Quaternion::Euler(Vector3::up * mFps->deltaTime() * 10.0f);
+	mTransform.pos = Vector3::up + mTransform.rot * Vector3::back * 10.0f;
 }
 
 //-------------------------------------------------------------------------------------------------

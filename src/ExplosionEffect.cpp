@@ -8,9 +8,6 @@
 namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
-const static auto FPS = Fps::getInst();
-
-//-------------------------------------------------------------------------------------------------
 ExplosionEffect::ExplosionEffect(Vector3 aInstancePos)
 	: mRenderer()
 {
@@ -35,9 +32,9 @@ void ExplosionEffect::update()
 	const static float SCALE_UP_SPEED = 8.0f;
 	const static float COLOR_ALPHA_DOWN_SPEED = 3.0f;
 
-	mTransform.scale.x += SCALE_UP_SPEED * FPS->deltaTime();
-	mTransform.scale.y += SCALE_UP_SPEED * FPS->deltaTime();
-	mColor.a -= COLOR_ALPHA_DOWN_SPEED * FPS->deltaTime();
+	mTransform.scale.x += SCALE_UP_SPEED * mFps->deltaTime();
+	mTransform.scale.y += SCALE_UP_SPEED * mFps->deltaTime();
+	mColor.a -= COLOR_ALPHA_DOWN_SPEED * mFps->deltaTime();
 
 	if (mColor.a < 0.0f) {
 		destroyThisGameObject();

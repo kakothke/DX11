@@ -12,7 +12,6 @@ namespace KDXK {
 
 //-------------------------------------------------------------------------------------------------
 const static auto INPUT_MANAGER = InputManager::getInst();
-const static auto FPS = Fps::getInst();
 const static auto SOUND = Sound::getInst();
 
 //-------------------------------------------------------------------------------------------------
@@ -78,7 +77,7 @@ void TestPlayer::move()
 	}
 
 	// トランスフォーム更新
-	Vector2 angle = mMoveVelocity * FPS->deltaTime() * MOVE_SPEED;
+	Vector2 angle = mMoveVelocity * mFps->deltaTime() * MOVE_SPEED;
 	mTransform.rot *= Quaternion::AxisAngle(-mTransform.Up(), angle.x);
 	mTransform.rot *= Quaternion::AxisAngle(mTransform.Right(), angle.y);
 	mTransform.pos = mTargetPos + mTransform.rot * Vector3::back * mTargetDistance;
@@ -106,7 +105,7 @@ void TestPlayer::shot()
 		}
 		// タイマー更新
 		if (mRapidShotTimer < RAPID_SHOT_TIME) {
-			mRapidShotTimer += FPS->deltaTime();
+			mRapidShotTimer += mFps->deltaTime();
 		} else {
 			mRapidShotTimer = 0.0f;
 		}
@@ -115,8 +114,8 @@ void TestPlayer::shot()
 	}
 	// ショットを撃って体が縮んでいたら戻す
 	if (mTransform.scale != Vector3(0.0f)) {
-		mTransform.scale.x -= RESET_SCALE_TIME * FPS->deltaTime();
-		mTransform.scale.y += RESET_SCALE_TIME * FPS->deltaTime();
+		mTransform.scale.x -= RESET_SCALE_TIME * mFps->deltaTime();
+		mTransform.scale.y += RESET_SCALE_TIME * mFps->deltaTime();
 		mTransform.scale.x = Math::Clamp(mTransform.scale.x, 1.0f, SHOT_SCALE.x);
 		mTransform.scale.y = Math::Clamp(mTransform.scale.y, SHOT_SCALE.y, 1.0f);
 	}
